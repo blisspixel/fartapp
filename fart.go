@@ -19,5 +19,3 @@ func Rate(intensity int) string {
 		return "respectable"
 	}
 }
-
-// TODO: add a --silent mode that returns "" for stealth deployment.
