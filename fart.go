@@ -5,7 +5,7 @@ var sounds = []string{"pfft", "toot", "braaap", "blorp", "KABLAM"}
 
 // Pick returns the fart sound for an intensity from 1 (gentle) to 5 (mighty).
 func Pick(intensity int) string {
-	return sounds[intensity]
+	return sounds[intensity-1]
 }
 
 // Rate describes an intensity in words.
