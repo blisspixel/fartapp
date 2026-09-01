@@ -8,7 +8,7 @@ import (
 )
 
 func run(args []string, stdout, stderr io.Writer) int {
-	if len(args) < 2 {
+	if len(args) != 2 {
 		fmt.Fprintln(stderr, "usage: fartapp <intensity>")
 		return 1
 	}

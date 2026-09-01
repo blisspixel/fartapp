@@ -1,3 +1,7 @@
 *.exe
 cov.out
 coverage
+coverage.out
+.steward/deliberations.json
+.steward/eventlog.jsonl
+.steward/receipts.jsonl

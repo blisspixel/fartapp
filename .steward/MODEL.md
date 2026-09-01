@@ -1,21 +1,27 @@
 # MODEL
 
-> Stewardry's grounded understanding of this project. Regenerate with `stew understand`.
-
-- **Languages:** Go
-- **Updated:** 2026-06-21T13:47:46Z
+- **Implemented language:** Go
+- **Planned production languages:** Rust and Godot-supported native scripting
+- **Updated:** 2026-09-01
 
 ## Understanding
 
-Languages: Go. Key signals present: roadmap/docs in tree.
+The current product is a five-level Go CLI and test suite. The ratified direction
+is a CLI-first simulation and procedural comedy game, followed by an htop-style
+Terminal Lab and a native Godot application. The current docs are design
+contracts, not implemented physics.
 
 ## Structure
 
-```
-README.md
-fart.go
-fart_test.go
-fartapp.exe
-go.mod
-main.go
+```text
+README.md                 product overview and current CLI
+ROADMAP.md                authoritative progressive plan
+docs/SIMULATION.md        scientific and numerical contract
+docs/GAMEPLAY.md          modes, story, seeds, and progression
+docs/INTERFACES.md        CLI, TUI, native, archive, and release contract
+docs/RESEARCH.md          authoritative source basis
+fart.go                   current reference behavior
+fart_test.go              current tests
+main.go                   current CLI entry
+go.mod                    current Go module
 ```

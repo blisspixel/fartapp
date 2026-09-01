@@ -1,10 +1,18 @@
 # ROADMAP
 
-- [x] v0.1: intensity parsing - accept and validate an integer arg in 1-5, rejecting anything else
-- [x] v0.2: emission mapping - deterministic sound string for each of the five levels
-- [x] v0.3: rating layer - correct parenthetical rating per intensity (e.g. `braaap (respectable)`)
-- [x] v0.4: flawlessness pass - exhaustive tests in fart_test.go covering all levels and bad input
-- [x] v0.5: shippable CLI - wire main.go end-to-end matching the README example exactly
+The public, authoritative roadmap is [ROADMAP.md](../ROADMAP.md). It preserves
+the completed v0.1 through v0.5 Go seed and defines the progressive path to the
+1.0 CLI Lab, 2.0 Terminal Lab, and 3.0 native Tiled Chamber.
+
+## Current target
+
+- CLI first on Windows, macOS, and Linux.
+- Terminal instrumentation only after the CLI is complete.
+- Native Godot application only after CLI and TUI are excellent.
+- Every physics, story, proof, and gameplay feature follows that promotion path.
 
 ## Evidence
-- README.md:3-11
+
+- [Roadmap](../ROADMAP.md)
+- [README](../README.md)
+- [Research basis](../docs/RESEARCH.md)

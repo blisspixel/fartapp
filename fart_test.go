@@ -47,6 +47,7 @@ func TestCLIInvalidInput(t *testing.T) {
 		args []string
 	}{
 		{"missing intensity", []string{"fartapp"}},
+		{"extra argument", []string{"fartapp", "3", "extra"}},
 		{"non-integer", []string{"fartapp", "nope"}},
 		{"below range", []string{"fartapp", "0"}},
 		{"above range", []string{"fartapp", "6"}},

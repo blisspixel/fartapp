@@ -1,6 +1,20 @@
 # VISION
 
-fartapp is a deliberately silly idea taken seriously: a CLI that takes an intensity from 1 (gentle) to 5 (mighty) and returns an appropriate, rated fart sound (e.g. `fartapp 3` → `braaap (respectable)`). The north star is that this trivial tool be flawless.
+F.A.R.T. Lab is the world's most overengineered and fun fart app: a complete
+command-line game and scientific instrument, an htop-style Terminal Lab, and
+eventually a polished native audiovisual application.
+
+Its deeper identity is the Universal Flatulence Translator. A source-neutral,
+versioned event contract lets humans, machines, organisms, planets, stars,
+higher-dimensional structures, and fictional universes meet through rigorously
+translated fart humor. One authoritative event history drives science, story,
+audio, visuals, haptics, and consequences.
+
+The north star is a vulgar comedy game that teaches serious fluid dynamics,
+numerics, and model honesty because it refuses to fake a result for a joke.
 
 ## Evidence
-- README.md:1-11
+
+- [README](../README.md)
+- [Roadmap](../ROADMAP.md)
+- [Research basis](../docs/RESEARCH.md)
