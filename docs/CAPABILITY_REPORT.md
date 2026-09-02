@@ -260,9 +260,57 @@ engineering tokens, not natural language or universally shared meaning. Neither
 negative outcome can become registration `not_registered`; that bridge still
 requires separately ratified attribution scope and lookup closure.
 
+## Exact registration-authority binding relation candidate
+
+The internal, non-wire experiment in `internal/registrationauthoritybinding` implements
+one pairwise exact-equality rule. It consumes a positive
+`SnapshotResolvedAuthority` and a positive structural `Registration`, first
+requires their exact catalog-scope references to match, and then compares only
+their exact opaque declaration-authority references. Catalog-scope mismatch is
+an input-composition error and never a no-match.
+
+The rule identity `lab.exact-authority-binding` at revision `v0alpha1` is closed
+inside the package. Callers cannot attach arbitrary rule labels to the fixed
+behavior. Revision is rule identity material, not chronology, recency, maturity,
+precedence, compatibility, or a latest-version selector. A future behavior or
+revision requires a separate explicit factory and conformance decision.
+
+For valid same-scope inputs, `exact_authority_binding_match` means only that the
+two existing opaque reference values are exactly equal under that rule.
+`no_exact_authority_binding_match` means only that they are unequal. It does not
+establish that they denote different external things. No normalization, case
+folding, decoding, alias, delegation, hierarchy, inheritance, or fallback is
+performed. Subject and capability remain retained in the registration but do
+not participate in this comparison.
+
+The `Decision` retains the complete rule identity, resolution witness, and
+positive structural registration without storing a caller-provided outcome or
+copied binding. Only equality can produce an `ExactBindingWitness`. A no-match
+decision still exposes its retained positive structural registration, making it
+structurally distinct from registration absence. Product registration presence
+still requires separately ratified catalog closure.
+
+This relation is deliberately not called Declaration Attribution Scope. It
+does not identify an agent, entity, creator, owner, speaker, lawgiver, source,
+or responsible party, and it establishes no attribution, provenance,
+responsibility, legitimacy, permission, authorization, ownership, authorship,
+identity equivalence, trust, source truth, scientific truth, or catalog
+completeness. It requires and infers no person, organism, species, body, anatomy,
+institution, object, observer, event, location, geometry, dimensionality, unit
+system, language, network identity, universe, source-law time, chronology, or
+external existence.
+
+The Go-domain decision is deterministic and performs no locale, clock,
+filesystem, environment, network, randomness, or I/O operation. Its identifiers
+and corpus labels are Lab engineering tokens, not natural language or universal
+meaning. Collection-level rule selection, rule migration, attribution-scope
+ratification, closed attribution domains, conflict handling, canonical bytes,
+signatures, CLI projection, and wire representation remain planned.
+
 ## Catalog lookup closure gate
 
-The product meaning requires three later contracts:
+Product meaning still requires separate ratification of all three contracts
+below. Internal candidates and pairwise relations do not satisfy that gate:
 
 - **Declaration Authority Resolution:** a profile-owned, witness-retaining
   decision over exact authority-reference match evidence. The current candidate
@@ -271,24 +319,28 @@ The product meaning requires three later contracts:
   legitimacy, permission, jurisdiction, trust, authorship, ownership,
   personhood, agency, attribution scope, external completeness, or source-law
   standing.
-- **Declaration Attribution Scope:** an exact revisioned Lab rule defining which
-  registration records count as attributed to the resolved authority, with no
-  implicit alias, delegation, hierarchy, inheritance, or cross-authority
-  equivalence.
+- **Declaration Attribution Scope:** a rule-relative, witness-retaining decision
+  over a collection of structural registration records and one
+  snapshot-resolved authority. The current pairwise experiment is only a
+  precondition and implements no collection scope. The future contract must
+  perform no implicit alias, delegation, hierarchy, inheritance, ownership,
+  authorship, or cross-authority equivalence inference.
 - **Catalog Lookup Closure:** a finite Lab software-enumeration property over one
   exact catalog-scope revision and attribution scope. It is not a claim that
   reality, possible capabilities, or an external catalog are finite or complete.
 
 A future query-bound closed-lookup witness must retain the exact binding,
-resolved authority record, attribution-scope revision, lookup-contract revision,
-and closed membership domain. Only zero matching records in that domain may
-produce product `not_registered`. A positive result must identify its exact
-matching registration record. Invalid bindings, unresolved or ambiguous
-authority, no exact authority match, multiple exact authority matches, any
-separately defined semantic ambiguity, unresolved attribution scope, open or
-incomplete content, unavailable content, and conflicting registration records
-remain typed owner-profile outcomes or diagnostics. They are never shared
-evaluation-disposition kinds and never aliases for absence.
+resolved authority record, exact attribution-rule identity, complete
+attribution-scope witness, lookup-contract revision, and closed membership
+domain. Only zero matching records in that domain may produce product
+`not_registered`. A positive result must identify its exact matching
+registration record. Invalid bindings, unresolved or ambiguous authority, no
+exact authority match, multiple exact authority matches, pairwise
+authority-reference inequality, any separately defined semantic ambiguity,
+unresolved attribution scope, open or incomplete content, unavailable content,
+and conflicting registration records remain typed owner-profile outcomes or
+diagnostics. They are never shared evaluation-disposition kinds and never
+aliases for absence.
 
 ## Current provisional tagged variants
 

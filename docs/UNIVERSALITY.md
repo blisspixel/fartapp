@@ -134,6 +134,17 @@ language, universe, network identity, temporal status, legitimacy, trust, or
 external existence of anything named by the opaque reference. Multiple entries
 are not evidence of multiple beings, authorities, identities, or meanings.
 
+Exact registration-authority binding is a Lab software relation among one
+retained snapshot-resolved authority witness, one positive structural
+registration, and one closed internal comparison-rule identity. A match says
+only that two opaque catalog-scope references and two opaque
+declaration-authority references are pairwise equal under that rule. It does not
+identify a creator, owner, speaker, lawgiver, institution, organism, entity,
+location, universe, or source. A no-match does not establish external
+difference, unrelatedness, nonexistence, illegitimacy, ambiguity, attribution,
+or registration absence. Rule identity and revision are Lab identity material,
+not natural language, universal meaning, provenance, or source-law time.
+
 No current field may be collapsed into or inferred solely from another. A
 fictional axiom can be implemented and formally checked without being
 empirically validated. A real-world model can be defined yet unavailable on a

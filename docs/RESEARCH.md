@@ -591,6 +591,19 @@ comic quality.
   the scheme. The Lab therefore treats opaque references as identity material,
   not proof that anything was accessed, resolved, or trusted. Current candidate
   tokens are not URIs and reserve no URI scheme.
+- [RFC 6943](https://www.rfc-editor.org/rfc/rfc6943), an Informational RFC,
+  distinguishes comparing two identifiers from deciding whether different
+  identifiers refer to the same entity and documents the security consequences
+  of inconsistent comparison algorithms. The Lab therefore versions one exact
+  comparison rule and treats inequality only as a pairwise token result. It
+  adopts no identifier class, principal, resource, URI, canonicalization, or
+  security-policy model from the RFC.
+- [W3C PROV-DM](https://www.w3.org/TR/2013/REC-prov-dm-20130430/) defines
+  attribution through entities, agents, and responsibility, and treats
+  provenance as information used in a separate trust judgment. The Lab's
+  biology-neutral exact binding relation deliberately does not adopt PROV
+  attribution, entity, agent, activity, responsibility, delegation, time,
+  provenance, or trust semantics.
 - The 28 August 2026 Candidate Recommendation Draft of
   [W3C DID Resolution v1](https://www.w3.org/TR/2026/CRD-did-resolution-1.0-20260828/)
   remains a work in progress. It keeps invalid DID input, `NOT_FOUND`, the

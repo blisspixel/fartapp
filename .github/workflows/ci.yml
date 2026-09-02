@@ -64,6 +64,7 @@ jobs:
       - name: Verify contract evidence
         shell: bash
         run: |
+          go test ./internal/registrationauthoritybinding -run '^TestRegistrationAuthorityBindingCorpus$'
           go test ./internal/authoritymatching -run '^TestAuthorityMatchingCorpus$'
           go test ./internal/authorityresolution -run '^TestAuthorityResolutionCorpus$'
           go test ./internal/cataloglookup -run '^TestLookupCorpus$'
@@ -112,6 +113,7 @@ jobs:
         shell: bash
         run: |
           go test -run=^$ -fuzz=FuzzRun -fuzztime=5s .
+          go test -run=^$ -fuzz=FuzzCompareExactAuthorityBinding -fuzztime=5s ./internal/registrationauthoritybinding
           go test -run=^$ -fuzz=FuzzFiniteAuthorityMatching -fuzztime=5s ./internal/authoritymatching
           go test -run=^$ -fuzz=FuzzResolveInSnapshot -fuzztime=5s ./internal/authorityresolution
           go test -run=^$ -fuzz=FuzzFiniteSnapshotAndLookup -fuzztime=5s ./internal/cataloglookup

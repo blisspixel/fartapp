@@ -1,0 +1,13 @@
+registration_id	catalog_id	catalog_revision	authority_id	authority_revision	subject_id	subject_revision	capability	expect
+exact_a	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	valid_registration
+exact_a_other_payload	catalog.scope	r1	authority.a	r1	subject.other	r9	capability.other	valid_registration
+authority_id_mismatch	catalog.scope	r1	authority.b	r1	subject.a	r1	capability.a	valid_registration
+authority_revision_mismatch	catalog.scope	r1	authority.a	r2	subject.a	r1	capability.a	valid_registration
+hierarchy_like_mismatch	catalog.scope	r1	authority.a.child	r1	subject.a	r1	capability.a	valid_registration
+catalog_id_mismatch	other.scope	r1	authority.a	r1	subject.a	r1	capability.a	valid_registration
+catalog_revision_mismatch	catalog.scope	r2	authority.a	r1	subject.a	r1	capability.a	valid_registration
+duplicate_b	duplicate.scope	r1	authority.b	r1	subject.a	r1	capability.a	valid_registration
+order_b	order.scope	r1	authority.b	r1	subject.a	r1	capability.a	valid_registration
+scope_one_shared	scope.one	r1	authority.shared	r1	subject.a	r1	capability.a	valid_registration
+scope_two_shared	scope.two	r1	authority.shared	r1	subject.a	r1	capability.a	valid_registration
+invalid_registration	catalog.scope	r1	Authority	r1	subject.a	r1	capability.a	invalid_registration

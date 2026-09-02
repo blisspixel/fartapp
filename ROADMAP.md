@@ -121,6 +121,16 @@ planned.
   distinct without claiming external absence or semantic ambiguity; require no
   source, body, species, localized presentation, dimension, universe, network,
   or source-law time; and preserve every current wire byte.
+- [x] Add an internal, non-wire exact registration-authority binding relation as
+  a precondition for Declaration Attribution Scope. Retain one positive
+  snapshot-resolved authority witness, one positive structural registration,
+  and one closed versioned Lab comparison-rule identity. Require exact catalog
+  scope before comparing exact opaque authority references; permit a positive
+  equality witness only on a match. Treat inequality as a pairwise rule result,
+  not attribution, provenance, external difference, illegitimacy, trust, or
+  registration absence. Perform no normalization, alias, delegation, hierarchy,
+  inheritance, ownership, authorship, network, chronology, or latest-revision
+  inference, and preserve every current wire byte.
 - [ ] Ratify Declaration Authority Resolution, Declaration Attribution Scope,
   and Catalog Lookup Closure separately. Require a query-bound closed-lookup
   witness before product `not_registered`; keep invalid input, unresolved or
