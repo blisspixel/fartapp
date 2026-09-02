@@ -58,7 +58,7 @@ a scientific, usability, accessibility, security, or quality gate.
   and smoke test the executable.
 - [x] Lock Markdown tooling, pin CI actions to immutable revisions, and move
   dependency updates to a weekly schedule.
-- [ ] Protect the public default branch against force-push and deletion, require
+- [x] Protect the public default branch against force-push and deletion, require
   current CI and CodeQL checks for merges, and preserve a documented
   maintainer-only emergency bypass.
 
