@@ -64,7 +64,7 @@ seed_commitment = H(seed || normalized_scenario_digest || event_nonce)
 ```
 
 Here `event_nonce` is the public wire name for a `RecordNonce`. It commits the
-Lab record and realization, not a source-occurrence identity set.
+Lab record and realization, not context-occurrence identity claims.
 
 The evaluator reveals the committed values after completion. A ranked caller
 cannot choose or inspect them before play.

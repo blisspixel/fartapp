@@ -106,7 +106,7 @@ The standards thought experiment therefore has two layers:
 2. **`RP-1 everyday realization`:** a one-time event sampled from a published
    low-energy uncertainty model around the definition. It receives a fresh
    record nonce, develops its own imperfections, and is never called the same
-   Lab record. The Earth profile separately defines its source-occurrence
+   Lab record. The Earth profile separately defines its context-occurrence
    identity.
 
 The definition event is the tuning fork. The everyday realization is the note

@@ -27,10 +27,11 @@ unrelated preset or rewrite it.
 
 The general contract is:
 
-> An occurrence is an identified realization under one or more versioned law
-> contexts. Those contexts declare which concepts exist, including ordering,
-> state, participants, couplings, locality, observables, transformations,
-> invariants, and representations.
+> The Lab identifies a finite record of a realization under one or more
+> versioned law contexts. Those contexts alone declare whether source-law
+> occurrence identity exists and which other concepts exist, including
+> ordering, state, participants, couplings, locality, observables,
+> transformations, invariants, and representations.
 
 An `EmissionAnalogue` is an occurrence that a declared classifier maps to
 release, transfer, relaxation, or boundary crossing. `DischargeEvent` is the
@@ -38,22 +39,26 @@ Earth continuum subtype, not the superclass of existence.
 
 Only four top-level objects are required inside the Lab's bounded formalism:
 
-- `OccurrenceIdentity`: a unique Lab record identity plus a
-  `SourceOccurrenceIdentitySet`. The set contains one law-defined identity per
-  scoped context and an optional composite identity only when an
-  `InterLawCoupling` supplies its equivalence, recurrence, cyclicity, or
-  ordering semantics. Here `source` means the source law context, not a localized
-  emitter, origin object, or causal source role.
+- `RecordIdentity`: a unique Lab-local record identity. Optional
+  `ContextOccurrenceIdentityClaims` contain identities only for scoped
+  contexts that define occurrence identity and may therefore be empty. A
+  context that does not define identity receives an explicit inapplicable
+  result, never a fabricated identifier. A composite identity exists only when
+  an `InterLawCoupling` supplies its equivalence, recurrence, cyclicity, or
+  ordering semantics. Here `source` means the source law context, not a
+  localized emitter, origin object, or causal source role.
 - `LawContextSet`: one or more scoped `LawContext` entries. Each entry declares
   axioms or rules, supported structural modules, capabilities, interpretation or
   validity domain, implementation binding, trust class, and verification suite.
   Every `InterLawCoupling` owns its bridge rules, compatibility, ordering,
   representation conversion, and cross-context conservation claims.
-- `Scope`: declared participants, relations, couplings, measurement interactions, and
-  explicit absences. It need not contain spatial domains or localized objects.
-- `ProvenanceGraph`: authoritative states or relations, observations, claims,
-  transformations, uncertainty, measurement back-action, and derived artifacts connected by
-  typed versioned edges.
+- `Scope`: an addressable application boundary declaring whichever participants,
+  relations, couplings, measurement interactions, or explicit absences apply.
+  It need not contain spatial domains, localized objects, or any one of those
+  optional categories.
+- `ProvenanceGraph`: typed versioned edges connecting whichever authoritative
+  states or relations, observations, claims, transformations, uncertainty,
+  measurement back-action, or derived artifacts are applicable.
 
 The formal boundary is explicit: a purported reality that cannot be identified,
 finitely encoded, versioned, scoped, or related to anything expressible in this
@@ -101,9 +106,9 @@ Every law context declares machine-readable concepts and capabilities. The
 eventual canonical `CapabilityReport` keeps eight questions separate:
 
 1. Does the law define the concept?
-2. Does a trusted implementation exist?
+2. Does an implementation exist?
 3. Does the requested model have an applicable closure?
-4. Is it applicable to this scenario and measurement interaction?
+4. Is it applicable to this scenario and any declared measurement interactions?
 5. What verification and validation grade supports the requested claim?
 6. Does policy permit and trust the pack and operation?
 7. Can the selected backend satisfy the required implementation, precision, and
@@ -114,10 +119,11 @@ Each entry returns typed availability or refusal evidence rather than one
 Boolean. The capability vocabulary can represent continuum, compressible,
 acoustic, multiphase, reacting, radiative, rarefied, plasma, MHD, relativistic,
 and gravitational concepts without claiming an implementation exists.
-Fictional-axiomatic packs declare their own concepts. A
-scenario is rejected before realization if a requested effect lacks a
-compatible law, implementation, closure, verification grade, trust decision,
-backend, or resource budget.
+Fictional-axiomatic packs declare their own concepts. Document validity remains
+separate from realization readiness. A structurally valid scenario can be
+unavailable, inapplicable, refused, infeasible, or undetermined for realization
+if a requested effect lacks a compatible law, implementation, closure,
+verification grade, trust decision, backend, or resource budget.
 
 Initial law packs are compiled in and reviewed. Future third-party packs are
 declarative data with bounded resources. They cannot load native code, perform
@@ -127,7 +133,8 @@ model and are outside the initial public contract.
 
 ## Measurement, view, and presentation profiles
 
-A `MeasurementInteractionProfile` is an accepted scenario input. It declares
+A `MeasurementInteractionProfile` is an optional accepted scenario input. When
+present, it declares
 support or extent, an ordering or clock when one exists, accessible observables,
 measurement operator, resolution, noise, and whether interaction is passive,
 coupled, or state-altering. Any back-action enters the provenance graph as a
@@ -439,7 +446,7 @@ Approximate translation minimizes weighted log-ratio errors or exposes a Pareto
 frontier. The preference objective chooses among solutions; it is not physics.
 
 Each translation certificate records source and target `LawContextSet` hashes,
-scope assignments, bridge hashes, mapped source-occurrence identities, mode,
+scope assignments, bridge hashes, mapped context-occurrence identities, mode,
 requested invariants, achieved residuals, discarded quantities, incompatible
 fields, and whether the result is validated, extrapolated, or fictional.
 
@@ -481,12 +488,13 @@ exists.
 
 The project keeps ten identities separate:
 
-1. **Scenario identity:** normalized author intent, law contexts, scope,
-   measurement interactions, inputs, and scenario seed before realization.
+1. **Scenario identity:** normalized requested contract, law contexts, scope,
+   declared measurement interactions, inputs, and any declared scenario seed
+   before realization.
 2. **Record identity:** one committed nonce and unique Lab capture or
    computation, independent of source-law time.
-3. **Source-occurrence identity set:** per-context law-defined identities plus
-   an optional composite identity supplied only by an inter-law coupling.
+3. **Context-occurrence identity claims:** optional context-defined identities
+   plus an optional composite identity supplied only by an inter-law coupling.
 4. **Occurrence-result identity:** authoritative occurrence provenance graph
    under the declared law contexts, measurement, implementation, numerical, and
    tolerance contracts.
@@ -612,15 +620,18 @@ conservation is necessary but not sufficient.
 
 ## Determinism, scenario seeds, and record nonces
 
-The public schema field `event_nonce` has type `RecordNonce`. The comic wire
-name is retained, but its semantics are precise: it changes Lab record and
-realization identity only. `SourceOccurrenceIdentitySet` changes only according
-to the law contexts and any declared inter-law coupling.
+The public record schema field `event_nonce` has type `RecordNonce`. The comic
+wire name is retained, but its semantics are precise: it changes Lab record and
+realization identity only. Pure scenario validation neither creates nor reads a
+record nonce or reconstruction seed unless a later explicit record contract
+supplies one. `ContextOccurrenceIdentityClaims` change only according to
+identity concepts actually defined by the law contexts and any declared
+inter-law coupling. They are absent when none of those contexts defines one.
 
 Determinism has explicit levels:
 
-- D0: the same normalized scenario and scenario seed have the same scenario
-  identity.
+- D0: the same normalized scenario and, when declared, the same scenario seed
+  have the same scenario identity.
 - D1: the same build, target, settings, thread policy, and retained record nonce
   reconstruct the numerical trace bitwise.
 - D2: supported platforms match declared observables within tolerances.
@@ -665,10 +676,11 @@ Every claim independently reports `pass`, `fail`, `inconclusive`, or
 - Empirically validated for a stated physical domain.
 - Fictional-law consistent for a stated axiom pack.
 
-The generic certificate includes occurrence, law, scope, provenance, applicable
-state, relation, observable, invariant, validity, balance, implementation, and
-observation claims. Unknown, unsupported, and unverified concepts remain
-explicit without numeric placeholders. Law-specific extensions may add
+The generic certificate includes occurrence, law, scope, provenance, validity,
+and implementation claims. State, relation, observable, invariant, balance,
+and observation sections appear only when selected capabilities define them.
+Unknown, unsupported, and unverified concepts remain explicit without numeric
+placeholders. Law-specific extensions may add
 equation, closure, solver, numerics, comparison signature, extrema, positivity,
 ledgers, refinement, regime, random-stream, and consumer hashes. A play receipt
 separately binds the knowledge policy, action journal, budgets, branches, result

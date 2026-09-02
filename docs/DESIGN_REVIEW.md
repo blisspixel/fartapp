@@ -37,7 +37,7 @@ observer-independent truth where the selected contexts do not define one.
 exterior, conservation law, or propositional language?
 
 **Reviewer:** Then those cannot be mandatory schema fields. Require only record
-and source-occurrence identity set, a law-context set, scope, and provenance inside
+and optional context-occurrence identity claims, a law-context set, scope, and provenance inside
 the Lab's bounded formalism. Everything else is a capability: ordering, state,
 participants, couplings, geometry, equations, units, measurement, views, and
 invariants. Test tiny counterexamples before archive and UI schemas freeze
@@ -136,7 +136,7 @@ overconfidence the safest recurring target.
    independently derived references.
 5. Make predict, emit, inspect, explain, vary, and transfer a first-class play
    loop.
-6. Separate scenario, record, source-occurrence identity set, occurrence-result, view,
+6. Separate scenario, record, context-occurrence identity claims, occurrence-result, view,
    narrative, presentation, and archive-byte identities.
 7. Treat semantic Pi groups as authored scientific contracts that tooling
    verifies, not meanings automatically discovered from a matrix.
@@ -152,7 +152,7 @@ overconfidence the safest recurring target.
     speech separately controllable, reproducible, and scientifically labeled.
 13. Make social meaning optional, situated, and plural. Keep incompatibility,
     absence, privacy, refusal, prohibition, and unknown results distinct.
-14. Require only occurrence identity, law-context set, scope, and provenance
+14. Require only Lab-local record identity, law-context set, scope, and provenance
     inside the bounded formalism; treat time, state, spatial roles, units,
     equations, measurement, and views as capability-selected structures.
 

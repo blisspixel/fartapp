@@ -503,6 +503,15 @@ func validateGoPackage(value string) error {
 		strings.HasPrefix(relative, "../") {
 		return fmt.Errorf("go package must be a clean repository-relative package")
 	}
+	for _, character := range relative {
+		if (character >= 'a' && character <= 'z') ||
+			(character >= 'A' && character <= 'Z') ||
+			(character >= '0' && character <= '9') ||
+			strings.ContainsRune("._-/", character) {
+			continue
+		}
+		return fmt.Errorf("go package must contain only portable ASCII path characters")
+	}
 	return nil
 }
 

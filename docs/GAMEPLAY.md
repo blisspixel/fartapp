@@ -439,7 +439,7 @@ first audiovisual event.
   full setup, result, consequence, explanation, and callback treatment.
 - Occurrence random streams are independent of narrative, presentation, execution
   order, terminal dimensions, localization, and accessibility settings.
-- Archive round trips preserve record and source-occurrence identity sets,
+- Archive round trips preserve record and context-occurrence identity claims,
   optional presentation beat ordering, stream manifest, certificate, and hashes.
 - Malicious archive tests fail safely.
 - The seed museum and failure corpus catch repeated jokes, contradictions,

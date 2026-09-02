@@ -66,14 +66,14 @@ Exit gate: a clean clone passes CI, the public history scan is clean, repository
 visibility is confirmed public, and planned systems are clearly labeled as
 planned.
 
-## v0.7: Biology-neutral Earth-continuum Go oracle
+## v0.7: Capability-neutral Go oracle and first Earth-continuum profile
 
 - [ ] Freeze biology-neutral `ref:rp1:v1`, its exact SI constant chain,
   conventional exterior, reference observer, comparison vector, uncertainty
   budget, traceability graph, and non-normative status.
 - [ ] Define the exact `RP-1 definition event` separately from imperfect,
   one-time everyday realizations.
-- [ ] Add record and source-occurrence identity set, law-context, scope, provenance,
+- [ ] Add record, optional context-occurrence identity claims, law-context, scope, provenance,
   measurement, view, comparison, numerical, scenario, history, and certificate
   schemas, with emitter,
   interface, exterior, and payload as Earth discharge extensions.
@@ -84,8 +84,10 @@ planned.
   or localized prose.
 - [ ] Ratify the capability-report wire schema before calling it canonical or
   freezing it for the Rust service and protocol adapters.
-- [ ] Add `scenario validate` and scenario refusal inspection over the ratified
-  report.
+- [ ] Add capability-neutral `scenario validate` and scenario refusal inspection
+  over the ratified report. Ship its minimal atemporal, observerless,
+  nonconserving, recurrence-free, and no-implicit-bridge counterexamples in the
+  same milestone.
 - [ ] Add dimension diagnostics only where selected law contexts define
   dimensional quantities.
 - [ ] Implement ideal-mixture finite-reservoir mass and energy balance.
@@ -226,7 +228,7 @@ TUI or graphical application.
   and observer-coupled communication without assuming a universal meaning graph.
 - [ ] Prove a supplied scenario seed reconstructs the setting while a default
   re-enactment receives a fresh record nonce and record identity. Its
-  source-occurrence identity set follows only the selected law contexts.
+  context-occurrence identity claims follow only the selected law contexts.
 - [ ] Run at least 10,000 deterministic seed cases with expressive-range reports.
 - [ ] Run representative human reviews for humor, comprehension, pacing,
   grossness controls, science density, and ordinary-event replay value.
@@ -248,7 +250,7 @@ evidence without claiming the occurrence happened again.
 - [ ] Add constrained approximate translation with explicit residuals,
   infeasibility, and Pareto choices.
 - [ ] Bind translation witnesses to source and target `LawContextSet` hashes,
-  scope assignments, inter-law bridge hashes, and mapped source-occurrence
+  scope assignments, inter-law bridge hashes, and mapped context-occurrence
   identities. A coupled occurrence has no global source identity unless a bridge
   defines one.
 - [ ] Separate semantic translation, structural mapping, signal transcoding,

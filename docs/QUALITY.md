@@ -60,7 +60,7 @@ executable check exists.
 | `CLI-001` | Valid toy levels have exact permanent output | Golden table and executable test | Preserve as Go and Rust oracle fixtures |
 | `CLI-002` | Arbitrary input cannot panic or produce unbounded output | Seeded Go fuzz target | Nightly retained-corpus fuzzing |
 | `CLI-003` | Diagnostics never contaminate successful stdout | Exact fixtures and fuzz property | JSONL framing and broken-pipe conformance |
-| `ONT-001` | Universal schemas require no Earth discharge role | Executable atemporal relation-only Go schema fixture | Ontology counterexample round trips across every adapter |
+| `ONT-001` | Catalog inspection requires no Earth discharge role | Executable atemporal relation-only Go catalog fixture | Extend the proof to scenario, archive, certificate, and every adapter with dedicated counterexamples |
 | `CAP-001` | Capability reports keep eight decision axes independent | Exact localized-text and deterministic JSON Go fixtures | Cross-adapter schema and refusal conformance |
 | `OBS-001` | Observation capabilities and back-action remain explicit | Design contract | Passive, distributed, and coupled observer tests |
 | `PHY-001` | One authoritative occurrence account drives all consumers | Design contract | Typed provenance traversal tests |

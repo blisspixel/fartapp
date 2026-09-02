@@ -9,7 +9,7 @@ government laboratories, and official project documentation are preferred.
 
 ## Decisions changed by the research
 
-- The capability-neutral bounded core is occurrence identity, law-context set,
+- The capability-neutral bounded core is Lab-local record identity, law-context set,
   scope, and provenance. Outside-formalism cases fail explicitly.
   Emitter, interface, exterior, dimensional equations, human anatomy, and Earth
   physics are capability-selected profile structures.

@@ -422,7 +422,7 @@ The interface never collapses these identities:
 | --- | --- | --- |
 | Scenario | Normalized laws, scope, measurement interactions, inputs, or seed change | Unit spelling and field order do not change it |
 | Record | A new Lab capture or computation is committed | It does not assert source-law time or recurrence |
-| Source occurrence identity set | A scoped context identity or an explicit inter-law composite relation changes | Session order cannot change it |
+| Context occurrence identity claims | An identity actually defined by a scoped context or an explicit inter-law composite relation changes | They may be absent; session order cannot create an identity |
 | Occurrence result | Laws, measurement interaction, implementation, numerics, or authoritative claims change | Views and presentation cannot change it |
 | View | Knowledge, privacy, accessibility, or selection projection changes | It cannot back-react or change the occurrence account |
 | Narrative | Resolved world, storylets, or narrative streams change | Camera and terminal width cannot change it |

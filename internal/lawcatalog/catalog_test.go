@@ -208,6 +208,23 @@ func TestPresentationValidation(t *testing.T) {
 	}
 }
 
+func TestGoPackageValidation(t *testing.T) {
+	for _, value := range []string{".", "./internal/lawcatalog", "./cmd/tool-v2", "./a_b/c.d"} {
+		if err := validateGoPackage(value); err != nil {
+			t.Errorf("validateGoPackage(%q): %v", value, err)
+		}
+	}
+	for _, value := range []string{
+		"", "internal/lawcatalog", "./", "./../outside", "./a/../b", "./a\\b",
+		"./pkg;command", "./a b", "./$(command)", "./line\nbreak",
+		strings.Repeat("a", 257),
+	} {
+		if err := validateGoPackage(value); err == nil {
+			t.Errorf("validateGoPackage(%q) succeeded", value)
+		}
+	}
+}
+
 func TestAssessmentVocabulary(t *testing.T) {
 	valid := []struct {
 		axis       string

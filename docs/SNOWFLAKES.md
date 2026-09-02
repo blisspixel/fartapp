@@ -11,7 +11,7 @@ a universal metaphysical claim. In the first Earth profile, small changes in
 interface motion, turbulent closure, payload distribution, exterior state,
 measurement position, and timing produce different fields and sensations. Even
 when a deterministic test reproduces the same numerical trace, the new
-computation has a distinct record identity. Its per-context source-occurrence
+computation has a distinct record identity. Its context-occurrence identity
 identities and any composite relation are whatever the selected law contexts
 and inter-law couplings declare.
 
@@ -22,11 +22,11 @@ The Lab uses these words precisely:
 | Operation | What it does | What it does not claim |
 | --- | --- | --- |
 | Record | Creates one immutable Lab capture or computation under a committed scenario and nonce | How the source law contexts treat recurrence |
-| Source occurrence identity set | Uses per-context identities and an optional bridge-defined composite relation | That Lab record identity is source-context time |
+| Context occurrence identity claims | Uses only identities defined by applicable contexts and adds a composite relation only through a declared bridge | That every context defines identity or that Lab record identity is context-defined time |
 | Recording | Preserves selected evidence and provenance from the occurrence | That every aspect of experience was captured |
 | Replay | Presents the preserved record again | That the source occurrence recurred |
 | Reconstruction | Recomputes a declared numerical realization for verification | That it is the original encounter |
-| Re-enactment | Runs the same scenario with a fresh record nonce | That matching controls produce an identical outcome or source-occurrence identity set |
+| Re-enactment | Runs the same scenario with a fresh record nonce | That matching controls produce an identical outcome or context-occurrence identity claims |
 | Translation | Maps retained claims into a target `LawContextSet` and applicable measurement, view, or presentation context | That equivalence exists where it does not |
 
 Default Quick Play generates a fresh 256-bit record nonce and reveals its

@@ -17,7 +17,8 @@ absurd possibility that release, surprise, and institutional overanalysis might
 give radically different observers something to laugh about.
 
 “Fart” is the comic umbrella, not the scientific ontology. The engine begins
-with only an occurrence identity, a law-context set, a scope, and provenance. A
+with only a Lab-local record identity, a law-context set, a scope, and
+provenance. A
 declared classifier may then recognize a release, transfer, relaxation,
 boundary crossing, or another emission analogue. The occurrence need not have
 a source, interface, body, gas, geometry, linear time, passive observer,
@@ -143,7 +144,7 @@ exposure, composition, particle loading, dimensionless signature, and ledger
 residuals remain separate measurands. One exact calibration fixture can be
 reconstructed to test an implementation. Each everyday realization receives a
 fresh record nonce, its own imperfections, and its own Lab record identity. Its
-Earth source-occurrence identity follows the Earth profile's own rules.
+Earth context-occurrence identity claims follow the Earth profile's own rules.
 
 Read the full [metrology contract](docs/METROLOGY.md) and the fictional,
 non-normative [French standards debate](docs/DEBAT_NORMATIF.fr.md).
@@ -152,10 +153,11 @@ non-normative [French standards debate](docs/DEBAT_NORMATIF.fr.md).
 
 The capability-neutral bounded occurrence contract is:
 
-> An occurrence is an identified realization under one or more versioned law
-> contexts. Those contexts declare which concepts exist, including ordering,
-> state, participants, couplings, locality, observables, transformations,
-> invariants, and representations.
+> The Lab identifies a finite record of a realization under one or more
+> versioned law contexts. Those contexts alone declare whether source-law
+> occurrence identity exists and which other concepts exist, including
+> ordering, state, participants, couplings, locality, observables,
+> transformations, invariants, and representations.
 
 A `LawContextSet` contains one or more `LawContext` entries and assigns each
 applicable part of the occurrence scope to one entry. A typed `InterLawCoupling`
@@ -190,16 +192,16 @@ dimension, metric, locality, fields, equations, units, symmetries, invariants,
 and conserved currents are optional modules. `not_applicable` is a valid result,
 never a fabricated zero or missing Earth field.
 
-The required top-level objects are `OccurrenceIdentity`, `LawContextSet`,
+The required top-level objects are `RecordIdentity`, `LawContextSet`,
 `Scope`, and `ProvenanceGraph`. This table expands their identity components and
 the optional profile objects:
 
 | Contract object | Requirement |
 | --- | --- |
 | Record identity | Unique Lab capture or computation identity and lineage, independent of source-law recurrence |
-| Source occurrence identity set | Per-context law-defined identities plus an optional composite identity only when an inter-law coupling supplies one |
+| Context occurrence identity claims | Optional identities supplied only by contexts that define occurrence identity, plus an optional composite identity only when an inter-law coupling supplies one |
 | Law context set | One or more scoped law contexts plus explicit inter-law couplings |
-| Scope | Declared participants, relations, couplings, or an explicit absence of those roles |
+| Scope | Addressable application boundary with only the context-owned bindings or explicit absences that apply |
 | Provenance | Versioned inputs, transformations, claims, uncertainty, and retained evidence |
 | Measurement interaction | Accepted scenario input that may couple or back-react and therefore changes occurrence-result identity |
 | View profile | Knowledge, accessibility, and privacy projection over retained claims that never changes the occurrence account |
@@ -655,7 +657,7 @@ Every completed simulation should be able to emit a certificate containing:
 - Measurement, view, and presentation transformations, including measurement
   back-action, projection loss, or capability refusal.
 - Evidence that every enabled consumer used the same occurrence provenance.
-- Record, source-occurrence identity set, occurrence-result, trace, and
+- Record, context-occurrence identity claims, occurrence-result, trace, and
   reconstruction-lineage identifiers.
 
 Certificate claims are independent: replayable, internally consistent, code
