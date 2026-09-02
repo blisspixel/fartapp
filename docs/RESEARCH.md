@@ -31,6 +31,20 @@ government laboratories, and official project documentation are preferred.
 - The CLI is the first complete product, the TUI is the second, and the native
   Godot app begins only after both are excellent.
 
+## Evidence matrix
+
+The bibliography is not a pile of prestigious names. Each important source has
+a bounded design consequence and an open question.
+
+| Claim | Evidence and supported scope | Implementation consequence | Open question |
+| --- | --- | --- | --- |
+| Derived artifacts need traceable provenance | [W3C PROV-DM](https://www.w3.org/TR/prov-dm/) defines entities, activities, derivations, and constraints | Use a typed event graph with versioned derivation edges | What minimal subset stays pleasant in a CLI? |
+| Units can be part of program correctness | [Kennedy on units of measure](https://www.microsoft.com/en-us/research/publication/relational-parametricity-and-units-of-measure/) proves dimensional invariance properties for a typed language | Make invalid dimensional combinations difficult to represent | Which quantities need runtime profiles rather than compile-time dimensions? |
+| Prediction before explanation can improve transfer | [Kapur's controlled studies](https://doi.org/10.1111/cogs.12107) concern mathematics learning | Let players predict, fail productively, then inspect and transfer | Does this effect hold for short fluid-dynamics play sessions? |
+| Complex model conclusions need sensitivity analysis | [Saltelli et al.](https://doi.org/10.1002/9780470725184) covers global sensitivity methods | Report influential inputs, interactions, and nonidentifiability | Which methods fit interactive latency and mixed variables? |
+| Sonification must be perceptually evaluated | The [NSF sonification report](https://digitalcommons.unl.edu/psychfacpub/444/) calls for control, interchange, and perceptual testing | Treat sound as both consequence and auditory display, with separate tests | Which mappings teach without ruining the joke or accessibility? |
+| Generator robustness does not establish entertainment | The [PCG literature](https://www.pcgbook.com/) provides generation and evaluation methods, not a universal fun metric | Pair seed sweeps with a curated corpus and human playtests | Which repetition and pacing measures predict shareability? |
+
 ## Gas dynamics, reservoirs, and jets
 
 - [NASA Glenn: Mass Flow Choking](https://www.grc.nasa.gov/www/k-12/BGP/mflchk.html)
@@ -130,6 +144,44 @@ government laboratories, and official project documentation are preferred.
   supports independently addressable deterministic streams.
 - [RFC 8785: JSON Canonicalization Scheme](https://www.rfc-editor.org/rfc/rfc8785.html)
   defines canonical JSON suitable for stable metadata hashing.
+
+## Scientific workflow, causality, and software correctness
+
+- [W3C PROV-DM](https://www.w3.org/TR/prov-dm/) supplies a domain-neutral model
+  for entities, activities, derivations, and provenance constraints. The event
+  graph borrows those distinctions without requiring a web runtime.
+- [Kennedy: Relational Parametricity and Units of Measure](https://www.microsoft.com/en-us/research/publication/relational-parametricity-and-units-of-measure/)
+  connects a type system for units with invariance under unit changes. It
+  supports dimension-safe core APIs, not a claim that static types replace
+  runtime law-profile validation.
+- [Global Sensitivity Analysis: The Primer](https://doi.org/10.1002/9780470725184)
+  supports reporting how uncertainty in inputs and assumptions affects model
+  outputs. Interactive local sensitivity and slower global studies need separate
+  cost and interpretation rules.
+- [Causal testing for scientific modeling software](https://arxiv.org/abs/2209.00357)
+  explores causal inference and metamorphic relations for scientific programs.
+  F.A.R.T. Lab will use independently justified metamorphic properties, such as
+  unit invariance and similarity scaling, rather than treating any relation as
+  automatic proof.
+- The [National Academies reproducibility report](https://doi.org/10.17226/25303)
+  distinguishes computational reproducibility from broader scientific
+  replication. That distinction informs event identities and certificate claims.
+
+## Learning, explanation, and auditory display
+
+- [Kapur: Productive Failure in Learning Math](https://doi.org/10.1111/cogs.12107)
+  reports improved conceptual understanding and transfer when problem solving
+  precedes instruction in its studied setting. The project's predict, emit,
+  explain, vary, transfer loop is a hypothesis to test, not a guaranteed effect.
+- [Improving Comprehension of Numbers in the News](https://www.microsoft.com/en-us/research/publication/improving-comprehension-of-numbers-in-the-news/)
+  reports controlled experiments in which contextual perspectives improved
+  numerical recall and estimation. Explanation cards should connect absurd
+  outputs to familiar scale without substituting analogy for units.
+- The [NSF Sonification Report](https://digitalcommons.unl.edu/psychfacpub/444/)
+  defines sonification as nonspeech audio used to convey information and calls
+  for perceptual testing. Procedural audio and data sonification share event
+  provenance, but their entertainment and information goals are evaluated
+  separately.
 
 ## Procedural play, narrative, and accessibility
 

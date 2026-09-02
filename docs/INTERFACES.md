@@ -75,6 +75,9 @@ fart scenario init -o bathroom.toml
 fart scenario validate bathroom.toml
 fart simulate bathroom.toml -o run.fart
 fart inspect run.fart --at "1.2 s"
+fart explain run.fart --why regime.choked
+fart provenance run.fart --to consumers/audio
+fart branch run.fart --set exterior.pressure="0 Pa" -o vacuum.fart
 fart sweep bathroom.toml --vary reservoir.pressure="105 kPa..800 kPa" --steps 64
 fart compare small.fart large.fart --nondimensional
 fart translate source.fart --target-world hush-3.toml --mode strict
@@ -120,10 +123,28 @@ Rules:
 - Invalid physical states fail with exact field paths and are not silently
   clamped into a different scenario.
 - Convenience controls expose the explicit scenario diff they produce.
+- Every displayed scientific value can reveal its source, canonical unit,
+  uncertainty, validity domain, derivation, and provenance path on demand.
 
 Stable exit-code families should distinguish success, command or input error,
 unsupported law or regime, numerical failure, verification failure, archive or
 filesystem failure, replay mismatch, and cancellation.
+
+### Identity contract
+
+The interface never collapses these identities:
+
+| Identity | Changes when | Stability promise |
+| --- | --- | --- |
+| Scenario | Normalized laws, inputs, or seed change | Unit spelling and field order do not change it |
+| Physical result | Solver, numerics, or authoritative state changes | Presentation cannot change it |
+| Narrative | Resolved world, storylets, or narrative streams change | Camera and terminal width cannot change it |
+| Presentation | Language, layout, device, camera, or accessibility changes | No physical claim follows from it |
+| Archive bytes | Serialization or container bytes change | Byte equality is never confused with semantic equality |
+
+`fart provenance` traverses the typed event graph. `fart explain` presents a
+causal path and a runnable counterfactual. `fart branch` creates a new scenario
+with explicit ancestry and never mutates a certified source.
 
 ### CLI experience bar
 
@@ -143,6 +164,15 @@ filesystem failure, replay mismatch, and cancellation.
   Unicode, color modes, hostile strings, and Windows, macOS, and Linux paths.
 - No command needs a display server, browser, account, or network access.
 
+Release candidates publish p50 and p95 measurements on named Windows, macOS,
+and Linux reference systems. Initial budgets are less than 250 ms to `--help`,
+less than 250 ms to the Quick Play title and seed, less than 1 s for an ordinary
+analytical event, less than 100 ms to acknowledge cancellation, and less than
+1 s to reach a safe cancellation boundary outside a documented atomic section.
+The benchmark RFC also sets resident-memory and ordinary-archive-size budgets
+after the first measured implementation. Regressions require evidence, not a
+quietly weakened target.
+
 ### Cancellation and atomic output
 
 The first interrupt requests cooperative cancellation. A second terminates
@@ -158,28 +188,34 @@ uncertified `.partial.fart`.
 ## Event and episode archives
 
 The event archive is the boundary between computation and presentation. A
-documented `.fart` ZIP64 package may contain:
+documented `.fart` package may contain:
 
 ```text
 mimetype
 manifest.json
 scenario.json
-history.arrow
+history.jsonl
 certificate.json
-fields/<content-hash>.arrow
+fields/<content-hash>.bin
 consumers/audio.json
 ```
 
 Canonical JSON metadata uses RFC 8785. Schemas use JSON Schema 2020-12. Large
-typed histories use an isolated Apache Arrow IPC layer. Every member has a
-SHA-256 content hash, and the manifest commits to sorted names and hashes. Hash
-logical content rather than incidental ZIP compression bytes.
+typed histories begin with the simplest bounded, streamable representation that
+meets measured budgets. Apache Arrow IPC or another columnar layer is added
+behind an isolated adapter only when profiling proves it necessary. Every
+member has a SHA-256 content hash, and the manifest commits to sorted names and
+hashes. Hash logical content rather than incidental ZIP compression bytes.
 
 Writers use fixed member order, normalized timestamps, and no machine-specific
 metadata. Migration creates a new archive with provenance and never mutates a
 certified source. Readers reject duplicate names, traversal, links, oversized
 members, decompression bombs, impossible array lengths, nonfinite invalid JSON,
 and hash mismatches before allocating or parsing payloads.
+
+Initial third-party content packs are versioned, declarative data only. They
+cannot load native code, access the network, name arbitrary local files, or
+bypass law-capability and resource checks.
 
 A `.fartshow` episode bundle adds resolved world, culture, narrative streams,
 fact-provenance timeline, transcript, and optional presentation assets. Seeds

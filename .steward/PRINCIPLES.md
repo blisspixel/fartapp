@@ -4,7 +4,7 @@
 2. **CLI first forever.** A capability is complete headlessly before TUI or
    native presentation.
 3. **One event, one truth.** Physics, proof, story, audio, visuals, haptics, and
-   consequences cite one authoritative history.
+   consequences cite one authoritative provenance graph.
 4. **No assumed source.** Human, biological, terrestrial, three-dimensional, and
    familiar-universe behavior are profiles, not the ontology.
 5. **Labels are earned.** Regimes cite calculated state and versioned policy.

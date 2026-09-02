@@ -6,10 +6,16 @@ repository.
 
 ## Core invariant
 
-One event produces one authoritative time history. Every visible, audible,
-haptic, narrative, and destructive effect must cite that history. Presentation
-systems can transform solver output, but cannot substitute an unrelated preset
-or rewrite an outcome.
+One event produces one authoritative physical truth represented by an immutable,
+typed provenance graph. Every visible, audible, haptic, narrative, and
+destructive effect must have a traversable derivation from that graph.
+
+The graph is deliberately not one enormous master-rate array. Solver states,
+interface samples, observer signals, audio blocks, narrative facts, and rendered
+frames use their appropriate clocks and resolutions. Every derived node records
+its input identities, transformation version, clock, resampling policy,
+uncertainty, and content hash. Presentation can transform an outcome but cannot
+substitute an unrelated preset or rewrite it.
 
 ## Source-neutral event ontology
 
@@ -22,7 +28,8 @@ It is represented by these top-level objects:
 
 - `LawProfile`: dimensions, metric or geometry, fields, governing equations,
   closures, constants, symmetries, conserved currents, sources, canonical units,
-  compatibility class, validity domain, and verification suite.
+  capability set, compatibility class, validity domain, trust class, and
+  verification suite.
 - `WorldProfile`: boundaries, exterior phases, composition, radiation, gravity
   or other fields, initial state, and observer locations.
 - `Emitter`: stored inventories and energy, state equations, containment,
@@ -36,6 +43,8 @@ It is represented by these top-level objects:
   policy, random streams, and determinism contract.
 - `EventSignature`: normalized source histories, regime sequence, active
   dimensionless groups, impulse, spectra, loading, and directional structure.
+- `EventGraph`: authoritative states and typed derived artifacts connected by
+  versioned provenance edges.
 
 A source can be an organism, machine, colony, ecosystem, spacecraft, planet,
 star, distributed intelligence, topological structure, or unknown. A bathroom
@@ -58,6 +67,21 @@ The input schema must not independently prescribe an inconsistent mass,
 composition, pressure, temperature, and volume. It selects an independent
 thermodynamic state set, an equation of state, and explicit validation
 constraints. Derived quantities remain derived.
+
+## Capabilities and trust
+
+Every law profile declares a machine-readable `CapabilitySet`. Initial
+capabilities include continuum, compressible, acoustic, multiphase, reacting,
+radiative, rarefied, plasma, MHD, relativistic, gravitational, and
+fictional-axiomatic support. A scenario is rejected before simulation if a
+requested effect lacks a compatible implementation, closure, and verification
+suite.
+
+Initial law packs are compiled in and reviewed. Future third-party packs are
+declarative data with bounded resources. They cannot load native code, perform
+network access, select arbitrary filesystem paths, or claim a capability without
+the required schemas and tests. Executable extensions require a separate threat
+model and are outside the initial public contract.
 
 ## Coupled Earth-profile pipeline
 
@@ -215,8 +239,10 @@ D * k = 0
 
 The implementation computes exact rational null spaces for discovery, but a raw
 null-space basis is not a stable public contract because the basis is not
-unique. Stable semantic group identifiers come from nondimensionalizing the
-actual equations and closures.
+unique. Law-pack authors declare stable semantic groups obtained from
+nondimensionalizing their equations and closures. Tooling proves that those
+groups are dimensionless, checks their dependencies, and reports possible
+omissions. It does not invent scientific meaning from a null space.
 
 The active signature includes:
 
@@ -266,11 +292,38 @@ Each translation certificate records source and target law hashes, mode,
 requested invariants, achieved residuals, discarded quantities, incompatible
 fields, and whether the result is validated, extrapolated, or fictional.
 
+Strict translation also emits a machine-checkable `CompatibilityWitness` that
+identifies the mapped equations, dimensions, closures, topology, normalized
+conditions, semantic groups, and tolerances. Approximate translation emits the
+attempted witness plus unmatched capabilities, residuals, sensitivity,
+nonuniqueness, and identifiability warnings. A close observable match is not
+automatically a unique or physically equivalent inverse solution.
+
 Different spatial dimensions generally change densities, interface measures,
 wave propagation, turbulence, and geometric spreading. A literal 2D universe,
 an axisymmetric reduction of 3D, and a 2D visualization are three different
 things. Cross-dimensional translation is rejected unless an explicit mapping
 exists.
+
+## Identity and provenance
+
+The project keeps five identities separate:
+
+1. **Scenario identity:** normalized author intent, law profile, inputs, and
+   seed before solving.
+2. **Physical-result identity:** authoritative event graph under a solver,
+   numerical contract, and declared tolerance policy.
+3. **Narrative identity:** resolved world, culture, storylets, facts, and
+   narrative streams.
+4. **Presentation identity:** language, layout, camera, audio-device path,
+   accessibility, and rendering choices.
+5. **Archive-byte identity:** exact serialized container bytes.
+
+A presentation change must not alter scenario or physical-result identity. An
+archive may be migrated or recompressed without pretending that byte identity
+was preserved. Cross-platform tolerant equality is a comparison result, not a
+fake hash. Raw floating-point identity is promised only at a determinism level
+that actually controls the arithmetic.
 
 ## Fidelity ladder
 
@@ -353,6 +406,20 @@ streams. Physics, parcel, audio, narrative, and presentation streams are
 separate. Scheduling, terminal width, localization, and camera choices cannot
 alter the event identity.
 
+## Uncertainty, sensitivity, and identifiability
+
+Certificates keep aleatory variability, parameter uncertainty, model-form
+uncertainty, discretization error, iterative error, roundoff, and presentation
+randomness separate. Inter-fidelity disagreement is measured rather than hidden
+inside one confidence score.
+
+Sensitivity reports state which uncertain inputs control each observable and
+where interactions matter. Inverse and translation commands report families of
+solutions when observations do not identify a unique source. Extrapolation
+beyond a closure's validation domain is visible at the value, chart, and
+certificate levels. One seeded realization is never presented as an uncertainty
+study.
+
 ## Certificate claims
 
 Every claim independently reports `pass`, `fail`, `inconclusive`, or
@@ -376,7 +443,10 @@ damage.
 The progressive suite includes:
 
 - Unit-expression invariance and dimensional homogeneity.
-- Exact null-space checks for generated Pi bases.
+- Exact null-space checks for discovered bases and dimensional checks for every
+  authored semantic Pi group.
+- Preflight rejection of unsupported capability combinations and untrusted
+  executable content.
 - Zero-area and equal-pressure zero-flow limits.
 - Rigid adiabatic and isothermal reservoir limits.
 - Continuity and the mass-flow plateau at the analytical choking boundary.
@@ -391,6 +461,8 @@ The progressive suite includes:
   references when that pack exists.
 - Sealed-system center-of-mass conservation and externally vented rocket limits.
 - Deterministic random streams independent of execution order.
+- Traversable provenance from every consumer artifact and lab-fact sentence to
+  authoritative event nodes.
 - Go-to-Rust oracle parity.
 - Strict similarity scale families and exact translator round trips.
 - Explicit infeasibility for incompatible targets and dimensions.

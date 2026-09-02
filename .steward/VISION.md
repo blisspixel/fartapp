@@ -7,7 +7,7 @@ eventually a polished native audiovisual application.
 Its deeper identity is the Universal Flatulence Translator. A source-neutral,
 versioned event contract lets humans, machines, organisms, planets, stars,
 higher-dimensional structures, and fictional universes meet through rigorously
-translated fart humor. One authoritative event history drives science, story,
+translated fart humor. One authoritative event graph drives science, story,
 audio, visuals, haptics, and consequences.
 
 The north star is a vulgar comedy game that teaches serious fluid dynamics,

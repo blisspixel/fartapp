@@ -77,7 +77,7 @@ not invented where no sound speed exists, and Weber is not reported where there
 is no material interface. The labels and jokes are consequences of calculated
 state and a versioned classification policy, not hidden presets.
 
-## One event, many consequences
+## One event, many traceable projections
 
 ```text
 event parameters
@@ -88,16 +88,18 @@ reservoir -> compliant aperture -> jet and plume -> room or atmosphere
       +----------------+-----------------+
                        |
                        v
-             shared event history
+          immutable provenance graph
                        |
           +------------+------------+------------+
           |            |            |            |
         audio       visuals      haptics       damage
 ```
 
-The same mass-flow and pressure history drives every branch. Interface layers
-may render, sonify, and explain the result, but they must not invent a second
-physics story.
+The same physical event drives every branch. Solver state, observer samples,
+audio blocks, narrative facts, and rendered frames may use different clocks and
+resolutions, but every projection records its inputs, transformation, uncertainty,
+and hash. Interface layers may render, sonify, and explain the result, but they
+must not invent a second physics story.
 
 ## Regime classification
 
@@ -142,7 +144,10 @@ mechanic and a testable engine invariant. It enables a challenge such as
 reproducing an event at 1,000 times scale without merely multiplying every value
 by 1,000.
 
-It also powers the Universal Flatulence Translator:
+It also powers the Universal Flatulence Translator. Universal describes an
+extensible protocol for declaring laws, capabilities, compatibility, and failed
+mappings. It is not a claim that one equation or solver models every possible
+universe.
 
 1. **Strict translation** matches the complete active signature between
    compatible law profiles.
@@ -191,6 +196,22 @@ certified event.
 See [docs/GAMEPLAY.md](docs/GAMEPLAY.md) for the mode and story-director
 contracts.
 
+## Why this teaches
+
+The central learning loop is short enough to remain a game:
+
+1. Predict what will happen and name the reason.
+2. Run one event and observe the result.
+3. Ask for a causal explanation with its assumptions and uncertainty.
+4. Branch one parameter or law and inspect the counterfactual.
+5. Replay the evidence, then transfer the idea to a different world or scale.
+
+The player learns by trying to falsify an explanation, not by memorizing a wall
+of equations. Dimension-safe types prevent nonsense inputs, similarity enables
+scaling puzzles, deterministic streams make stories replayable, and provenance
+makes every punchline auditable. Advanced theory earns a place only when it
+changes a player action, an observable, or a test.
+
 ## CLI Lab
 
 The command line is the primary scientific product, not a debug console for the
@@ -202,7 +223,10 @@ fart broadcast --seed 42 --length standard
 fart freestyle bathroom.toml --set reservoir.pressure="106 kPa"
 fart simulate bathroom.toml --output run.fart
 fart inspect run.fart
-fart sweep reservoir.pressure 105kPa..800kPa --steps 64
+fart explain run.fart --why regime.choked
+fart provenance run.fart --to consumers/audio
+fart branch run.fart --set exterior.pressure="0 Pa" --output vacuum.fart
+fart sweep bathroom.toml --vary reservoir.pressure="105 kPa..800 kPa" --steps 64
 fart compare small.fart large.fart --nondimensional
 fart verify run.fart --refine timestep
 fart replay run.fart --check-hash
@@ -296,7 +320,9 @@ The project will use three fidelity levels behind the same event contract:
 For the detailed scientific contract, see
 [docs/SIMULATION.md](docs/SIMULATION.md). For the interface and release rules,
 see [docs/INTERFACES.md](docs/INTERFACES.md). The research basis and model
-boundaries are collected in [docs/RESEARCH.md](docs/RESEARCH.md).
+boundaries are collected in [docs/RESEARCH.md](docs/RESEARCH.md). A simulated
+PhD-level computer-science design review and its resulting commitments are in
+[docs/DESIGN_REVIEW.md](docs/DESIGN_REVIEW.md).
 
 ## Proof, not vibes
 

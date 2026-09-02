@@ -31,6 +31,8 @@ native third. A checkbox means merged, documented, and verified behavior.
   reuse rights.
 - [ ] Ratify the event ontology, law profile, modes, story-director rules,
   accessibility matrix, seed RFC, and archive threat model.
+- [ ] Ratify event-identity, typed-provenance, law-capability, content-pack trust,
+  performance-budget, and human-evaluation RFCs.
 - [ ] Version the current toy behavior as permanent oracle fixtures.
 
 Exit gate: a clean clone passes CI, the public history scan is clean, repository
@@ -48,15 +50,21 @@ planned.
 - [ ] Export source mass, momentum, enthalpy, composition, pressure, and recoil
   histories.
 - [ ] Compute the active Earth dry-flow signature and conservation ledgers.
+- [ ] Ship a Go walking skeleton for one ordinary pfft: predict, simulate,
+  inspect, explain, branch one counterfactual, certify, and replay.
 
 Exit gate: zero-flow, adiabatic, isothermal, choking, positivity, conservation,
 and trusted blowdown fixtures pass. The ordinary Earth-biological preset cannot
-silently enter a laboratory pressure regime.
+silently enter a laboratory pressure regime. The walking skeleton is already
+fun and useful without Rust, a TUI, or a graphical application.
 
 ## v0.8: Rust production core and typed CLI
 
 - [ ] Create `fart-domain`, `fart-core`, `fart-services`, and `fart-cli` crates.
 - [ ] Match all versioned Go oracle fixtures within documented tolerances.
+- [ ] Freeze the Go oracle's owned equations and fixture schema; require exact,
+  manufactured, or independently derived references so two implementations do
+  not merely repeat one derivation error.
 - [ ] Add fixed-order stepping, deterministic reductions, counter-based random
   streams, cooperative cancellation, and separate physics and numerical hashes.
 - [ ] Add typed `simulate`, `inspect`, and `verify` commands with human, JSON,
@@ -70,6 +78,9 @@ TTY and a pipe, and reproduces under its declared determinism level.
 ## v0.9: Certified event archive
 
 - [ ] Implement canonical scenario, manifest, history, and certificate records.
+- [ ] Begin with the simplest bounded streamable history representation; add
+  Arrow or another columnar layer only after named profiles miss measured
+  budgets.
 - [ ] Add `.fart` atomic write, inspect, replay, verify, migrate, and export.
 - [ ] Add SHA-256 member hashes and canonical JSON metadata.
 - [ ] Reject duplicate members, traversal, links, decompression bombs, oversized
@@ -81,7 +92,7 @@ TTY and a pipe, and reproduces under its declared determinism level.
 Exit gate: archives round-trip across all supported systems, malicious fixtures
 fail safely, and cancellation leaves either one valid archive or no archive.
 
-## v0.10: One excellent ordinary pfft
+## v0.10: One exceptional ordinary pfft
 
 - [ ] Add a reduced starting-jet or puff model driven by source flux.
 - [ ] Add recoil and observer sampling.
@@ -89,8 +100,9 @@ fail safely, and cancellation leaves either one valid archive or no archive.
   and a labeled stochastic turbulence closure.
 - [ ] Implement no-exterior-sound vacuum behavior and visible-emission
   requirements.
-- [ ] Ship `fart quick` with one authored world, source, cultural stake,
-  consequence, explanation, certificate, replay, and inspect path.
+- [ ] Promote the v0.7 walking skeleton into `fart quick` with one authored
+  world, source, cultural stake, consequence, causal explanation, runnable
+  counterfactual, certificate, replay, and inspect path.
 
 Exit gate: one ordinary low-energy event is fun enough to replay, scientifically
 inspectable, fully deterministic under its contract, and compelling without a
@@ -104,9 +116,13 @@ TUI or graphical application.
 - [ ] Add a read-only event-fact API and authored storylets with fact provenance.
 - [ ] Add `fart broadcast`, immutable event playback, transcript, and `.fartshow`
   episode archives.
+- [ ] Maintain a curated seed museum and a regression corpus for dull, repeated,
+  contradictory, unsafe, or scientifically unsupported episodes.
 - [ ] Prove that narration, localization, terminal size, accessibility, camera,
-  and presentation streams cannot change the physics hash.
+  and presentation streams cannot change the physical-result identity.
 - [ ] Run at least 10,000 deterministic seed cases with expressive-range reports.
+- [ ] Run representative human reviews for humor, comprehension, pacing,
+  grossness controls, science density, and ordinary-event replay value.
 
 Exit gate: every seed terminates or fails explicitly within a fixed budget, no
 valid event is rerolled for drama, and the archived episode replays its resolved
@@ -116,7 +132,8 @@ world, story, event, and certificate.
 
 - [ ] Add `freestyle`, sweeps, comparisons, branches, optimization, uncertainty,
   refinement, and custom challenge contracts.
-- [ ] Generate stable semantic Pi groups from dimension-checked equations.
+- [ ] Define author-reviewed semantic Pi groups and machine-verify dimensions,
+  dependencies, and possible omissions.
 - [ ] Implement strict same-law, same-dimension similarity and translation.
 - [ ] Add constrained approximate translation with explicit residuals,
   infeasibility, and Pareto choices.
@@ -133,6 +150,8 @@ rewards precision and verification as well as magnitude.
   simulation, translation, proof, replay, and export command families.
 - [ ] Polish width-adaptive human output, errors, help, progress, plain mode,
   accessibility, hostile text, and pipe behavior.
+- [ ] Publish p50 and p95 startup, first-output, analytical-run, cancellation,
+  memory, and archive-size results on named Windows, macOS, and Linux systems.
 - [ ] Generate shell completions, manual pages, schemas, examples, and command
   reference from the typed command model.
 - [ ] Ship deterministic offline audio without requiring an audio device.
@@ -215,9 +234,11 @@ available in CLI and TUI, and every consumer cites the same event history.
   least 80 percent.
 - Numerical work states equations, assumptions, units, dimensions, validity,
   tolerances, verification, and validation status.
-- New presentation consumes the authoritative event history.
+- New presentation consumes the authoritative event graph.
 - New narrative claims cite event facts and cannot modify simulation state.
 - New interfaces preserve CLI parity.
+- Every milestone delivers at least one player-visible improvement, one better
+  scientific claim or boundary, and one stronger verification result.
 - High-energy content changes the source model before it changes the scale.
 - Public changes pass secret, privacy, dependency, license, safety, and
   accessibility review appropriate to their surface.

@@ -43,6 +43,22 @@ Low magnitude never means low importance. A quiet pfft can complete a ritual,
 make first contact, resolve a court case, expose an exquisite resonance, or fail
 at precisely the funniest moment.
 
+### The playable learning loop
+
+Every authored lesson and generated episode supports this loop without forcing
+the player through a lecture:
+
+1. **Predict:** choose or state an expected outcome and reason.
+2. **Emit:** run the immutable scenario.
+3. **Inspect:** compare the prediction with measured observables.
+4. **Explain:** traverse a causal account with assumptions and uncertainty.
+5. **Vary:** branch one input or law and preview the counterfactual.
+6. **Transfer:** try the same idea in a new scale, medium, source, or world.
+
+Every player-facing causal explanation offers at least one runnable
+counterfactual. It distinguishes causal model structure from correlation and
+admits when the selected model cannot support the requested claim.
+
 ## Broadcast mode
 
 `fart broadcast --seed <seed>` is the seeded interdimensional show. It generates
@@ -85,6 +101,13 @@ The story director may not:
 If a predicted planet killer produces a polite ripple, the polite ripple is the
 ending. Narration, witnesses, bureaucracy, and the callback make failure funny.
 The simulation does not get another take.
+
+Broadcast quality is evaluated with more than successful generation. A curated
+seed museum preserves exemplary ordinary, strange, failed, and spectacular
+episodes. A failure corpus preserves dull pacing, repeated jokes,
+contradictions, unsupported claims, unsafe culture generation, and accidental
+outcome rerolls as regression cases. Diversity metrics can find repetition, but
+regular human playtests judge humor, comprehension, pacing, and shareability.
 
 ## Freestyle Lab
 
@@ -217,7 +240,9 @@ law profile
 
 Generated cultures are connected systems, not random costumes and syllables.
 Habitat, energy economics, coordination, sensory channels, and attitudes toward
-venting constrain each other.
+venting constrain each other. A generated culture must not be a thin analogue
+of a real protected group, and review must look for stereotype-shaped clusters
+rather than only banned words.
 
 A storylet declares its identifier, version, episode phase, state and fact
 predicates, knowledge requirements, exclusions, priority, cooldown, duration,
@@ -287,6 +312,13 @@ accessibility setup appears before the first audiovisual event.
 - Archive round trips preserve event, story timeline, stream manifest,
   certificate, and hashes.
 - Malicious archive tests fail safely.
+- The seed museum and failure corpus catch repeated jokes, contradictions,
+  hidden rerolls, unsupported claims, and unsafe culture analogues.
+- Representative playtests separately measure humor, comprehension, pacing,
+  grossness controls, science-density controls, and whether ordinary events
+  remain worth replaying and sharing.
+- Learning checks test prediction and transfer for vacuum acoustics, choking,
+  conservation, and similarity without turning play into an exam.
 - Every TUI or native action exposes an equivalent CLI command, scenario change,
   or archive operation.
 - Disabled-player testing occurs before public native release.
