@@ -175,7 +175,7 @@ The compiler returns:
   units, source, exterior, and observer appear only when supported.
 - Assumptions, ambiguities, unsupported requests, and confidence by field.
 - A canonical scenario diff and action plan.
-- Compute, action, energy, and recording budgets.
+- Applicable compute, action, energy, and recording budgets.
 - A stable interpretation receipt linking source spans to typed fields.
 
 `--dry-run` is the default whenever wording is ambiguous, hazardous, expensive,
@@ -204,7 +204,7 @@ modes stay short:
 fart
 fart quick
 fart broadcast
-fart ask "a very small dry event in a cathedral-sized station"
+fart ask "a very small dry event in a 90 000 m3 station"
 fart freestyle reference-enclosure.toml
 fart lab
 ```
@@ -349,7 +349,7 @@ update signature.
 fart scenario init -o reference-enclosure.toml
 fart scenario validate reference-enclosure.toml
 fart law list
-fart law inspect earth.continuum.si --capabilities
+fart law inspect earth.continuum.si
 fart scenario capabilities reference-enclosure.toml --format json
 fart event run reference-enclosure.toml --output run.fart
 fart event inspect run.fart --at "1.2 s"
@@ -380,7 +380,7 @@ accepted. Capabilities and output discipline are not provisional.
 Planned global controls include:
 
 ```text
---format human|json|jsonl|csv
+--format text|json|jsonl|csv
 --color auto|always|never
 --unicode auto|always|never
 --progress auto|always|never

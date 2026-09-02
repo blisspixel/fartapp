@@ -2,7 +2,7 @@
 
 F.A.R.T. Lab needs a mark credible on a scientific instrument and funny on a
 shirt without becoming novelty-shop clip art. The identity uses one stable
-institutional mark and an unlimited family of event artifacts.
+institutional mark and an unlimited family of occurrence artifacts.
 
 The current candidate is **The Open Isobar**. It is not a cleared or final
 trademark.
@@ -60,13 +60,15 @@ blindly scaled:
    identity.
 2. **Conservation Triad:** circle for mass, directional chevron for momentum,
    and diamond for energy. It is notation, not the app icon.
-3. **Plumeprint:** a two-dimensional artifact belonging to one observed event.
-4. **Fartflake:** a three-dimensional artifact belonging to one observed event.
+3. **Plumeprint:** a two-dimensional artifact projection belonging to one Lab
+   record.
+4. **Fartflake:** a three-dimensional artifact projection belonging to one Lab
+   record.
 5. **Unofficial Field Observation:** a deliberately distinct community badge
    for remixes, fan work, and unverified artifacts.
 
-The stable mark identifies the instrument. A generated artifact identifies an
-event. A Fartflake never becomes the app icon, release seal, or repository
+The stable mark identifies the instrument. A generated artifact identifies a
+Lab record and its declared projection. A Fartflake never becomes the app icon, release seal, or repository
 avatar, no matter how beautiful it is.
 
 ## Lockups
@@ -133,7 +135,7 @@ The mark does not graduate from candidate status until it works as:
 - A thermal-receipt and grayscale print.
 - A masked macOS, Windows, Linux, and social icon.
 
-Event-derived merchandise is the stronger long-term system: one-of-one
+Occurrence-derived merchandise is the stronger long-term system: one-of-one
 Plumeprint shirts, Fartflake sculptures, trace cards, ledger patches, and radio
 station apparel that remains wearable without explaining the joke.
 
@@ -147,7 +149,7 @@ marks, common-law uses, and relevant software, game, education, media, and
 merchandise classes in intended markets.
 
 Apache License 2.0 covers repository source as declared. It does not grant broad
-trademark rights. Official marks, community templates, event artifacts, music,
+trademark rights. Official marks, community templates, occurrence artifacts, music,
 fonts, and third-party media therefore need explicit, separate policies. The
 project will publish a permissive fan kit only after that boundary receives
 legal review.
@@ -163,4 +165,5 @@ legal review.
 - Generate exports from version-controlled SVG and reject embedded rasters,
   unapproved fonts, metadata leakage, and output drift in CI.
 
-The event happened once. The ledger remains.
+The Lab encounter was unique. The record remains. Source-law recurrence is a
+separate claim.

@@ -24,10 +24,10 @@ The Lab uses these words precisely:
 | Record | Creates one immutable Lab capture or computation under a committed scenario and nonce | How the source law contexts treat recurrence |
 | Source occurrence identity set | Uses per-context identities and an optional bridge-defined composite relation | That Lab record identity is source-context time |
 | Recording | Preserves selected evidence and provenance from the occurrence | That every aspect of experience was captured |
-| Replay | Presents the preserved record again | That the physical event recurred |
+| Replay | Presents the preserved record again | That the source occurrence recurred |
 | Reconstruction | Recomputes a declared numerical realization for verification | That it is the original encounter |
 | Re-enactment | Runs the same scenario with a fresh record nonce | That matching controls produce an identical outcome or source-occurrence identity set |
-| Translation | Creates a mapped event under another observer or law profile | That equivalence exists where it does not |
+| Translation | Maps retained claims into a target `LawContextSet` and applicable measurement, view, or presentation context | That equivalence exists where it does not |
 
 Default Quick Play generates a fresh 256-bit record nonce and reveals its
 commitment before realization. A supplied scenario seed can reproduce a scope
@@ -51,8 +51,8 @@ understated beauty, incompleteness, age, solitude, and patina.
 These are not interchangeable slogans and not a Japanese-themed content pack.
 The project does not use cherry blossoms, tea utensils, calligraphy, Japanese
 music, or faux-Japanese copy as shortcuts for depth. Public wording and any
-Japanese localization require review by people with relevant language and
-cultural knowledge. The underlying product commitment is plain: attend closely
+Japanese localization follow the locale-steward qualifications and review
+contract in [LOCALIZATION.md](LOCALIZATION.md). The underlying product commitment is plain: attend closely
 to a ridiculous, imperfect encounter because the player's experience of it is
 passing.
 
@@ -66,7 +66,7 @@ better story.
 ## Artifact projection profiles
 
 Plumeprints and Fartflakes are human-spatial projection profiles, not universal
-event geometry. Every `ArtifactProjectionProfile` records the source structure,
+occurrence geometry. Every `ArtifactProjectionProfile` records the source structure,
 applicable measurement context and view profile, target medium and target
 dimensionality, preserved
 relations or features, projection or embedding, distortion, information loss,
@@ -81,7 +81,7 @@ renderer expects them. Plain data and text alternatives remain canonical.
 
 When supported, an occurrence can derive a compact, deterministic
 two-dimensional scientific fingerprint called a **Plumeprint**. It is calculated
-from authoritative event features, never selected from a texture library.
+from authoritative occurrence features, never selected from a texture library.
 
 Candidate Earth-discharge channels include:
 
@@ -111,11 +111,11 @@ A **Fartflake** is a deterministic three-dimensional artifact projected from the
 occurrence graph. From the side it can appear as a branching plume, vortex sculpture,
 crystal, coral, cloud, or law-profile-specific structure. From one declared
 orthographic verification view, its occupancy can encode a scannable matrix
-that resolves to a safe event reference.
+that resolves to a safe record reference.
 
 The idea takes inspiration from QR-Bloom's striking combination of a 3D voxel
 tree and a top-down QR silhouette. F.A.R.T. Lab will implement its own
-event-derived algorithm and assets. It will not copy QR-Bloom code, weights,
+occurrence-derived algorithm and assets. It will not copy QR-Bloom code, weights,
 training shapes, or non-commercial source material.
 
 The Fartflake pipeline is:
@@ -125,7 +125,7 @@ certified occurrence provenance graph
   -> normalized feature field
   -> topology and branch skeleton
   -> QR occupancy constraints in one verification projection
-  -> event-conditioned geometry and material channels
+  -> occurrence-conditioned geometry and material channels
   -> mesh, thumbnail, flat code fallback, and provenance manifest
 ```
 

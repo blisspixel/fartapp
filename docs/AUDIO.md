@@ -159,7 +159,10 @@ Pitch is optional. An unvoiced or low-confidence physical signal reports no
 pitch rather than inventing a note. Twelve-tone equal temperament and A440 are
 Earth presets, not universal laws. Other profiles may use just intonation,
 microtonal ratios, continuous pitch, pitchless percussion, or a compatible
-observer-specific mapping. An incompatible world can return `UNTRANSLATABLE`.
+measurement-context mapping. An incompatible target returns its precise
+structured no-mapping, refusal, prohibition, ambiguity, or uncertainty code.
+`UNTRANSLATABLE` may appear only as an optional localized display label for a
+corresponding structured result.
 
 A mapping declares its input, units, reference range, transform, clipping,
 quantization, missing-value behavior, and information loss. Comparisons share a

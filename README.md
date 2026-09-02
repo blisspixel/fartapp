@@ -42,10 +42,13 @@ profile supports. The game never swaps in a canned sound or animation.
 
 ## Project status
 
-The repository currently contains the original Go CLI prototype. It accepts an
-intensity from 1 to 5 and prints a deterministic, rated emission. The next goal
-is not a graphical wrapper. It is a genuinely excellent, cross-platform command
-line laboratory.
+The repository contains the original Go CLI prototype plus the first
+experimental v0.7 laboratory slice. The permanent legacy path accepts an
+intensity from 1 to 5 and prints a deterministic, rated emission. A new read-only
+law catalog lists and inspects candidate law contexts through the same typed
+localized-text and JSON report. It does not contain a physical solver yet, and
+it labels that absence explicitly. The next goal is not a graphical wrapper. It
+is a genuinely excellent, cross-platform command-line laboratory.
 
 The wider product will be built in this order:
 
@@ -68,13 +71,42 @@ See the [roadmap](ROADMAP.md) for delivery gates.
 
 ![Current Go CLI printing the exact output for intensity three](docs/media/readme/cli-v0.6-current.png)
 
-Current v0.6 development snapshot of the Go prototype. This exact command and output are tested as a
-permanent oracle fixture.
+Permanent v0.6 legacy snapshot of the Go prototype. This exact command and
+output remain tested as an oracle fixture.
 
 ```console
 $ ./fartapp 3
 braaap (respectable)
 ```
+
+The first CLI-first laboratory command is also implemented:
+
+```console
+$ ./fartapp law list
+LAW CONTEXTS
+
+earth.continuum.si@v0alpha1 [design-candidate]
+  Earth continuum mechanics in SI
+  Biology-neutral candidate context for continuum discharge models under declared Earth conditions; no solver is implemented yet.
+conformance.relation.atemporal@v0alpha1 [schema-conformance]
+  Atemporal relation conformance context
+  A relation-only context with no required ordering, geometry, units, source, or observer.
+```
+
+`law inspect earth.continuum.si` reports law definition, implementation,
+closure, applicability, evidence, trust, backend feasibility, and resource
+feasibility independently. `--format json` emits the same typed candidate report
+as deterministic compact JSON. This experimental inspection report names one
+exact versioned law context. Coupled occurrences will use the complete ratified
+`LawContextSet`, scope-assignment, and inter-law coupling contracts instead of a
+misleading list of bare IDs. Neither report requires an Earth discharge role or
+localized prose.
+
+`conformance.relation.atemporal` is a schema-conformance counterexample, not a
+solver or an empirical claim about reality. It proves that catalog inspection
+works without ordering, geometry, dimensions, units, a localized source, or an
+observer before the Earth oracle grows further. Software evidence IDs resolve
+inside each inspection to exact Go package and test targets that CI executes.
 
 ![Planned htop-style terminal laboratory with emitter, plume, uncertainty, acoustics, solver, and conservation panes](docs/media/readme/terminal-lab-concept-v1.svg)
 
@@ -292,11 +324,12 @@ be a successful answer, but the archive retains the precise reason.
 ## Plumeprints and Fartflakes
 
 When a compatible human-spatial artifact projection is selected, an occurrence
-can leave two event-derived artifacts:
+can leave two occurrence-derived artifacts:
 
 - A **Plumeprint** is a compact two-dimensional scientific fingerprint made
-  from normalized source history, interface motion, field structure,
-  composition, active groups, observer response, uncertainty, and ledger state.
+  from supported normalized relations or features. Earth-discharge channels may
+  include source history, interface motion, field structure, composition,
+  active groups, measurement response, uncertainty, and ledger state.
 - A **Fartflake** is a deterministic three-dimensional sculpture grown from the
   same occurrence provenance graph. In one declared verification view, its silhouette can
   encode a safe, scannable reference to the retained trace.
@@ -304,7 +337,7 @@ can leave two event-derived artifacts:
 Each `ArtifactProjectionProfile` records the source structure, observation
 profile, target medium and dimensionality, preserved features, embedding,
 distortion, information loss, accessibility requirements, and whether the
-result is evidence, interpretation, or art. A nonspatial event may produce a
+result is evidence, interpretation, or art. A nonspatial occurrence may produce a
 declared lossy projection or a precise unsupported result. The artifact is never
 presented as the occurrence's native geometry.
 
@@ -315,11 +348,11 @@ flat code fallback remains available, and no artifact embeds a public URL,
 private path, or tracking token without explicit action.
 
 The idea is inspired by the way QR-Bloom makes a 3D voxel tree readable as a QR
-code from above. This project will use an independent event-derived algorithm
+code from above. This project will use an independent occurrence-derived algorithm
 and will not copy its code, weights, shapes, or restricted source assets.
 
-The event happened once. The ledger remains. See the complete
-[snowflake and artifact contract](docs/SNOWFLAKES.md).
+The Lab encounter was unique. The record remains. Source-law recurrence stays a
+separate claim. See the complete [snowflake and artifact contract](docs/SNOWFLAKES.md).
 
 The lab gives memorable names to real constraints:
 
@@ -513,12 +546,15 @@ particle, deposition, consequence, and haptic projection responds continuously
 to the same occurrence history already inspectable in the CLI. The app adds a
 world and a feel. It does not add secret physics.
 
-Native Chill Mode lets the same reference enclosure, other worlds, and abstract
-mathematical spaces breathe for long sessions. Music carries the atmosphere, ordinary
-subsonic events occur occasionally, and pressure fields, pathlines, vortices,
-spectra, Plumeprints, Fartflakes, uncertainty, and conservation become slow
-visual art. Bubble modes appear only when the later verified underwater pack is
-installed. It remains scoreless, offline, and free of engagement mechanics.
+Native Chill Mode lets compatible occurrences and mathematical structures
+breathe for long sessions. Music carries the atmosphere while low-attention
+occurrences or relations appear through capability-selected representations.
+In the Earth Reference Enclosure, that can mean ordinary subsonic events plus
+pressure fields, pathlines, vortices, spectra, Plumeprints, Fartflakes,
+uncertainty, and conservation as slow visual art. Bubble modes appear only when
+the later verified underwater pack is installed. Other profiles receive no
+invented Earth fields, geometry, audio, or emitter. Chill remains scoreless,
+offline, and free of engagement mechanics.
 
 ## Long-term progression concept
 

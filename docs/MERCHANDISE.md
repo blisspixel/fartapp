@@ -9,8 +9,9 @@ The strongest system has three layers:
    and release marks under a reviewed trademark policy.
 2. **Community Kit:** clearly unofficial, openly remixable frames, glyphs,
    captions, and scientific-comedy primitives.
-3. **Event Artifacts:** private or shareable one-time Plumeprints, Fartflakes,
-   observation cards, posters, shirts, patches, and sculptures.
+3. **Occurrence Artifacts:** private or shareable record-specific Plumeprints,
+   Fartflakes, capability-selected cards, posters, shirts, patches, and
+   sculptures.
 
 Apache License 2.0 applies to repository material only as declared. It does not
 silently make project trademarks, music, fonts, generated art, or third-party
@@ -56,18 +57,20 @@ official-store reference. They do not contain advertising, purchase telemetry,
 checkout state, payment code, or a merch account.
 
 The store collects only information needed for fulfillment, payment, fraud,
-tax, and support, with documented retention and deletion. Event details remain
-private unless the buyer deliberately submits a print artifact. Accessibility
-targets WCAG 2.2 AA, keyboard-complete checkout, meaningful product alt text,
+tax, and support, with documented retention and deletion. Occurrence or record
+details remain private unless the buyer deliberately submits a print artifact.
+Accessibility targets WCAG 2.2 AA, keyboard-complete checkout, meaningful product alt text,
 text size charts, actual garment measurements, sensory details, and no
 color-only distinction.
 
-## Event artifacts
+## Occurrence artifacts
 
 Local print-ready export comes before official fulfillment. A buyer may choose
-to submit one artifact without uploading the source archive, hidden world state,
-precise location, or personal machine data. The item says `SIMULATED EVENT` and
-`OBSERVED ONCE`. It carries a trace identifier, not a replay promise.
+to submit one artifact without uploading the source archive, hidden context
+state, precise location, or personal machine data. Every item says `LAB RECORD`
+or `SIMULATED OCCURRENCE`. It may additionally say `OBSERVED ONCE` only when its
+provenance supports an observation claim. It carries a record identifier, not a
+replay promise.
 
 An official SKU code authenticates the item and batch only. It does not identify
 the buyer or claim scientific, safety, or environmental certification.

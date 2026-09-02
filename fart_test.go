@@ -148,31 +148,46 @@ func TestExecutable(t *testing.T) {
 }
 
 func FuzzRun(f *testing.F) {
-	for _, seed := range []string{"", "0", "1", "5", "6", "+1", "01", " 1 ", "nope", "\x00", strings.Repeat("9", 200)} {
+	for _, seed := range []string{
+		"", "0", "1", "5", "6", "+1", "01", " 1 ", "nope", "text", "json", "--help",
+		"earth.continuum.si", "earth.continuum.si@v0alpha1",
+		"conformance.relation.atemporal", strings.Repeat("9", 200), "\x00",
+	} {
 		f.Add(seed)
 	}
 
 	f.Fuzz(func(t *testing.T, input string) {
-		invoke := func() (int, string, string) {
+		invoke := func(args []string) (int, string, string) {
 			var stdout bytes.Buffer
 			var stderr bytes.Buffer
-			code := run([]string{"fartapp", input}, &stdout, &stderr)
+			code := run(args, &stdout, &stderr)
 			return code, stdout.String(), stderr.String()
 		}
 
-		code1, stdout1, stderr1 := invoke()
-		code2, stdout2, stderr2 := invoke()
-		if code1 != code2 || stdout1 != stdout2 || stderr1 != stderr2 {
-			t.Fatalf("nondeterministic result for %q", input)
+		argumentSets := [][]string{
+			{"fartapp", input},
+			{"fartapp", "law", "inspect", input},
+			{"fartapp", "law", "list", "--format", input},
 		}
-		if code1 != 0 && code1 != 1 {
-			t.Fatalf("exit code = %d, want 0 or 1", code1)
-		}
-		if stdout1 != "" && stderr1 != "" {
-			t.Fatalf("mixed stdout %q and stderr %q", stdout1, stderr1)
-		}
-		if len(stdout1)+len(stderr1) > 256 {
-			t.Fatalf("output length = %d, want at most 256", len(stdout1)+len(stderr1))
+		for _, args := range argumentSets {
+			code1, stdout1, stderr1 := invoke(args)
+			code2, stdout2, stderr2 := invoke(args)
+			if code1 != code2 || stdout1 != stdout2 || stderr1 != stderr2 {
+				t.Fatalf("nondeterministic result for %q", args)
+			}
+			if code1 != 0 && code1 != 1 {
+				t.Fatalf("exit code = %d, want 0 or 1", code1)
+			}
+			if stdout1 != "" && stderr1 != "" {
+				t.Fatalf("mixed stdout %q and stderr %q", stdout1, stderr1)
+			}
+			limit := 256
+			if code1 == 0 && len(args) >= 2 && args[1] == "law" {
+				limit = 16 * 1024
+			}
+			if len(stdout1)+len(stderr1) > limit {
+				t.Fatalf("output length = %d, want at most %d", len(stdout1)+len(stderr1), limit)
+			}
 		}
 	})
 }

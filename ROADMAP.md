@@ -77,8 +77,17 @@ planned.
   measurement, view, comparison, numerical, scenario, history, and certificate
   schemas, with emitter,
   interface, exterior, and payload as Earth discharge extensions.
-- [ ] Add `law list`, `law inspect`, `scenario validate`, canonical capability
-  reports, scenario refusal inspection, and dimension diagnostics.
+- [x] Add dependency-free `law list` and `law inspect` commands with versioned
+  experimental localized-text and deterministic JSON fixtures. Keep law
+  definition, implementation, closure, applicability, evidence, trust, backend
+  feasibility, and resource feasibility separate without requiring Earth roles
+  or localized prose.
+- [ ] Ratify the capability-report wire schema before calling it canonical or
+  freezing it for the Rust service and protocol adapters.
+- [ ] Add `scenario validate` and scenario refusal inspection over the ratified
+  report.
+- [ ] Add dimension diagnostics only where selected law contexts define
+  dimensional quantities.
 - [ ] Implement ideal-mixture finite-reservoir mass and energy balance.
 - [ ] Implement prescribed area, simple compliance, subsonic flow, and the
   analytical choking boundary with explicit assumptions.
@@ -434,7 +443,8 @@ observables beyond tolerance. The complete application remains CPU-capable.
 - [ ] Make natural-language generation exceptional for humans and agents while
   preserving offline typed control, interpretation receipts, and explicit
   acceptance.
-- [ ] Ship Plumeprint, Fartflake, witness-card, and print-ready local exports.
+- [ ] Ship the generic Occurrence Card plus capability-selected Witness Card,
+  Plumeprint, Fartflake, and print-ready local exports.
 - [ ] Polish width-adaptive human output, errors, help, progress, plain mode,
   accessibility, hostile text, and pipe behavior.
 - [ ] Ship named reviewed BCP 47 locale packs spanning left-to-right,

@@ -5,8 +5,8 @@ scientific objects that are funny enough for people to turn into memes.
 
 The culture loop is:
 
-1. A unique event happens.
-2. The instrument leaves a recognizable trace.
+1. A Lab encounter receives a unique record identity.
+2. The instrument retains only the trace its recording policy permits.
 3. The trace becomes a shareable artifact.
 4. Someone remixes it without disguising its scientific status.
 5. The community invents language around it.
@@ -85,9 +85,9 @@ them. Publication never happens as a side effect of generation or play.
   being, scale, medium, or universe.
 - **Boundary Review:** conduct a mock evidence-based hearing on a disputed
   wetness, choking, plasma, or classification transition.
-- **The Vanishing Session:** witness a one-time event without a full recording.
-- **Postcards From Elsewhere:** contribute a nonhuman or alternate-law observer
-  story that passes science and cultural review.
+- **The Vanishing Session:** attend one Lab encounter without a full recording.
+- **Postcards From Elsewhere:** contribute a nonhuman or alternate-law viewpoint
+  that passes science and cultural review.
 - **Radio Crate Drop:** release a small station pack whose music is good before
   its lore is noticed.
 
@@ -137,9 +137,9 @@ People can contribute without writing simulation code:
 - **Verification Report:** invariant, convergence, fuzz, or platform evidence.
 
 The project recognizes contributors in history, release notes, optional
-profiles, and asset metadata where requested. The event card itself remains
-about the event. Required third-party notices remain available even though the
-product carries no visible creator or tool attribution.
+profiles, and asset metadata where requested. The Occurrence Card itself remains
+about the occurrence record. Required third-party notices remain available even
+though the product carries no visible creator or tool attribution.
 
 ## What success means
 

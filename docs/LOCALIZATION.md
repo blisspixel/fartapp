@@ -8,11 +8,11 @@ electromagnetism, collective state, or a declared fictional channel.
 
 This is a design contract. The current toy CLI is English-only.
 
-## A language-neutral reference
+## A locale-invariant reference
 
-The canonical Reference Pfft key is `ref:rp1:v1`. It does not contain a country,
-language, species, anatomy, room function, or cultural norm. Its first Earth
-realization declares `101 325 Pa`, `293.15 K`, `50 %` relative humidity,
+The canonical Reference Pfft key is `ref:rp1:v1`. It does not select a country,
+language, locale, species, anatomy, room function, or cultural norm. Its first
+Earth realization declares `101 325 Pa`, `293.15 K`, `50 %` relative humidity,
 standard gravity, a project reference enclosure, a reference observer, and a
 synthetic uncertain low-energy source. The fixture is not a body. The enclosure
 is a reproducible geometry, not a claim that buildings, bathrooms, or tiled
@@ -106,8 +106,8 @@ with natural-language input as if they were the same task.
 
 ## Humor and sound symbolism
 
-When a source context, compatible retained claims, a human locale, and an
-interpretation path exist, localized humor may interpret them. A localized
+When compatible retained claims, a human locale, and an interpretation path
+exist, localized humor may interpret them. A localized
 onomatopoeia such as the working English `pfft` is presentation metadata, not a
 physical class or waveform lookup. Translators may choose different sound
 symbolism, register, rhythm, legal phrasing, understatement, or wordplay if the

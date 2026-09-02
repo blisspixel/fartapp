@@ -10,6 +10,10 @@ import (
 const maximumDisplayedInputBytes = 32
 
 func run(args []string, stdout, stderr io.Writer) int {
+	if len(args) >= 2 && args[1] == "law" {
+		return runLaw(args[2:], stdout, stderr)
+	}
+
 	if len(args) != 2 {
 		writeDiagnostic(stderr, "usage: fartapp <intensity>\n")
 		return 1

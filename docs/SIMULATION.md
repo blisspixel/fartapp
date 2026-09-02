@@ -42,7 +42,8 @@ Only four top-level objects are required inside the Lab's bounded formalism:
   `SourceOccurrenceIdentitySet`. The set contains one law-defined identity per
   scoped context and an optional composite identity only when an
   `InterLawCoupling` supplies its equivalence, recurrence, cyclicity, or
-  ordering semantics.
+  ordering semantics. Here `source` means the source law context, not a localized
+  emitter, origin object, or causal source role.
 - `LawContextSet`: one or more scoped `LawContext` entries. Each entry declares
   axioms or rules, supported structural modules, capabilities, interpretation or
   validity domain, implementation binding, trust class, and verification suite.
@@ -96,17 +97,18 @@ constraints. Derived quantities remain derived.
 
 ## Capabilities and trust
 
-Every law context declares machine-readable concepts and capabilities. A
-canonical `CapabilityReport` keeps seven questions separate:
+Every law context declares machine-readable concepts and capabilities. The
+eventual canonical `CapabilityReport` keeps eight questions separate:
 
 1. Does the law define the concept?
 2. Does a trusted implementation exist?
 3. Does the requested model have an applicable closure?
 4. Is it applicable to this scenario and measurement interaction?
 5. What verification and validation grade supports the requested claim?
-6. Does policy permit the pack, backend, and operation?
-7. Can the selected backend satisfy precision, determinism, memory, and work
-   budgets?
+6. Does policy permit and trust the pack and operation?
+7. Can the selected backend satisfy the required implementation, precision, and
+   determinism class?
+8. Can available resources satisfy memory, storage, and work budgets?
 
 Each entry returns typed availability or refusal evidence rather than one
 Boolean. The capability vocabulary can represent continuum, compressible,
@@ -456,8 +458,9 @@ No-mapping results use stable locale-invariant reason codes:
 - `outside_representable_ontology`
 - `unknown`
 
-The result records both profiles, requested preservation, evidence, residual or
-loss, policy basis, and whether more information could change the answer. A
+The result records the source and target `LawContextSet`s, scope assignments,
+applicable bridge rules, requested preservation, evidence, residual or loss,
+policy basis, and whether more information could change the answer. A
 refusal is never rewritten as physical incompatibility. `UNTRANSLATABLE` is a
 localized presentation label, not the scientific result identity.
 
@@ -643,7 +646,8 @@ inside one confidence score.
 
 Sensitivity reports state which uncertain inputs control each observable and
 where interactions matter. Inverse and translation commands report families of
-solutions when observations do not identify a unique source. Extrapolation
+solutions when retained claims do not identify a unique underlying realization,
+parameter set, or relation. Extrapolation
 beyond a closure's validation domain is visible at the value, chart, and
 certificate levels. One seeded realization is never presented as an uncertainty
 study.

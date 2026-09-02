@@ -137,13 +137,15 @@ regular human playtests judge humor, comprehension, pacing, and shareability.
 letting moments pass. It begins in the CLI as a calm append-only stream, becomes
 a live instrument in the TUI, and reaches its full form in the native app.
 
-The mode maintains a slowly evolving compatible context and runs occasional
-low-intensity occurrences through the same law, scope, provenance, and
-applicable consumer services as every other mode. There is no library of
-prerecorded emissions and no visualizer driven only by music. Long quiet
-intervals are valid. An Earth event can remain a tiny ordinary pfft.
+The mode selects compatible relations or occurrences through the same law,
+scope, provenance, and applicable consumer services as every other mode. When
+Lab-session presentation order exists, it can pace them sparsely inside a
+slowly evolving presentation context. There is no library of prerecorded
+emissions and no visualizer driven only by music. Long quiet intervals are
+valid. An Earth event can remain a tiny ordinary pfft.
 
-Its visual director turns actual mathematical structure into restrained art:
+For compatible Earth-discharge profiles, its visual director turns actual
+mathematical structure into restrained art:
 
 - Pressure, velocity, vorticity, temperature, composition, and uncertainty
   fields.
@@ -152,11 +154,17 @@ Its visual director turns actual mathematical structure into restrained art:
   conservation ledgers.
 - Slow camera motion and context-specific palettes that never alter the occurrence account.
 
-Controls cover station, music bus, event density, occurrence and law family,
-ordinary-versus-extreme range, science overlay, visual abstraction, grossness,
-deposition detail, dynamic range, bass, narration, motion, flashing, camera
-movement, and recording. Defaults favor dry ordinary events, sparse pacing,
-subtle lore, no graphic material, and readable but unobtrusive instrumentation.
+Other profiles use only their supported relations and representations. They do
+not receive invented fields, spatial motion, spectra, emitters, or ledgers.
+
+Controls are capability-selected. Generic controls cover applicable view,
+representation, recording, explanation-density, and accessibility choices.
+Presentation profiles may add station, music bus, Lab-session pacing, narration,
+motion, or flashing controls. Compatible Earth-discharge profiles may add
+magnitude range, grossness, deposition detail, dynamic range, bass, and camera
+movement. Earth-discharge defaults favor dry ordinary events. Other profiles
+favor low-attention supported relations or occurrences without inventing
+intensity, time, audio, geometry, payload, or deposition.
 
 Chill Mode has no streak, daily task, idle reward, advertisement, engagement
 timer, or penalty for leaving. It pauses cleanly, can run entirely offline, and
