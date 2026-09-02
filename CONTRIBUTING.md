@@ -48,6 +48,7 @@ pwsh ./scripts/check-media.ps1
 go mod verify
 go build ./...
 go test ./internal/registrationauthoritybinding -run '^TestRegistrationAuthorityBindingCorpus$'
+go test ./internal/snapshotregistrationbinding -run '^TestSnapshotRegistrationBindingCorpus$'
 go test ./internal/authoritymatching -run '^TestAuthorityMatchingCorpus$'
 go test ./internal/authorityresolution -run '^TestAuthorityResolutionCorpus$'
 go test ./internal/cataloglookup -run '^TestLookupCorpus$'
@@ -74,6 +75,7 @@ go test ./...
 go test -shuffle=on -count=20 ./...
 go test -run=^$ -fuzz=FuzzRun -fuzztime=5s .
 go test -run=^$ -fuzz=FuzzCompareExactAuthorityBinding -fuzztime=5s ./internal/registrationauthoritybinding
+go test -run=^$ -fuzz=FuzzComposePositive -fuzztime=5s ./internal/snapshotregistrationbinding
 go test -run=^$ -fuzz=FuzzFiniteAuthorityMatching -fuzztime=5s ./internal/authoritymatching
 go test -run=^$ -fuzz=FuzzResolveInSnapshot -fuzztime=5s ./internal/authorityresolution
 go test -run=^$ -fuzz=FuzzFiniteSnapshotAndLookup -fuzztime=5s ./internal/cataloglookup

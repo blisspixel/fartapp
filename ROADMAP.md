@@ -131,6 +131,18 @@ planned.
   registration absence. Perform no normalization, alias, delegation, hierarchy,
   inheritance, ownership, authorship, network, chronology, or latest-revision
   inference, and preserve every current wire byte.
+- [x] Add an internal, non-wire positive snapshot-registration binding
+  composition. Consume one valid `SnapshotLookup` with a positive
+  snapshot-relative registration and one valid `ExactBindingWitness` for the
+  same complete structural registration. Retain both upstream witnesses and
+  permit only a positive `SnapshotMemberExactBindingWitness`. Reuse the existing
+  membership and exact-binding decisions without constructing another snapshot,
+  invoking either upstream constructor, emitting a new membership or comparison
+  outcome, filtering a collection, or defining a negative outcome. Defensively
+  revalidate both witnesses. Treat mismatched, absent, unresolved, and pairwise
+  no-match inputs as unavailable positive composition, not attribution, catalog
+  closure, external absence, or product registration status. Add no CLI or wire
+  contract.
 - [ ] Ratify Declaration Authority Resolution, Declaration Attribution Scope,
   and Catalog Lookup Closure separately. Require a query-bound closed-lookup
   witness before product `not_registered`; keep invalid input, unresolved or

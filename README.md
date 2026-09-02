@@ -73,10 +73,13 @@ for exactly one matching record entry. A sixth internal experiment uses one
 closed, versioned exact-equality rule to compare that positive resolution
 witness with the opaque authority reference in a positive structural
 registration. It explicitly does not call the result attribution, provenance,
-identity equivalence, or trust. None of these experiments is a new CLI or wire
-contract. The project does not contain a physical solver yet, and it labels that
-absence explicitly. The next goal is not a graphical wrapper. It is a genuinely
-excellent, cross-platform command-line laboratory.
+identity equivalence, or trust. A seventh internal experiment composes a
+positive finite-snapshot lookup with that exact binding witness only when both
+retain the same complete structural registration. It adds no negative result,
+collection scope, or catalog-closure claim. None of these experiments is a new
+CLI or wire contract. The project does not contain a physical solver yet, and it
+labels that absence explicitly. The next goal is not a graphical wrapper. It is
+a genuinely excellent, cross-platform command-line laboratory.
 
 Run `fartapp --help` or `fartapp help` to discover every command implemented in
 the current oracle. Topic routes such as `fartapp help law inspect` and

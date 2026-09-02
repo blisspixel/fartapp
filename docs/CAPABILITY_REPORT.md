@@ -307,6 +307,39 @@ meaning. Collection-level rule selection, rule migration, attribution-scope
 ratification, closed attribution domains, conflict handling, canonical bytes,
 signatures, CLI projection, and wire representation remain planned.
 
+## Positive snapshot-registration binding composition candidate
+
+The internal, non-wire candidate in `internal/snapshotregistrationbinding`
+composes two already-produced positive witnesses. It accepts a valid
+`SnapshotLookup` that exposes a positive structural registration and a valid
+`ExactBindingWitness` that exposes the same complete structural registration.
+It constructs no new snapshot, invokes neither upstream constructor, and emits
+no new membership or authority-comparison outcome. It defensively revalidates
+both retained witnesses and their shared registration.
+
+`SnapshotMemberExactBindingWitness` retains both complete upstream witnesses.
+It therefore retains the finite registration snapshot, exact lookup query,
+positive structural registration, resolved-authority snapshot, pairwise rule
+identity, and exact authority-binding decision. Its validity requires the two
+witnesses to expose equal complete `Registration` values, not merely the same
+authority reference.
+
+The candidate defines no absent, unequal, unresolved, invalid, non-attributed,
+or not-registered outcome. A valid negative lookup is a typed construction error,
+as are an invalid binding witness and two positive witnesses for different
+registrations. Failure to produce the positive composition has no negative
+external meaning.
+
+This candidate performs no collection selection, partition, filtering,
+enumeration, Declaration Attribution Scope, or Catalog Lookup Closure. It does
+not ratify product `registered` or establish attribution, provenance,
+responsibility, identity equivalence, ownership, authorship, legitimacy, trust,
+truth, external existence, or catalog completeness. It introduces no person,
+agent, organism, species, body, anatomy, institution, object, observer, event,
+source, location, geometry, dimensionality, unit system, language, network,
+universe, occurrence, operation, source-law time, ambient state, I/O, CLI, or
+wire contract.
+
 ## Catalog lookup closure gate
 
 Product meaning still requires separate ratification of all three contracts
@@ -322,9 +355,11 @@ below. Internal candidates and pairwise relations do not satisfy that gate:
 - **Declaration Attribution Scope:** a rule-relative, witness-retaining decision
   over a collection of structural registration records and one
   snapshot-resolved authority. The current pairwise experiment is only a
-  precondition and implements no collection scope. The future contract must
-  perform no implicit alias, delegation, hierarchy, inheritance, ownership,
-  authorship, or cross-authority equivalence inference.
+  precondition, and positive snapshot-registration binding composition only
+  joins two witnesses for one registration. Neither implements collection
+  scope. The future contract must perform no implicit alias, delegation,
+  hierarchy, inheritance, ownership, authorship, or cross-authority equivalence
+  inference.
 - **Catalog Lookup Closure:** a finite Lab software-enumeration property over one
   exact catalog-scope revision and attribution scope. It is not a claim that
   reality, possible capabilities, or an external catalog are finite or complete.

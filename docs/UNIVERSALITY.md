@@ -145,6 +145,15 @@ difference, unrelatedness, nonexistence, illegitimacy, ambiguity, attribution,
 or registration absence. Rule identity and revision are Lab identity material,
 not natural language, universal meaning, provenance, or source-law time.
 
+Positive snapshot-registration binding composition joins two retained Lab
+software witnesses only when they expose the same complete structural
+registration. It does not assert that a collection is complete, that a
+reference denotes an entity, or that any external relationship exists. It
+establishes no attribution, provenance, responsibility, agency, ownership,
+authorship, legitimacy, identity equivalence, trust, source, body, species,
+location, dimension, language, universe, network, occurrence, or source-law
+time. The absence of this positive composition has no negative external meaning.
+
 No current field may be collapsed into or inferred solely from another. A
 fictional axiom can be implemented and formally checked without being
 empirically validated. A real-world model can be defined yet unavailable on a

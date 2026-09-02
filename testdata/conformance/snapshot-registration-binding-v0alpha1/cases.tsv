@@ -1,0 +1,11 @@
+case_id	lookup_subject_id	lookup_subject_revision	lookup_capability	snapshot_state	binding_catalog_id	binding_catalog_revision	binding_authority_id	binding_authority_revision	binding_subject_id	binding_subject_revision	binding_capability	expect	positive_witness
+exact	subject.a	r1	capability.a	present	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	positive_composition	true
+exact_other_payload	subject.other	r9	capability.other	present	catalog.scope	r1	authority.a	r1	subject.other	r9	capability.other	positive_composition	true
+catalog_id_mismatch	subject.a	r1	capability.a	present	other.scope	r1	authority.a	r1	subject.a	r1	capability.a	registration_mismatch	not_applicable
+catalog_revision_mismatch	subject.a	r1	capability.a	present	catalog.scope	r2	authority.a	r1	subject.a	r1	capability.a	registration_mismatch	not_applicable
+authority_id_mismatch	subject.a	r1	capability.a	present	catalog.scope	r1	authority.b	r1	subject.a	r1	capability.a	registration_mismatch	not_applicable
+authority_revision_mismatch	subject.a	r1	capability.a	present	catalog.scope	r1	authority.a	r2	subject.a	r1	capability.a	registration_mismatch	not_applicable
+subject_id_mismatch	subject.a	r1	capability.a	present	catalog.scope	r1	authority.a	r1	subject.b	r1	capability.a	registration_mismatch	not_applicable
+subject_revision_mismatch	subject.a	r1	capability.a	present	catalog.scope	r1	authority.a	r1	subject.a	r2	capability.a	registration_mismatch	not_applicable
+capability_mismatch	subject.a	r1	capability.a	present	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.b	registration_mismatch	not_applicable
+absent_snapshot_member	subject.a	r1	capability.a	absent	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	snapshot_registration_absent	not_applicable
