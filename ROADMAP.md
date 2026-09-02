@@ -227,9 +227,10 @@ planned.
 - [x] Implement the exact finite-withdrawal endpoint for a rigid, homogeneous,
   nonreacting, calorically perfect ideal-gas mixture with explicit component
   masses and properties. Support adiabatic and prescribed-isothermal paths,
-  preserve a zero-withdrawal operation, and report independent component,
-  total-mass, energy, and equation-of-state residuals. Label it as an endpoint,
-  not an aperture-flow history or full `RES-002` blowdown result.
+  preserve a zero-withdrawal operation, and report component, total-mass, and
+  energy balance residuals plus reported-state equation-of-state consistency
+  residuals. Label it as an endpoint, not an aperture-flow history or full
+  `RES-002` blowdown result.
 - [ ] Replace the growing repository-check script collection with one small,
   dependency-free Go `repoquality` executable shared by Windows, macOS, Linux,
   local hooks, and CI. Keep policy data declarative, detect case and symlink
