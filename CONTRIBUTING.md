@@ -19,6 +19,11 @@ Read:
 - [docs/AGENT_PLAY.md](docs/AGENT_PLAY.md) for actions, observations, protocol
   adapters, fairness, and benchmark rules.
 - [docs/CULTURE.md](docs/CULTURE.md) for cultural and public-interest safeguards.
+- [docs/LOCALIZATION.md](docs/LOCALIZATION.md) for semantic, language, script,
+  and nonhuman communication contracts.
+- [docs/METROLOGY.md](docs/METROLOGY.md) for the Reference Pfft and traceability.
+- [docs/SNOWFLAKES.md](docs/SNOWFLAKES.md) for event identity and artifacts.
+- [docs/QUALITY.md](docs/QUALITY.md) for progressive engineering gates.
 
 New capabilities must appear in the CLI before the terminal or native layers.
 New narrative must react to event facts and cannot alter simulation state. New
@@ -27,20 +32,32 @@ validation status.
 
 ## Current development setup
 
-Install the Go version declared in `go.mod`. Documentation lint also requires a
-current Node.js and npm installation. Then run:
+Install the Go version declared in `go.mod`. Documentation lint uses Node.js 24
+and the locked npm toolchain. Then run:
 
 ```sh
-npx --yes markdownlint-cli2@0.20.0
+npm ci --ignore-scripts
+npm run lint:markdown
+pwsh ./scripts/check-dependencies.ps1
+pwsh ./scripts/check-links.ps1
+pwsh ./scripts/check-media.ps1
+go mod verify
 go build ./...
 go vet ./...
+go run honnef.co/go/tools/cmd/staticcheck@v0.8.1 ./...
+go run golang.org/x/vuln/cmd/govulncheck@v1.7.0 ./...
+go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
 go test ./...
-go test -coverprofile=coverage.out ./...
-go tool cover -func=coverage.out
+go test -shuffle=on -count=20 ./...
+go test -run=^$ -fuzz=FuzzRun -fuzztime=5s ./...
+go test '-coverprofile=coverage.out' ./...
+pwsh ./scripts/check-go-coverage.ps1 -ProfilePath coverage.out -AggregateMinimum 90 -PackageMinimum 80
 ```
 
 Run `gofmt` on every changed Go file. Total statement coverage must remain at or
-above 80 percent.
+above 90 percent, and every non-generated package must remain at or above the 80
+percent floor. Domain, solver, archive, replay, and protocol code receive stricter
+changed-line and mutation gates described in [docs/QUALITY.md](docs/QUALITY.md).
 
 ## Pull requests
 

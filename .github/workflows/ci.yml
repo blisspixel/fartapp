@@ -13,20 +13,53 @@ concurrency:
 
 jobs:
   quality:
-    name: Format, vet, race, and coverage
+    name: Build, lint, fuzz, race, and coverage
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Check out repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install documentation tooling
+        run: npm ci --ignore-scripts
+
+      - name: Audit documentation tooling
+        run: npm audit --audit-level=high
+
+      - name: Verify dependency and license policy
+        shell: pwsh
+        run: ./scripts/check-dependencies.ps1
 
       - name: Lint Markdown
-        run: npx --yes markdownlint-cli2@0.20.0
+        run: npm run lint:markdown
+
+      - name: Verify local documentation links
+        shell: pwsh
+        run: ./scripts/check-links.ps1
+
+      - name: Verify documentation media
+        shell: pwsh
+        run: ./scripts/check-media.ps1
 
       - name: Set up Go
-        uses: actions/setup-go@v7
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
           cache: false
+
+      - name: Verify modules
+        run: go mod verify
+
+      - name: Build executable
+        run: go build ./...
 
       - name: Check formatting
         shell: bash
@@ -40,19 +73,36 @@ jobs:
       - name: Vet
         run: go vet ./...
 
+      - name: Static analysis
+        run: go run honnef.co/go/tools/cmd/staticcheck@v0.8.1 ./...
+
+      - name: Vulnerability analysis
+        run: go run golang.org/x/vuln/cmd/govulncheck@v1.7.0 ./...
+
+      - name: Lint workflows
+        run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
+
+      - name: Fuzz command input
+        run: go test -run=^$ -fuzz=FuzzRun -fuzztime=5s ./...
+
+      - name: Repeat tests in shuffled order
+        run: go test -shuffle=on -count=20 ./...
+
       - name: Test with race detector and coverage
         run: go test -race -covermode=atomic -coverprofile=coverage.out ./...
 
-      - name: Enforce 80 percent statement coverage
-        shell: bash
-        run: |
-          coverage="$(go tool cover -func=coverage.out | awk '/^total:/{gsub(/%/, "", $3); print $3}')"
-          printf 'total statement coverage: %s%%\n' "$coverage"
-          awk -v coverage="$coverage" 'BEGIN { if (coverage + 0 < 80) exit 1 }'
+      - name: Enforce aggregate and per-package coverage
+        shell: pwsh
+        run: >-
+          ./scripts/check-go-coverage.ps1
+          -ProfilePath coverage.out
+          -AggregateMinimum 90
+          -PackageMinimum 80
 
   test:
     name: Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
@@ -62,13 +112,18 @@ jobs:
           - windows-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
 
       - name: Set up Go
-        uses: actions/setup-go@v7
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
           cache: false
+
+      - name: Build executable
+        run: go build ./...
 
       - name: Test
         run: go test ./...

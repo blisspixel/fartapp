@@ -9,8 +9,10 @@ government laboratories, and official project documentation are preferred.
 
 ## Decisions changed by the research
 
-- The neutral ontology is emitter, interface, exterior, and law profile. Human
-  anatomy and Earth physics are presets.
+- The capability-neutral bounded core is occurrence identity, law-context set,
+  scope, and provenance. Outside-formalism cases fail explicitly.
+  Emitter, interface, exterior, dimensional equations, human anatomy, and Earth
+  physics are capability-selected profile structures.
 - Ordinary Earth-biological pressure excursions are far below the ideal-gas
   choking threshold. Choked, underexpanded, locally supersonic, and
   shock-containing are separate labels.
@@ -20,18 +22,20 @@ government laboratories, and official project documentation are preferred.
   unresolved turbulent waveform detail. The audio closure and seed are part of
   provenance.
 - Wetness, breakup, and deposition require more than Weber or Stokes number.
-- Similarity requires matching nondimensional equations, closures, dimensions,
-  topology, normalized conditions, and active coefficients.
+- Dimensional similarity requires matching nondimensional equations, closures,
+  dimensions, topology, normalized conditions, and active coefficients. Other
+  law profiles define their own comparison signature.
 - Conservation, code verification, solution verification, empirical validation,
   and fictional-law consistency are separate certificate claims.
 - Alternate dimensions and universes get explicit law packs. Unsupported laws
   fail explicitly rather than reusing Earth fluid equations.
-- The story director reacts to immutable event facts and never rerolls a valid
+- The story director reacts to context-scoped occurrence claims and never rerolls a valid
   outcome.
 - Physical acoustics, diagnostic sonification, Symphony, and radio are separate
   audio lanes with different truth claims and tests.
-- Social meaning is represented through situated perspectives, institutions,
-  disagreement, and power, never one generated `culture.norms` fact.
+- Social meaning is optional. When supported, it is represented through situated
+  perspectives, disagreement, and power, never one generated `culture.norms`
+  fact or a mandatory institution.
 - CLI, MCP, A2A, TUI, accessibility, and native automation lower into one
   canonical play reducer with explicit knowledge and budget policies.
 - There is no universal agent-difficulty meaning for Level 4. F.A.R.T. Lab uses
@@ -47,13 +51,13 @@ a bounded design consequence and an open question.
 
 | Claim | Evidence and supported scope | Implementation consequence | Open question |
 | --- | --- | --- | --- |
-| Derived artifacts need traceable provenance | [W3C PROV-DM](https://www.w3.org/TR/prov-dm/) defines entities, activities, derivations, and constraints | Use a typed event graph with versioned derivation edges | What minimal subset stays pleasant in a CLI? |
+| Derived artifacts need traceable provenance | [W3C PROV-DM](https://www.w3.org/TR/prov-dm/) defines entities, activities, derivations, and constraints | Use a typed occurrence provenance graph with versioned derivation edges | What minimal subset stays pleasant in a CLI? |
 | Units can be part of program correctness | [Kennedy on units of measure](https://www.microsoft.com/en-us/research/publication/relational-parametricity-and-units-of-measure/) proves dimensional invariance properties for a typed language | Make invalid dimensional combinations difficult to represent | Which quantities need runtime profiles rather than compile-time dimensions? |
 | Prediction before explanation can improve transfer | [Kapur's controlled studies](https://doi.org/10.1111/cogs.12107) concern mathematics learning | Let players predict, fail productively, then inspect and transfer | Does this effect hold for short fluid-dynamics play sessions? |
 | Complex model conclusions need sensitivity analysis | [Saltelli et al.](https://doi.org/10.1002/9780470725184) covers global sensitivity methods | Report influential inputs, interactions, and nonidentifiability | Which methods fit interactive latency and mixed variables? |
 | Sonification must be perceptually evaluated | The [NSF sonification report](https://digitalcommons.unl.edu/psychfacpub/444/) calls for control, interchange, and perceptual testing | Treat sound as both consequence and auditory display, with separate tests | Which mappings teach without ruining the joke or accessibility? |
 | Generator robustness does not establish entertainment | The [PCG literature](https://www.pcgbook.com/) provides generation and evaluation methods, not a universal fun metric | Pair seed sweeps with a curated corpus and human playtests | Which repetition and pacing measures predict shareability? |
-| Protocol parity requires an application contract | [MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28) is stateless at its core and [A2A 1.0](https://a2a-protocol.org/latest/specification/) models longer agent tasks | Keep play handles, state, actions, knowledge, and replay in `PlayService`, not transport sessions | What smallest adapter set remains pleasant for unrelated agents? |
+| Protocol parity requires an application contract | [MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28) is stateless at its core and [A2A 1.0](https://a2a-protocol.org/v1.0.0/specification/) models longer agent tasks | Keep play handles, state, actions, knowledge, and replay in `PlayService`, not transport sessions | What smallest adapter set remains pleasant for unrelated agents? |
 | More modalities can reduce agent performance | [OmniPlay](https://arxiv.org/abs/2508.04361) evaluates reinforcing and conflicting image, video, audio, and text | Identify physical audio, radio, captions, and semantic observations as separate benchmark channels | Which combinations improve reasoning rather than add noise? |
 | Social generation needs situated review | [UNESCO's ICH ethical principles](https://ich.unesco.org/en/ethics-and-ich-00866) emphasize community participation, diversity, and context | Model plural positions and trigger focused review for recognizable living affinity | When is generated resemblance substantial enough to require review? |
 
@@ -75,10 +79,32 @@ a bounded design consequence and an open question.
   establishes integral entrainment theory for buoyant sources.
 - [Gharib, Rambod, and Shariff: vortex-ring formation](https://doi.org/10.1017/S0022112097008410)
   supports source-stroke analysis with important geometry-specific limits.
+- [Peña Fernández and Sesterhenn: compressible starting jets](https://doi.org/10.1017/jfm.2017.128)
+  supports high-fidelity transient cases with shock, shear-layer, and vortex
+  interaction. It is not an ordinary low-pressure puff model.
+- [Zhu et al.: stopping vortex rings](https://doi.org/10.1017/jfm.2024.883)
+  shows why source deceleration and closure remain part of impulse and vortex
+  evolution after the main supply phase.
+- [Flexible-nozzle pulsed-jet experiments](https://doi.org/10.1017/jfm.2024.720)
+  demonstrate that stored elastic energy and closure timing can change impulse
+  and entrainment. Their engineered liquid nozzle supplies a mechanism and
+  benchmark shape, not biological calibration values.
+- [Patel et al.: particle-laden underexpanded jets](https://doi.org/10.1017/jfm.2024.1014)
+  couples an Eulerian gas with Lagrangian particles and finds particle loading
+  can shift shock structure. It bounds later dense high-pressure models.
 - [Ambulatory anorectal pressure study](https://pubmed.ncbi.nlm.nih.gov/3219524/)
   provides scale evidence for ordinary biological pressure excursions.
 - [Measured flatus composition study](https://pubmed.ncbi.nlm.nih.gov/9176210/)
   shows substantial event and subject variability in major and trace gases.
+- [Quantitative GC-TCD measurements](https://pubmed.ncbi.nlm.nih.gov/35161583/)
+  supply a recent measurement-method reference but only a five-subject dietary
+  demonstration, not a universal composition.
+- [Flatus-related motor events](https://pubmed.ncbi.nlm.nih.gov/8601379/) provide
+  small-sample pressure and coordination evidence, not a synchronized source,
+  aperture, mass-flow, and audio waveform.
+- [Twenty-four-hour flatus production](https://pubmed.ncbi.nlm.nih.gov/1648028/)
+  measures daily collected volume, which cannot be assigned to one event without
+  an additional model.
 
 ## Acoustics, interfaces, and rooms
 
@@ -89,6 +115,17 @@ a bounded design consequence and an open question.
   implying identical anatomy.
 - [Single-mass vocal-fold fluid-structure review](https://pmc.ncbi.nlm.nih.gov/articles/PMC2857605/)
   explains why self-sustained oscillation needs aerodynamic feedback.
+- [Collapsible-tube experiments](https://doi.org/10.1063/5.0211227) measure open,
+  collapsed, and self-excited compliant-flow regimes and support an explicit
+  fluid-structure energy budget.
+- [Flexible-wall instability study](https://doi.org/10.1017/jfm.2025.10860)
+  shows that some modes survive reduced modeling while other regimes need a
+  higher-dimensional coupled system. Fidelity must escalate by observable.
+- [Ffowcs Williams and Hawkings](https://doi.org/10.1098/rsta.1969.0031)
+  provides a moving-surface acoustic analogy for later field tiers.
+- [Wave interactions in a screeching jet](https://arxiv.org/abs/2603.04786)
+  analyzes shock-cell, instability-wave, guided-mode, and nonlinear feedback
+  interactions. It supports making screech an earned regime, not an audio flag.
 - [Allen and Berkley: image-source rooms](https://doi.org/10.1121/1.382599)
   provides deterministic rectangular-room impulse-response modeling.
 - [NASA: sound and the vacuum limit](https://science.nasa.gov/ems/02_anatomy/)
@@ -100,6 +137,18 @@ a bounded design consequence and an open question.
   documents Weber, Ohnesorge, breakup-mode, and breakup-time dependencies.
 - [Hinze: breakup in dispersion processes](https://doi.org/10.1002/aic.690010303)
   is a foundational source for turbulent breakup criteria and viscosity effects.
+- [Role of viscosity in turbulent drop breakup](https://doi.org/10.1017/jfm.2023.345)
+  treats the transition as probabilistic and shows why Weber number alone is not
+  a universal Boolean boundary.
+- [The Atomizing Pulsed Jet](https://arxiv.org/abs/2405.01959) reports complex
+  sheet, ligament, droplet, and bubble topology plus a nonconvergent numerical
+  droplet peak near three grid cells. It directly motivates cutoff reporting.
+- [Evaporating turbulent jet-spray DNS](https://arxiv.org/abs/2010.07689)
+  reports clustering and heterogeneous histories that violate naive local
+  isolated-droplet assumptions.
+- [Statistical turbulent aerosol dispersal](https://doi.org/10.1103/PhysRevFluids.10.054302)
+  supports reporting realization variability and ensembles instead of only a
+  mean indoor concentration.
 - [Sandia aerosol transport and deposition report](https://www.osti.gov/servlets/purl/1675151)
   connects response time, Stokes behavior, settling, inertia, diffusion, and
   deposition mechanisms.
@@ -107,6 +156,9 @@ a bounded design consequence and an open question.
   derives Rayleigh-Plesset dynamics and states their assumptions.
 - [Minnaert: musical air bubbles](https://doi.org/10.1080/14786443309462277)
   provides the classic isolated-bubble resonance model.
+- [Detaching-bubble acoustics](https://doi.org/10.1103/xshn-mnb8) and its
+  [open experimental dataset](https://doi.org/10.57745/Y1XCZM) support deriving
+  underwater amplitude from evolving radius, neck, and detachment dynamics.
 - [NASA rarefied CFD and DSMC comparison](https://ntrs.nasa.gov/citations/20230013741)
   discusses continuum-breakdown criteria and rarefied-model applicability.
 - [NASA rocket thrust equation](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/rocket-thrust-equation/)
@@ -137,11 +189,23 @@ a bounded design consequence and an open question.
 - [Buckingham: On Physically Similar Systems](https://doi.org/10.1103/PhysRev.4.345)
   is the original Pi-theorem formulation.
 - [BIPM SI Brochure](https://www.bipm.org/en/publications/si-brochure) defines
-  the International System of Units used by the first Earth law profile.
+  the International System of Units and exact defining constants inherited by
+  the first Earth law profile. Those constants define coordinates, not a
+  physiology or one scalar fart unit.
+- The [International Vocabulary of Metrology](https://www.bipm.org/en/committees/jc/jcgm/publications)
+  distinguishes measurands, calibration, metrological traceability, and
+  uncertainty concepts used by the Reference Pfft procedure.
 - [Barth and Ohlberger: finite-volume methods](https://ntrs.nasa.gov/citations/20030020790)
   provides a foundation for conservative discretization.
 - [Zhang and Shu: positivity-preserving Euler schemes](https://doi.org/10.1016/j.jcp.2010.08.016)
   supports positive density and pressure under explicit numerical conditions.
+- [Sayyari and Yamaleev: implicit positivity-preserving entropy-stable BDF2](https://arxiv.org/abs/2608.20103)
+  is a current research candidate for unsteady compressible viscous flow. Its
+  stated stability and positivity properties do not eliminate application-level
+  convergence and validation work.
+- [Yang and Fu: positivity and entropy behavior on curvilinear AMR](https://arxiv.org/abs/2604.21600)
+  documents conservation, admissibility, and a real tradeoff between one
+  high-order mortar construction and provable entropy stability.
 - [Roache: Method of Manufactured Solutions](https://doi.org/10.1115/1.1436090)
   provides a code-verification method independent of physical validation.
 - [NASA verification and validation tutorial](https://www.grc.nasa.gov/www/wind/valid/tutorial/tutorial.html)
@@ -156,6 +220,46 @@ a bounded design consequence and an open question.
   supports independently addressable deterministic streams.
 - [RFC 8785: JSON Canonicalization Scheme](https://www.rfc-editor.org/rfc/rfc8785.html)
   defines canonical JSON suitable for stable metadata hashing.
+- [NISTIR 8298](https://doi.org/10.6028/NIST.IR.8298) frames CFD verification,
+  validation, and uncertainty as distinct evidence activities.
+
+## CPU, GPU, and numerical language choices
+
+- The current [CUDA Programming Guide](https://docs.nvidia.com/cuda/cuda-programming-guide/)
+  documents scientific GPU execution, floating-point behavior, and multi-GPU
+  facilities. It also warns that bitwise determinism depends on specified
+  hardware and execution conditions.
+- The [CUDA multi-GPU guide](https://docs.nvidia.com/cuda/cuda-programming-guide/03-advanced/multi-gpu-systems.html)
+  covers contexts, decomposition, peer transfers, synchronization, and MPI or
+  communication-library integration. Multi-GPU support is therefore a distinct
+  algorithm and verification milestone, not an automatic switch.
+- The [HIP porting guide](https://rocm.docs.amd.com/projects/HIP/en/latest/how-to/hip_porting_guide.html)
+  defines HIP as a C++ runtime and kernel language for AMD GPUs with close CUDA
+  correspondence. Portability still requires independent AMD evidence.
+- Apple's [Metal compute documentation](https://developer.apple.com/documentation/metal/compute-passes)
+  supports native parallel compute on Apple GPUs. Feature and precision
+  requirements must be queried per target rather than assumed from the API name.
+- [Kokkos backend configuration](https://kokkos.org/kokkos-core-wiki/get-started/configuration-guide.html)
+  supports CPU, CUDA, HIP, and SYCL execution spaces, but currently selects one
+  device backend per build. It is the planned C++20 field-kernel layer, packaged
+  as separate first-party backends. Its proof surface and lack of Metal and MPI
+  support remain explicit costs.
+- [SYCL](https://www.khronos.org/sycl/) is a standards-based C++ portability
+  candidate. It is not selected until project kernels demonstrate target
+  coverage, accuracy, tooling, and competitive performance.
+- [Mojo 1.0](https://mojolang.org/releases/v1.0.0/) shipped on 2026-08-11 and
+  begins a stability policy while deliberately stabilizing only a small initial
+  standard-library surface. Its
+  [system requirements](https://mojolang.org/docs/requirements/) still report no
+  native Windows toolchain. Apple GPU precision, cross-compilation, packaging,
+  profiling, MAX runtime dependencies, and production CFD evidence remain gates.
+  Mojo therefore stays an isolated research backend.
+
+The production choice is a safe Rust control and scalar CPU-reference core, an
+optional C++20 Kokkos field library built separately for CPU, CUDA, HIP, and
+SYCL behind a narrow C ABI, and optional non-certifying Metal preview kernels.
+The ordinary executable remains CPU-complete and free of accelerator
+dependencies. See [COMPUTE.md](COMPUTE.md).
 
 ## Scientific workflow, causality, and software correctness
 
@@ -198,6 +302,11 @@ a bounded design consequence and an open question.
   defines program-loudness and true-peak measurement algorithms. It supports
   reproducible measurement, not one mandatory artistic target or a substitute
   for safe monitor gain.
+- [ITU-T H.872](https://www.itu.int/epublications/publication/itu-t-h-872-2024-10-safe-listening-for-video-gameplay-and-esports)
+  defines safe-listening provisions for video gameplay and esports, including
+  information, controls, loudness, and true-peak targets. The Lab applies its
+  software profile to idents, stems, mixes, transitions, and representative long
+  Chill sessions while retaining independent dynamic-range controls.
 - [ITU-R BS.1534-3](https://www.itu.int/rec/R-REC-BS.1534-3-201510-I/en)
   and [ITU-R BS.1116-3](https://www.itu.int/rec/R-REC-BS.1116-3-201502-I/en)
   provide controlled methods for intermediate and small audio impairments.
@@ -224,6 +333,15 @@ a bounded design consequence and an open question.
   independently from this repository's Apache License 2.0. Generated assets
   therefore require a project rights decision at release time. Provider access
   never runs during ordinary CI or becomes a player dependency.
+- The [USPTO sound-mark examples](https://www.uspto.gov/trademarks/soundmarks/trademark-sound-mark-examples)
+  confirm that audio signatures can function as registered source identifiers,
+  including the familiar cinema reference that motivated this feature. The
+  project creates an independently specified gesture and performs similarity
+  review rather than treating genre or technical differences as clearance.
+- The USPTO's [sound-mark filing guidance](https://www.uspto.gov/trademarks/basics/mark-drawings-trademarks)
+  requires an audio reproduction and detailed written description for a sound
+  mark. F.A.R.T. Lab preserves a canonical master and description even if no
+  registration is pursued.
 
 ## Agent environments and interoperability
 
@@ -231,12 +349,15 @@ a bounded design consequence and an open question.
   removes the initialize handshake and protocol session, adds discovery and
   header routing, moves long-running Tasks into an extension, and deprecates
   Roots, Sampling, Logging, and legacy HTTP+SSE. Stateful games should return
-  explicit application handles.
+  explicit application handles. Its Tier 1 TypeScript, Python, Go, and C# SDKs
+  support the revision, while the Rust SDK is described as beta. The project
+  requires a maturity and conformance gate rather than selecting by language
+  preference.
 - The official [MCP conformance framework](https://github.com/modelcontextprotocol/conformance)
   validates messages and scenarios for declared protocol revisions. Its
   2026-07-28 coverage and open harness issues must be pinned and reported rather
   than hidden in a permanent expected-failure baseline.
-- The [A2A 1.0 specification](https://a2a-protocol.org/latest/specification/)
+- The [A2A 1.0.0 specification](https://a2a-protocol.org/v1.0.0/specification/)
   defines Agent Cards, skills, messages, tasks, artifacts, streaming, bindings,
   authorization, and capability equivalence. The latest reviewed patch is
   [v1.0.1](https://github.com/a2aproject/A2A/releases/tag/v1.0.1), while wire
@@ -268,6 +389,12 @@ a bounded design consequence and an open question.
 - [OmniGameArena](https://arxiv.org/abs/2606.09826) motivates measuring
   improvement over repeated play and transfer to held-out variants rather than
   reporting only cold-start completion.
+- The name ClawBench is currently ambiguous. The
+  [claw-bench repository](https://github.com/claw-bench/claw-bench) is a generic
+  pytest task suite whose public counts are inconsistent, while
+  [ShellBench](https://github.com/openclaw/shellbench) formerly used the same
+  name and emphasizes trace and reliability analysis. Neither establishes a
+  scientific meaning for `Level 4`; both are implementation references only.
 
 ## Culture, religion, and public interest
 
@@ -278,6 +405,13 @@ a bounded design consequence and an open question.
 - [UNESCO's ethical principles for intangible cultural heritage](https://ich.unesco.org/en/ethics-and-ich-00866)
   emphasize community participation, diversity, consent, and customary access.
   Sacred or private contexts are boundaries, not random comic props.
+- The [UNESCO Recommendation on the Ethics of Artificial Intelligence](https://www.unesco.org/en/artificial-intelligence/recommendation-ethics)
+  supports accountable human oversight, diversity, bias assessment, and digital
+  access in generated-content and agent systems.
+- The [United Nations Declaration on the Rights of Indigenous Peoples](https://www.un.org/development/desa/indigenouspoples/wp-content/uploads/sites/19/2018/11/UNDRIP_E_web.pdf)
+  protects Indigenous cultural, intellectual, religious, and spiritual material
+  and makes real provenance, authority, consent, correction, and withdrawal
+  necessary for any high-affinity authored pack.
 - The [Design Justice Network Principles](https://designjustice.org/read-the-principles)
   center people affected by design decisions and support focused, compensated
   review when content closely resembles a living community.
@@ -292,6 +426,13 @@ a bounded design consequence and an open question.
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/) and the Xbox Accessibility
   Guidelines inform equivalent meaning, controllable timing, input alternatives,
   captions, and clear state across terminal and native surfaces.
+- The [Stanford Encyclopedia of Philosophy overview of Japanese aesthetics](https://plato.stanford.edu/entries/japanese-aesthetics/)
+  supplies historical and philosophical context for impermanence, `wabi`, and
+  `sabi`. It does not turn them into interchangeable branding phrases.
+- The Government of Japan's discussion of
+  [`ichigo ichie`](https://www.gov-online.go.jp/eng/publicity/book/hlj/html/202112/202112_05_en.html)
+  supports the one-encounter framing. The implementation adopts impermanence and
+  attention, not decorative Japanese motifs or claims of cultural ownership.
 
 These sources do not certify generated humor as respectful or funny. Structural
 checks catch predictable failures; situated people judge meaning, dignity, and
@@ -312,6 +453,10 @@ comic quality.
 - [Xbox Accessibility Guidelines](https://learn.microsoft.com/en-us/xbox/accessibility/guidelines)
   covers text, contrast, narration, inputs, motion, photosensitivity, difficulty,
   time limits, and documentation.
+- [Microsoft Gaming Accessibility Testing guidance](https://learn.microsoft.com/en-us/xbox/accessibility/mgats)
+  supports involving players with disabilities once a representative slice is
+  stable, followed by remediation and retesting rather than a final-release-only
+  review.
 - [Accessible Player Experiences](https://accessible.games/accessible-player-experiences/)
   frames accessibility through concrete player experience patterns.
 
@@ -319,6 +464,11 @@ comic quality.
 
 - [Command Line Interface Guidelines](https://clig.dev/) supports a human-first,
   composable, predictable command experience.
+- [The Update Framework](https://theupdateframework.io/) defines signed metadata
+  roles and defenses against rollback, freeze, and mix-and-match attacks used by
+  the standalone update design.
+- [Sigstore verification documentation](https://docs.sigstore.dev/cosign/verifying/verify/)
+  supports identity and transparency-bundle verification for release artifacts.
 - [clap derive](https://docs.rs/clap/latest/clap/_derive/),
   [completion generation](https://docs.rs/clap_complete/latest/clap_complete/),
   and [manual generation](https://docs.rs/clap_mangen/latest/clap_mangen/struct.Man.html)
@@ -354,3 +504,45 @@ comic quality.
   define native signing requirements.
 - [cargo-dist configuration](https://axodotdev.github.io/cargo-dist/book/reference/config.html)
   is a possible release scaffold that must be pinned and reviewed before use.
+
+## Language, scripts, and observer communication
+
+- [Unicode Locale Data Markup Language](https://unicode.org/reports/tr35/)
+  defines the current CLDR model for locale identifiers, numbers, units, dates,
+  messages, and related data. The Lab stores semantic values independently and
+  applies these conventions only at presentation and input boundaries.
+- [Unicode Bidirectional Algorithm](https://www.unicode.org/reports/tr9/)
+  defines bidirectional ordering behavior. Terminal and native surfaces must be
+  tested with real right-to-left text, isolates, hostile control characters,
+  cursor movement, selection, and mixed scientific notation.
+- [Project Fluent](https://projectfluent.org/) is a candidate localization model
+  because it lets translators control grammar and expression without assembling
+  sentences from fragments. Adoption still requires dependency and terminal
+  rendering review.
+- Human language is one observer communication channel. Pressure, spectra,
+  chemistry, fields, images, gestures, and unknown channels use the same
+  capability and loss model without being forced through English prose.
+
+## Artifacts, identity, and public remix
+
+- The [OpenAI Terms of Use](https://openai.com/policies/terms-of-use/) state that,
+  as between the user and OpenAI and to the extent permitted by law, the user
+  owns output, while warning that output may not be unique and that the user
+  remains responsible for it. Generated concepts still require prompt, input,
+  similarity, rights, and public-release review; provider terms do not establish
+  copyrightability or eliminate third-party risk.
+- [QR-Bloom](https://github.com/physical-computation/qr-bloom) demonstrates a
+  three-dimensional voxel tree whose top projection remains scannable. Its
+  repository also credits source shapes with restrictions, so F.A.R.T. Lab uses
+  only the high-level constraint as inspiration and copies no code, weights,
+  meshes, or assets.
+- [IBM Plex](https://github.com/IBM/plex) supplies the candidate Sans, Mono, and
+  Math family under the SIL Open Font License. Fonts enter releases only through
+  an explicit asset and license manifest.
+- [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) does not grant
+  permission to use licensor names or marks except for reasonable descriptive
+  use. Source licensing and trademark permission therefore remain separate.
+- [USPTO trademark search guidance](https://www.uspto.gov/trademarks/search)
+  supports a real clearance process before locking names, marks, merchandise,
+  store listings, or implied exclusivity. A repository search is not legal
+  clearance.

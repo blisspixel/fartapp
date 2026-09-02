@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Planned F.A.R.T. Lab terminal interface</title>
+  <desc id="desc">An htop-style scientific terminal dashboard with live reference-event fields, solver status, uncertainty, acoustic plots, and conservation ledgers.</desc>
+  <rect width="1600" height="900" fill="#0B0F12"/>
+  <g font-family="Cascadia Mono, Consolas, monospace">
+    <rect x="18" y="16" width="1564" height="58" rx="5" fill="#12191F" stroke="#58D6D0" stroke-opacity=".7"/>
+    <text x="42" y="52" font-size="22" font-weight="700" fill="#F2EEE6">F.A.R.T. LAB</text>
+    <text x="225" y="52" font-size="18" fill="#58D6D0">REFERENCE PFFT / LIVE INSTRUMENT</text>
+    <text x="1015" y="52" font-size="16" fill="#F2EEE6">t  1.824 s</text>
+    <text x="1165" y="52" font-size="16" fill="#E6B85C">D1 REPLAYABLE</text>
+    <rect x="1350" y="27" width="202" height="36" rx="3" fill="#0B0F12" stroke="#E6B85C"/>
+    <text x="1371" y="51" font-size="15" font-weight="700" fill="#F2EEE6">PLANNED CONCEPT</text>
+
+    <g fill="#12191F" stroke="#34414A">
+      <rect x="18" y="88" width="330" height="414" rx="4"/>
+      <rect x="362" y="88" width="770" height="414" rx="4"/>
+      <rect x="1146" y="88" width="436" height="414" rx="4"/>
+      <rect x="18" y="516" width="504" height="278" rx="4"/>
+      <rect x="536" y="516" width="508" height="278" rx="4"/>
+      <rect x="1058" y="516" width="524" height="278" rx="4"/>
+      <rect x="18" y="808" width="1564" height="74" rx="4"/>
+    </g>
+
+    <g font-size="16" font-weight="700" fill="#58D6D0">
+      <text x="38" y="119">EMITTER + EXTERIOR</text>
+      <text x="382" y="119">FIELD / PLUMEPRINT</text>
+      <text x="1166" y="119">REGIME + SOLVER</text>
+      <text x="38" y="547">OBSERVER ACOUSTICS</text>
+      <text x="556" y="547">UNCERTAINTY BUDGET</text>
+      <text x="1078" y="547">CONSERVATION OF ASS</text>
+      <text x="38" y="839">EVENT TIMELINE</text>
+    </g>
+
+    <g font-size="14" fill="#9EADB7">
+      <text x="38" y="156">ambient pressure</text><text x="248" y="156" text-anchor="end" fill="#F2EEE6">101.325 kPa</text>
+      <text x="38" y="187">temperature</text><text x="248" y="187" text-anchor="end" fill="#F2EEE6">293.15 K</text>
+      <text x="38" y="218">relative humidity</text><text x="248" y="218" text-anchor="end" fill="#F2EEE6">50.0 %</text>
+      <text x="38" y="249">reservoir delta p</text><text x="248" y="249" text-anchor="end" fill="#F2EEE6">0.91 kPa</text>
+      <text x="38" y="280">effective area</text><text x="248" y="280" text-anchor="end" fill="#F2EEE6">2.18 cm2</text>
+      <text x="38" y="311">mass flow</text><text x="248" y="311" text-anchor="end" fill="#F2EEE6">0.173 g/s</text>
+      <text x="38" y="342">source inventory</text><text x="248" y="342" text-anchor="end" fill="#F2EEE6">0.061 g</text>
+      <text x="38" y="373">Mach / Reynolds</text><text x="248" y="373" text-anchor="end" fill="#E6B85C">0.004 / 1.7e3</text>
+      <text x="38" y="404">recording</text><text x="248" y="404" text-anchor="end" fill="#F2EEE6">ephemeral</text>
+      <text x="38" y="435">event nonce</text><text x="248" y="435" text-anchor="end" fill="#F2EEE6">committed</text>
+    </g>
+    <rect x="38" y="458" width="280" height="16" rx="2" fill="#25313A"/>
+    <rect x="38" y="458" width="112" height="16" rx="2" fill="#58D6D0"/>
+    <text x="38" y="491" font-size="12" fill="#9EADB7">finite source inventory  40.0%</text>
+
+    <g stroke="#26343C" stroke-width="1">
+      <path d="M390 148H1104M390 208H1104M390 268H1104M390 328H1104M390 388H1104M390 448H1104"/>
+      <path d="M450 138V472M570 138V472M690 138V472M810 138V472M930 138V472M1050 138V472"/>
+    </g>
+    <g fill="none" stroke-linecap="round">
+      <path d="M400 354 C465 350 493 313 544 303 C600 291 628 331 674 320 C731 307 749 244 816 254 C868 262 894 313 948 291 C1001 270 1014 222 1093 239" stroke="#58D6D0" stroke-width="3"/>
+      <path d="M400 370 C471 372 510 343 559 346 C618 350 659 379 706 361 C773 336 804 291 859 301 C922 313 958 347 1018 325 C1051 313 1070 287 1093 276" stroke="#58D6D0" stroke-width="1.4" stroke-opacity=".55"/>
+      <path d="M400 382 C462 397 511 383 562 397 C618 411 650 433 711 417 C770 402 826 353 881 371 C937 389 984 418 1093 390" stroke="#E6B85C" stroke-width="1.6" stroke-opacity=".85"/>
+      <ellipse cx="809" cy="306" rx="96" ry="62" stroke="#58D6D0" stroke-opacity=".24"/>
+      <ellipse cx="809" cy="306" rx="48" ry="31" stroke="#58D6D0" stroke-opacity=".32"/>
+    </g>
+    <g fill="#F2EEE6" font-size="12">
+      <text x="392" y="467">source</text><text x="1048" y="467">observer</text>
+    </g>
+    <g fill="#58D6D0">
+      <circle cx="544" cy="303" r="3"/><circle cx="674" cy="320" r="3"/><circle cx="816" cy="254" r="3"/><circle cx="948" cy="291" r="3"/>
+    </g>
+
+    <g font-size="14">
+      <text x="1166" y="156" fill="#9EADB7">material</text><text x="1460" y="156" fill="#F2EEE6">DRY</text>
+      <text x="1166" y="187" fill="#9EADB7">flow</text><text x="1460" y="187" fill="#F2EEE6">SUBSONIC PUFF</text>
+      <text x="1166" y="218" fill="#9EADB7">wetness boundary</text><text x="1460" y="218" fill="#58D6D0">CLEAR</text>
+      <text x="1166" y="249" fill="#9EADB7">choked criterion</text><text x="1460" y="249" fill="#58D6D0">CLEAR</text>
+      <text x="1166" y="280" fill="#9EADB7">continuum Kn</text><text x="1460" y="280" fill="#F2EEE6">6.2e-6</text>
+      <text x="1166" y="311" fill="#9EADB7">solver</text><text x="1460" y="311" fill="#F2EEE6">ANALYTICAL A</text>
+      <text x="1166" y="342" fill="#9EADB7">step</text><text x="1460" y="342" fill="#F2EEE6">0.125 ms</text>
+      <text x="1166" y="373" fill="#9EADB7">positivity</text><text x="1460" y="373" fill="#58D6D0">PASS</text>
+      <text x="1166" y="404" fill="#9EADB7">model validity</text><text x="1460" y="404" fill="#E6B85C">BOUNDED</text>
+      <text x="1166" y="435" fill="#9EADB7">observer sound</text><text x="1460" y="435" fill="#F2EEE6">23.4 dB</text>
+    </g>
+    <rect x="1166" y="460" width="374" height="14" rx="2" fill="#25313A"/>
+    <rect x="1166" y="460" width="312" height="14" rx="2" fill="#E6B85C"/>
+    <text x="1166" y="491" font-size="12" fill="#9EADB7">scenario validity margin</text>
+
+    <g stroke="#26343C"><path d="M43 584H494M43 631H494M43 678H494M43 725H494"/><path d="M99 566V758M180 566V758M261 566V758M342 566V758M423 566V758"/></g>
+    <path d="M43 691 C93 687 123 626 168 642 C220 660 246 589 302 612 C353 632 385 669 426 651 C456 638 475 643 494 640" fill="none" stroke="#58D6D0" stroke-width="2"/>
+    <path d="M43 714 C102 708 127 707 172 710 C230 714 257 695 312 703 C366 711 417 697 494 706" fill="none" stroke="#E6B85C" stroke-width="1.5"/>
+    <text x="42" y="776" font-size="12" fill="#9EADB7">pressure waveform / acoustic-energy envelope / observer A-01</text>
+
+    <g font-size="13">
+      <text x="556" y="581" fill="#9EADB7">ambient pressure</text><rect x="718" y="569" width="273" height="12" fill="#25313A"/><rect x="718" y="569" width="58" height="12" fill="#58D6D0"/><text x="1000" y="581" text-anchor="end" fill="#F2EEE6">0.8%</text>
+      <text x="556" y="625" fill="#9EADB7">source state</text><rect x="718" y="613" width="273" height="12" fill="#25313A"/><rect x="718" y="613" width="173" height="12" fill="#E6B85C"/><text x="1000" y="625" text-anchor="end" fill="#F2EEE6">41.2%</text>
+      <text x="556" y="669" fill="#9EADB7">interface closure</text><rect x="718" y="657" width="273" height="12" fill="#25313A"/><rect x="718" y="657" width="221" height="12" fill="#E6B85C"/><text x="1000" y="669" text-anchor="end" fill="#F2EEE6">52.7%</text>
+      <text x="556" y="713" fill="#9EADB7">numerics</text><rect x="718" y="701" width="273" height="12" fill="#25313A"/><rect x="718" y="701" width="23" height="12" fill="#58D6D0"/><text x="1000" y="713" text-anchor="end" fill="#F2EEE6">0.3%</text>
+      <text x="556" y="757" fill="#9EADB7">observer model</text><rect x="718" y="745" width="273" height="12" fill="#25313A"/><rect x="718" y="745" width="78" height="12" fill="#58D6D0"/><text x="1000" y="757" text-anchor="end" fill="#F2EEE6">5.0%</text>
+    </g>
+
+    <g font-size="14">
+      <circle cx="1090" cy="590" r="11" fill="none" stroke="#58D6D0" stroke-width="2"/><text x="1115" y="595" fill="#F2EEE6">MASS</text><text x="1545" y="595" text-anchor="end" fill="#58D6D0">PASS  1.2e-10 kg</text>
+      <path d="M1078 645L1100 633L1100 657Z" fill="none" stroke="#58D6D0" stroke-width="2"/><text x="1115" y="650" fill="#F2EEE6">MOMENTUM</text><text x="1545" y="650" text-anchor="end" fill="#58D6D0">PASS  3.4e-9 N s</text>
+      <path d="M1089 686L1102 699L1089 712L1076 699Z" fill="none" stroke="#58D6D0" stroke-width="2"/><text x="1115" y="705" fill="#F2EEE6">ENERGY</text><text x="1545" y="705" text-anchor="end" fill="#58D6D0">PASS  5.7e-8 J</text>
+      <text x="1078" y="755" fill="#9EADB7">certificate</text><text x="1545" y="755" text-anchor="end" fill="#E6B85C">3 pass / 2 inconclusive</text>
+    </g>
+
+    <line x1="190" y1="845" x2="1544" y2="845" stroke="#34414A" stroke-width="2"/>
+    <line x1="190" y1="845" x2="1136" y2="845" stroke="#58D6D0" stroke-width="4"/>
+    <g fill="#58D6D0"><circle cx="294" cy="845" r="6"/><circle cx="539" cy="845" r="6"/><circle cx="836" cy="845" r="6"/><circle cx="1136" cy="845" r="7"/></g>
+    <g font-size="11" fill="#9EADB7"><text x="270" y="866">OPEN</text><text x="505" y="866">PEAK FLOW</text><text x="801" y="866">CUTOFF</text><text x="1088" y="866">PUFF DECAY</text></g>
+    <text x="1225" y="868" font-size="12" fill="#F2EEE6">[q] quit  [tab] views  [p] pause  [?] inspect</text>
+  </g>
+</svg>

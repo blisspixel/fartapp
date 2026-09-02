@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 2,
+  "reviewedAt": "2026-09-01",
+  "assets": [
+    {
+      "path": "docs/media/readme/cli-v0.6-current.png",
+      "kind": "current-cli-capture",
+      "status": "current",
+      "width": 1200,
+      "height": 360,
+      "bytes": 23082,
+      "maxBytes": 50000,
+      "sha256": "45700fd5fe218d2857a211fbea6401bc4cd9c69df1d14e4116a9450833fcc10e",
+      "origin": "captured-from-project",
+      "capture": "go run . 3",
+      "sourceRevision": "8efc48727d36ecef050b9b9b933d6a17aaa0fa5c",
+      "license": "Apache-2.0",
+      "rightsStatus": "approved-for-public-repository",
+      "rightsBasis": "Captured from the Apache-2.0 project executable with no third-party media input",
+      "rightsReviewedAt": "2026-09-01",
+      "reviewerRole": "repository-maintainer",
+      "replacementHistory": [],
+      "referencedBy": ["README.md"],
+      "alt": "Current Go CLI printing braaap with the respectable rating"
+    },
+    {
+      "path": "docs/media/readme/terminal-lab-concept-v1.svg",
+      "kind": "terminal-interface-concept",
+      "status": "planned",
+      "width": 1600,
+      "height": 900,
+      "bytes": 9679,
+      "maxBytes": 30000,
+      "sha256": "2541549688d09dafa39bbf146eb42a3893d8a925c5afccba6177f0eb9294fef4",
+      "origin": "project-authored-vector",
+      "brief": "Planned htop-style Earth-discharge terminal with plume, audio, regime, and conservation panes",
+      "sourceRevision": "sha256:2541549688d09dafa39bbf146eb42a3893d8a925c5afccba6177f0eb9294fef4",
+      "license": "Apache-2.0",
+      "rightsStatus": "approved-for-public-repository",
+      "rightsBasis": "Project-authored vector with no third-party source asset",
+      "rightsReviewedAt": "2026-09-01",
+      "reviewerRole": "repository-maintainer",
+      "replacementHistory": [],
+      "referencedBy": ["README.md"],
+      "alt": "Planned Earth-discharge Terminal Lab dashboard with scientific panes and a character-cell plume"
+    },
+    {
+      "path": "docs/media/readme/ordinary-enclosure-concept-v1.webp",
+      "kind": "native-interface-concept",
+      "status": "planned",
+      "width": 1600,
+      "height": 900,
+      "bytes": 155200,
+      "maxBytes": 200000,
+      "sha256": "7a28217d0b6eb9dbd0a55cfbb2a1ae262f84bb8f4d748ba2c1ff624ea94f6eae",
+      "origin": "project-generated-concept",
+      "brief": "Biology-neutral soft fixture, functionless enclosure, low-energy dry flow, serious native scientific overlays",
+      "provenance": {
+        "generator": "OpenAI built-in image generation",
+        "model": "service-managed image model",
+        "generatedAt": "2026-09-01",
+        "sanitizedPrompt": "Minimal edit of the planned native scientific instrument in a functionless reference enclosure: preserve the biology-neutral soft fixture, subtle low-energy cyan flow, occurrence and ledger overlays; correct the acronym expansion and mark the event identifier as illustrative; add no body, creature, bathroom, pressure tank, browser, signature, or watermark",
+        "sourceAssetSha256": "2387436ced62498548aeb98d1cfa320100ab8f1abf217554b959733ce4595631",
+        "inputAssets": [
+          {
+            "repositoryPathAtGeneration": "docs/media/readme/ordinary-enclosure-concept-v1.webp",
+            "sha256": "80da0b14b0f3221f6475a19879c05062f274ab7f55d240f4f6dec3e45330ba8a",
+            "role": "prior generated concept supplied for a minimal text correction"
+          }
+        ],
+        "postProcessing": "Scaled and center-cropped to 1600x900, then encoded as WebP with ffmpeg libwebp quality 88 and compression level 6"
+      },
+      "license": "Apache-2.0",
+      "rightsStatus": "approved-for-public-repository",
+      "rightsBasis": "Repository-owner-directed generation using only the prior project-generated concept as an input and no third-party reference image; provider terms assign output rights as between provider and user; output reviewed and approved for Apache-2.0 public distribution",
+      "rightsReviewedAt": "2026-09-01",
+      "reviewerRole": "repository-maintainer",
+      "replacementHistory": [
+        {
+          "replacedPath": "docs/media/readme/ordinary-bathroom-concept-v1.webp",
+          "reason": "Removed human-room bias and replaced it with the biology-neutral Earth-profile Reference Enclosure",
+          "reviewedAt": "2026-09-01"
+        }
+      ],
+      "referencedBy": ["README.md"],
+      "alt": "Planned native Earth-profile view of a biology-neutral soft fixture producing a subtle flow in a reference enclosure"
+    },
+    {
+      "path": "docs/media/pressure-standard/pressure-standard-concept-v1.webp",
+      "kind": "audio-ident-concept",
+      "status": "planned",
+      "width": 1600,
+      "height": 900,
+      "bytes": 178404,
+      "maxBytes": 250000,
+      "sha256": "85222376c99d9e929f19a61293dabe0c1ce544b031c3b5a149f4ef4e06594c67",
+      "origin": "project-generated-concept",
+      "brief": "Original calibration chamber, wavefront orbit, metrology grid, and conservation response",
+      "provenance": {
+        "generator": "OpenAI built-in image generation",
+        "model": "service-managed image model",
+        "generatedAt": "2026-09-01",
+        "sanitizedPrompt": "Original Pressure Standard ident concept with a black calibration chamber, amber wavefront orbit, cyan metrology grid, six-second grammar, conservation response, no imitation, anatomy, brown imagery, signature, or watermark",
+        "sourceAssetSha256": "2f1cfbd769ae6ca2737dced9b0f594f8653156acd220514d1b877da2eb919e8a",
+        "inputAssets": [],
+        "postProcessing": "Scaled and center-cropped to 1600x900 and encoded as WebP"
+      },
+      "license": "Apache-2.0",
+      "rightsStatus": "approved-for-public-repository",
+      "rightsBasis": "Repository-owner-directed generation with no reference image; provider terms assign output rights as between provider and user; output reviewed and approved for Apache-2.0 public distribution",
+      "rightsReviewedAt": "2026-09-01",
+      "reviewerRole": "repository-maintainer",
+      "replacementHistory": [],
+      "referencedBy": ["README.md"],
+      "alt": "Planned Pressure Standard ident with chamber, wavefront, metrology grid, and ledger responses"
+    },
+    {
+      "path": "brand/source/open-isobar-candidate.svg",
+      "kind": "candidate-brand-mark",
+      "status": "planned",
+      "width": 256,
+      "height": 256,
+      "bytes": 754,
+      "maxBytes": 10000,
+      "sha256": "7269e73ab4f09b3db42c44b12cba9009e7698eca093e411094df3cf5a41e9ecb",
+      "origin": "project-authored-vector",
+      "brief": "Open Isobar candidate mark with an open pressure contour and one asymmetric wavefront",
+      "sourceRevision": "sha256:7269e73ab4f09b3db42c44b12cba9009e7698eca093e411094df3cf5a41e9ecb",
+      "license": "Apache-2.0",
+      "rightsStatus": "approved-for-public-repository",
+      "rightsBasis": "Project-authored vector with no third-party source asset; candidate mark remains uncleared",
+      "rightsReviewedAt": "2026-09-01",
+      "reviewerRole": "repository-maintainer",
+      "replacementHistory": [],
+      "clearanceStatus": "candidate-not-cleared",
+      "referencedBy": ["README.md"],
+      "alt": "Open Isobar candidate mark with an ivory open contour, cyan wavefront, and amber reference point"
+    }
+  ]
+}

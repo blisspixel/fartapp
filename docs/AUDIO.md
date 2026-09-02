@@ -1,12 +1,17 @@
-# Audio, Symphony, and in-world radio
+# Audio, Symphony, and player soundtrack profiles
 
-This document defines the planned audio system. It keeps one promise simple:
+This document defines optional human-audible projections and soundtrack
+systems. A generic occurrence may have no sound, medium, clock, waveform,
+observer, plume, or audio lane. For a compatible physical-acoustic profile, one
+promise is simple:
 
-> Every emission is generated from a versioned scenario, physical history,
-> closure, observer, and seed. A deliberate replay recreates the same snowflake.
+> Every physical-audio render is generated from applicable versioned scenario
+> claims, source history, closure, measurement context, scenario seed, and event
+> nonce. Replay presents its record. It does not assert source-law recurrence.
 
-Two identical certified events may reproduce identical output. That is correct.
-Uniqueness comes from the event, not from decorative randomness.
+An explicit numerical reconstruction may reproduce identical sample bytes. That
+is correct and useful for verification. It receives a new operation and
+encounter identity. Uniqueness comes from the occurrence, not decorative noise.
 
 ## Four separate audio lanes
 
@@ -15,17 +20,118 @@ Uniqueness comes from the event, not from decorative randomness.
 | Physical acoustics | Sound and vibration derived from the event and its medium | A physical projection within stated model limits |
 | Diagnostic sonification | Audible inspection of pressure, flow, uncertainty, and proof | A declared data mapping |
 | Symphony Mode | A musical composition derived from event features | An artistic interpretation |
-| In-world radio | Music for play, Broadcast, and watching episodes | An independent soundtrack |
+| Player soundtrack | Music for play, Broadcast, and watching episodes | An independent Earth-facing presentation; diegetic only when supported |
 
 Narration and dialogue use a fifth speech bus. Players can mix or mute every bus
 independently. A radio track is never used as an emission, and Symphony Mode
 never claims harmony is a law of fluid dynamics. The physical event must render
 correctly when every music asset is absent.
 
+## Compatible physical-acoustic source graph
+
+For an Earth physical-acoustic profile, audio is a typed projection of the same
+occurrence account as applicable plume and ledger views. The source graph can
+contain:
+
+```text
+reservoir and interface history
+  -> volume-flow monopole and interface-loading dipole
+resolved plume field
+  -> turbulent quadrupoles and directly resolved pressure
+underexpanded field
+  -> broadband shock noise and verified feedback tones
+droplets, particles, bubbles, impacts, and structures
+  -> phase, contact, volume, and vibration sources
+all active sources
+  -> propagation -> boundaries and room -> observer response
+```
+
+The analytical tier uses compact-source and modal approximations with explicit
+frequency and distance limits. The reduced real-time tier adds a
+state-conditioned turbulent closure and resolved interface motion. The field
+tier can use Lighthill or Ffowcs Williams-Hawkings formulations, nested control
+surfaces, or directly resolved acoustics where the mesh and timestep support the
+claimed band. Underwater sound uses bubble and neck dynamics, including coupled
+bubbles when independence fails.
+
+Screech is not a sound effect. It requires a compatible underexpanded jet,
+shock-cell structure, instability waves, upstream feedback path, and a resolved
+or validated reduced feedback model. No physical-audio node exists merely
+because the requested prompt contains `supersonic` or `screech`.
+
+Every rendered block records applicable source-node identities, measurement
+support, location or motion when defined, propagation model, ordering or sample
+clock, resampling, random stream, calibration, limiter, uncertainty, and hash.
+Verification includes analytical source fields,
+rectangular-room modes, nested acoustic-surface agreement, cross-backend parity,
+energy provenance, and exact absence of exterior propagation in vacuum.
+
+## The Pressure Standard
+
+F.A.R.T. Lab needs one unmistakable cinema-grade audio ident. Its working title
+is **The Pressure Standard**.
+
+It is an original certified calibration sequence, not an imitation of another
+audio logo and not a prompt asking for one. The master is derived from the fixed
+`RP-1 definition event`, physical-audio closure, Symphony mapping, spatial mix,
+haptic envelope, and caption timeline. Its certified recording can ship for
+instant startup because it is one named ident, not a prerecorded emission
+selected as the result of a simulated fart.
+
+The initial six-second composition brief is:
+
+1. One dry reference impulse reveals the chamber through its reflections.
+2. Mass, momentum, and energy answer as three distinct rhythmic ledger pulses.
+3. The room response moves around the listener while the original impulse stays
+   spatially traceable.
+4. The exterior acoustic lane cuts to true silence for the vacuum lemma while a
+   clearly internal structural vibration continues.
+5. The ledgers close with one compact, low-frequency seal.
+6. After a precise pause, a tiny dry release completes calibration.
+
+The memorable gesture is impulse, orbit, vacuum cut, ledger seal, polite release.
+It must not use the familiar swarm of sliding pitches resolving into a sustained
+chord. Blind similarity review covers registered and widely recognized sound
+marks before release.
+
+Brand recognition requires stability. `pressure-standard.v1` uses one canonical
+scenario and mapping within a major release. Alternate-world translations are
+collectible demonstrations, not random replacements for the master ident. Every
+master package includes:
+
+```text
+reference scenario and occurrence-result hash
+physical, score, and room stems
+stereo, binaural, and supported surround renders
+haptic envelope
+caption and text-only timelines
+loudness, true-peak, and safety report
+similarity and rights approval
+```
+
+The native app may play the ident only after first-run audio preferences are
+known. It is instantly skippable and has silent, reduced-duration, reduced-bass,
+no-haptics, and captioned variants. It does not autoplay in CLI or TUI. A CLI
+command can inspect, verify, render, or deliberately play it:
+
+```console
+fart ident inspect pressure-standard.v1
+fart ident verify pressure-standard.v1 --check-hash
+fart ident render pressure-standard.v1 --format wav
+fart ident play pressure-standard.v1
+```
+
+Production begins from the declared acoustic and musical brief, never another
+brand name, recording, score, or reference audio. The project records a sound
+mark search and legal review before treating the ident as a protected brand
+asset. Filing or registration is a later business decision, not a scientific
+claim.
+
 ## Symphony Mode
 
 Symphony Mode turns the snowflake into an inspectable score. It reads normalized
-features from the event graph rather than analyzing the final fart waveform.
+features from the occurrence provenance graph rather than analyzing the final
+fart waveform.
 
 Three listening modes keep the claim honest:
 
@@ -74,11 +180,13 @@ Initial experiences include:
 The canonical Symphony artifact is a small semantic event list. WAV and text
 are initial renders. MIDI can follow when arbitrary tuning support is mature.
 
-## In-world radio
+## Earth-facing player soundtrack
 
-Radio exists so Quick Play and Broadcast are genuinely pleasant to watch. It is
-music first and worldbuilding second. The concept can remain unnoticed for a
-whole track.
+The player soundtrack exists so Quick Play and Broadcast are genuinely pleasant
+to watch. It is music first and worldbuilding second. The concept can remain
+unnoticed for a whole track. The first station families are Earth-facing
+presentation profiles, not evidence that a source context has sound, radio,
+hosts, or broadcast institutions.
 
 The first station families are:
 
@@ -86,7 +194,7 @@ The first station families are:
 - **Night Side 106.1:** deep house, melodic EDM, and city-after-dark energy.
 - **The Local Medium 88.4:** alternative hip-hop and neo-soul with original,
   restrained lyrics about pressure, distance, infrastructure, awkward silence,
-  and life in the source world.
+  and life in an authored source context.
 - **Scale Free FM:** dub techno and minimal electronics whose motifs reappear at
   different scales.
 - **Public Resonance:** ambient orchestral and chamber minimalism from a very
@@ -109,10 +217,11 @@ Lyrics and captions are available on request. Production metadata does not
 invade the listening interface.
 
 Optional station IDs, transitions, weather, traffic, and very short host breaks
-build the source-world illusion between tracks. Music remains the majority of
-airtime. A host can misinterpret an event only as a clearly diegetic opinion;
-measured claims still come from immutable facts. Host-free and music-only modes
-are complete experiences.
+build alternate-context lore between tracks. They become diegetic only when an
+authored profile supports audio broadcasting, stations, hosts, and radio-like
+institutions. Music remains the majority of airtime. A host can misinterpret an
+event only as a clearly labeled opinion; measured claims still come from the
+occurrence account. Host-free and music-only modes are complete experiences.
 
 A station schedule is deterministic from a station-pack revision and a
 presentation seed. Tuning, skipping, volume, lyrics, vocals, or host controls
@@ -122,6 +231,22 @@ scores, or agent observations outside the audio presentation.
 Radio defaults to opt-in in terminal interfaces. The native app may remember an
 explicit player preference. Music never carries the only copy of gameplay
 information.
+
+### Chill Mode mix
+
+Chill Mode treats silence as part of the player presentation. Radio occupies
+most of the session, while occurrences remain sparse. Compatible Earth events
+retain their supported duration, measurement position, enclosure response, and
+dynamic relationship to their context. Other profiles expose only supported
+relations and representations. Chill never rhythmically quantizes an occurrence
+unless the player selects a clearly labeled Symphony interpretation.
+
+The default ducking policy is gentle and state-derived. It makes room for an
+event without turning every pfft into a trailer impact. Players can disable
+ducking, separate the buses, or select music-only, physical-only, captioned,
+reduced-dynamic-range, and silent visual modes. Visuals consume simulation and
+audio-analysis nodes separately, so a radio waveform cannot masquerade as a
+pressure field.
 
 ## Developer music pipeline
 
@@ -189,6 +314,11 @@ A private generation receipt may retain the sanitized request, model, plan,
 date, response identifier, cost, and source hash. It never contains credentials,
 account details, or local paths.
 
+A separate non-display approval record retains vocal origin, a no-voice-clone
+attestation, lyric-language review, performer consent where applicable, rights
+scope, similarity decision, reviewer role, and takedown contact. This provenance
+does not clutter the player-facing station, title, and now-playing display.
+
 The repository owner has chosen Apache License 2.0 for repository-owned source,
 documentation, and approved project media, including approved tracks.
 Music-service terms are separate and can change. Release tooling therefore
@@ -219,12 +349,17 @@ audio-only, visual-only, and multimodal divisions.
 - Extreme simulated pressure is never mapped directly to headphone amplitude.
 - Scientific pressure is preserved before monitor gain, compression, and safety
   limiting.
+- Idents, stems, representative mixes, mode changes, and long Chill sessions are
+  verified against ITU-T H.872 or a documented stricter safe-listening profile.
+  The initial software target is no more than `-23 LUFS +/- 2 LU` over a
+  30-minute window and no more than `-1 dBTP`, with measured transition jumps,
+  ducking, bass, and limiter behavior.
 - Physical acoustics, Symphony, radio, and speech have independent controls.
 - Lyrics and meaningful non-speech audio have synchronized text alternatives.
 - Music-only, host-free, vocals-off, reduced-dynamic-range, and audio-disabled
   play remain complete.
 - Physical audio works with the radio catalog missing.
-- Radio and Symphony changes cannot alter physical-result identity.
+- Radio and Symphony changes cannot alter occurrence-result identity.
 - A no-medium path produces no exterior physical sound while clearly labeled
   diagnostic sonification may remain available.
 - Mappings advertised as monotone are property-tested as monotone.

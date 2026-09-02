@@ -16,26 +16,44 @@ skepticism.
 **Project:** What should the player actually learn?
 
 **Reviewer:** Not a list of equations. Give the player an epistemic loop:
-predict, simulate, observe, explain, vary one cause, and try to falsify the
-explanation. A three-second pfft can teach more than a page of exposition when
-the counterfactual is immediate and runnable.
+predict, realize, inspect, explain with the strongest relation the law supports,
+and test it. A three-second Earth pfft can teach more than a page of exposition
+when a supported intervention is immediate and runnable. For a constraint-only
+law, compare alternate solutions instead of inventing causality.
 
 **Project:** We require one authoritative event history. Is that the right
 abstraction?
 
-**Reviewer:** Preserve one physical truth, but do not force every consumer into
-one master-rate array. Fields, observer samples, audio, narration, and rendering
-operate at different rates and resolutions. Use an immutable provenance graph.
-Every projection should cite its inputs, transformation, clock, uncertainty,
-and hash.
+**Reviewer:** Preserve one authoritative simulation account under the declared
+law contexts and measurement interactions, but do not force every consumer into
+one master-rate array. Applicable fields, measurements, audio, narration, and
+rendering operate at their own orderings and resolutions. Use an immutable
+provenance graph. Commit state-altering measurement before realization. Keep
+views and presentation read-only. Every projection should cite its inputs,
+transformation, applicable ordering, uncertainty, and hash. Do not claim
+observer-independent truth where the selected contexts do not define one.
+
+**Project:** What if another universe has no linear time, metric, emitter,
+exterior, conservation law, or propositional language?
+
+**Reviewer:** Then those cannot be mandatory schema fields. Require only record
+and source-occurrence identity set, a law-context set, scope, and provenance inside
+the Lab's bounded formalism. Everything else is a capability: ordering, state,
+participants, couplings, geometry, equations, units, measurement, views, and
+invariants. Test tiny counterexamples before archive and UI schemas freeze
+around Earth gas. A precise `not_applicable` is better than a fake zero. If a
+purported reality cannot be finitely represented at all, say it is outside the
+ontology instead of pretending the protocol is literally universal.
 
 **Project:** How universal can the Universal Flatulence Translator be?
 
-**Reviewer:** Universal as a protocol, not as one equation. A law profile
-declares capabilities and invariants. Translation requires an explicit
-compatibility witness. Some mappings are strict, some approximate, some
-perceptual, and some impossible. `UNTRANSLATABLE` is one of the lab's best
-results.
+**Reviewer:** Universal as an aspiration, not as one equation or an unlimited
+claim. A law-context set declares capabilities, invariants, and any explicit
+inter-law bridge. Translation requires a compatibility witness. Keep semantic translation, structural mapping, signal
+transcoding, and experience analogy distinct. Some mappings are strict, some
+approximate, and some impossible. Incompatibility, privacy, refusal,
+undecidability, and missing information are different results even when the UI
+summarizes them as `UNTRANSLATABLE`.
 
 **Project:** Can tooling generate the meaningful dimensionless groups?
 
@@ -70,17 +88,17 @@ judgment.
 **Project:** What should ship first?
 
 **Reviewer:** One excellent ordinary pfft, end to end. It should start instantly,
-sound funny, expose its seed, explain one surprising fact, produce a small
+sound funny, expose its scenario seed and nonce commitment, explain one surprising fact, produce a small
 evidence bundle, and invite one meaningful variation. Build that walking
 skeleton before the archive and architecture become elaborate.
 
 **Project:** If CLI is first, should every later surface call the CLI?
 
 **Reviewer:** No. CLI first is a delivery discipline, not an architectural
-privilege. Put canonical actions, observations, roles, revisions, journals, and
-budgets in one in-process play service. CLI, terminal, native, MCP, A2A,
-accessibility, and automation are adapters. Then compare their state transitions
-and permitted information with the same trace.
+privilege. Put canonical actions, measurement commitments, read-only views,
+roles, revisions, journals, and budgets in one in-process play service. CLI,
+terminal, native, MCP, A2A, accessibility, and automation are adapters. Then
+compare their account transitions and permitted information with the same trace.
 
 **Project:** How do agents make the project better rather than merely automate
 it?
@@ -109,15 +127,17 @@ overconfidence the safest recurring target.
 
 1. Move the first playable and inspectable ordinary pfft into the Go-oracle
    milestone, then preserve it through the Rust migration.
-2. Model one physical truth as a typed, immutable, multirate provenance graph.
-3. Give law profiles explicit capabilities, compatibility witnesses, trust
+2. Model one authoritative occurrence account as a typed, immutable,
+   multi-order provenance graph under declared law contexts and measurement
+   interactions, with read-only views and presentation.
+3. Give law contexts explicit capabilities, compatibility witnesses, trust
    classes, and unsupported states.
 4. Freeze the Go oracle's scope and compare both implementations with
    independently derived references.
 5. Make predict, emit, inspect, explain, vary, and transfer a first-class play
    loop.
-6. Separate scenario, physical-result, narrative, presentation, and archive-byte
-   identities.
+6. Separate scenario, record, source-occurrence identity set, occurrence-result, view,
+   narrative, presentation, and archive-byte identities.
 7. Treat semantic Pi groups as authored scientific contracts that tooling
    verifies, not meanings automatically discovered from a matrix.
 8. Report sensitivity, nonuniqueness, model-form uncertainty, extrapolation, and
@@ -130,15 +150,19 @@ overconfidence the safest recurring target.
     explicit knowledge, action, identity, and resource contracts.
 12. Keep physical acoustics, diagnostic sonification, Symphony, radio, and
     speech separately controllable, reproducible, and scientifically labeled.
-13. Represent social meaning through situated, plural perspectives and make
-    `UNTRANSLATABLE`, private, and refused successful outcomes.
+13. Make social meaning optional, situated, and plural. Keep incompatibility,
+    absence, privacy, refusal, prohibition, and unknown results distinct.
+14. Require only occurrence identity, law-context set, scope, and provenance
+    inside the bounded formalism; treat time, state, spatial roles, units,
+    equations, measurement, and views as capability-selected structures.
 
 ## Questions the implementation must answer
 
 - Can a player predict vacuum acoustics, choking, conservation, or similarity
   more accurately after play and transfer the idea to a new scenario?
-- Can every audio block, rendered frame, damage event, and lab-fact sentence
-  traverse provenance back to authoritative event state?
+- Can every audio block, rendered frame, damage event, and lab-claim sentence
+  traverse provenance back to authoritative occurrence claims or relations that
+  the selected law and measurement contexts actually define?
 - Can strict translation produce a compatibility witness and round-trip within
   its declared tolerance?
 - Can approximate translation expose residuals, sensitivity, nonuniqueness, and

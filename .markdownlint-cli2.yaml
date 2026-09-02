@@ -5,4 +5,6 @@ config:
 globs:
   - "**/*.md"
   - "!LICENSE"
+  - "!node_modules/**"
+  - "!vendor/**"
   - "!.steward/DECISIONS/**"

@@ -6,55 +6,81 @@ repository.
 
 ## Core invariant
 
-One event produces one authoritative physical truth represented by an immutable,
-typed provenance graph. Every visible, audible, haptic, narrative, and
-destructive effect must have a traversable derivation from that graph.
+One occurrence produces one authoritative simulation account under declared
+law contexts, numerical policies, and measurement interactions, represented by
+an immutable typed provenance graph. The graph records only the claims and
+relations the selected laws and measurement contexts permit. It does not claim
+observer-independent truth where they do not define one. Every visible,
+audible, haptic, narrative, destructive, or other applicable derived effect must have a
+traversable derivation from that graph.
 
-The graph is deliberately not one enormous master-rate array. Solver states,
-interface samples, observer signals, audio blocks, narrative facts, and rendered
-frames use their appropriate clocks and resolutions. Every derived node records
-its input identities, transformation version, clock, resampling policy,
-uncertainty, and content hash. Presentation can transform an outcome but cannot
-substitute an unrelated preset or rewrite it.
+The graph is deliberately not one enormous master-rate array. Applicable solver
+states, interface samples, measured signals, audio blocks, narrative claims,
+and rendered frames use their declared ordering references, dependency
+coordinates, clocks, and resolutions where those concepts exist. Every derived
+node records its input identities, transformation version, applicable ordering
+or dependency reference, resampling policy when relevant, uncertainty, and
+content hash. Presentation can transform an outcome but cannot substitute an
+unrelated preset or rewrite it.
 
-## Source-neutral event ontology
+## Capability-neutral bounded occurrence ontology
 
 The general contract is:
 
-> A finite-time state transition coupling an emitter domain to an exterior
-> domain across an interface, under a versioned law profile.
+> An occurrence is an identified realization under one or more versioned law
+> contexts. Those contexts declare which concepts exist, including ordering,
+> state, participants, couplings, locality, observables, transformations,
+> invariants, and representations.
 
-It is represented by these top-level objects:
+An `EmissionAnalogue` is an occurrence that a declared classifier maps to
+release, transfer, relaxation, or boundary crossing. `DischargeEvent` is the
+Earth continuum subtype, not the superclass of existence.
 
-- `LawProfile`: dimensions, metric or geometry, fields, governing equations,
-  closures, constants, symmetries, conserved currents, sources, canonical units,
-  capability set, compatibility class, validity domain, trust class, and
-  verification suite.
-- `WorldProfile`: boundaries, exterior phases, composition, radiation, gravity
-  or other fields, initial state, and observer locations.
-- `Emitter`: stored inventories and energy, state equations, containment,
-  inertia, structural limits, forcing, and one or more boundary ports.
-- `Interface`: topology, geometry, orientation, measure, compliance, actuation,
-  contact, and surface behavior.
-- `Payload`: carrier and dispersed phases, composition, sizes, loading, charge,
-  reactivity, and material properties.
-- `Observers`: sensors, bandwidth, sensory model, and presentation translation.
-- `Numerics`: solver family, discretization, tolerances, refinement, thread
-  policy, random streams, and determinism contract.
-- `EventSignature`: normalized source histories, regime sequence, active
-  dimensionless groups, impulse, spectra, loading, and directional structure.
-- `EventGraph`: authoritative states and typed derived artifacts connected by
-  versioned provenance edges.
+Only four top-level objects are required inside the Lab's bounded formalism:
 
-A source can be an organism, machine, colony, ecosystem, spacecraft, planet,
+- `OccurrenceIdentity`: a unique Lab record identity plus a
+  `SourceOccurrenceIdentitySet`. The set contains one law-defined identity per
+  scoped context and an optional composite identity only when an
+  `InterLawCoupling` supplies its equivalence, recurrence, cyclicity, or
+  ordering semantics.
+- `LawContextSet`: one or more scoped `LawContext` entries. Each entry declares
+  axioms or rules, supported structural modules, capabilities, interpretation or
+  validity domain, implementation binding, trust class, and verification suite.
+  Every `InterLawCoupling` owns its bridge rules, compatibility, ordering,
+  representation conversion, and cross-context conservation claims.
+- `Scope`: declared participants, relations, couplings, measurement interactions, and
+  explicit absences. It need not contain spatial domains or localized objects.
+- `ProvenanceGraph`: authoritative states or relations, observations, claims,
+  transformations, uncertainty, measurement back-action, and derived artifacts connected by
+  typed versioned edges.
+
+The formal boundary is explicit: a purported reality that cannot be identified,
+finitely encoded, versioned, scoped, or related to anything expressible in this
+schema is outside the representable ontology. The result code is
+`outside_representable_ontology`, not `unknown`, `law_incompatible`, or a claim
+of successful simulation.
+
+A law context may independently declare modules for ordering or time, state or
+object space, dimension, adjacency, topology, metric, locality, fields, units,
+equations or transition rules, constants, symmetries, invariants, and conserved
+currents. Any can be inapplicable. Schemas use typed option and capability
+results, never sentinel Earth values or fabricated zeros.
+
+Profiles may add `Participant`, `Coupling`, `StateRegion`,
+`MeasurementInteractionProfile`, `ViewProfile`, `PresentationProfile`,
+`Numerics`, and `ComparisonSignature` objects. The Earth discharge profile adds
+`WorldProfile`, `Emitter`, `Interface`, `Exterior`, and `Payload` roles. Those
+roles are not universal requirements.
+
+A participant can be an organism, machine, colony, ecosystem, spacecraft, planet,
 star, distributed intelligence, topological structure, or unknown. A bathroom
 is one scenario. A human is one preset. Neither is the engine's ontology.
 
-## First validated law profile
+## First validation-target law profile
 
-The initial profile is `earth.continuum.si`, with three Euclidean spatial
+The initial target profile is `earth.continuum.si`, with three Euclidean spatial
 dimensions, one time dimension, Newtonian mechanics, continuum gas dynamics,
-and SI canonical storage. Under that profile, a fart event specializes to:
+and SI canonical storage. Under that profile, an emission analogue specializes to:
 
 > A pressure-driven discharge from a deformable reservoir through a compliant
 > aperture into an exterior domain.
@@ -70,18 +96,49 @@ constraints. Derived quantities remain derived.
 
 ## Capabilities and trust
 
-Every law profile declares a machine-readable `CapabilitySet`. Initial
-capabilities include continuum, compressible, acoustic, multiphase, reacting,
-radiative, rarefied, plasma, MHD, relativistic, gravitational, and
-fictional-axiomatic support. A scenario is rejected before simulation if a
-requested effect lacks a compatible implementation, closure, and verification
-suite.
+Every law context declares machine-readable concepts and capabilities. A
+canonical `CapabilityReport` keeps seven questions separate:
+
+1. Does the law define the concept?
+2. Does a trusted implementation exist?
+3. Does the requested model have an applicable closure?
+4. Is it applicable to this scenario and measurement interaction?
+5. What verification and validation grade supports the requested claim?
+6. Does policy permit the pack, backend, and operation?
+7. Can the selected backend satisfy precision, determinism, memory, and work
+   budgets?
+
+Each entry returns typed availability or refusal evidence rather than one
+Boolean. The capability vocabulary can represent continuum, compressible,
+acoustic, multiphase, reacting, radiative, rarefied, plasma, MHD, relativistic,
+and gravitational concepts without claiming an implementation exists.
+Fictional-axiomatic packs declare their own concepts. A
+scenario is rejected before realization if a requested effect lacks a
+compatible law, implementation, closure, verification grade, trust decision,
+backend, or resource budget.
 
 Initial law packs are compiled in and reviewed. Future third-party packs are
 declarative data with bounded resources. They cannot load native code, perform
 network access, select arbitrary filesystem paths, or claim a capability without
 the required schemas and tests. Executable extensions require a separate threat
 model and are outside the initial public contract.
+
+## Measurement, view, and presentation profiles
+
+A `MeasurementInteractionProfile` is an accepted scenario input. It declares
+support or extent, an ordering or clock when one exists, accessible observables,
+measurement operator, resolution, noise, and whether interaction is passive,
+coupled, or state-altering. Any back-action enters the provenance graph as a
+law-governed coupling and changes occurrence-result identity.
+
+A `ViewProfile` is a read-only knowledge, privacy, accessibility, and selection
+projection over retained claims. A `PresentationProfile` controls locale,
+layout, sonification, camera, and rendering. Neither can alter the occurrence
+account or its identity. Two views may expose different authorized subsets or
+representations of the same retained context-scoped claims without creating two
+accounts. A law context can declare no observer, no
+localization, no sound, no language, or no proposition-like semantics.
+Presentation adapters consume only the capabilities that exist.
 
 ## Coupled Earth-profile pipeline
 
@@ -117,7 +174,16 @@ viscoelastic, separated flow boundary.
 The next model adds a quasi-static compliance law. A later model may add a
 damped interface oscillator with pressure work, contact, actuation, and stored
 wall energy. Self-sustained oscillation requires aerodynamic phase feedback. A
-one-mass forced oscillator alone is not enough to claim that behavior.
+one-mass forced oscillator alone is not enough to claim that behavior. Over one
+candidate cycle, the diagnostic is:
+
+```text
+cycle_energy = fluid_work - structural_dissipation - fluid_dissipation
+```
+
+A stable tone can be classified as a self-excited limit cycle only after the
+coupled model sustains positive growth and reaches a bounded attractor. A sound
+designer cannot switch that label on.
 
 ### 3. Restriction flow
 
@@ -128,15 +194,17 @@ converging restriction, choking begins when:
 p_back / p_stagnation <= (2 / (gamma + 1))^(gamma / (gamma - 1))
 ```
 
-This is the Choked Cheek Criterion. Choked means Mach 1 occurs at the
-controlling section. It does not by itself mean the plume is supersonic,
-underexpanded, shock-containing, or screeching.
+The English presentation layer calls this the Choked Cheek Criterion. The
+scientific state records a neutral choking-regime code. Choked means Mach 1
+occurs at the controlling section. It does not by itself mean the plume is
+supersonic, underexpanded, shock-containing, or screeching.
 
 For gamma 1.4, the critical ratio is about 0.528. At Earth sea-level pressure,
 the upstream reservoir needs about 192 kPa absolute, or 90 kPa gauge. Published
 ambulatory measurements report ordinary flatus-associated pressure excursions
-around 0.93 kPa. An ordinary Earth-biological preset therefore cannot drift into
-choking. A laboratory or fictional source pack must provide the missing energy.
+around 0.93 kPa. That optional Earth-biological preset therefore cannot drift
+into choking. The biology-neutral calibration fixture, laboratory packs, and
+fictional profiles each declare their own finite energy budgets.
 
 The analytical mass-flow model uses a declared discharge coefficient, gas
 properties, stagnation state, area history, and back pressure. Its full thrust
@@ -157,6 +225,14 @@ may include nondimensional stroke:
 L / D = integral(exit_velocity dt) / D
 ```
 
+Source closure is part of the event. Deceleration can generate a pressure-driven
+stopping vortex and change impulse, recoil, trailing structures, and sound. The
+solver therefore advances through opening, supply, deceleration, closure, and
+post-closure evolution rather than deleting the jet when mass flow reaches
+zero. The familiar vortex-ring formation number near `L / D = 4` is retained as
+a canonical piston-cylinder benchmark, not a universal constant for arbitrary
+apertures, compressibility, or source histories.
+
 Developed round-jet centerline decay and entrainment laws are allowed only when
 their far-field, unconfined assumptions apply. A tiled room with return flow and
 walls must stop claiming infinite-domain similarity.
@@ -173,15 +249,55 @@ Later models add evaporation, collision, breakup, splash, adhesion, rebound,
 and two-way fluid coupling.
 
 Weber number concerns deformation and breakup after a droplet exists. Ohnesorge
-number, density ratio, exposure time, acceleration history, droplet Reynolds
-number, and the breakup correlation also matter. Stokes number measures response
-to a declared flow timescale. It does not alone predict deposition.
+number, density and viscosity ratios, exposure time, strain history, droplet
+Reynolds number, turbulence intermittency, and neighboring droplets also
+matter. The English presentation alias Wetness Transition therefore describes a
+probability distribution over regimes and breakup times, never one universal
+Weber threshold. Stokes number
+measures response to a declared flow timescale. It does not alone predict
+deposition.
 
 Primary atomization needs a liquid film or source model. Deposition needs a
 surface-interaction model. Evaporated mass and latent energy are transferred
 back into the carrier ledger rather than disappearing.
 
-### 6. Audio and observers
+Evaporation progresses from a labeled isolated-droplet `d^2` limiting model,
+through coupled heat and mass transfer, to multicomponent and vapor-shielded
+models. The active closure is visible in every result. Dense parcels do not
+silently inherit dilute assumptions.
+
+Each surface owns a material state machine:
+
+```text
+approach -> impact -> rebound | stick | spread | splash
+stick -> roll | slide | evaporate | dry | resuspend
+```
+
+Transitions cite impact kinematics, material properties, surface state, contact
+angle, roughness, adhesion, temperature, and the applicable dimensionless
+groups. Contact transfers mass, momentum, and energy instead of making parcels
+vanish.
+
+### 6. Underwater branch
+
+Discharge into a liquid is not a gas jet with a blue color grade. The source
+creates a connected gas cavity, neck, detaching bubbles, or a bubble cloud. The
+first specialist model uses Rayleigh-Plesset dynamics within its incompressible,
+spherical limits:
+
+```text
+rho_l * (R * d2R/dt2 + 3/2 * (dR/dt)^2)
+  = p_bubble - p_infinity - 4 * mu_l * (dR/dt) / R - 2 * sigma / R
+```
+
+The small-amplitude isolated-bubble check uses the Minnaert frequency. Sound
+amplitude is driven by volume and neck dynamics, not an arbitrary sine wave.
+Strong compressibility, shocks, nearby walls, nonspherical collapse, and
+interacting bubbles trigger a higher model or an explicit refusal. Later tiers
+may use Keller-Miksis, Gilmore, boundary, and coupled-bubble models with separate
+validation.
+
+### 7. Audio and observers
 
 Coarse pressure and mass-flow histories do not uniquely determine unresolved
 turbulent waveform detail. The reduced audio model may combine:
@@ -192,9 +308,16 @@ turbulent waveform detail. The reduced audio model may combine:
 - Versioned random phases from a dedicated deterministic audio stream.
 - Parameterized room propagation or a declared empirical impulse response.
 
-That is procedural audio derived from event state plus a stochastic closure. It
+That is procedural audio derived from the Earth occurrence account plus a stochastic closure. It
 is not a prerecorded emission. A resolved compressible solver can later provide
 sources for an acoustic analogy or a directly resolved acoustic field.
+
+The physical-audio source graph distinguishes interface loading and volume
+velocity, turbulent quadrupoles, loading dipoles, mass or heat monopoles,
+shock-associated broadband noise, shock-cell feedback tones, bubble-volume
+sources, impacts, structural vibration, propagation, room response, and the
+observer transfer. Each active edge records its approximation and validity
+domain.
 
 Physical acoustics is distinct from diagnostic sonification, Symphony Mode, and
 radio. Sonification declares a data mapping. Symphony declares an artistic
@@ -208,11 +331,12 @@ cold gas exhaust is not automatically visible. Visibility requires particles,
 droplets, condensate, scattering, luminescence, plasma, radiation, or an
 explicit scientific visualization.
 
-## Independent regime axes
+## Independent Earth-discharge regime axes
 
-Labels are facts, not a single severity ladder:
+Neutral codes are facts, not a single severity ladder:
 
-- Material: dry, wet, shart, gas-carried solids, or reclassified fecal ejecta.
+- Material: single-phase carrier, dilute dispersed loading, dense dispersed
+  loading, gas-carried solids, continuous condensed transfer, or unsupported.
 - Discharge: subsonic, choked, underexpanded, locally supersonic,
   shock-containing, or another supported regime.
 - Thermochemical: ordinary gas, reacting gas, ionized equilibrium, plasma, or
@@ -226,18 +350,28 @@ ejecta occurs only when a versioned policy finds that continuous or plug-like
 condensed material controls the event. Every label cites calculated state,
 policy version, thresholds, and uncertainty.
 
+Optional English presentation aliases map single-phase carrier to dry, dilute
+droplets to wet, dense depositional loading to shart, and continuous biological
+condensed transfer to the Fecal Ejecta boundary notice. Those words never enter
+scientific identifiers, archives, or cross-locale comparisons.
+
 Plasma is not a single temperature threshold. Ionization and the valid model
 depend on composition, density, equilibrium, collision scales, magnetization,
 and characteristic length. Stellar events require radiation and plasma or MHD
 profiles. Neutron-star conditions require relativistic hydrodynamics, spacetime
 curvature, and a dense-matter equation of state. They are never ordinary slider
-values in the bathroom solver.
+values in the Earth continuum gas solver.
 
-## Active dimensionless signature
+## Comparison signatures and optional dimensional analysis
 
-A law profile declares base dimensions and dimension-checked equations. For a
-dimension matrix `D`, dimensionless monomials have exponent vectors `k` such
-that:
+Every law context may define a `ComparisonSignature` from the supported relations,
+invariants, observables, capability states, and applicability results needed for
+its own comparisons. A `PiSignature` is an optional extension when the profile
+declares dimensional quantities and equations. No dimensional-analysis field is
+required for a graph, rule, or constraint system that lacks those concepts.
+
+For a profile with base dimensions and dimension-checked equations, a dimension
+matrix `D` has dimensionless monomials with exponent vectors `k` such that:
 
 ```text
 D * k = 0
@@ -250,7 +384,7 @@ nondimensionalizing their equations and closures. Tooling proves that those
 groups are dimensionless, checks their dependencies, and reports possible
 omissions. It does not invent scientific meaning from a null space.
 
-The active signature includes:
+An Earth continuum active signature includes:
 
 - Law, equation, closure, dimension, and topology identities.
 - Deterministic reference scales.
@@ -269,10 +403,13 @@ and closure identities.
 
 ## Flatulence Similarity Law
 
-Strict similarity means the source and target normalized problems are identical
-within declared tolerance. It requires compatible equations, closures,
-dimensions, topology, normalized geometry, material functions, initial and
-boundary conditions, active coefficients, and solution branches.
+Strict similarity is defined by the selected `ComparisonSignature`. For the
+Earth dimensional-continuum specialization, the source and target normalized
+problems must be identical within declared tolerance, including compatible
+equations, closures, dimensions, topology, normalized geometry, material
+functions, initial and boundary conditions, active coefficients, and solution
+branches. Other law contexts declare different comparison relations or report
+that strict similarity is not applicable.
 
 Matching Mach and Reynolds alone does not make two compliant multiphase events
 equivalent. Buckingham Pi analysis identifies possible dimensionless
@@ -281,26 +418,52 @@ the model is true.
 
 ## Universal Flatulence Translator
 
-The translator offers three honest modes:
+The translator separates four operations:
 
-1. `strict`: solve only between compatible law-profile hashes with matching
-   active signatures and normalized histories.
-2. `approximate`: optimize target parameters for selected invariants, subject to
-   validity and safety constraints, then report every residual and conflict.
-3. `comic`: preserve declared observer experiences or cultural meaning and mark
-   the result as a presentation translation.
+1. `semantic_translation`: requires a declared shared semantic basis.
+2. `structural_mapping`: preserves selected relations or invariants without
+   claiming shared meaning.
+3. `signal_transcoding`: preserves a supported signal under channel constraints.
+4. `experience_analogy`: creates an explicitly comic or artistic presentation.
+
+Compatible semantic and structural operations may use `strict` matching or
+`approximate` optimization. Strict matching requires compatible law-context
+hashes and complete declared comparison signatures. Approximate optimization
+selects target parameters for requested invariants subject to validity and
+safety constraints, then reports every residual and conflict.
 
 Exact monomial matching can become a constrained linear problem in log space.
 Approximate translation minimizes weighted log-ratio errors or exposes a Pareto
 frontier. The preference objective chooses among solutions; it is not physics.
 
-Each translation certificate records source and target law hashes, mode,
+Each translation certificate records source and target `LawContextSet` hashes,
+scope assignments, bridge hashes, mapped source-occurrence identities, mode,
 requested invariants, achieved residuals, discarded quantities, incompatible
 fields, and whether the result is validated, extrapolated, or fictional.
 
+No-mapping results use stable locale-invariant reason codes:
+
+- `law_incompatible`
+- `no_shared_observable`
+- `no_common_semantic_basis`
+- `target_channel_insufficient`
+- `not_identifiable`
+- `outside_validity`
+- `loss_exceeds_policy`
+- `withheld_by_source`
+- `forbidden_by_policy`
+- `undecidable_within_budget`
+- `outside_representable_ontology`
+- `unknown`
+
+The result records both profiles, requested preservation, evidence, residual or
+loss, policy basis, and whether more information could change the answer. A
+refusal is never rewritten as physical incompatibility. `UNTRANSLATABLE` is a
+localized presentation label, not the scientific result identity.
+
 Strict translation also emits a machine-checkable `CompatibilityWitness` that
-identifies the mapped equations, dimensions, closures, topology, normalized
-conditions, semantic groups, and tolerances. Approximate translation emits the
+identifies every applicable mapped axiom, rule, equation, dimension, closure,
+topology, condition, semantic group, and tolerance. Approximate translation emits the
 attempted witness plus unmatched capabilities, residuals, sensitivity,
 nonuniqueness, and identifiability warnings. A close observable match is not
 automatically a unique or physically equivalent inverse solution.
@@ -313,27 +476,44 @@ exists.
 
 ## Identity and provenance
 
-The project keeps six identities separate:
+The project keeps ten identities separate:
 
-1. **Scenario identity:** normalized author intent, law profile, inputs, and
-   seed before solving.
-2. **Physical-result identity:** authoritative event graph under a solver,
-   numerical contract, and declared tolerance policy.
-3. **Narrative identity:** resolved world, situated perspectives, storylets,
+1. **Scenario identity:** normalized author intent, law contexts, scope,
+   measurement interactions, inputs, and scenario seed before realization.
+2. **Record identity:** one committed nonce and unique Lab capture or
+   computation, independent of source-law time.
+3. **Source-occurrence identity set:** per-context law-defined identities plus
+   an optional composite identity supplied only by an inter-law coupling.
+4. **Occurrence-result identity:** authoritative occurrence provenance graph
+   under the declared law contexts, measurement, implementation, numerical, and
+   tolerance contracts.
+5. **Trace identity:** the observations, relations, fields, samples, and provenance that
+   were actually retained from an occurrence.
+6. **View identity:** knowledge, privacy, accessibility, and selection filters
+   over retained claims. It never changes occurrence-result identity.
+7. **Narrative identity:** resolved world, situated perspectives, storylets,
    facts, and narrative streams.
-4. **Presentation identity:** language, layout, camera, audio-device path,
+8. **Presentation identity:** language, layout, camera, audio-device path,
    accessibility, and rendering choices.
-5. **Play-session identity:** rules, initial identity, roles, ordered canonical
+9. **Play-session identity:** rules, initial identity, roles, ordered canonical
    action journal, checkpoints, branches, and produced artifacts.
-6. **Archive-byte identity:** exact serialized container bytes.
+10. **Archive-byte identity:** exact serialized container bytes.
 
-A presentation change must not alter scenario or physical-result identity. An
+A view or presentation change must not alter scenario or occurrence-result
+identity. A measurement interaction is part of the accepted scenario and may
+change that identity. An
 archive may be migrated or recompressed without pretending that byte identity
 was preserved. Cross-platform tolerant equality is a comparison result, not a
 fake hash. Raw floating-point identity is promised only at a determinism level
 that actually controls the arithmetic.
 
-## Fidelity ladder
+Replay presents a trace. Numerical reconstruction computes a new realization
+from retained inputs. Re-enactment uses a fresh record nonce. A bitwise-identical
+reconstruction is still a new operation and encounter, not the original record.
+Its relation to a source occurrence is decided only by the applicable law
+contexts.
+
+## Earth discharge fidelity ladder
 
 All levels share event vocabulary, hashes, regime policy, and certificate shape.
 They do not pretend to share one universal equation set.
@@ -376,9 +556,38 @@ or compressible pressure damage.
 - `fiction.axiomatic.*` profiles that are internally consistent under declared
   rules but never called empirically validated.
 
+## Closure registry and fidelity escalation
+
+Every empirical or reduced closure has a registry entry containing its equation
+or algorithm, implementation revision, provenance, dimensional inputs, validity
+envelope, calibration data, uncertainty model, conserved transfers, verification
+cases, known failure modes, and escalation condition. A certificate lists every
+entry used.
+
+Escalation is based on model applicability, not spectacle or platform:
+
+- A reduced aperture model escalates when wall inertia, contact, separation, or
+  fluid-structure feedback controls the requested observable.
+- A dilute parcel model escalates when loading, collisions, neighbor effects,
+  vapor shielding, or unresolved sheet topology becomes important.
+- A continuum model escalates or refuses when its Knudsen criterion fails.
+- A low-Mach or incompressible model refuses choking, shocks, and quantitative
+  propagation acoustics.
+- An isolated-bubble model escalates for interaction, boundaries, strong
+  compressibility, or nonspherical collapse.
+
+Higher fidelity is not automatically more truthful. It earns authority only for
+observables that pass stronger verification and validation evidence.
+
 ## Conservation of Ass
 
-Each run declares its control volume and double-entry transfer ledgers:
+For profiles that define balances or conserved currents, Conservation of Ass is
+the localized presentation alias for a serious ledger obligation. A profile
+without conservation laws uses its declared invariant or consistency policy
+instead and reports the conservation fields as `not_applicable`.
+
+Each applicable Earth discharge run declares its control volume and double-entry
+transfer ledgers:
 
 - Mass or applicable conserved current by carrier, species, liquid, solid,
   deposited material, source, and open-boundary export.
@@ -398,12 +607,19 @@ energy estimate is not counted as transferred energy unless it is conservatively
 removed from the fluid model. A wrong model can conserve perfectly, so
 conservation is necessary but not sufficient.
 
-## Determinism and seeds
+## Determinism, scenario seeds, and record nonces
+
+The public schema field `event_nonce` has type `RecordNonce`. The comic wire
+name is retained, but its semantics are precise: it changes Lab record and
+realization identity only. `SourceOccurrenceIdentitySet` changes only according
+to the law contexts and any declared inter-law coupling.
 
 Determinism has explicit levels:
 
-- D0: same normalized scenario and seed have the same identity.
-- D1: same build, target, settings, and thread policy replay bitwise.
+- D0: the same normalized scenario and scenario seed have the same scenario
+  identity.
+- D1: the same build, target, settings, thread policy, and retained record nonce
+  reconstruct the numerical trace bitwise.
 - D2: supported platforms match declared observables within tolerances.
 - D3: cross-platform bitwise identity, claimed only if arithmetic, reductions,
   transcendentals, and DSP actually guarantee it.
@@ -412,7 +628,11 @@ The engine uses fixed iteration order, deterministic reductions, exact unit
 normalization where possible, and counter-based or independently keyed random
 streams. Physics, parcel, physical-audio closure, score, radio, narrative, and
 presentation streams are separate. Scheduling, terminal width, localization,
-camera, station, and subscriber choices cannot alter the event identity.
+camera, station, and subscriber choices cannot alter scenario or
+occurrence-result identity. A default Lab encounter is not reconstructable
+after its record nonce is destroyed. This says nothing about recurrence under
+the source laws. Scientific, test, and benchmark modes retain or explicitly
+provide the nonce under their recording policy.
 
 ## Uncertainty, sensitivity, and identifiability
 
@@ -434,26 +654,44 @@ Every claim independently reports `pass`, `fail`, `inconclusive`, or
 `not-applicable`:
 
 - Replayable under a declared determinism level.
-- Internally consistent and dimensionally homogeneous.
+- Internally consistent under the declared axioms, rules, dimensions, or other
+  applicable structures.
 - Code verified against exact, manufactured, or trusted reference cases.
 - Solution verified by timestep, grid, parcel, or ensemble refinement.
 - Empirically validated for a stated physical domain.
 - Fictional-law consistent for a stated axiom pack.
 
-The certificate includes scenario, law, equation, closure, solver, numerics, and
-consumer hashes; active signature; extrema and positivity; local and global
-ledgers; refinement; uncertainty channels; regime evidence; random stream keys;
-unsupported effects; and provenance for audio, visuals, haptics, narrative, and
-damage. A play receipt separately binds the knowledge policy, action journal,
-budgets, branches, result artifacts, and score vector.
+The generic certificate includes occurrence, law, scope, provenance, applicable
+state, relation, observable, invariant, validity, balance, implementation, and
+observation claims. Unknown, unsupported, and unverified concepts remain
+explicit without numeric placeholders. Law-specific extensions may add
+equation, closure, solver, numerics, comparison signature, extrema, positivity,
+ledgers, refinement, regime, random-stream, and consumer hashes. A play receipt
+separately binds the knowledge policy, action journal, budgets, branches, result
+artifacts, and score vector.
 
 ## Verification gates
 
 The progressive suite includes:
 
-- Unit-expression invariance and dimensional homogeneity.
+- Ontology conformance fixtures for an occurrence with no emitter, interface,
+  exterior, gas, geometry, acoustics, mass, canonical units, or localized
+  observer, with schema, archive, certificate, and inspection round trips.
+- A non-biological non-gaseous transfer, a discrete graph or non-Euclidean
+  profile, a distributed nonlinguistic observer, and a profile where familiar
+  Earth quantities are explicitly `not_applicable`.
+- Distinct tests for semantic translation, structural mapping, signal
+  transcoding, experience analogy, and every structured no-mapping reason.
+- Measurement-interaction tests for passive, distributed, probabilistic, and
+  state-altering measurement, including provenance of back-action and changed
+  occurrence-result identity.
+- View and presentation tests proving that knowledge, privacy, accessibility,
+  locale, layout, sonification, and camera changes do not alter the occurrence
+  account.
+- Unit-expression invariance and dimensional homogeneity where units and
+  dimensions exist.
 - Exact null-space checks for discovered bases and dimensional checks for every
-  authored semantic Pi group.
+  authored semantic Pi group where dimensional analysis applies.
 - Preflight rejection of unsupported capability combinations and untrusted
   executable content.
 - Zero-area and equal-pressure zero-flow limits.
@@ -464,23 +702,39 @@ The progressive suite includes:
 - Exact discrete cancellation for reservoir, plume, deposition, and recoil
   transfers.
 - Correct starting-jet and puff limits.
+- Canonical starting-vortex formation and source-closure stopping-vortex cases,
+  with geometry-specific validity stated.
 - No exterior acoustic propagation in vacuum while structural vibration remains.
-- Particle tracer, settling, ballistic, evaporation, and deposition balances.
+- Particle tracer, drag-relaxation, settling, ballistic, evaporation, and
+  deposition balances.
+- Breakup and droplet-size convergence above a declared reliable numerical
+  cutoff. A peak tied to roughly three grid cells fails this gate.
+- Dilute and dense spray cases distinguished, with parcel, grid, and ensemble
+  refinement appropriate to the active model.
 - Underwater hydrostatic, Laplace-pressure, Rayleigh-Plesset, and bubble-resonance
-  references when that pack exists.
+  references when that pack exists, followed by an open bubble-acoustics dataset
+  comparison before empirical-validation claims.
 - Sealed-system center-of-mass conservation and externally vented rocket limits.
 - Deterministic random streams independent of execution order.
-- Traversable provenance from every consumer artifact and lab-fact sentence to
-  authoritative event nodes.
+- Traversable provenance from every consumer artifact and lab-claim sentence to
+  authoritative occurrence nodes.
 - Go-to-Rust oracle parity.
 - Strict similarity scale families and exact translator round trips.
 - Explicit infeasibility for incompatible targets and dimensions.
 - Manufactured-solution order, shock relations, and separate time and grid
   refinement.
+- Sod shock tube, shock-vortex interaction, isentropic nozzle, finite-reservoir
+  blowdown, rectangular-room modes, and nested acoustic-surface comparisons.
 - Ensemble and integral comparisons after chaotic fields decorrelate.
 
-Core solver and archive packages maintain at least 80 percent statement
-coverage. Coverage supports verification but never replaces validation.
+Aggregate non-generated core statement coverage remains at least 90 percent,
+and every non-generated package remains above 80 percent. Higher-risk domain,
+solver, archive, protocol, and changed code use stricter branch, property, fuzz,
+mutation, and differential evidence. Coverage supports verification but never
+replaces validation.
+
+The benchmark inventory, required artifacts, tolerances, and claim vocabulary
+are defined in [VERIFICATION.md](VERIFICATION.md).
 
 ## Safety boundary
 

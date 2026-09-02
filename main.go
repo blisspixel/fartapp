@@ -7,22 +7,60 @@ import (
 	"strconv"
 )
 
+const maximumDisplayedInputBytes = 32
+
 func run(args []string, stdout, stderr io.Writer) int {
 	if len(args) != 2 {
-		fmt.Fprintln(stderr, "usage: fartapp <intensity>")
+		writeDiagnostic(stderr, "usage: fartapp <intensity>\n")
 		return 1
 	}
-	intensity, err := strconv.Atoi(args[1])
+
+	rawIntensity := args[1]
+	value, err := strconv.Atoi(rawIntensity)
 	if err != nil {
-		fmt.Fprintf(stderr, "invalid intensity %q: must be an integer from 1 to 5\n", args[1])
+		writeDiagnostic(
+			stderr,
+			"invalid intensity %s: must be a canonical integer from %d to %d\n",
+			quoteInput(rawIntensity),
+			minimumIntensity,
+			maximumIntensity,
+		)
 		return 1
 	}
-	if intensity < 1 || intensity > 5 {
-		fmt.Fprintf(stderr, "invalid intensity %d: must be from 1 to 5\n", intensity)
+	if strconv.Itoa(value) != rawIntensity {
+		writeDiagnostic(
+			stderr,
+			"invalid intensity %s: must be a canonical integer from %d to %d\n",
+			quoteInput(rawIntensity),
+			minimumIntensity,
+			maximumIntensity,
+		)
 		return 1
 	}
-	fmt.Fprintf(stdout, "%s (%s)\n", Pick(intensity), Rate(intensity))
+
+	level, err := newIntensity(value)
+	if err != nil {
+		writeDiagnostic(stderr, "invalid %v\n", err)
+		return 1
+	}
+
+	event := level.emission()
+	if _, err := fmt.Fprintf(stdout, "%s (%s)\n", event.sound, event.rating); err != nil {
+		writeDiagnostic(stderr, "write output: %v\n", err)
+		return 1
+	}
 	return 0
+}
+
+func quoteInput(value string) string {
+	if len(value) > maximumDisplayedInputBytes {
+		value = value[:maximumDisplayedInputBytes] + "..."
+	}
+	return strconv.QuoteToASCII(value)
+}
+
+func writeDiagnostic(stderr io.Writer, format string, args ...any) {
+	_, _ = fmt.Fprintf(stderr, format, args...)
 }
 
 func main() {

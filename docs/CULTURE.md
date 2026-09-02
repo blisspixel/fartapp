@@ -7,17 +7,20 @@ perceptible.
 The Universal Flatulence Translator is therefore an experiment in connection.
 Sometimes two observers share a laugh. Sometimes they recognize equivalent
 physical structure but disagree completely about its meaning. Sometimes the
-correct result is `UNTRANSLATABLE`, private, unavailable, or politely refused.
+correct result is incompatibility, absence, privacy, refusal, prohibition, or
+unknown. Those causes remain distinct. `UNTRANSLATABLE` is only a localized
+presentation label for the applicable structured result.
 
 The most reliable comic target is the Lab itself: institutional confidence,
 excessive measurement, bureaucratic procedure, and a universal theory defeated
 by one inconvenient observer.
 
-## Cultural principles
+## Real-world public-interest safeguards
 
 1. Bodily commonality does not imply cultural sameness.
 2. Context comes before category.
-3. Every society contains disagreement, change, institutions, and uneven power.
+3. When a society exists, it contains disagreement, change, and uneven power;
+   institutions and individuals are not universal requirements.
 4. Ritual purity is not the same thing as hygiene, morality, or disgust.
 5. The joke targets systems, certainty, and circumstance, not involuntary
    bodies or identities.
@@ -29,7 +32,12 @@ by one inconvenient observer.
    a living community.
 10. Generation volume cannot prove that a joke is kind, accurate, or funny.
 
-## Situated perspectives
+## Optional generated social contexts
+
+A generated occurrence may have no society, institution, individual, language,
+or translatable social meaning. The generator does not invent those structures
+to make an episode familiar. When social interpretation is actually supported,
+the following safeguards apply.
 
 Broadcast does not generate one fact called `culture.norms`. Where social
 meaning matters, it records a small situated context:
@@ -46,8 +54,9 @@ what the translator preserves and loses
 
 Environment, morphology, and economics can create pressures and possibilities.
 They do not deterministically produce morality or a single social rule. Two
-worlds with the same habitat can build different institutions. Two people in
-one institution can disagree.
+worlds with the same habitat can build different institutions. Two participants
+in one institution can disagree. A collective may have no individual members,
+and an observer may have no social interpretation at all.
 
 The Lab is also a situated observer, not an omniscient narrator. Source-world
 participants may correct its translation, deny access to a sensory channel, or
@@ -98,6 +107,54 @@ same certified event as art, equipment failure, public policy, or a perfect
 pressure transient. Hosts may be wrong when their claims are clearly diegetic
 opinions and other positions remain possible.
 
+## Localization humor
+
+Localization may add real comedy, but it cannot implement “the French fart,”
+“the Japanese fart,” or any other national bodily preset. The physics result,
+event identity, score, and artifact features are identical across locales.
+
+Locale-specific humor can come from:
+
+- Attested sound symbolism and onomatopoeic conventions.
+- Formal versus familiar register.
+- Euphemism, understatement, legal phrasing, and bureaucratic escalation.
+- Unit formatting, typography, line breaking, and translation loss.
+- A term that becomes comically over-precise or refuses a clean mapping.
+- Characters disagreeing with the Lab's translation in their own language.
+
+It cannot come from pseudo-language, mock accents, national temperament,
+supposed cleanliness, food stereotypes, sacred material, or claims about how a
+population's bodies behave.
+
+The French mock standards debate in [DEBAT_NORMATIF.fr.md](DEBAT_NORMATIF.fr.md)
+is a prototype candidate, not approved localization. It requires francophone
+editorial and metrology review. Japanese-language work requires reviewers
+competent in the exact language, script, region, humor, and cultural context.
+National identity alone neither qualifies nor disqualifies a reviewer. No
+translated joke ships from automated fluency confidence alone.
+
+Localization tests cover placeholder and unit preservation, Unicode
+normalization, grapheme width, bidirectional text, plural and grammatical
+agreement, line wrapping, terminal escape safety, stable semantic identifiers,
+and same-trace identity across every supported locale.
+
+The complete interface and nonhuman observer contract is in
+[LOCALIZATION.md](LOCALIZATION.md).
+
+## Impermanence as influence
+
+The project's event identity is informed by serious discussions of Japanese
+aesthetics and tea practice, including mono no aware, ichigo ichie, and the
+distinct histories of wabi and sabi. The design conclusion is not a visual skin.
+It is the separation of one passing occurrence from its retained evidence and
+later numerical reconstruction.
+
+Do not collapse those ideas into one slogan, imply that they represent every
+Japanese perspective, or decorate the project with cherry blossoms,
+calligraphy, tea, music, or religious imagery to signal depth. Explicit public
+interpretation and Japanese merchandise language require culturally situated
+review.
+
 ## Player and agent covenant
 
 - The complete core game works offline without an account or telemetry.
@@ -105,8 +162,10 @@ opinions and other positions remain possible.
   missing out, or pay-to-win systems.
 - Money never changes event odds, solver fidelity, challenge actions, or rank.
 - Ranked play fixes action, observation, fidelity, and simulation-work budgets.
-- Humans and agents receive the same declared truth and cannot inspect hidden
-  state outside their division's stated sensors.
+- Ranked play never scores wall-clock speed. Faster hardware may reduce waiting
+  but cannot expose more truth, attempts, branches, fidelity, or score.
+- Players and agents receive the same authorized observation contract and cannot
+  inspect state outside their division's stated capabilities.
 - Music, lyrics, hosts, narration, haptics, grossness, motion, and destructive
   consequences are independently controllable.
 - Archives belong to the player, remain portable, and exclude personal data and
@@ -119,6 +178,10 @@ opinions and other positions remain possible.
 Low-end and text-only play are product requirements. Optional station packs and
 native presentation cannot become prerequisites for simulation, story,
 translation, challenges, or agent participation.
+
+Before 1.0, the project publishes a minimum CPU-only baseline for startup,
+memory, storage, installation, ordinary-run cost, update size, and archive size.
+Radio and high-resolution media remain separately installable.
 
 ## Review lenses
 

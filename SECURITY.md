@@ -5,6 +5,12 @@
 Security fixes are applied to the current default branch. The repository is in
 early development, so no older release line is currently supported.
 
+Before 1.0, the project will publish a versioned support contract covering
+semantic versioning, stable commands and machine fields, archive migration,
+deprecation, supported operating systems and toolchains, release-line lifetime,
+and security-fix duration. Until that contract is ratified, development
+snapshots carry no compatibility or long-term-support promise.
+
 ## Reporting a vulnerability
 
 Use GitHub's private vulnerability reporting for this repository. Do not open a
