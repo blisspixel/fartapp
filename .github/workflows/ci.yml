@@ -64,7 +64,11 @@ jobs:
       - name: Check formatting
         shell: bash
         run: |
-          files="$(gofmt -l $(git ls-files '*.go'))"
+          mapfile -t go_files < <(git ls-files '*.go')
+          if ((${#go_files[@]} == 0)); then
+            exit 0
+          fi
+          files="$(gofmt -l "${go_files[@]}")"
           if [ -n "$files" ]; then
             printf '%s\n' "$files"
             exit 1
