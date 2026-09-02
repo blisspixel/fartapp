@@ -17,6 +17,12 @@ const (
 	ReportSchema     = "fart.law-capability-report/v0alpha1"
 )
 
+// ValidateMachineToken checks the bounded locale-invariant token grammar used
+// by candidate catalog and scenario schemas.
+func ValidateMachineToken(value string) error {
+	return validateToken("machine token", value)
+}
+
 // Assessment is one independently reported capability axis. Status vocabularies
 // are axis-specific; ReasonCode is a stable machine-oriented explanation.
 type Assessment struct {

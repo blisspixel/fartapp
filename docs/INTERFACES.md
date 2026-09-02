@@ -345,6 +345,17 @@ update signature.
 
 ### Laboratory commands
 
+The current v0.7 probe is:
+
+```console
+fartapp scenario validate testdata/scenarios/atemporal-probe.json
+fartapp scenario validate - --format json
+```
+
+It accepts only the provisional strict JSON envelope documented in
+[SCENARIO_PROBE.md](SCENARIO_PROBE.md). The broader command family below remains
+planned.
+
 ```console
 fart scenario init -o reference-enclosure.toml
 fart scenario validate reference-enclosure.toml

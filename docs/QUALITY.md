@@ -62,6 +62,8 @@ executable check exists.
 | `CLI-003` | Diagnostics never contaminate successful stdout | Exact fixtures and fuzz property | JSONL framing and broken-pipe conformance |
 | `ONT-001` | Catalog inspection requires no Earth discharge role | Executable atemporal relation-only Go catalog fixture | Extend the proof to scenario, archive, certificate, and every adapter with dedicated counterexamples |
 | `CAP-001` | Capability reports keep eight decision axes independent | Exact localized-text and deterministic JSON Go fixtures | Cross-adapter schema and refusal conformance |
+| `SCN-001` | Scenario-probe validity does not imply realization or admission | Exact atemporal and unavailable-Earth text and JSON fixtures | Ratified scenario admission and refusal conformance |
+| `SCN-002` | Atemporal scenario probing consults no ambient or Earth default | Validator over document bytes and the compiled-in catalog, explicit empty ambient-input report, and counterexample fixture | Provider tripwires and broader orthogonal ontology suite |
 | `OBS-001` | Observation capabilities and back-action remain explicit | Design contract | Passive, distributed, and coupled observer tests |
 | `PHY-001` | One authoritative occurrence account drives all consumers | Design contract | Typed provenance traversal tests |
 | `PHY-002` | Applicable conserved transfers close for the declared boundary | Design contract | Exact and tolerance-based ledger properties |

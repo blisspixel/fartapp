@@ -84,8 +84,13 @@ planned.
   or localized prose.
 - [ ] Ratify the capability-report wire schema before calling it canonical or
   freezing it for the Rust service and protocol adapters.
+- [x] Add a dependency-free, read-only `scenario validate` probe for one exact
+  law revision, one opaque scope, and explicit capability requests. Bound and
+  strictly parse file or stdin JSON, reject duplicate and unknown members, keep
+  document validity separate from unratified realization admission, and prove
+  the atemporal fixture uses no ambient or Earth default.
 - [ ] Add capability-neutral `scenario validate` and scenario refusal inspection
-  over the ratified report. Ship its minimal atemporal, observerless,
+  over the ratified full scenario report. Ship its minimal atemporal, observerless,
   nonconserving, recurrence-free, and no-implicit-bridge counterexamples in the
   same milestone.
 - [ ] Add dimension diagnostics only where selected law contexts define

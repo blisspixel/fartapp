@@ -1,0 +1,20 @@
+{
+  "schema": "fart.scenario-probe/v0alpha1",
+  "law_context_set": {
+    "contexts": [
+      {
+        "id": "earth.continuum.si",
+        "version": "v0alpha1",
+        "scope_id": "s0"
+      }
+    ]
+  },
+  "scope": {
+    "id": "s0"
+  },
+  "capability_requests": [
+    {
+      "id": "flow.subsonic"
+    }
+  ]
+}

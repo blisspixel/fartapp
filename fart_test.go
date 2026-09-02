@@ -151,7 +151,9 @@ func FuzzRun(f *testing.F) {
 	for _, seed := range []string{
 		"", "0", "1", "5", "6", "+1", "01", " 1 ", "nope", "text", "json", "--help",
 		"earth.continuum.si", "earth.continuum.si@v0alpha1",
-		"conformance.relation.atemporal", strings.Repeat("9", 200), "\x00",
+		"conformance.relation.atemporal",
+		`{"schema":"fart.scenario-probe/v0alpha1","law_context_set":{"contexts":[{"id":"conformance.relation.atemporal","version":"v0alpha1","scope_id":"s0"}]},"scope":{"id":"s0"},"capability_requests":[{"id":"catalog.inspect"}]}`,
+		nestedDiagnosticSeed(), strings.Repeat("9", 200), "\x00",
 	} {
 		f.Add(seed)
 	}
@@ -160,7 +162,7 @@ func FuzzRun(f *testing.F) {
 		invoke := func(args []string) (int, string, string) {
 			var stdout bytes.Buffer
 			var stderr bytes.Buffer
-			code := run(args, &stdout, &stderr)
+			code := runWithInput(args, strings.NewReader(input), &stdout, &stderr)
 			return code, stdout.String(), stderr.String()
 		}
 
@@ -168,6 +170,7 @@ func FuzzRun(f *testing.F) {
 			{"fartapp", input},
 			{"fartapp", "law", "inspect", input},
 			{"fartapp", "law", "list", "--format", input},
+			{"fartapp", "scenario", "validate", "-", "--format", "json"},
 		}
 		for _, args := range argumentSets {
 			code1, stdout1, stderr1 := invoke(args)
@@ -182,7 +185,9 @@ func FuzzRun(f *testing.F) {
 				t.Fatalf("mixed stdout %q and stderr %q", stdout1, stderr1)
 			}
 			limit := 256
-			if code1 == 0 && len(args) >= 2 && args[1] == "law" {
+			if len(args) >= 2 && args[1] == "scenario" {
+				limit = 32 * 1024
+			} else if code1 == 0 && len(args) >= 2 && args[1] == "law" {
 				limit = 16 * 1024
 			}
 			if len(stdout1)+len(stderr1) > limit {
@@ -190,4 +195,9 @@ func FuzzRun(f *testing.F) {
 			}
 		}
 	})
+}
+
+func nestedDiagnosticSeed() string {
+	key := strings.Repeat(`\u0001`, 128)
+	return strings.Repeat(`{"`+key+`":`, 34) + "0" + strings.Repeat("}", 34)
 }

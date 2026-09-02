@@ -61,11 +61,13 @@ jobs:
       - name: Build executable
         run: go build ./...
 
-      - name: Verify catalog evidence registry
+      - name: Verify registered schema evidence
         shell: bash
         run: |
           go test ./internal/lawcatalog -run '^TestBuiltInCatalog$'
           go test . -run '^TestLawCLITextAndJSONFixtures$'
+          go test ./internal/scenarioprobe -run '^TestAtemporalProbeHasNoAmbientOrEarthRequirements$'
+          go test . -run '^TestScenarioCLITextAndJSONFixtures$'
 
       - name: Check formatting
         shell: bash
@@ -93,7 +95,10 @@ jobs:
         run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
 
       - name: Fuzz command input
-        run: go test -run=^$ -fuzz=FuzzRun -fuzztime=5s .
+        shell: bash
+        run: |
+          go test -run=^$ -fuzz=FuzzRun -fuzztime=5s .
+          go test -run=^$ -fuzz=FuzzValidate -fuzztime=5s ./internal/scenarioprobe
 
       - name: Repeat tests in shuffled order
         run: go test -shuffle=on -count=20 ./...

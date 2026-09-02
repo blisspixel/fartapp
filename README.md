@@ -43,13 +43,15 @@ profile supports. The game never swaps in a canned sound or animation.
 
 ## Project status
 
-The repository contains the original Go CLI prototype plus the first
-experimental v0.7 laboratory slice. The permanent legacy path accepts an
+The repository contains the original Go CLI prototype plus the initial
+experimental v0.7 laboratory slices. The permanent legacy path accepts an
 intensity from 1 to 5 and prints a deterministic, rated emission. A new read-only
 law catalog lists and inspects candidate law contexts through the same typed
-localized-text and JSON report. It does not contain a physical solver yet, and
-it labels that absence explicitly. The next goal is not a graphical wrapper. It
-is a genuinely excellent, cross-platform command-line laboratory.
+localized-text and JSON report. A strict scenario probe validates one exact law,
+one opaque scope, and explicit capability requests without applying defaults or
+performing a realization. It does not contain a physical solver yet, and it
+labels that absence explicitly. The next goal is not a graphical wrapper. It is
+a genuinely excellent, cross-platform command-line laboratory.
 
 The wider product will be built in this order:
 
@@ -108,6 +110,34 @@ solver or an empirical claim about reality. It proves that catalog inspection
 works without ordering, geometry, dimensions, units, a localized source, or an
 observer before the Earth oracle grows further. Software evidence IDs resolve
 inside each inspection to exact Go package and test targets that CI executes.
+
+The next CLI slice is also executable:
+
+```console
+$ ./fartapp scenario validate testdata/scenarios/atemporal-probe.json
+SCENARIO PROBE DOCUMENT VALID
+
+Document schema: fart.scenario-probe/v0alpha1
+Law context: conformance.relation.atemporal@v0alpha1
+Scope: s0
+Realization admission: not-evaluated (admission_policy_unratified)
+Realization: not-performed (validation_only)
+Validation stages:
+  syntax:                 valid
+  schema:                 valid
+  law resolution:         resolved
+  capability resolution:  resolved
+Validator inputs: document_bytes, built_in_law_catalog
+Ambient inputs: none
+```
+
+The report continues with every capability axis and referenced software
+evidence. `--format json` provides the same locale-invariant typed result and
+the explicit admission and realization separation shown above. The parser is
+bounded, rejects duplicate and unknown JSON members, and never supplies an
+Earth, time, geometry, observer, identity, seed, or resource default. This is an
+experimental capability probe, not the full scenario schema or a claim that a
+solver ran. See the [scenario probe contract](docs/SCENARIO_PROBE.md).
 
 ![Planned htop-style terminal laboratory with emitter, plume, uncertainty, acoustics, solver, and conservation panes](docs/media/readme/terminal-lab-concept-v1.svg)
 

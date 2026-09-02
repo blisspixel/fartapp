@@ -294,10 +294,10 @@ func TestLawCLIOutputFailures(t *testing.T) {
 	}
 
 	var stderr bytes.Buffer
-	code := writeLawValue(
+	code := writeValue(
 		&bytes.Buffer{},
 		&stderr,
-		lawOutputJSON,
+		outputJSON,
 		make(chan int),
 		func(chan int) string { return "unused" },
 	)
@@ -311,9 +311,9 @@ func TestLawCLIOutputFailures(t *testing.T) {
 }
 
 func TestLawHelpers(t *testing.T) {
-	positional, format, err := parseLawFormat([]string{"earth.continuum.si", "--format", "json"})
-	if err != nil || len(positional) != 1 || positional[0] != "earth.continuum.si" || format != lawOutputJSON {
-		t.Fatalf("parseLawFormat = (%q, %v, %v)", positional, format, err)
+	positional, format, err := parseOutputFormat([]string{"earth.continuum.si", "--format", "json"})
+	if err != nil || len(positional) != 1 || positional[0] != "earth.continuum.si" || format != outputJSON {
+		t.Fatalf("parseOutputFormat = (%q, %v, %v)", positional, format, err)
 	}
 	if got := joinModuleIDs(nil); got != "" {
 		t.Fatalf("joinModuleIDs(nil) = %q, want empty", got)

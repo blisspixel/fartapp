@@ -225,6 +225,17 @@ func TestGoPackageValidation(t *testing.T) {
 	}
 }
 
+func TestValidateMachineToken(t *testing.T) {
+	if err := ValidateMachineToken("relation.atemporal:v1"); err != nil {
+		t.Fatalf("valid token: %v", err)
+	}
+	for _, value := range []string{"", "Bad", "has space", strings.Repeat("a", 129)} {
+		if err := ValidateMachineToken(value); err == nil {
+			t.Errorf("ValidateMachineToken(%q) succeeded", value)
+		}
+	}
+}
+
 func TestAssessmentVocabulary(t *testing.T) {
 	valid := []struct {
 		axis       string

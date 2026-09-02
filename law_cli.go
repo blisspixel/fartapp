@@ -1,19 +1,11 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"strings"
 
 	"github.com/blisspixel/fartapp/internal/lawcatalog"
-)
-
-type lawOutputFormat uint8
-
-const (
-	lawOutputText lawOutputFormat = iota
-	lawOutputJSON
 )
 
 const lawHelp = `F.A.R.T. Lab candidate law catalog
@@ -43,15 +35,15 @@ func runLaw(args []string, stdout, stderr io.Writer) int {
 		return 1
 	}
 	if len(args) == 1 && (args[0] == "help" || hasLawHelp(args)) {
-		return writeLawText(stdout, stderr, lawHelp)
+		return writeText(stdout, stderr, lawHelp)
 	}
 
 	switch args[0] {
 	case "list":
 		if hasLawHelp(args[1:]) {
-			return writeLawText(stdout, stderr, lawListHelp)
+			return writeText(stdout, stderr, lawListHelp)
 		}
-		positional, format, err := parseLawFormat(args[1:])
+		positional, format, err := parseOutputFormat(args[1:])
 		if err != nil {
 			writeDiagnostic(stderr, "invalid law list: %v\n", err)
 			return 1
@@ -60,12 +52,12 @@ func runLaw(args []string, stdout, stderr io.Writer) int {
 			writeDiagnostic(stderr, "usage: fartapp law list [--format text|json]\n")
 			return 1
 		}
-		return writeLawValue(stdout, stderr, format, lawcatalog.List(), formatLawList)
+		return writeValue(stdout, stderr, format, lawcatalog.List(), formatLawList)
 	case "inspect":
 		if hasLawHelp(args[1:]) {
-			return writeLawText(stdout, stderr, lawInspectHelp)
+			return writeText(stdout, stderr, lawInspectHelp)
 		}
-		positional, format, err := parseLawFormat(args[1:])
+		positional, format, err := parseOutputFormat(args[1:])
 		if err != nil {
 			writeDiagnostic(stderr, "invalid law inspect: %v\n", err)
 			return 1
@@ -91,10 +83,10 @@ func runLaw(args []string, stdout, stderr io.Writer) int {
 			writeDiagnostic(stderr, "resolve law context: internal resolution error\n")
 			return 1
 		}
-		return writeLawValue(stdout, stderr, format, inspection, formatLawInspection)
+		return writeValue(stdout, stderr, format, inspection, formatLawInspection)
 	default:
 		if hasLawHelp(args[1:]) {
-			return writeLawText(stdout, stderr, lawHelp)
+			return writeText(stdout, stderr, lawHelp)
 		}
 		writeDiagnostic(stderr, "unknown law command %s\n", quoteInput(args[0]))
 		return 1
@@ -102,82 +94,7 @@ func runLaw(args []string, stdout, stderr io.Writer) int {
 }
 
 func hasLawHelp(args []string) bool {
-	for _, argument := range args {
-		if argument == "-h" || argument == "--help" {
-			return true
-		}
-	}
-	return false
-}
-
-func writeLawText(stdout, stderr io.Writer, output string) int {
-	return writeLawValue(
-		stdout,
-		stderr,
-		lawOutputText,
-		output,
-		func(value string) string { return value },
-	)
-}
-
-func parseLawFormat(args []string) ([]string, lawOutputFormat, error) {
-	format := lawOutputText
-	seenFormat := false
-	positional := make([]string, 0, len(args))
-	for index := 0; index < len(args); index++ {
-		if args[index] != "--format" {
-			positional = append(positional, args[index])
-			continue
-		}
-		if seenFormat {
-			return nil, 0, fmt.Errorf("--format may be specified only once")
-		}
-		seenFormat = true
-		index++
-		if index == len(args) {
-			return nil, 0, fmt.Errorf("--format requires text or json")
-		}
-		switch args[index] {
-		case "text":
-			format = lawOutputText
-		case "json":
-			format = lawOutputJSON
-		default:
-			return nil, 0, fmt.Errorf(
-				"unsupported format %s; expected text or json",
-				quoteInput(args[index]),
-			)
-		}
-	}
-	return positional, format, nil
-}
-
-func writeLawValue[T any](
-	stdout, stderr io.Writer,
-	format lawOutputFormat,
-	value T,
-	humanFormatter func(T) string,
-) int {
-	var output []byte
-	if format == lawOutputJSON {
-		encoded, err := json.Marshal(value)
-		if err != nil {
-			writeDiagnostic(stderr, "encode output: %v\n", err)
-			return 1
-		}
-		output = append(encoded, '\n')
-	} else {
-		output = []byte(humanFormatter(value))
-	}
-	written, err := stdout.Write(output)
-	if err == nil && written != len(output) {
-		err = io.ErrShortWrite
-	}
-	if err != nil {
-		writeDiagnostic(stderr, "write output: %v\n", err)
-		return 1
-	}
-	return 0
+	return hasHelpOption(args)
 }
 
 func formatLawList(document lawcatalog.ListDocument) string {

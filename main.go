@@ -5,13 +5,21 @@ import (
 	"io"
 	"os"
 	"strconv"
+	"strings"
 )
 
 const maximumDisplayedInputBytes = 32
 
 func run(args []string, stdout, stderr io.Writer) int {
+	return runWithInput(args, strings.NewReader(""), stdout, stderr)
+}
+
+func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	if len(args) >= 2 && args[1] == "law" {
 		return runLaw(args[2:], stdout, stderr)
+	}
+	if len(args) >= 2 && args[1] == "scenario" {
+		return runScenario(args[2:], stdin, stdout, stderr)
 	}
 
 	if len(args) != 2 {
@@ -68,5 +76,5 @@ func writeDiagnostic(stderr io.Writer, format string, args ...any) {
 }
 
 func main() {
-	os.Exit(run(os.Args, os.Stdout, os.Stderr))
+	os.Exit(runWithInput(os.Args, os.Stdin, os.Stdout, os.Stderr))
 }
