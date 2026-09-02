@@ -6,6 +6,11 @@ a real person or as external validation. Its purpose is to pressure-test the
 project across scientific computing, programming languages, HCI, learning
 science, procedural narrative, reproducibility, and game design.
 
+A separate [fictional laboratory director review](LAB_DIRECTOR_REVIEW.md)
+challenges the implemented reservoir boundary, chemistry decomposition,
+advanced-physics claim classes, cultural safeguards, and release engineering
+from a multidisciplinary panel perspective.
+
 ## Discussion
 
 **Reviewer:** The concept is stronger than the joke. The fart is not decoration
@@ -112,6 +117,27 @@ and proof obligations. Publish your own measurable difficulty grades. Separate
 semantic, visual, omnimodal, multi-agent, and matched human tracks so interface
 advantages do not masquerade as intelligence.
 
+**Project:** Could model guidance work like weather forecasting, where people
+compare the European model, a local model, and an ensemble?
+
+**Reviewer:** Yes, if you copy the epistemic discipline rather than an
+institution's branding. Keep model definition, implementation, fitted or
+trained artifact, run, ensemble, comparison, and localized display identity
+separate. Say exactly what varies across members. Initial-condition spread,
+numerical refinement, structural disagreement, and stochastic learned samples
+do not share one probability meaning. Agreement is not truth, and an exact
+`no_shared_observable` is better than a fake consensus.
+
+**Project:** Where does machine learning belong?
+
+**Reviewer:** Start with a bounded surrogate for selected outputs of a verified
+solver. Make it beat a simple baseline on a preregistered objective. Then earn
+property emulation, reduced trajectories, solver-in-the-loop closures, and only
+later probabilistic fields. Record training data, weights, preprocessing,
+calibration, shifted-domain tests, and OOD refusal as first-class evidence. A
+loss penalty is not a conservation proof, and a learned model cannot certify
+itself.
+
 **Project:** Can Symphony Mode and radio coexist with scientific audio?
 
 **Reviewer:** Only if they remain different truth claims. Physical acoustics is
@@ -159,6 +185,11 @@ overconfidence the safest recurring target.
 14. Require only Lab-local record identity, law-context set, scope, and provenance
     inside the bounded formalism; treat time, state, spatial roles, units,
     equations, measurement, and views as capability-selected structures.
+15. Treat model guidance as a typed comparison of independently identified
+    definitions, implementations, artifacts, runs, ensembles, and displays.
+16. Introduce scientific ML through a removable bounded surrogate before any
+    learned closure or probabilistic field model, with solver-owned invariants
+    and explicit OOD fallback or refusal.
 
 ## Questions the implementation must answer
 

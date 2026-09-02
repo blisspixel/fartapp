@@ -1,8 +1,9 @@
 # Simulation contract
 
 This document defines the scientific spine of F.A.R.T. Lab. It is a researched
-design target, not a description of physics already implemented in this
-repository.
+contract. Most sections are design targets. The explicitly labeled v0.7
+finite-reservoir endpoint subset is implemented; no other planned physics is
+implied by that slice.
 
 ## Core invariant
 
@@ -23,6 +24,25 @@ node records its input identities, transformation version, applicable ordering
 or dependency reference, resampling policy when relevant, uncertainty, and
 content hash. Presentation can transform an outcome but cannot substitute an
 unrelated preset or rewrite it.
+
+### Contract ownership
+
+The Lab keeps different claim owners separate. One owner cannot mint another
+owner's result merely because the data appears in the same account.
+
+| Owner | May establish | Cannot establish by itself |
+| --- | --- | --- |
+| Lab operation | Inputs consulted, stages performed, artifacts retained, and execution provenance | Source-law occurrence, physical truth, or permission |
+| Law context | Applicable structures, rules, quantities, invariants, and supported conclusions | Implementation availability, authorization, or evidence sufficiency |
+| Measurement interaction | Accessible observables, support, disturbance, noise, and uncertainty | Unmeasured state or observer-independent completeness |
+| Mapping profile | Correspondence, preservation, residual, ambiguity, loss, and exact failure | Source identity, global compatibility, or semantic equivalence not declared by the witness |
+| Play service | Legal actions, roles, knowledge, budgets, score, and journal transitions | Scientific state outside accepted operations or privileged hidden facts |
+| Presentation and view | Authorized selection, layout, language, sonification, analogy, and accessibility transformation | New scientific geometry, probability, evidence, or source-law meaning |
+| Narrative | Character, institution, and story claims tied to retained facts or declared fiction | Lab endorsement or scientific evidence |
+| Evidence profile | What a test, proof, comparison, calibration, or review supports inside its scope | A stronger claim class, wider domain, or unrelated kind of evidence |
+
+Provenance can record that one Lab claim was computed from another without
+asserting that the first caused the second in the represented context.
 
 ## Minimum-assumption bounded record ontology
 
@@ -150,6 +170,43 @@ Authority classes never collapse into one impressive-sounding maturity label:
 - A **narrative pack** may shape story and presentation but cannot mint
   scientific state, evidence, or source-law meaning.
 
+Every scientific component also carries one application-level
+`ModelClaimClass`. This classification records the relationship between a
+model and the Lab's reviewed evidence. It is not an axiom inside the source law
+and does not claim that every context recognizes human scientific institutions:
+
+- `established_physics` identifies a physical theory or model with empirical
+  support for a named observable inside a stated envelope. It does not validate
+  a new scenario merely because the governing equation is well established.
+- `research_toy` identifies a published reduction or deliberately simplified
+  problem that can be executed and studied without claiming world fidelity.
+- `speculative_model` identifies a mathematically stated candidate physical
+  model whose physical realization has not been established.
+- `analogy` identifies a mapping that preserves only its enumerated structures,
+  observables, or equations.
+- `fictional_axiom` identifies deliberately invented rules that can earn only
+  the declared internal-consistency and conformance claims.
+
+Claim class, empirical support, scenario applicability, and implementation
+assurance are independent fields. A verified implementation can solve a
+speculative model correctly. An established equation can be extrapolated
+outside its validated domain. A useful analogy can preserve one wave equation
+without preserving dynamics, ontology, or empirical status. CLI, TUI, native,
+agent, archive, and certificate surfaces retain these distinctions rather than
+reducing them to one confidence or maturity score. Each status names its source
+revision and Lab review date because scientific assessment can change without
+changing a law-pack identity.
+
+Several compatible models may address one requested observable. The Lab keeps
+model definition, implementation, run, ensemble, and comparison identities
+separate. Initial-condition, parameter, stochastic-closure, numerical,
+structural, learned, and multi-model ensembles have different uncertainty
+semantics and cannot be pooled by default. Agreement is not validation, and
+disagreement is a reportable result. Learned surrogates, closures, hybrid
+solvers, inverse estimators, and probabilistic generators retain their training
+domain, calibration, physical constraints, and out-of-distribution refusal.
+The full contract is in [MODELS.md](MODELS.md).
+
 Every pack publishes the applicable subset of formal semantics, admissibility,
 examples and counterexamples, implementation status, invariant obligations,
 observable and measurement definitions, validity envelope, uncertainty, known
@@ -200,6 +257,118 @@ Every source term is named. Earth-biological presets use finite, plausible
 budgets. Laboratory, spacecraft, planetary, and stellar profiles must select a
 different source model rather than hiding impossible energy inside a body.
 
+#### Implemented v0.7 endpoint subset
+
+The Go oracle now implements one narrow standalone model identified as
+`continuum.rigid-calorically-perfect-ideal-mixture@v0alpha1`. It predicts an
+endpoint after a prescribed composition-preserving finite withdrawal from a
+rigid, homogeneous, nonreacting, single-gas-phase reservoir. Each component has
+positive initial mass `m_i,0`, specific gas constant `R_i`, and constant
+isochoric heat capacity `cv_i`. Volume `V`, initial temperature `T_0`, closure,
+and withdrawal fraction `f` are explicit SI inputs. No Earth, source, exterior,
+ambient, body, case, or occurrence is supplied.
+
+With retained fraction `r = 1 - f`, the component masses and mixture properties
+are:
+
+```text
+m_0    = sum(m_i,0)
+m_i,1 = r * m_i,0
+R_mix  = sum(m_i,0 * R_i) / sum(m_i,0)
+cv_mix = sum(m_i,0 * cv_i) / sum(m_i,0)
+cp_mix = cv_mix + R_mix
+gamma  = cp_mix / cv_mix
+```
+
+For the rigid adiabatic closure:
+
+```text
+T_1   = T_0 * r^(R_mix / cv_mix)
+p_1   = p_0 * r^gamma
+H_out = m_0 * cp_mix * T_0 * (1 - r^gamma) / gamma
+Q_in  = 0
+```
+
+For the prescribed-isothermal closure:
+
+```text
+T_1   = T_0
+p_1   = p_0 * r
+H_out = f * m_0 * cp_mix * T_0
+Q_in  = f * m_0 * R_mix * T_0
+```
+
+Rigid boundary work is zero. The reported energy account uses the sign
+convention:
+
+```text
+U_1 + H_out - Q_in - U_0 = 0
+```
+
+The implementation computes state relations, integrated transfers, component
+mass balances, total mass balance, energy balance, and endpoint ideal-gas
+reported-state equation-of-state consistency residuals through separately
+expressed paths where practical.
+It rejects nonfinite or nonpositive quantities, complete depletion, forged
+states, and a positive fraction too small to produce representable progress.
+An authored zero withdrawal is an exact identity rather than a missing value.
+
+This is an analytical endpoint oracle, not a time-resolved blowdown model. It
+has no aperture, discharge coefficient, flow rate, elapsed duration, exterior
+pressure, choking, wall heat-transfer law, stratification, selective outflow,
+reaction, phase change, recoil, plume, or acoustics. Its tests are code
+verification against closed forms and properties. They are not empirical
+validation. The complete `RES-002` benchmark remains open.
+
+### Composition, chemistry, phase, and exposure layers
+
+Composition is not one universal odor or danger slider. The Earth profile keeps
+the following capabilities independent and couples them only through declared
+ports:
+
+- `BulkMixtureThermodynamics` owns the major species that determine mass,
+  equation of state, heat capacity, enthalpy, density, and any supported
+  transport properties. The first ideal-mixture reservoir belongs only to this
+  layer and remains nonreacting, single-phase, and calorically perfect.
+- `TraceSpeciesInventory` owns species-resolved trace masses or concentrations,
+  analytical detection limits, uncertainty, and source basis. A trace species
+  may be passive and one-way coupled only when a declared bound shows that its
+  omission from bulk mass, energy, and properties is acceptable. Otherwise it
+  enters the bulk mixture.
+- `ReactionNetwork` declares `none`, `equilibrium`, or a versioned finite-rate
+  mechanism, together with species closure, rate or equilibrium data, validity,
+  reversibility, and coupling to energy and transport. An equilibrium result is
+  not evidence for finite-rate evolution.
+- `PhaseEquilibriumAndCondensation` owns saturation or fugacity assumptions,
+  phase stability, nucleation policy, condensed-phase composition, and latent
+  energy. Condensate formed after release remains distinct from liquid already
+  present in the payload.
+- `AerosolAndDropletChemistry` distinguishes primary emitted condensed material
+  from secondary aerosol. Gas-particle partition, dissolution, evaporation,
+  heterogeneous or aqueous reaction, coagulation, and deposition activate only
+  when their own closures exist.
+- `ExteriorChemistry` owns ambient composition, oxidants, humidity, radiation
+  or photolysis fields, surfaces, mixing, and its mechanism revision. Source
+  composition, transformed plume composition, and composition at a measurement
+  support are separate states.
+- `ObserverDetection` maps a physical field through an explicit sensor or
+  observer model. Compound-dependent thresholds, adaptation, fatigue, masking,
+  resolution, timing, and uncertainty belong here. Odor is not an intrinsic
+  scalar property of a species or plume.
+- `HazardAssessment` is a separate optional interpretation requiring species,
+  concentration, averaging duration, route, endpoint, applicable population,
+  authority, revision, and uncertainty. Missing context returns
+  `insufficient_assessment_context`; the initial simulator does not invent a
+  health score.
+
+Carrier, trace, suspended, deposited, reacted, condensed, and exported ledgers
+remain separately auditable. Detectability never implies toxicity, and lack of
+detection never implies safety. Occupational or emergency exposure values are
+context-scoped references, not universal game thresholds. A bioaerosol or
+pathogen claim requires a separate biological capability and evidence review.
+Composition cannot be used to infer identity, diet, disease, or protected
+traits.
+
 ### 2. Interface
 
 The first analytical model uses a prescribed effective area history and an
@@ -219,6 +388,36 @@ cycle_energy = fluid_work - structural_dissipation - fluid_dissipation
 A stable tone can be classified as a self-excited limit cycle only after the
 coupled model sustains positive growth and reaches a bounded attractor. A sound
 designer cannot switch that label on.
+
+### Source morphology and material parameter patches
+
+The scientific source creator edits neutral source, interface, and material
+parameters rather than selecting a hidden body type. Supported parameters may
+include reservoir volume, shape, and compliance; opening area, equivalent or
+hydraulic diameter, perimeter, aspect ratio, topology, and multiplicity;
+channel length and wall thickness; lip curvature and separation geometry;
+surface roughness and wettability; stiffness, damping, prestress, contact and
+closure laws; surrounding baffle curvature and thickness; orientation; and
+prescribed motion. Payload inventory remains a separate parameter group.
+
+A humorous preset is a versioned pair:
+
+- `PresetPresentation` contains a localized name, art, joke, cosmetic shell,
+  and camera treatment. It never enters the scientific state or case hash.
+- `MorphologyParameterPatch` is an explicit scenario diff with units and closure
+  requirements. Applying it changes the scientific case identity and remains
+  inspectable through CLI, TUI, native, agent, and archive surfaces.
+
+Labels such as Big Butt, Small Butt, and Different Butt are optional localized
+presentation aliases over named multidimensional patches. They are not
+scientific types, a binary universal size axis, or evidence of a normal body.
+Non-ordered variants may differ by topology, asymmetry, compliance, curvature,
+or multiplicity. A patch cannot silently choose composition, odorants, wetness,
+cleanliness, toxicity, diet, health, pressure, intelligence, culture, sex,
+gender, race, species, or social value. Locale and cosmetic presentation cannot
+change the patch, and two presentations over an identical patch must produce
+identical scientific results. The biology-neutral reference interface remains
+the default.
 
 ### 3. Restriction flow
 
@@ -397,6 +596,126 @@ profiles. Neutron-star conditions require relativistic hydrodynamics, spacetime
 curvature, and a dense-matter equation of state. They are never ordinary slider
 values in the Earth continuum gas solver.
 
+## Relativity, compactification, strings, and cosmology
+
+These profiles do not form one spectacle ladder. Relativistic flow in four
+dimensional spacetime, a higher-dimensional classical field theory, perturbative
+string theory, semiclassical gravity, a candidate quantum-gravity model, an
+analogue system, and a fictional portal have different equations and evidence.
+Selecting one never silently enables another.
+
+### Compact dimensions
+
+An exact compactification case declares all of the following before evaluation:
+
+- Total spacetime dimension and the split between extended and compact factors.
+- Compact topology, differentiable and metric structure where applicable,
+  radii or moduli, orientation, and identifications.
+- Complete field content, action or equations, couplings, localization, and
+  gauge structure used by the calculation.
+- Initial and boundary conditions, compact-coordinate boundary conditions, and
+  any truncation of the mode tower.
+- Which observer-accessible quantities and comparison maps are defined.
+
+For a free scalar on a circle of radius `R`, a research-toy pack can verify the
+Fourier basis and, in natural units, the Kaluza-Klein spectrum
+`m_n^2 = m_0^2 + n^2 / R^2`. It can report degeneracy, truncation error,
+effective lower-dimensional couplings, and the zero-mode limit. Energy can
+leave a lower-dimensional sector only when the selected action supplies an
+explicit coupling to bulk modes. The calculation does not establish that the
+compact factor, mode, or coupling exists in nature. Arbitrary-dimensional fluid
+dynamics and Kaluza-Klein field reduction are not automatically string theory.
+
+### String and brane packs
+
+A string pack identifies the exact formulation rather than exposing a generic
+dimension slider. It declares whether it implements bosonic, Type I, Type II,
+heterotic, or another stated theory; its critical dimension; background fields
+and consistency conditions; string tension or `alpha_prime`; string coupling;
+compactification; open or closed sectors; boundary conditions; gauge choice;
+quantum state; and approximation order. A perturbative bosonic-string toy uses
+26 spacetime dimensions and contains a tachyon; perturbative superstring packs
+use their theory-specific ten-dimensional consistency conditions. An arbitrary
+dimension or background is rejected unless a separate formal or fictional pack
+defines it.
+
+The smallest quantum string research toy is a free compact worldsheet boson. It
+may calculate oscillator, momentum, and winding levels and test level matching
+and the declared T-duality map `R <-> alpha_prime / R`. A classical
+Nambu-Goto pack may calculate worldsheet motion, constraints, and conserved
+quantities in a prescribed background. Neither turns a gas plume into a
+fundamental string or creates physical audio. Any audible rendering of string
+modes is an `analogy` or sonification with an explicit transfer function.
+
+A brane pack declares dimension, embedding, worldvolume fields, charges,
+boundary conditions, tension, bulk couplings, and effective action. A bounded
+Dirac-Born-Infeld or linear worldvolume calculation is a research model, not a
+claim that a brane is a material membrane, discovered portal, or route between
+universes. The Standard Model, source, or payload remains brane-localized only
+when the selected model says so.
+
+### Gravity and black holes
+
+Special and general relativity are physical theories with extensive empirical
+support, but each calculation still declares its regime. A fixed-background
+Schwarzschild or Kerr profile can calculate geodesics, redshift, causal reach,
+capture, and radiation transport while explicitly neglecting backreaction. It
+must refuse when the release materially changes the metric.
+
+Black-hole formation cannot be certified from total energy or one compactness
+number alone. Distribution, stress, pressure, angular momentum, geometry, and
+the gravitational constraint and evolution equations matter. A formation claim
+requires a dynamical spacetime solver, compatible matter model, constraint
+convergence, horizon diagnostics, and an applicable validation argument.
+
+Hawking temperature and evaporation are a separate semiclassical
+quantum-field-on-curved-spacetime capability. They are not direct empirical
+observations of an astrophysical evaporation event. String microstate claims
+remain restricted to the exact supersymmetric or extremal configurations for
+which the counting was derived. Low-energy quantum-gravity effective-field
+calculations remain separate from unknown ultraviolet completion. At Planckian
+curvature or energy, a physical pack without a justified model returns
+`outside_validated_theory` rather than extrapolating.
+
+### Cosmological initial data
+
+A cosmology profile declares a spacetime model, metric, matter and radiation
+components, equations of state, interactions, initial-data surface, perturbation
+order, gauge, observables, and validity range. Homogeneous FLRW evolution can
+calculate scale factor, density dilution, redshift, horizons, thermal history,
+and interaction-rate freeze-out under those assumptions. Linear perturbation
+theory activates only while its small-perturbation conditions hold.
+
+A homogeneous Big Bang-scale case is not a pressure discharge from a localized
+reservoir into an exterior. When a request replaces the exterior with the
+initial state of the modeled cosmos, the engine reports:
+
+```text
+DISCHARGE BOUNDARY INVALID: CASE RECLASSIFIED AS COSMOLOGICAL INITIAL DATA
+```
+
+That case can evolve declared post-initial data. It cannot validate the
+classical `t = 0` singularity, creation of spacetime, pre-Planck evolution, a
+unique inflation model, or another universe. A localized release on an FLRW
+background is admitted only when its perturbative or nonlinear gravity model is
+explicit and applicable.
+
+Covariant local stress-energy conservation does not guarantee a single global
+energy in an arbitrary dynamical spacetime. A cosmological or gravitational
+Conservation of Ass pane names the exact current, symmetry, boundary, or
+asymptotic charge supporting each ledger. Otherwise the global scalar ledger is
+`not_applicable`.
+
+### Analogue gravity and fiction
+
+An acoustic horizon may preserve the propagation equation for selected
+perturbations in a moving medium. It does not reproduce dynamical Einstein
+gravity, black-hole matter, entropy, or quantum-gravity evidence. Its
+certificate enumerates the preserved and unpreserved structures. A portal,
+cross-universe exhaust, arbitrary-law Big Bang, or universe-spawning release
+belongs in `fiction.axiomatic.*`, with declared rules and no borrowed empirical
+status.
+
 ## Comparison signatures and optional dimensional analysis
 
 Every law context may define a `ComparisonSignature` from the supported relations,
@@ -545,6 +864,12 @@ was preserved. Cross-platform tolerant equality is a comparison result, not a
 fake hash. Raw floating-point identity is promised only at a determinism level
 that actually controls the arithmetic.
 
+The candidate change matrix in
+[INTERFACES.md](INTERFACES.md#identity-contract) records which of these
+identities may change under locale, presentation, measurement, law, model, and
+execution changes. It becomes normative only with the identity RFC and its
+property suite.
+
 Replay presents a trace. Numerical reconstruction computes a new realization
 from retained inputs. Re-enactment uses a fresh record nonce. A bitwise-identical
 reconstruction is still a new operation and encounter, not the original record.
@@ -589,8 +914,15 @@ or compressible pressure damage.
 - Rarefied and vacuum transport with continuum-breakdown criteria and ballistic
   or DSMC models where needed.
 - Orbital recoil, torque, mass loss, and delta-v.
-- Reacting, ionized, plasma, MHD, stellar, relativistic, and gravitational
-  profiles, each with its own equations and verification suite.
+- Trace chemistry, reaction, condensation, secondary aerosol, exterior
+  chemistry, observer detection, and hazard interpretation as independent
+  capabilities rather than one composition switch.
+- Reacting, ionized, plasma, MHD, stellar, relativistic, gravitational, and
+  cosmological profiles, each with its own equations and verification suite.
+- Published compactification, string, and brane reductions labeled as
+  `research_toy` or `speculative_model` at their actual evidential scope.
+- Acoustic-horizon and other structural analogies with explicit preservation
+  and non-preservation witnesses.
 - `fiction.axiomatic.*` profiles that are internally consistent under declared
   rules but never called empirically validated.
 
@@ -613,6 +945,13 @@ Escalation is based on model applicability, not spectacle or platform:
   propagation acoustics.
 - An isolated-bubble model escalates for interaction, boundaries, strong
   compressibility, or nonspherical collapse.
+- A passive trace model escalates when trace mass, reaction heat, phase change,
+  or property effects exceed its declared coupling bound.
+- A fixed-spacetime model refuses when source backreaction is material.
+- A local discharge model reclassifies when the requested exterior is instead a
+  cosmological initial-data surface.
+- A compact-mode or string truncation escalates when discarded modes or
+  interactions control the requested observable.
 
 Higher fidelity is not automatically more truthful. It earns authority only for
 observables that pass stronger verification and validation evidence.
@@ -623,6 +962,12 @@ For profiles that define balances or conserved currents, Conservation of Ass is
 the localized presentation alias for a serious ledger obligation. A profile
 without conservation laws uses its declared invariant or consistency policy
 instead and reports the conservation fields as `not_applicable`.
+
+In curved or cosmological spacetime, a locally conserved stress-energy tensor
+does not by itself authorize a global energy total. Every reported charge names
+the applicable symmetry, current, boundary, or asymptotic construction. If the
+selected profile defines none, the corresponding global ledger remains
+`not_applicable` rather than displaying a fabricated total.
 
 Each applicable Earth discharge run declares its control volume and double-entry
 transfer ledgers:
@@ -706,9 +1051,10 @@ Every claim independently reports `pass`, `fail`, `inconclusive`, or
 - Fictional-law consistent for a stated axiom pack.
 
 The generic certificate includes record, law, scope, provenance, validity, and
-implementation claims. Occurrence, state, relation, observable, invariant,
-balance, and observation sections appear only when selected capabilities define
-them.
+implementation claims plus the independent model-claim class, empirical-support
+scope, scenario applicability, and review revision. Occurrence, state,
+relation, observable, invariant, balance, and observation sections appear only
+when selected capabilities define them.
 Unknown, unsupported, and unverified concepts remain explicit without numeric
 placeholders. Law-specific extensions may add
 equation, closure, solver, numerics, comparison signature, extrema, positivity,
@@ -735,6 +1081,12 @@ The progressive suite includes:
 - View and presentation tests proving that knowledge, privacy, accessibility,
   locale, layout, sonification, and camera changes do not alter the authoritative
   Lab account.
+- Cross-surface tests proving that model-claim class, empirical support,
+  applicability, assurance, nonclaims, and evidence revision survive CLI, TUI,
+  native, agent, archive, and export paths.
+- Morphology-patch tests proving exact diff and archive round trips, identical
+  physics under cosmetic or locale changes, and no hidden composition, health,
+  identity, or social-value parameter changes.
 - Unit-expression invariance and dimensional homogeneity where units and
   dimensions exist.
 - Exact null-space checks for discovered bases and dimensional checks for every
@@ -746,6 +1098,14 @@ The progressive suite includes:
 - Continuity and the mass-flow plateau at the analytical choking boundary.
 - Positive mass, species, density, pressure, temperature, and internal energy
   without silent clamping.
+- Bulk-mixture and passive-trace coupling bounds; species and elemental closure
+  for each reaction mechanism; no-reaction and zero-source limits; phase and
+  dew-point references; latent-energy balance; and distinct primary, secondary,
+  suspended, deposited, reacted, and exported material accounts.
+- Detection-model tests that keep physical concentration, compound-dependent
+  response, adaptation, and uncertainty separate from hazard interpretation,
+  including explicit refusal when duration, route, endpoint, population, or
+  authority context is missing.
 - Exact discrete cancellation for reservoir, plume, deposition, and recoil
   transfers.
 - Correct starting-jet and puff limits.
@@ -768,6 +1128,16 @@ The progressive suite includes:
 - Go-to-Rust oracle parity.
 - Strict similarity scale families and exact translator round trips.
 - Explicit infeasibility for incompatible targets and dimensions.
+- Exact compact-circle spectra, degeneracies, zero-mode limits, and controlled
+  truncation; free-string level matching and the selected momentum-winding
+  duality; and brane small-slope or linear limits when those packs exist.
+- Minkowski limits, fixed-background geodesic and redshift references,
+  gravitational constraint convergence, and explicit backreaction refusal.
+- Radiation, matter, and vacuum FLRW analytical solutions, continuity and
+  redshift checks, perturbation applicability, and cosmological initial-data
+  reclassification.
+- Analogy tests that enumerate preserved equations and reject unstated
+  gravitational, quantum, ontological, or empirical conclusions.
 - Manufactured-solution order, shock relations, and separate time and grid
   refinement.
 - Sod shock tube, shock-vortex interaction, isentropic nozzle, finite-reservoir
@@ -789,6 +1159,13 @@ F.A.R.T. Lab is a game and educational simulator, not a medical, biological,
 pressure-vessel, ignition, aerospace, or planetary-safety tool. Public challenges
 must not encourage real pressure-vessel abuse, ignition, inhalation, harmful
 biological experimentation, or contamination.
+
+Odor is never used as a safety alarm, and occupational or emergency limits are
+never presented as universal safe thresholds. The simulator does not provide
+real mixture recipes, exposure dosing, disease inference, hazardous-device
+control, accelerator design, or engineering instructions for destructive
+high-energy releases. Black-hole, string, extra-dimensional, and Big Bang-scale
+results retain their model class and nonclaims in every surface.
 
 The research sources and their exact scope are listed in
 [RESEARCH.md](RESEARCH.md).

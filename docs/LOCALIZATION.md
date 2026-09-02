@@ -46,6 +46,14 @@ natural language and never select physical or cultural behavior. Localized
 schema introspection supplies reviewed labels, descriptions, examples, units,
 and aliases while canonical automation grammar remains stable.
 
+Model definitions follow the same rule. A stable model ID, revision, provider,
+implementation, learned-artifact digest, and evidence do not change by locale.
+Forecast-desk names such as `Pfft Reference`, `Breeze`, or `Shortcut` are
+localized presentation keys, not lookup authority. A translated nickname
+cannot select a model, alter ensemble membership, hide a `SURROGATE` label, or
+change comparison results. Machine reports may include requested localized
+labels beside stable IDs, never instead of them.
+
 ## Human-language contract
 
 Every translatable message has:
@@ -115,19 +123,56 @@ observations. Agents may request localized natural language as a read-only view
 profile. A benchmark records the language and does not compare exact typed input
 with natural-language input as if they were the same task.
 
-## Humor and sound symbolism
+## Locale humor packs and sound symbolism
 
 When compatible retained claims, a human locale, and an interpretation path
-exist, localized humor may interpret them. A localized
-onomatopoeia such as the working English `pfft` is presentation metadata, not a
-physical class or waveform lookup. Translators may choose different sound
-symbolism, register, rhythm, legal phrasing, understatement, or wordplay if the
-underlying claims remain unchanged.
+exist, a versioned `HumorCue` may offer an optional interpretation. It reads
+only the retained account and presentation history. It cannot alter a law
+context, case input, operation, solver, numerical result, classification,
+evidence, admission, safety decision, score, progression, or identity. Its
+successful output is localized wording, a caption, an accessible alternative,
+a presentation-order suggestion, or `no_joke`. `no_joke` is a complete result,
+not a missing translation or a judgment about the audience.
 
-There is no French, Japanese, American, Martian, or species-essential fart
-preset. Locale never selects pressure, composition, wetness, cleanliness, body,
-diet, intelligence, morality, or social meaning. Humor is reviewed in context
-and may be rewritten rather than translated literally.
+A `LocaleHumorPack` contains:
+
+- A stable cue key, required retained claims, intended comic mechanism, and
+  declared joke target.
+- A source-locale intent note and complete localized realizations, not a bag of
+  fragments to assemble across languages.
+- Register and content tags selected independently from locale.
+- Text, speech, caption, compact-terminal, and accessibility alternatives where
+  those channels apply.
+- Review scope, reviewer roles, revision, known gaps, and a `no_joke` path.
+
+The pack transcreates intent rather than requiring literal translation.
+Understatement, legal phrasing, rhythm, wordplay, and a deliberately clinical
+non-joke may all be correct outcomes. A localized onomatopoeia such as the
+working English `pfft` is presentation metadata, not a physical class or
+waveform lookup. Languages differ in sound-symbolic conventions, and observed
+sound-meaning associations are tendencies rather than a universal dictionary
+([Blasi et al., 2016](https://doi.org/10.1073/pnas.1605782113)). Game-humor
+localization likewise benefits from preserving comic function instead of word
+shape ([Lee, 2013](https://doi.org/10.15749/jts.2013.14.1.006)).
+
+Language, region, script, register, content level, age or maturity context,
+religious or cultural context, direct-language tolerance, and accessibility are
+separate profile axes. Selecting one never infers the others. There is no
+French, Japanese, American, Martian, or species-essential fart preset. Locale
+never selects pressure, composition, wetness, cleanliness, body, diet,
+intelligence, morality, social meaning, or morphology.
+
+A declared morphology may be described where the case needs it. It never
+selects accent, locale, culture, religion, personality, intelligence, morality,
+music, clothing, food, or comic rank. Morphology-aware humor targets a Lab
+adapter, category error, or institutional assumption, never a body, species, or
+community. A locale pack may decline the cue with `no_joke`.
+
+Humor is reviewed in running product context and may be rewritten, narrowed, or
+omitted. Material involving a living culture, religion, taboo, identity, or
+high-affinity analogue requires the safeguards in [CULTURE.md](CULTURE.md),
+including competent situated review and a correction or withdrawal path.
+Machine translation can propose a draft but cannot approve it.
 
 ## Writing systems and terminal safety
 
@@ -238,6 +283,20 @@ safety, metrology, accessibility, or cultural material.
   rights manifest as other documentation media.
 - Localization updates cannot alter canonical scenarios, record nonces, random
   streams, physics, proof, score, progression, or archive identity.
+- Switching locale, register, content level, caption style, accessibility
+  alternative, or `no_joke` preserves the same retained account, scientific
+  values, claim paths, operation disposition, and applicable result identity.
+- Every shipping humor cue names its required retained claims and joke target.
+  A cue with unmet predicates is unavailable rather than approximately true.
+- Locale, morphology, content level, maturity context, cultural context, and
+  accessibility vary independently in regression fixtures. No profile is used
+  as a proxy for another.
+- Child-accessible paths avoid humiliation, sexualization, body shame, graphic
+  deposition, contamination panic, and coercion. They remain complete with
+  comedy disabled and do not imply an age rating or child-suitability claim.
+- A joke cannot require sound, color, animation, haptics, fast timing, or speech
+  as its only understandable channel. Applicable alternatives receive review in
+  context, not only placeholder and layout checks.
 
 The cultural safeguards in [CULTURE.md](CULTURE.md) and interface rules in
 [INTERFACES.md](INTERFACES.md) are part of this contract.

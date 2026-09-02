@@ -121,5 +121,44 @@ and counterfeit representation:
 
 The project enforces against confusion, not against humor.
 
+## Open collateral candidates
+
+The Community Kit should eventually include print-ready SVG and PDF layouts,
+one-color separations, embroidery-safe reductions, accessible product text,
+and a compact manifest recording dimensions, colors, fonts, source revision,
+license, and mark class. Until ownership and trademark policy review is
+complete, these are design candidates rather than an announced merch line or a
+promise that every asset will enter the Community Kit.
+
+Candidate shirt and mug treatments include:
+
+| Face copy | Suitable treatment | Claim boundary |
+| --- | --- | --- |
+| `KEEP IT SUBSONIC FOR THIS TEST` | Shirt back, mug wrap, lab notebook | A test constraint, never a claim that an item, wearer, or occurrence was measured |
+| `EVERY FART IS A SNOWFLAKE` | Shirt front, mug, sticker | A project metaphor for particularity, not proof of physical uniqueness or irreproducibility |
+| `CONSERVATION OF ASS` | Shirt, mug, patch | Comic shorthand for a declared conservation ledger, not certification that any ledger closed |
+| `NO EXTERNAL SOUND IN THIS DECLARED VACUUM MODEL` | Mug wrap, observation print | Limited to one named model and its external acoustic channel |
+| `SUBSONIC IN THE DECLARED FRAME` | Shirt pocket, mug rim | Meaningful only with the declared reference frame and simulated state |
+| `ASK ABOUT THE CONTROL VOLUME` | Shirt, notebook | An invitation to inspect the model boundary, not a safety or standards claim |
+
+The Open Isobar can anchor a small front mark while a control-volume diagram or
+state trace carries the joke on the reverse. A discreet secondary line such as
+`FOR THIS TEST` or `UNDER THE DECLARED MODEL` is enough when the main copy needs
+a boundary. Product metadata carries the full limitation so the visible design
+does not become a wall of disclaimers.
+
+Static collateral must not use `CERTIFIED`, `APPROVED`, `NASA-GRADE`,
+`STANDARDS-BOARD TESTED`, `UNIVERSALLY VERIFIED`, or a similar institutional
+claim. A record-specific artifact may print a measured or simulated status only
+when the retained record supports the exact statement and identifies the model,
+frame, tolerance, and relevant step. A passing fixture certifies neither the
+garment nor its wearer.
+
+Candidate collateral committed to the repository follows the license declared
+for that asset. Apache License 2.0 does not grant permission to use project
+trademarks, and a downloadable Core Mark is not automatically Community Kit
+material. Source files and exports must make that distinction machine-readable
+in the media manifest as well as clear to a person browsing the kit.
+
 This is a product and research plan, not legal advice. Relevant professional
 review gates are listed in the [roadmap](../ROADMAP.md).

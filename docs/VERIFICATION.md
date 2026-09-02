@@ -2,7 +2,10 @@
 
 This document defines the evidence required before F.A.R.T. Lab calls a result
 trustworthy. It is a plan and benchmark registry. The current toy CLI has not
-implemented or passed the planned physical benchmarks.
+implemented or passed the planned field-physics benchmarks. The experimental
+v0.7 reservoir command now supplies a code-verified analytical endpoint slice
+of `RES-002`; it is not empirical validation or the complete time-resolved
+blowdown benchmark.
 
 The governing distinction is strict:
 
@@ -62,6 +65,14 @@ reference uncertainty before the benchmark is marked active.
 | ALG-002 | Dimensional group basis | Exact rational dimension matrix | Exact null space, dimensionless authored groups, rank and basis recorded |
 | RES-001 | Zero driving force | Equal reservoir and exterior pressure | Zero net mass flow and impulse within roundoff-scaled tolerance |
 | RES-002 | Finite blowdown | Closed-form ideal adiabatic and isothermal limits | Mass, pressure, temperature, and energy errors below ratified analytical tolerance |
+| SRC-001 | Source-preset transparency | Neutral morphology plus each localized alias | Expanded parameter patch is complete, stable, inspectable, and independent of locale; no hidden composition, health, identity, or classification change |
+| CHM-001 | Chemistry capability separation | Same bulk mixture with independently varied trace, detection, and hazard profiles | Bulk thermodynamics remains unchanged where declared; detection and hazard results cite their own inputs, models, units, and limits |
+| EPI-001 | Epistemic claim separation | Established, toy, speculative, analogy, and fictional-axiom fixtures | Model class, empirical support, applicability, assurance, evidence, source revision, and nonclaims remain independent across surfaces |
+| HUM-001 | Read-only humor | One retained result across locale packs, `no_joke`, and grossness levels | Scientific account, identities, score, archive evidence, and non-presentation random streams remain byte-identical |
+| MOD-001 | Model identity separation | One definition with two implementations, two learned artifacts, multiple runs, localized names, and one comparison | Definition, implementation, artifact, run, ensemble, comparison, and presentation changes affect only their owned identities |
+| ENS-001 | Ensemble interpretation | Initial, parameter, closure, numerical, structural, learned, and multi-model fixtures | Every member records why it differs; probability appears only with declared population, dependence, weighting, calibration, and scoring |
+| ML-001 | Learned surrogate | Held-out analytical and verified-field scalar or integral outputs | Beats a preregistered non-ML baseline on named accuracy and cost targets while satisfying applicable conservation, admissibility, calibration, and latency gates |
+| ML-002 | Learned-model domain gate | Held-out geometry, Mach, Reynolds, pressure-ratio, composition, phase, boundary, and resolution shifts | `in_domain`, `near_boundary`, `out_of_domain`, or `undetermined` agrees with the declared gate; structural failures force fallback or refusal without silent clamping |
 | NOZ-001 | Isentropic nozzle | Analytical subsonic mass flux | Integral mass flux within 1 percent inside the declared quasi-steady domain |
 | NOZ-002 | Choked Cheek Criterion | Analytical critical pressure ratio | Continuous transition and mass-flux plateau within 1 percent |
 | FSI-001 | Free compliant interface | Mass-spring-damper frequency and decay | Frequency and logarithmic decrement within ratified tolerance |
@@ -113,6 +124,40 @@ envelope without fabricating a capability result or evidence record. Because
 the report remains input-dependent and selects, admits, and executes no requested
 case operation, it is not retained-case, archive, admission-refusal, policy, or
 physical evidence.
+
+## Current finite-reservoir endpoint evidence
+
+The implemented model is
+`continuum.rigid-calorically-perfect-ideal-mixture@v0alpha1`. It assumes a
+rigid, homogeneous, nonreacting ideal-gas mixture with constant component heat
+capacities and a composition-preserving finite withdrawal. It supports an
+adiabatic path and a prescribed-isothermal path. It does not model an aperture,
+elapsed time, exterior state, wall heat-transfer law, stratification, phase
+change, reaction, choking, plume, sound, occurrence, or biological source.
+
+Current code-verification evidence includes:
+
+- Independently expressed adiabatic temperature and withdrawn-enthalpy
+  relations for synthetic closed-form mixtures.
+- Independently accumulated isothermal heat input rather than cancellation of
+  two large internal-energy terms.
+- Exact zero-withdrawal identity, composition preservation, sequential
+  withdrawal composition, component-order invariance, and input immutability.
+- Component and total mass closure, energy closure, and both endpoint
+  reported-state equation-of-state consistency residuals with scale-aware
+  tolerances.
+- Domain rejection for invalid quantities, forged states, non-representable
+  progress, complete exhaustion, nonfinite results, malformed or ambiguous
+  JSON, and unsupported model or quantity-system identifiers.
+- Deterministic CLI text and JSON fixtures from path and standard input, plus
+  fuzz targets for the numerical transition and complete request adapter.
+
+This evidence verifies the implemented equations and adapter invariants. The
+remaining `RES-002` benchmark adds an independently solved time history,
+aperture and exterior coupling, zero-driving-force behavior, heat-transfer
+closure where selected, and comparison against trusted blowdown references.
+Until then, the benchmark remains a candidate and the command says endpoint
+prediction.
 
 ## Numerical proof protocol
 

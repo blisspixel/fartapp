@@ -1,15 +1,13 @@
 package scenarioprobe
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"sort"
-	"strconv"
 	"strings"
-	"unicode/utf8"
 
 	"github.com/blisspixel/fartapp/internal/lawcatalog"
+	"github.com/blisspixel/fartapp/internal/strictjson"
 )
 
 const (
@@ -276,7 +274,7 @@ func validateMembers(
 }
 
 func decodeObject(raw []byte, path string) (map[string]json.RawMessage, *Diagnostic) {
-	trimmed := trimJSONSpace(raw)
+	trimmed := strictjson.TrimSpace(raw)
 	if len(trimmed) == 0 || trimmed[0] != '{' {
 		return nil, schemaDiagnostic(pathOrRoot(path), "wrong_type")
 	}
@@ -288,7 +286,7 @@ func decodeObject(raw []byte, path string) (map[string]json.RawMessage, *Diagnos
 }
 
 func decodeArray(raw []byte, path string) ([]json.RawMessage, *Diagnostic) {
-	trimmed := trimJSONSpace(raw)
+	trimmed := strictjson.TrimSpace(raw)
 	if len(trimmed) == 0 || trimmed[0] != '[' {
 		return nil, schemaDiagnostic(path, "wrong_type")
 	}
@@ -300,7 +298,7 @@ func decodeArray(raw []byte, path string) ([]json.RawMessage, *Diagnostic) {
 }
 
 func decodeString(raw []byte, path string) (string, *Diagnostic) {
-	trimmed := trimJSONSpace(raw)
+	trimmed := strictjson.TrimSpace(raw)
 	if len(trimmed) == 0 || trimmed[0] != '"' {
 		return "", schemaDiagnostic(path, "wrong_type")
 	}
@@ -323,160 +321,33 @@ func decodeToken(raw []byte, path string) (string, *Diagnostic) {
 }
 
 func preflightJSON(data []byte) *Diagnostic {
-	if len(trimJSONSpace(data)) == 0 {
-		return syntaxDiagnostic("empty_input", 0)
-	}
-	if !utf8.Valid(data) || !validJSONUnicodeEscapes(data) {
-		return syntaxDiagnostic("malformed_json", 0)
-	}
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.UseNumber()
-	if diagnostic := scanJSONValue(decoder, "", 0); diagnostic != nil {
-		return diagnostic
-	}
-	offset := decoder.InputOffset()
-	if offset < int64(len(data)) && len(trimJSONSpace(data[offset:])) != 0 {
-		return syntaxDiagnostic("trailing_json_value", offset)
-	}
-	return nil
-}
-
-func trimJSONSpace(value []byte) []byte {
-	start := 0
-	for start < len(value) && isJSONSpace(value[start]) {
-		start++
-	}
-	end := len(value)
-	for end > start && isJSONSpace(value[end-1]) {
-		end--
-	}
-	return value[start:end]
-}
-
-func isJSONSpace(value byte) bool {
-	return value == ' ' || value == '\t' || value == '\n' || value == '\r'
-}
-
-func validJSONUnicodeEscapes(data []byte) bool {
-	inString := false
-	for index := 0; index < len(data); index++ {
-		switch data[index] {
-		case '"':
-			inString = !inString
-		case '\\':
-			if !inString || index+1 >= len(data) {
-				continue
-			}
-			if data[index+1] != 'u' {
-				index++
-				continue
-			}
-			value, valid := decodeHexQuad(data, index+2)
-			if !valid {
-				continue
-			}
-			if value >= 0xdc00 && value <= 0xdfff {
-				return false
-			}
-			if value >= 0xd800 && value <= 0xdbff {
-				if index+12 > len(data) || data[index+6] != '\\' || data[index+7] != 'u' {
-					return false
-				}
-				low, lowValid := decodeHexQuad(data, index+8)
-				if !lowValid || low < 0xdc00 || low > 0xdfff {
-					return false
-				}
-				index += 11
-				continue
-			}
-			index += 5
-		}
-	}
-	return true
-}
-
-func decodeHexQuad(data []byte, start int) (uint16, bool) {
-	if start+4 > len(data) {
-		return 0, false
-	}
-	var value uint16
-	for _, character := range data[start : start+4] {
-		value <<= 4
-		switch {
-		case character >= '0' && character <= '9':
-			value += uint16(character - '0')
-		case character >= 'a' && character <= 'f':
-			value += uint16(character-'a') + 10
-		case character >= 'A' && character <= 'F':
-			value += uint16(character-'A') + 10
-		default:
-			return 0, false
-		}
-	}
-	return value, true
-}
-
-func scanJSONValue(decoder *json.Decoder, path string, depth int) *Diagnostic {
-	if depth > maximumJSONDepth {
-		return schemaDiagnostic(pathOrRoot(path), "maximum_nesting_exceeded")
-	}
-	token, err := decoder.Token()
-	if err != nil {
-		return syntaxDiagnostic("malformed_json", decoder.InputOffset())
-	}
-	delimiter, isDelimiter := token.(json.Delim)
-	if !isDelimiter {
+	issue := strictjson.Inspect(data, strictjson.Limits{
+		MaximumDepth: maximumJSONDepth, MaximumMemberNameBytes: maximumMemberNameBytes,
+	})
+	if issue == nil {
 		return nil
 	}
-	switch delimiter {
-	case '{':
-		seen := make(map[string]struct{})
-		for decoder.More() {
-			keyToken, keyErr := decoder.Token()
-			if keyErr != nil {
-				return syntaxDiagnostic("malformed_json", decoder.InputOffset())
-			}
-			key, ok := keyToken.(string)
-			if !ok {
-				return syntaxDiagnostic("malformed_json", decoder.InputOffset())
-			}
-			if len(key) > maximumMemberNameBytes {
-				return schemaDiagnostic(pathOrRoot(path), "member_name_too_long")
-			}
-			childPath := joinJSONPointer(path, key)
-			if _, exists := seen[key]; exists {
-				return &Diagnostic{
-					Code:       "FART-E-SCHEMA-0002",
-					Stage:      "schema",
-					Path:       childPath,
-					ReasonCode: "duplicate_member",
-					ByteOffset: decoder.InputOffset(),
-				}
-			}
-			seen[key] = struct{}{}
-			if diagnostic := scanJSONValue(decoder, childPath, depth+1); diagnostic != nil {
-				return diagnostic
-			}
+	switch issue.Kind {
+	case strictjson.MaximumDepth:
+		diagnostic := schemaDiagnostic(issue.Path, "maximum_nesting_exceeded")
+		diagnostic.ByteOffset = issue.ByteOffset
+		return diagnostic
+	case strictjson.MemberNameTooLong:
+		diagnostic := schemaDiagnostic(issue.Path, "member_name_too_long")
+		diagnostic.ByteOffset = issue.ByteOffset
+		return diagnostic
+	case strictjson.DuplicateMember:
+		return &Diagnostic{
+			Code: "FART-E-SCHEMA-0002", Stage: "schema", Path: issue.Path,
+			ReasonCode: "duplicate_member", ByteOffset: issue.ByteOffset,
 		}
-		if _, err = decoder.Token(); err != nil {
-			return syntaxDiagnostic("malformed_json", decoder.InputOffset())
-		}
-	case '[':
-		index := 0
-		for decoder.More() {
-			childPath := joinJSONPointer(path, strconv.Itoa(index))
-			if diagnostic := scanJSONValue(decoder, childPath, depth+1); diagnostic != nil {
-				return diagnostic
-			}
-			index++
-		}
-		if _, err = decoder.Token(); err != nil {
-			return syntaxDiagnostic("malformed_json", decoder.InputOffset())
-		}
+	case strictjson.TrailingValue:
+		return syntaxDiagnostic("trailing_json_value", issue.ByteOffset)
+	case strictjson.EmptyInput:
+		return syntaxDiagnostic("empty_input", issue.ByteOffset)
 	default:
-		return syntaxDiagnostic("malformed_json", decoder.InputOffset())
+		return syntaxDiagnostic("malformed_json", issue.ByteOffset)
 	}
-	return nil
 }
 
 func schemaDiagnostic(path, reason string) *Diagnostic {

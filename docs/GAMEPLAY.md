@@ -87,6 +87,59 @@ otherwise offers a comparison, alternate solution, or precise refusal. It
 distinguishes causal model structure from correlation and admits when the
 selected model cannot support the requested claim.
 
+## Explorer, Lab, and Research views
+
+Explorer, Lab, and Research are disclosure views over one retained account, not
+separate simulations or separate player identities. A player or agent may
+switch views without rerunning the case or losing prior work:
+
+- **Explorer** foregrounds one hypothesis, a few applicable controls, immediate
+  cause or relation and effect, and an inviting next action. Correct units,
+  assumptions, and the complete explanation remain reachable. Its language can
+  be child-accessible without claiming that every scenario is child-suitable.
+- **Lab** exposes comparisons, branches, sweeps, instruments, claim paths, and
+  conservation or constraint ledgers where those concepts apply.
+- **Research** exposes normalized inputs, equations or formal rules, closures,
+  discretization and solver controls, residuals, uncertainty, provenance, and
+  verification evidence where they exist.
+
+The views may vary density, vocabulary, ordering, and controls only within the
+capabilities of the selected case. Explorer does not substitute false physics,
+and Research does not receive privileged facts. All three support the same
+humor-off path, machine inspection, and record identity. The design follows the
+useful low-floor and high-ceiling principle without treating age as expertise
+([Blake-West and Bers, 2023](https://doi.org/10.1016/j.ijcci.2023.100601)).
+
+## Fact-bound humor cues
+
+A versioned `HumorCue` is a read-only presentation rule over compatible retained
+claims, classifications, absences, uncertainty, and presentation history. It
+may produce wording, a caption, an accessible alternative, a presentation-order
+suggestion, or `no_joke`. `no_joke` is a successful outcome. The director never
+forces a punchline when the facts do not support one.
+
+Useful mechanics include expectation and reversal, exact bureaucratic phrasing,
+scale mismatch, callback, harmless status inversion, scientific understatement,
+and a Lab instrument taking an ordinary result too seriously. Each cue declares
+its factual predicates and joke target. Morphology-aware cues may target a Lab
+adapter or institutional category error. They do not target a body, species,
+culture, religion, disability, identity, or material hardship.
+
+A cue cannot write or select law context, case scope, operation, source,
+participant, solver, numerical state, classification, evidence, admission,
+safety, challenge result, score, progression, archive identity, or content
+entitlement. It uses a named presentation-only random stream when variation is
+needed. Cue selection never consumes a physics, generation, challenge, or agent
+action stream. Human and agent seats receive the same fact boundary.
+
+Presentation history may suppress repetition or select among already eligible
+cues. It cannot make an unsupported cue eligible. In shared play, the session
+declares its shared humor and content envelope before play; per-seat humor-off
+and accessibility choices remain private and cannot alter science, score, or
+another seat's access. A shared cue targets the Lab, a retained result, or a
+consenting fictional role, never the losing player, an access need, or a private
+preference.
+
 ## Broadcast mode
 
 `fart broadcast --seed <seed>` is the seeded interdimensional show. It generates
@@ -118,6 +171,8 @@ The story director may:
 - Select cameras, instruments, narration, pacing, and display density.
 - Pause or visibly compress presentation playback or ordering when supported.
 - Choose reaction storylets whose predicates match retained claims.
+- Evaluate an eligible, reviewed `HumorCue` after its factual predicates are
+  satisfied, accepting `no_joke` as a complete result.
 - Let characters hold incorrect beliefs when dialogue marks them as beliefs.
 
 The story director may not:
@@ -129,6 +184,7 @@ The story director may not:
   without an applicable transfer and target model.
 - Hide failed or inconclusive verification.
 - Present character interpretation as a measured fact.
+- Turn a humor cue into a Lab claim, or rerun a case to make a cue eligible.
 
 If a predicted planet killer produces a polite ripple, the polite ripple is the
 ending. Narration, witnesses, bureaucracy, and the callback make failure funny.
@@ -200,6 +256,35 @@ Freestyle exposes the complete instrument:
 Scientific commands are available from the beginning. Campaign progression
 guides discovery and unlocks curated content, but does not hide the laboratory
 behind playtime.
+
+## Forecast Desk
+
+Forecast Desk turns compatible multi-model guidance into a playable read-only
+view. It borrows the social grammar of weather forecasts without borrowing a
+real forecasting center's identity or transferring weather skill claims. A
+player can compare an analytical oracle, reduced model, field calculation,
+ensemble, and learned surrogate when they share a declared observable.
+
+The humor comes from grave model-office disagreement: one guidance family may
+remain stubbornly subsonic while another places the wetness transition inside
+the declared uncertainty interval. The neutral account still reports exact
+model IDs, applicability, member construction, residuals, calibration, and
+typed disagreement. A locale pack can rewrite the desk banter but cannot select
+a model, change an ensemble, or invent consensus.
+
+The play loop asks the player or agent to choose useful evidence under a budget:
+
+1. Inspect available models, observables, cost, and evidence.
+2. Predict where they will agree or fail.
+3. Plan a parameter, initial-condition, numerical, structural, or learned
+   ensemble with explicit semantics.
+4. Run or refuse members without rerolling inconvenient outcomes.
+5. Diagnose disagreement, refine one uncertainty source, and cite the result.
+
+An exact `NO COMMON OBSERVABLE` is a successful and potentially funny result.
+Ensemble spread is not automatically probability, model agreement is not truth,
+and a surrogate near its training boundary remains visibly marked. See
+[models and scientific ML](MODELS.md).
 
 ## Challenges
 
@@ -341,6 +426,7 @@ law-context set + bounded case scope
   -> capability-selected observations and representations
   -> optional world, habitat, source, agents, institutions, and stakes
   -> optional reaction storylets
+  -> optional fact-bound HumorCue or no_joke
   -> player rendering with declared mapping and loss
 ```
 
@@ -366,7 +452,8 @@ A storylet declares its identifier, version, episode phase, state and fact
 predicates, knowledge requirements, exclusions, priority, cooldown, duration,
 claims, opinions, state effects, localization keys, and content tags. Every lab
 claim resolves to a scenario or telemetry path. Opinions are explicitly
-diegetic.
+diegetic. A `HumorCue` is not a state-changing storylet. It declares no state
+effects and cannot create a claim, knowledge fact, reward, or progression edge.
 
 Start with authored storylets and deterministic grammars. Runtime unrestricted
 text generation would weaken replay, safety review, offline use, localization,
@@ -434,12 +521,23 @@ grossness, deposition detail, consequence intensity, audio, dynamic range,
 motion, camera shake, flashing, haptics, playback speed, text, contrast, color,
 subtitles, and screen narration.
 
+Content level and interface density are independent. Explorer can remain
+scientifically correct for a young or new player, while Lab and Research remain
+available on the same account. Child-accessible presentation avoids humiliation,
+sexualization, graphic deposition, body shame, contamination panic, and
+coercion. This is a design constraint, not an age-rating or child-suitability
+claim. Locale, maturity context, grossness, comedy density, direct-language
+tolerance, and accessibility are configured separately.
+
 Critical information remains available with color, sound, animation, and
 haptics disabled. The CLI supports plain text and redirected output. The TUI has
 reduced-color, keyboard-only, append-only, and explicitly labeled ASCII
 transliteration or fallback modes. ASCII does not claim locale parity when the
 original script is unavailable. Native accessibility setup appears before the
-first audiovisual presentation.
+first audiovisual presentation. Jokes with relevant information have reviewed
+text, caption, speech, or other applicable alternatives and never require one
+sensory channel, rapid response, or voice chat. Comedy-off and `no_joke` paths
+remain complete play experiences.
 
 ## Acceptance gates
 
@@ -454,6 +552,17 @@ first audiovisual presentation.
   full setup, result, consequence, explanation, and callback treatment.
 - Case and operation streams are independent of narrative, presentation,
   execution order, terminal dimensions, localization, and accessibility settings.
+- Explorer, Lab, and Research views over the same case preserve retained account
+  identity, scientific values, claim paths, operation disposition, and
+  applicable result identity.
+- Switching locale, register, content level, accessibility alternative, comedy
+  density, eligible cue, or `no_joke` preserves the same retained account,
+  scientific values, score, progression, and applicable result identity.
+- Every `HumorCue` has testable retained-claim predicates and a declared joke
+  target. Unmet predicates make it unavailable, and mutation tests catch cues
+  that write state or consume a non-presentation random stream.
+- Morphology, locale, maturity context, culture, and content settings vary
+  independently in regression fixtures. No one profile infers another.
 - Archive round trips preserve record identity, any applicable
   context-occurrence identity claims, optional presentation beat ordering, any
   applicable stream manifest, certificate, and hashes.

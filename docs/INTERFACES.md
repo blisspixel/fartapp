@@ -124,6 +124,27 @@ grade, trust policy, backend feasibility, and resource refusal. Adapters may
 filter or present the report, but cannot invent capability from an absent pane,
 device feature, or protocol method.
 
+The canonical operation path is staged and typed:
+
+```text
+request parsing
+  -> law-context and scope resolution
+  -> required-capability resolution
+  -> applicability evaluation
+  -> authorization and trust decision
+  -> execution-plan construction
+  -> resource admission
+  -> execution or exact refusal
+  -> evidence retention
+  -> allowed-claim derivation
+```
+
+Each stage records its exact inputs and disposition. A later stage cannot repair
+an earlier semantic failure by adding defaults. Simulation is one possible
+operation family, not the master verb; relation evaluation, proof, mapping,
+translation, measurement, comparison, reconstruction, and export may have
+different applicable plans.
+
 ## Interface 1: CLI Lab
 
 The CLI is designed to stand on its own for play, science, automation,
@@ -132,7 +153,8 @@ regression, and people who prefer terminals.
 Commands written as `fart` in this section describe the planned installed 1.0
 product unless a subsection explicitly says they exist now. The current Go
 oracle is named `fartapp`; it implements the permanent intensity path, law
-catalog inspection, scenario-document validation, and their exact help routes.
+catalog inspection, scenario-document validation, exact ideal-mixture reservoir
+endpoint prediction, and their exact help routes.
 
 ### Immediate play
 
@@ -222,6 +244,8 @@ Scientific resources use consistent noun-then-verb groups:
 ```console
 fart reference inspect
 fart reference realize measured-enclosure.toml
+fart model list --operation case.run
+fart model inspect continuum.reduced-puff@v1
 fart scenario init
 fart scenario validate reference-enclosure.toml
 fart scenario diff first.toml second.toml
@@ -230,6 +254,10 @@ fart case inspect run.fart
 fart case explain run.fart --why regime.choked
 fart case verify run.fart --refine timestep
 fart case reconstruct run.fart
+fart ensemble plan reference-enclosure.toml --profile initial-condition.v1
+fart ensemble run plan.json --members 64 --output guidance.fart
+fart ensemble inspect guidance.fart --view research
+fart model compare guidance.fart --observable interface.mach
 fart trace replay run.fart
 fart artifact plumeprint run.fart
 fart artifact grow run.fart
@@ -245,6 +273,13 @@ and commits a case result, `reconstruct` creates a new verification operation,
 `replay` presents retained evidence, and `export` creates a representation. A
 law context may additionally classify supported claims as an occurrence or
 realization. There is no second `upgrade` command that competes with `update`.
+
+Model and ensemble commands follow [MODELS.md](MODELS.md). They preserve model
+definition, implementation, fitted or trained artifact, run, ensemble,
+comparison, and presentation
+identity separately. A localized display name cannot select a model. Multi-model
+guidance reports incompatible observables and member failures instead of
+silently averaging them.
 
 The root command never treats an unknown word as a natural-language request or
 catch-all action. A typo prints likely intended commands but does not execute
@@ -355,19 +390,35 @@ update signature.
 
 ### Laboratory commands
 
-The current v0.7 probe is:
+The current v0.7 commands are:
 
 ```console
+fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json
+fartapp reservoir predict - --format json
 fartapp scenario validate testdata/scenarios/atemporal-probe.json
 fartapp scenario validate - --format json
 fartapp --help
 fartapp help law inspect
 fartapp help scenario validate
+fartapp help reservoir predict
 ```
 
-It accepts only the provisional strict JSON envelope documented in
-[SCENARIO_PROBE.md](SCENARIO_PROBE.md). The broader command family below remains
-planned. Root and nested help enumerate every and only current command path.
+`reservoir predict` accepts one bounded strict JSON request from a path or
+standard input. The only current model identifier is
+`continuum.rigid-calorically-perfect-ideal-mixture@v0alpha1`; its quantity
+system is explicit SI. The request names rigid volume, temperature, closure,
+withdrawal fraction, and component masses, molar masses, and constant heat
+capacities. A withdrawal fraction of zero is an authored operation and is not
+treated as an omitted default. Text is a human presentation. JSON is the full
+typed report with initial and final state, transfers, balance claims,
+assumptions, evidence scope, and nonclaims.
+
+The scenario command accepts only the provisional strict envelope documented in
+[SCENARIO_PROBE.md](SCENARIO_PROBE.md). Both adapters reject malformed UTF-8,
+duplicate members, unknown members, invalid JSON whitespace, excessive nesting
+and member length, trailing values, and input beyond their published limit
+before typed decoding. The broader command family below remains planned. Root
+and nested help enumerate every and only current command path.
 They identify the permanent v0.6 string oracle separately from experimental
 v0.7 probes and label current English text as presentation rather than a shared
 language assumption.
@@ -378,6 +429,9 @@ fart scenario validate reference-enclosure.toml
 fart law list
 fart law inspect earth.continuum.si
 fart scenario capabilities reference-enclosure.toml --format json
+fart source inspect preset:big-butt --locale en
+fart source expand preset:big-butt --format json
+fart source diff neutral-source.toml preset:big-butt
 fart case run reference-enclosure.toml --output run.fart
 fart case inspect run.fart --at "1.2 s"
 fart case explain run.fart --why regime.choked
@@ -401,6 +455,34 @@ fart completions powershell
 
 Command names stay provisional until the typed command and schema RFC is
 accepted. Capabilities and output discipline are not provisional.
+
+Comic source names are presentation aliases over versioned, inspectable
+morphology parameter patches. `source expand` reveals every change before use,
+including compliance, interface geometry, symmetry, orientation, boundary
+motion, and materials. A preset cannot hide changes to composition, health,
+identity, or scientific classification. Every expanded patch remains usable
+without its localized comic name.
+
+### Presentation depth and humor
+
+Explorer, Lab, and Research are read-only depth profiles over the same result:
+
+- Explorer keeps the immediate sound, motion, joke, and one useful explanation.
+- Lab exposes inputs, regimes, comparisons, and applicable ledgers.
+- Research exposes equations or rules, assumptions, residuals, provenance,
+  uncertainty, evidence class, and nonclaims.
+
+Changing depth cannot rerun a stochastic operation, alter a seed, or select a
+different scientific result. `--view explorer|lab|research` is planned for
+human output; machine output receives explicit field-selection controls rather
+than a human-depth metaphor.
+
+A versioned `HumorCue` is likewise presentation only. It references facts in
+the retained account and may add a culturally reviewed rendering, but cannot
+change those facts. The valid outcomes include a rendered cue, an intentionally
+plain explanation, and `no_joke`. Humor uses its own named random stream so
+translation or editorial changes cannot perturb physics, narrative, challenge,
+or artifact generation.
 
 ### Global output contract
 
@@ -456,6 +538,25 @@ The interface never collapses these identities:
 | Presentation | Language, layout, device, camera, or accessibility changes | No physical claim follows from it |
 | Play session | Rules, initial identity, participants, canonical action journal, or branch changes | Transport and subscriber order cannot change it |
 | Archive bytes | Serialization or container bytes change | Byte equality is never confused with semantic equality |
+
+The ratified identity RFC will turn representative change behavior into a
+machine-readable matrix and property suite. Initial candidate rows are:
+
+| Change | Scenario | Record | Case result | Model artifact | View | Presentation |
+| --- | --- | --- | --- | --- | --- | --- |
+| Locale or translated model nickname | same | same | same | same | same | changes |
+| Terminal width, camera, or color mode | same | same | same | same | same | changes |
+| Read-only knowledge or privacy selection | same | same | same | same | changes | may change |
+| Accepted state-altering measurement | changes | changes | changes | same unless retrained | changes | may change |
+| Law or governing model revision | changes | changes | changes | same unless the artifact binding changes | changes | may change |
+| Learned-weight or preprocessing digest | changes when selected | changes | changes | changes | changes | may change |
+| New conforming execution of identical inputs | same | changes | same only when the declared deterministic result-identity criteria are satisfied; otherwise changes | same | changes | may change |
+
+`same` and `changes` are identity statements, not claims of source-law
+recurrence, causal order, byte equality, or observable difference. The final
+matrix must also cover replay, reconstruction, branches, measurement views,
+backend changes, archive migration, and optional context-occurrence claims
+without guessing semantics for contexts that do not define them.
 
 `fart provenance` traverses the typed Lab-account graph. `fart
 explain` presents a declared derivation or causal path, plus a runnable

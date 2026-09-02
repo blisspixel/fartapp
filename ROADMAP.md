@@ -20,6 +20,32 @@ delivery estimates. The project is not racing to 1.0. A milestone advances only
 when its exit evidence is complete, and scope moves later rather than weakening
 a scientific, usability, accessibility, security, or quality gate.
 
+## Gate-level dependency graph
+
+Version numbers provide the public narrative. These gates record the important
+unlock relationships underneath it:
+
+| Deliverable | Requires |
+| --- | --- |
+| Rust domain and `PlayService` | Frozen Go-oracle scope, bounded law and operation contracts, and cross-language fixtures |
+| Certified case archive | Ratified identities, journals, measurement boundary, canonical serialization, and hostile-input limits |
+| Exceptional ordinary pfft | Reservoir, restriction, reduced exterior, physical-audio, proof, archive, and one complete CLI play loop |
+| Broadcast and Chill | Canonical play reducer, ordinary case, retained-claim narrative predicates, separate presentation streams, and archive policy |
+| Model guidance and ensembles | At least two independently useful compatible models, shared-observable contract, registry identities, and comparison evidence |
+| Scientific ML pack | Verified reference producer, trustworthy split data, immutable artifact identity, preregistered baseline, OOD gate, and safe fallback |
+| MCP and A2A agent play | Stable canonical actions and observations, machine CLI parity, tasks, roles, budgets, journals, archives, and protocol threat models |
+| Snowflake artifacts | Stable record and trace identity, projection and loss contract, archive references, and hostile-artifact limits |
+| Verified field acceleration | Scalar references, field equations, benchmark registry, precision and backend contract, and CPU differential path |
+| 1.0 CLI Lab | Every capability in the ratified 1.0 manifest has passed its scientific, play, locale, accessibility, security, and release gates |
+| 2.0 Terminal Lab | Stable complete CLI services, streaming and cancellation contracts, cell semantics, and terminal recovery evidence |
+| 3.0 Native Lab | Stable CLI and TUI services, projection planning, native accessibility, media provenance, and GDExtension parity |
+
+This table does not replace milestone exit gates. Once contract IDs stabilize,
+the project will store these edges in one machine-readable dependency registry,
+validate cycles and missing references in CI, and render the human table from
+that source. It will not encode delivery dates or invent dependencies merely to
+make the graph look linear.
+
 ## Completed seed
 
 - [x] v0.1: Validate one integer intensity from 1 through 5.
@@ -169,6 +195,10 @@ planned.
   document validity separate from operation selection and admission, and prove
   the atemporal fixture uses no ambient, Earth, occurrence, or realization
   default.
+- [x] Extract and test one dependency-free strict JSON scanner shared by the
+  scenario probe and reservoir request adapter. Reject malformed UTF-8,
+  unpaired surrogates, duplicate members, excessive nesting and member length,
+  non-JSON whitespace, and trailing values before typed decoding.
 - [x] Add dependency-free root and nested help for every and only implemented
   command path. Distinguish the permanent v0.6 oracle from experimental v0.7
   probes, label current English text as presentation, and keep JSON tokens
@@ -194,7 +224,16 @@ planned.
   `not-applicable`, not admitted, executed, or refused.
 - [ ] Add dimension diagnostics only where selected law contexts define
   dimensional quantities.
-- [ ] Implement ideal-mixture finite-reservoir mass and energy balance.
+- [x] Implement the exact finite-withdrawal endpoint for a rigid, homogeneous,
+  nonreacting, calorically perfect ideal-gas mixture with explicit component
+  masses and properties. Support adiabatic and prescribed-isothermal paths,
+  preserve a zero-withdrawal operation, and report independent component,
+  total-mass, energy, and equation-of-state residuals. Label it as an endpoint,
+  not an aperture-flow history or full `RES-002` blowdown result.
+- [ ] Replace the growing repository-check script collection with one small,
+  dependency-free Go `repoquality` executable shared by Windows, macOS, Linux,
+  local hooks, and CI. Keep policy data declarative, detect case and symlink
+  edge cases, and retire each PowerShell implementation only after parity tests.
 - [ ] Implement prescribed area, simple compliance, subsonic flow, and the
   analytical choking boundary with explicit assumptions.
 - [ ] Export source mass, momentum, enthalpy, composition, pressure, and recoil
@@ -205,8 +244,11 @@ planned.
 - [ ] Run compensated disabled-player review of the CLI walking skeleton and
   document remediation and retesting before freezing its interaction contract.
 
-Exit gate: zero-flow, adiabatic, isothermal, choking, positivity, conservation,
-and trusted blowdown fixtures pass. The biology-neutral reference fixture cannot
+Exit gate: zero-flow, adiabatic endpoint, isothermal endpoint, choking,
+positivity, conservation, and trusted time-resolved blowdown fixtures pass. The
+implemented finite-withdrawal endpoint supplies only the analytical endpoint
+slice of `RES-002`; it does not close the milestone by itself. The
+biology-neutral reference fixture cannot
 silently enter a laboratory pressure regime. The walking skeleton is already
 fun and useful without Rust, a TUI, or a graphical application.
 A first-time operator can discover every implemented command from root help
@@ -216,6 +258,12 @@ labeled as presentation.
 
 ## v0.8: Rust production core and typed CLI
 
+- [ ] Replace the human-authored invariant table with one canonical
+  machine-readable registry containing stable ID, owner, applicability,
+  tolerance profile, lifecycle status, executable checks, evidence references,
+  counterexamples, and milestone. Validate referential integrity and status
+  claims in CI, and generate reference tables and planned `fart assurance`
+  inspection data from it.
 - [ ] Create `fart-domain`, `fart-core`, `fart-services`, and `fart-cli` crates.
 - [ ] Freeze `fart-compute`, precision, determinism, device-provenance,
   checkpoint, and backend-conformance contracts before writing GPU kernels.
@@ -229,6 +277,12 @@ labeled as presentation.
 - [ ] Implement one `CapabilityService` whose typed report composes only the
   applicable catalog, provider, formal-system, case, evidence, authorization,
   execution-planning, and resource-admission profiles for every adapter.
+- [ ] Implement the versioned model registry with separate model-definition,
+  implementation, immutable fitted or trained artifact, run, ensemble,
+  comparison, and localized-display identities.
+  Record equations or learned architecture, input and observable contracts,
+  applicability, uncertainty, evidence, backend, resource, license, source,
+  weight, and data provenance without one universal model score.
 - [ ] Route the walking skeleton through `PlayService`; adapters cannot import
   solver mutation APIs directly.
 - [ ] Match all versioned Go oracle fixtures within documented tolerances.
@@ -248,6 +302,12 @@ labeled as presentation.
 - [ ] Ratify a presentation-selection profile with an explicit requested locale,
   fallback policy, fallback report, and no-presentation result. Catalog order,
   first-authored text, and ambient locale never select semantic behavior.
+- [ ] Ratify an epistemic-claim profile that keeps model claim class, empirical
+  support, applicability, implementation assurance, verification or validation
+  evidence, source revision, and explicit nonclaims on separate axes. Include
+  established executable physics, research toy models, speculative models,
+  analogy, and fictional-axiom conformance without collapsing them into one
+  confidence score.
 - [ ] Implement and canonical-JSON-round-trip tiny ontology fixtures for a
   non-gaseous transfer, a discrete graph, an atemporal or partially ordered
   law, a distributed nonlinguistic observer, an occurrence with no emitter or
@@ -258,6 +318,10 @@ labeled as presentation.
   `docs/UNIVERSALITY.md`, including partial-order, cyclic, nonsymbolic,
   no-bridge, explicit-bridge, no-shared-observable, unrepresentable, and lossy
   spatial-projection cases.
+- [ ] Add the composition-stress corpus: rich empirical, rich formal, narrow
+  hybrid bridge, lossy translation, distributed observer, measurement
+  back-action, partial-order multiplayer, and nonhuman signal cases. Run both
+  minimal and rich fixtures through every shared contract as it becomes real.
 - [ ] Make CLI inspection capability-driven so an unsupported or inapplicable
   concept never appears as a fake zero, empty Earth panel, or sentinel value.
 - [ ] Test Windows, macOS, and Linux with formatting, Clippy, docs, tests,
@@ -300,6 +364,15 @@ fail safely, and cancellation leaves either one valid archive or no archive.
 ## v0.10: One exceptional ordinary pfft
 
 - [ ] Add a reduced starting-jet or puff model driven by source flux.
+- [ ] Define a neutral source-morphology contract before comic presets. Keep
+  compliance, geometry, symmetry, orientation, boundary motion, and material
+  properties explicit. Localized labels such as `Big Butt` expand to visible
+  parameter patches and cannot silently change chemistry, health, identity, or
+  social meaning.
+- [ ] Introduce versioned read-only `HumorCue` presentation with fact
+  provenance, audience profile, locale-pack revision, grossness level, and a
+  valid `no_joke` result. Prove it cannot mutate physics, identity, score,
+  archive evidence, or randomness outside the presentation stream.
 - [ ] Add recoil and observer sampling.
 - [ ] Add deterministic procedural WAV from interface motion, compact sources,
   and a labeled stochastic turbulence closure.
@@ -353,6 +426,10 @@ TUI or graphical application.
 - [ ] Run at least 10,000 deterministic seed cases with expressive-range reports.
 - [ ] Run representative human reviews for humor, comprehension, pacing,
   grossness controls, science density, and ordinary-event replay value.
+- [ ] Ship reviewed locale humor packs as transcreation, not word substitution.
+  Record safe targets, protected targets, taboo register, age range, reviewer
+  context, fallback behavior, and reasons a cue may be declined. No locale pack
+  changes a source parameter patch or scientific classification.
 - [ ] Add regression gates for monoculture, colonial gaze, pseudo-language,
   sacred-practice targeting, sanitation stigma, coercion, and humiliation.
 
@@ -364,6 +441,16 @@ evidence without claiming that any optional context occurrence happened again.
 
 - [ ] Add `freestyle`, sweeps, comparisons, branches, optimization, uncertainty,
   refinement, and custom challenge contracts.
+- [ ] Add `model list`, `model inspect`, `model compare`, `ensemble plan`,
+  `ensemble run`, and `ensemble inspect` through the CLI before other surfaces.
+- [ ] Keep initial-condition, parameter, stochastic-closure, numerical,
+  structural, learned, and multi-model ensembles distinct. Require declared
+  weighting, dependence, calibration, and probability semantics before any
+  consensus probability; otherwise report members, spread, and disagreement.
+- [ ] Add the read-only Forecast Desk view with applicable guidance, member
+  failures, common-observable checks, and exact `no_shared_observable` results.
+  Localized weather-style copy cannot change model selection or scientific
+  summaries.
 - [ ] Define author-reviewed semantic Pi groups and machine-verify dimensions,
   dependencies, and possible omissions.
 - [ ] Implement strict same-law, same-dimension similarity where dimensions
@@ -399,9 +486,9 @@ rewards precision and verification as well as magnitude.
   locking names or mastering branded audio and station assets.
 - [ ] Create `fart-audio`, `fart-score`, and `fart-radio` consumers over the
   authoritative Lab-account and presentation services.
-- [ ] Create `pressure-standard.v1`, an original six-second certified audio
-  ident built from the fixed `RP-1 definition event`, score mapping, spatial render,
-  haptic envelope, captions, safety report, and provenance.
+- [ ] Create `pressure-standard.v1`, an original six-second internally verified
+  audio ident built from the fixed `RP-1 definition event`, score mapping,
+  spatial render, haptic envelope, captions, safety report, and provenance.
 - [ ] Add blind sound-mark similarity review and prohibit briefs, prompts, or
   reference audio that ask for imitation of an existing audio logo.
 - [ ] Ship evidence, concert, and split Symphony modes with versioned mappings,
@@ -423,6 +510,9 @@ rewards precision and verification as well as magnitude.
   profile, including loudness, true peak, transition jumps, bass, and limiting.
 - [ ] Prove that radio, Symphony, mixing, captions, lyrics, and station controls
   cannot change physics, narrative canon, challenge scores, or replay identity.
+- [ ] Evaluate music and station humor separately from scientific comprehension.
+  A track may be subtle enough to stand alone, and lyric localization requires
+  cultural review rather than literal translation or premise density.
 
 Exit gate: one snowflake can be heard as physical evidence and as an inspectable
 score, The Pressure Standard is recognizable and fully traceable without
@@ -458,6 +548,11 @@ complete game intact.
   cancellation, inbound seats, outbound rosters, and read-only spectators.
 - [ ] Add capability budgets and separate Researcher, Operator, Accessible
   Operator, Omnimodal, Consortium, and matched human tracks.
+- [ ] Pass the Agent Quality of Life contract: negotiated discovery, schemas and
+  examples, adjustable compact observations, cursor deltas, subscriptions,
+  durable idempotency, typed recovery, progress, cancellation, checkpoints,
+  resume, branches, notebooks, artifact references, and bounded batch, sweep,
+  and ensemble work without required polling or CLI subprocesses.
 - [ ] Prove transition parity, information parity, idempotency, retry safety,
   role isolation, observation nonleakage, and exact CLI replay across adapters.
 - [ ] Pass official MCP conformance and Inspector checks plus the A2A TCK for
@@ -469,6 +564,9 @@ Exit gate: a human through CLI, a semantic MCP agent, and an A2A participant can
 complete the same Quick Play and representative challenge under declared
 capability budgets. Canonical journals and results agree, unauthorized requests
 fail safely, and human CLI play remains offline and requires no network.
+A sustained G5-style consortium campaign also survives interruption, resume,
+branching, notebook handoff, disjoint roles, and final proof without hidden-state
+or transport advantage.
 
 ## v0.15: Snowflake artifacts
 
@@ -513,6 +611,11 @@ precise unsupported result.
   merchandise, and asset-rights policies with a machine-readable manifest.
 - [ ] Keep Core Marks distinct from a CC0 community kit and a visibly different
   `UNOFFICIAL FIELD OBSERVATION` badge.
+- [ ] Publish print-ready, editable open collateral for shirts, mugs, stickers,
+  posters, and observation cards. Candidate state-bound lines include `KEEP IT
+  SUBSONIC FOR THIS TEST`, `CONSERVATION OF ASS`, and `NOT A NUMERICAL ARTIFACT`.
+  Each technical line must remain true for the pictured or named case and must
+  not imply laboratory, government, university, or standards-body approval.
 - [ ] Ship local Witness, Ledger, Boundary, and Postcard export cards with alt
   text, privacy lint, schema version, and an operation-specific status.
   `SIMULATED EVENT` is available only where both simulation and event semantics
@@ -560,6 +663,15 @@ store or community service becomes a dependency of the application.
   compiler, flags, decomposition, and command provenance.
 - [ ] Demonstrate one workstation multi-GPU decomposition only after
   single-device evidence is stable. Keep MPI and cluster libraries optional.
+- [ ] Train and qualify at most one first scientific ML candidate against a
+  preregistered non-ML baseline after trustworthy training and held-out data
+  exist. Start with a bounded surrogate or solver-in-the-loop closure, not an
+  end-to-end replacement for the scientific account.
+- [ ] Require model-card, dataset, weight, preprocessing, calibration,
+  out-of-distribution refusal, conservation or admissibility, shifted-domain,
+  solver-in-the-loop, security, privacy, license, CPU or accelerator, and
+  removal-path evidence from [docs/MODELS.md](docs/MODELS.md). Learned outputs
+  cannot certify themselves or silently replace a verified backend.
 
 Exit gate: one nontrivial transient field case is scientifically inspectable
 from the CLI, converges under independent refinements, conserves under its
@@ -577,6 +689,15 @@ observables beyond tolerance. The complete application remains CPU-capable.
 - [ ] Complete Quick Play, Broadcast, Freestyle, Challenge, Campaign,
   evaluation, simulation, translation, proof, replay, and export command
   families.
+- [ ] Ship Explorer, Lab, and Research presentations over the same calculation.
+  Explorer reduces vocabulary, Lab shows controls and explanations, and
+  Research exposes assumptions, residuals, provenance, and evidence. Switching
+  depth never recomputes or edits a case.
+- [ ] Ship the model registry, ensemble planning and inspection, comparison, and
+  Forecast Desk through the complete CLI and agent machine surface. Include one
+  ordinary case where two compatible models disagree usefully and one case
+  where comparison refuses because no common observable exists. Scientific ML
+  remains an optional earned model pack rather than a base-runtime dependency.
 - [ ] Complete Chill Mode as a calm append-only or live terminal experience with
   sparse admitted operations and retained-claim presentations, plus optional
   ordinary Earth events, long silence, radio, math-derived visuals, explicit
@@ -736,6 +857,10 @@ and every consumer cites the same Lab-account provenance.
 
 - [ ] Add parcels, evaporation, breakup, collision, deposition, bubble formation,
   Rayleigh-Plesset dynamics, and bubble acoustics with separate ledgers.
+- [ ] Add bulk-mixture thermodynamics, trace-species inventory, phase equilibrium
+  and condensation, aerosol and droplet chemistry, reaction networks, exterior
+  chemistry, observer detection, and hazard assessment as separately earned
+  capabilities. Never infer hazard from odor or safety from non-detection.
 
 ### Universal and extreme packs
 
@@ -743,6 +868,14 @@ and every consumer cites the same Lab-account provenance.
   relativistic, and gravitational profiles one verified model family at a time.
 - [ ] Add alternate-dimensional and fictional-law profiles with explicit axioms,
   compatibility maps, and no false empirical-validation claims.
+- [ ] Require any extra-dimensional model to state topology, metric signature,
+  compactification geometry and scale, fields, action or evolution law,
+  boundary data, observables, and projection. String theory is never a generic
+  dimension slider, and quantum superposition is never labeled as uniquely
+  string-theoretic.
+- [ ] Treat cosmological cases as initial-data and evolution problems when the
+  selected model does. Do not preserve an emitter, nozzle, exterior, plume,
+  sound field, or damage radius by analogy to a localized discharge.
 
 ### Interdimensional Consortium
 

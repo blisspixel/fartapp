@@ -4,5 +4,4 @@
   <rect width="1024" height="1024" rx="184" fill="#0B0F12"/>
   <path d="M771 638 A288 288 0 1 1 771 386" fill="none" stroke="#F2EEE6" stroke-width="88" stroke-linecap="butt"/>
   <path d="M347 566 C430 527 474 453 553 472 C632 491 655 574 735 553 C803 535 837 451 932 478" fill="none" stroke="#58D6D0" stroke-width="54" stroke-linecap="butt" stroke-linejoin="round"/>
-  <circle cx="512" cy="512" r="16" fill="#E6B85C"/>
 </svg>

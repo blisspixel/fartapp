@@ -14,6 +14,13 @@ contracts that may be absent or unevaluated. The report is not a scenario,
 operation request, admission decision, case, occurrence, realization, solver
 result, certificate, or cross-context compatibility report.
 
+The experimental `reservoir predict` report is a different contract. It records
+one explicitly selected model calculation, assumptions, nonclaims, transfers,
+and balance claims. It is not a `CapabilityReport`, does not make the current
+eight catalog axes authoritative, and cannot be used as evidence that a future
+scenario is applicable or admitted. Conversely, catalog availability cannot be
+used as proof that a reservoir prediction was executed or verified.
+
 ## Decision: do not freeze the current report
 
 The present report has valuable executable evidence, but ratifying it now would

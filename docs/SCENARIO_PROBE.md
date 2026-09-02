@@ -11,6 +11,10 @@ answer one useful question now:
 It is not a simulation command. It does not apply defaults, allocate a record
 nonce, create context-occurrence identity claims, compute scenario identity,
 inspect host resources, evaluate execution admission, or invoke a solver.
+The separate experimental `reservoir predict` command evaluates one explicit
+standalone mathematical request, but it does not widen this scenario envelope,
+select a scenario operation, or create a case. Sharing the strict JSON scanner
+does not couple their scientific semantics.
 
 ## Command
 

@@ -7,27 +7,31 @@ import (
 
 const rootHelp = `F.A.R.T. Lab
 
-Experimental law-context inspection and scenario-document validation.
+Experimental law inspection, scenario validation, and analytical prediction.
 
 Usage:
   fartapp <intensity>
   fartapp law <list|inspect>
   fartapp scenario validate <scenario.json|->
-  fartapp help [law [list|inspect]|scenario [validate]]
+  fartapp reservoir predict <request.json|->
+  fartapp help [law [list|inspect]|scenario [validate]|reservoir [predict]]
 
 Available now:
   <intensity>         Run the permanent v0.6 legacy string oracle from 1 to 5.
   law list           List built-in candidate law contexts.
   law inspect        Inspect one law-context revision and its capability axes.
   scenario validate  Validate a bounded document of law-scoped capability requests.
+  reservoir predict Predict one rigid ideal-mixture reservoir endpoint.
   help               Show root or command help.
 
 This build supplies no implicit Earth or other world, source, body, species,
-gas, geometry, time, observer, identity, mapping, admission policy, or solver.
-It has no realization engine, TUI, native application, updater, or
-natural-language generator. "Fart" is the comic umbrella, not the scientific
-ontology. The current probe resolves declared law contexts and capability
-references only; it executes no mapping or realization.
+geometry, time, observer, identity, mapping, or admission policy. Its one
+analytical predictor runs only the explicit SI ideal-mixture model named in a
+bounded request. It has no realization engine, aperture-flow solver, TUI,
+native application, updater, or natural-language generator. "Fart" is the comic
+umbrella, not the scientific ontology.
+The current probe resolves declared law contexts and capability references only;
+it executes no mapping or realization.
 
 Text help and reports are currently English presentations. Stable IDs and JSON
 fields are locale-invariant engineering tokens; this does not assert shared
@@ -38,6 +42,7 @@ Examples:
   fartapp law list
   fartapp law inspect conformance.relation.atemporal@v0alpha1
   fartapp scenario validate testdata/scenarios/atemporal-probe.json
+  fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json
   fartapp help scenario validate
 
 Exit status:
@@ -72,6 +77,10 @@ func helpOutput(args []string) (string, bool) {
 		return scenarioHelp, true
 	case len(args) == 2 && args[0] == "scenario" && args[1] == "validate":
 		return scenarioValidateHelp, true
+	case len(args) == 1 && args[0] == "reservoir":
+		return reservoirHelp, true
+	case len(args) == 2 && args[0] == "reservoir" && args[1] == "predict":
+		return reservoirPredictHelp, true
 	default:
 		return "", false
 	}

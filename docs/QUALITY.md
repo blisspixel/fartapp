@@ -35,6 +35,109 @@ Core domain, solver, archive, replay, and protocol code targets at least 95
 percent changed-line coverage and 90 percent mutation score. No critical mutant
 may survive merely because an aggregate score passes.
 
+## Cross-platform repository automation
+
+Four active repository-policy checks are currently implemented in PowerShell:
+dependency policy, local documentation links, media manifests, and Go coverage.
+The main quality job runs them on Ubuntu, while the Linux, macOS, and Windows
+matrix currently proves only that the Go tree builds and its package tests pass.
+This is a transitional state, not evidence of cross-platform parity for the
+repository-policy checks.
+
+The planned replacement is a standard-library-only Go implementation with
+domain logic in `internal/repoquality` and a thin command in
+`tools/repoquality`. Its intended command surface is:
+
+```text
+go run ./tools/repoquality repository
+go run ./tools/repoquality coverage --profile coverage.out --aggregate 90 --package 80
+go run ./tools/repoquality fuzz --time 5s
+```
+
+These commands are a migration specification and do not exist yet. Each checker
+must receive focused unit tests with temporary directory trees, malformed input,
+path-separator variation, duplicate declarations, and boundary cases. The
+combined repository check must then pass on Linux, macOS, and Windows before the
+PowerShell policy implementations are removed in the same change. Until that
+parity gate passes, the existing scripts remain authoritative.
+
+New repository-policy logic belongs in the planned Go checker, not in another
+shell-specific implementation. A platform wrapper may forward arguments and
+exit status, but it must contain no validation policy. GitHub Actions YAML,
+locked npm installation, `npm audit`, and Markdown lint remain direct tools.
+The project does not add Make, Task, Just, or another runner merely to rename
+these commands.
+
+## Structural and assisted-code controls
+
+Code acceptance depends on evidence, not on whether a human or an automated
+tool typed the first draft. Tool use does not lower review, security, license,
+traceability, or scientific standards, and it does not require assistant names,
+generator bylines, or attribution comments in source or product output.
+
+Every meaningful package, file, type, and function owns a named responsibility.
+Reviews reject mixed wire-parser-solver-report files, circular dependency
+pressure, adapters leaking into the core, speculative extension points, unused
+configuration, redundant wrappers, comments that merely restate code, and
+generic abstractions whose inputs do not share one semantic contract. The
+smallest coherent split is preferred over both a god file and fragmentation for
+its own sake.
+
+Validation and parsing are reused only when their contracts are identical.
+Versioned wire formats require explicit tests for duplicate members, unknown
+members, omissions, source positions, bounds, deterministic ordering, and exact
+bytes where promised. Similar-looking formats with different ownership rules
+remain separate rather than sharing a misleading parser.
+
+Coverage-only tests are not evidence. A test must be capable of failing under a
+meaningful defect and should use an independent oracle, analytical result,
+metamorphic property, or externally fixed fixture where appropriate. Reviews
+reject assertions that recompute an answer through the production path,
+tautological residual checks, brittle source-string surgery, and negative cases
+that never reach the behavior they claim to exercise.
+
+This policy follows current evidence without turning one study into a universal
+claim. [NIST SP 800-218A](https://doi.org/10.6028/NIST.SP.800-218A) supplies an
+institutional comparison for producers of generative AI and dual-use foundation
+models. It is not a study of code-assistant output. A 2025 randomized controlled
+trial of experienced open-source developers found a 19 percent slowdown under
+its particular mature-repository and early-2025 tool conditions, despite
+participants expecting a speedup. That bounded result supports measuring
+outcomes rather than assuming them. See
+[Becker et al., arXiv:2507.09089](https://arxiv.org/abs/2507.09089).
+
+## Contract lifecycle and evidence debt
+
+Ratification is a compatibility decision, not praise, scientific validation, or
+general maturity. Contract artifacts use these lifecycle states:
+
+| State | Meaning |
+| --- | --- |
+| Idea | Discussion with no implementation or compatibility claim |
+| Design candidate | Scoped prose with named owner, semantics, nonclaims, and open questions |
+| Executable candidate | Internal implementation and positive and negative fixtures with no public wire promise |
+| Review candidate | Normative semantics, limits, conformance corpus, versioning, migration, security, and owner review are complete enough for a ratification decision |
+| Ratified internal | Approved for repository-internal dependency under its exact revision, but not advertised as a public compatibility contract |
+| Public provisional | Versioned external surface that may still make documented breaking changes before stability |
+| Stable public | Published compatibility, deprecation, migration, security-support, and conformance commitments are in force |
+| Deprecated | Still supported for a declared transition policy but no longer preferred |
+| Retired | No supported execution; historical readers and migration behavior follow the published policy |
+
+A source comment or roadmap checkbox cannot promote a state. The evidence bundle
+records the approving owner, exact artifact revision, fixtures, review decisions,
+and remaining nonclaims. Scientific evidence, accessibility, localization,
+performance, and security retain owner-specific statuses rather than being
+inferred from this contract lifecycle.
+
+Every experimental capability also carries explicit evidence debt. Debt is a
+set of missing obligations, not a story-point total or one severity score. It
+may include absent counterexamples, independent oracle, refinement, empirical
+data, uncertainty, calibration, cross-platform parity, security review,
+accessibility test, locale review, adapter parity, or recovery evidence. A
+feature may remain available under an honest experimental label, but it cannot
+cross a promotion gate whose required debt is open. Shipping another feature
+does not pay unrelated evidence debt.
+
 ## Critical mutant policy
 
 The following mutations are release blockers regardless of aggregate score:
@@ -52,8 +155,18 @@ The following mutations are release blockers regardless of aggregate score:
 ## Invariant registry
 
 Every named product invariant receives a stable identifier, owner, test mapping,
-tolerance, and milestone. Planned invariants remain clearly marked until an
-executable check exists.
+tolerance profile, applicability rule, evidence references, counterexamples,
+status, and milestone. Planned invariants remain clearly marked until an
+executable check exists. The table below is the current human-authored seed,
+not yet a canonical machine contract.
+
+Once the identifiers and lifecycle rules are ratified, one machine-readable
+registry will own these fields. CI will reject duplicate identifiers, missing
+owners, broken evidence links, invalid lifecycle transitions, and a claimed
+executable status without an applicable check. Reference documentation and
+`fart assurance` output will be rendered from that registry instead of copying
+status prose between files. A nonapplicable invariant requires an explicit
+applicability result; it is never reported as passing.
 
 | ID | Invariant | Current evidence | Release direction |
 | --- | --- | --- | --- |
@@ -74,6 +187,8 @@ executable check exists.
 | `SCN-002` | Atemporal scenario probing consults no ambient or Earth default | Validator over document bytes and the compiled-in catalog, explicit empty ambient-input report, and counterexample fixture | Provider tripwires and broader orthogonal ontology suite |
 | `SCN-003` | The provisional schema rejects a two-entry `contexts` array before parsing either entry or beginning catalog and capability resolution; operation assessments remain unevaluated | Deterministic file and stdin CLI fixture, context-entry-order parity, exact stage and omission assertions | Supersede the probe limit with a ratified schema that represents scoped coupling and true no-bridge conformance |
 | `SCN-004` | An unresolved capability reference against the resolved minimal opaque catalog entry ends at the outer envelope without a fabricated capability, evidence record, case, ambient default, solver claim, or admitted, executed, or refused case operation | Exact typed report, file and stdin parity, deterministic JSON digest, stream separation, omission allowlist, operation-disposition assertions, and defensive-independence test | Ratified scenario reference-resolution and separate operation-refusal contracts |
+| `JSON-001` | Strict JSON adapters reject ambiguous, malformed, or over-budget documents before typed decoding | Shared standard-library scanner tests for invalid UTF-8, unpaired surrogates, non-JSON whitespace, trailing values, duplicate members, escaped pointer paths, nesting and member-name limits, plus deterministic fuzzing | Ratified per-contract size and collection limits, independent adversarial corpus, and cross-language parser parity |
+| `PHY-001` | Finite composition-preserving withdrawal from the declared rigid calorically perfect ideal mixture closes its component, total-mass, energy, and endpoint equation-of-state accounts | Independent synthetic adiabatic and isothermal closed forms, zero identity, composition and semigroup properties, component permutation, forged-state and representability rejection, fuzzing, adapter fixtures, and coverage above the per-package floor | Complete `RES-002` with a separately formulated time history, aperture and exterior coupling, heat-transfer closure, and trusted-reference comparison |
 | `OBS-001` | Observation capabilities and back-action remain explicit | Design contract | Passive, distributed, and coupled observer tests |
 | `ACC-001` | Every enabled projection cites one authoritative Lab account without inventing causal structure | Design contract | Typed claim and transformation traversal tests |
 | `PHY-002` | Applicable conserved transfers close for the declared boundary | Design contract | Exact and tolerance-based ledger properties |
@@ -204,7 +319,9 @@ public institutional guidance as a demanding comparison point. NASA-STD-8739.8B
 defines a systematic lifecycle approach to software assurance, software safety,
 and independent verification and validation. NIST SP 800-218 defines final SSDF
 1.1 secure-development practices, while SSDF 1.2 remains a draft as of the
-current research review.
+current research review. NIST SP 800-218A adds a final AI-specific secure
+development community profile for generative AI and dual-use foundation models
+without replacing the base SSDF.
 
 The project should publish an assurance case that maps:
 

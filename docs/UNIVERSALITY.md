@@ -26,6 +26,14 @@ allocating a record identity. `outside_representable_ontology` can likewise end
 at this boundary. A failed attempt to represent something does not create a
 fictional in-ontology case merely so the failure has somewhere to live.
 
+The current `reservoir predict` command is also deliberately narrower than a
+case. It evaluates one explicitly selected mathematical model and operation. It
+creates no emitter, body, organism, world, exterior, occurrence, observer,
+timeline, narrative, archive, or claim of universal thermodynamics. SI and the
+ideal-mixture equations belong to that model request, not to the outer Lab
+ontology. A future case may cite its result only through an explicit compatible
+capability and provenance edge.
+
 The minimal opaque unresolved-capability fixture makes the capability-resolution
 boundary executable. A syntax-valid, schema-valid input with an exact law
 reference can still end without a capability result, case, ambient default, or
@@ -220,6 +228,28 @@ language does not receive an invisible English gloss. The native app may render
 a compatible human-spatial analogy, but it must label the projection and its
 losses.
 
+Humor is a separately versioned presentation capability, not a universal
+property of an account. `no_joke`, no locale match, refusal, and no applicable
+social context are valid and distinct outcomes. A `HumorCue` can reference
+retained facts but cannot add a source, participant, culture, body, intention,
+emotion, embarrassment, or shared comic meaning that the case did not define.
+
+Source morphology and localized source presets are likewise optional extension
+profiles. A comic label is never a universal scientific class. It expands to an
+inspectable parameter patch within a supporting law and source model, while
+source-free transitions and contexts without geometry remain completely valid.
+
+Epistemic labels such as established executable physics, research toy model,
+speculative model, analogy, and fictional axiom describe the Lab's claim and
+evidence discipline. They do not assert that every represented context shares
+the Lab's philosophy of science, language, confidence ordering, or institutions.
+
+Plural model guidance is also conditional. A model, learned artifact, ensemble,
+or forecast-style view exists only when the selected Lab contracts define it.
+Comparing models requires an explicit shared observable and transformation.
+Ensemble membership does not imply time, probability, exchangeability, or
+consensus, and a localized model nickname carries no scientific authority.
+
 ## Negative-space conformance matrix
 
 Universality is tested by removing assumptions, not by adding increasingly
@@ -257,15 +287,39 @@ Passing one fixture does not establish real-world universality. Together they
 prevent ordinary Earth discharge, human narrative, and three-dimensional UI
 assumptions from hardening into the core by accident.
 
+### Composition stress corpus
+
+Negative-space fixtures prove that familiar concepts are not mandatory. A
+permanent positive-space corpus must also prove that optional capabilities
+compose without collapsing their owners. Planned fixtures include:
+
+| Fixture | Composition pressure | Required result |
+| --- | --- | --- |
+| Rich empirical | State evolution, several measurements, uncertainty, media, and validation evidence | Each claim retains its measurement support, uncertainty, evidence class, and provenance |
+| Rich formal | Rules, proofs, multiple admissible structures, and no physical interpretation | Formal outcomes remain usable without physical units, simulation, or empirical labels |
+| Narrow hybrid bridge | Two radically different contexts with one shared invariant | Only the witnessed scope, representation, and invariant cross the bridge |
+| Lossy translation | Several target mappings with residuals and no unique semantic result | Alternatives, loss, nonuniqueness, and forbidden inferences remain visible |
+| Distributed observer | Information exists only through a collective measurement | No individual observer or private complete view is invented |
+| Back-action | Measurement changes the admitted authoritative result | Interaction and read-only view receive different identities and provenance |
+| Partial-order multiplayer | Lab transactions are ordered but source relations are only partial | Service order never becomes a source-law global timeline |
+| Nonhuman signal | Signal transcoding succeeds without semantic interpretation | Structural signal evidence survives while semantic mapping remains unavailable |
+
+Every schema, archive, certificate, surface, agent adapter, and presentation
+planner eventually runs both negative-space and composition-stress fixtures.
+Passing a rich fixture cannot compensate for failing a minimal one.
+
 ## Standard for new work
 
 Every new schema field, command, pane, story beat, agent observation, and
-scientific metric must answer four questions:
+scientific metric must answer six questions:
 
-1. Which law context or Lab-level contract owns this concept?
-2. What happens when that concept is not defined?
-3. Which executable negative-space fixture proves the fallback?
-4. Does the presentation claim more meaning than the retained evidence?
+1. Which law context or Lab-level contract owns the concept?
+2. What semantics does the concept actually assert?
+3. What exactly does absence or inapplicability mean for this owner?
+4. Which executable positive fixture proves the supported behavior?
+5. Which executable counterexample proves the concept is not assumed
+   universally or inferred from the wrong owner?
+6. Which retained evidence permits every user-facing sentence or visual claim?
 
 If those answers are missing, the feature remains a design candidate. The
 project can be absurdly ambitious without pretending that familiar physics or

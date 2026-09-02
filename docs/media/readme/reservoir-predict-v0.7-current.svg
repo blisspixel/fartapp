@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Current F.A.R.T. Lab reservoir prediction</title>
+  <desc id="desc">A terminal shows an explicit two-component rigid adiabatic reservoir prediction with initial and final state, transfers, assumptions, nonclaims, and four satisfied balance claims.</desc>
+  <rect width="1600" height="900" rx="28" fill="#0B0F12"/>
+  <rect x="24" y="24" width="1552" height="852" rx="18" fill="#11181D" stroke="#29353D" stroke-width="2"/>
+  <rect x="24" y="24" width="1552" height="58" rx="18" fill="#19242B"/>
+  <circle cx="60" cy="53" r="8" fill="#F05D5E"/>
+  <circle cx="88" cy="53" r="8" fill="#E6B85C"/>
+  <circle cx="116" cy="53" r="8" fill="#58D6D0"/>
+  <text x="800" y="60" text-anchor="middle" fill="#B7C4CB" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20">F.A.R.T. LAB :: CURRENT v0.7 ANALYTICAL ORACLE</text>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19">
+    <text x="54" y="122" fill="#58D6D0">$ ./fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json</text>
+    <text x="54" y="162" fill="#F2EEE6" font-size="24" font-weight="700">RESERVOIR ENDPOINT PREDICTED</text>
+    <text x="54" y="198" fill="#B7C4CB">continuum.rigid-calorically-perfect-ideal-mixture@v0alpha1</text>
+    <text x="54" y="228" fill="#B7C4CB">SI explicit  |  rigid-adiabatic  |  withdrawal fraction 0.75</text>
+
+    <text x="54" y="286" fill="#E6B85C" font-weight="700">INITIAL STATE</text>
+    <text x="54" y="320" fill="#F2EEE6">component.a    1 kg    R 200 J/(kg K)    cv 400 J/(kg K)</text>
+    <text x="54" y="350" fill="#F2EEE6">component.b    3 kg    R 400 J/(kg K)    cv 800 J/(kg K)</text>
+    <text x="54" y="392" fill="#B7C4CB">mass 4 kg      T 400 K      p 560000 Pa      U 1120000 J</text>
+    <text x="54" y="422" fill="#B7C4CB">R_mix 350      cv_mix 700      cp_mix 1050      gamma 1.5</text>
+
+    <text x="54" y="482" fill="#E6B85C" font-weight="700">FINAL STATE</text>
+    <text x="54" y="516" fill="#F2EEE6">component.a    0.25 kg    component.b    0.75 kg</text>
+    <text x="54" y="558" fill="#B7C4CB">mass 1 kg      T 200 K      p 70000 Pa       U 140000 J</text>
+    <text x="54" y="588" fill="#B7C4CB">R_mix 350      cv_mix 700      cp_mix 1050      gamma 1.5</text>
+
+    <line x1="930" y1="270" x2="930" y2="720" stroke="#29353D" stroke-width="2"/>
+    <text x="970" y="286" fill="#E6B85C" font-weight="700">TRANSFERS</text>
+    <text x="970" y="326" fill="#F2EEE6">total mass out          3 kg</text>
+    <text x="970" y="358" fill="#F2EEE6">integrated enthalpy out 980000 J</text>
+    <text x="970" y="390" fill="#F2EEE6">heat into reservoir     0 J</text>
+    <text x="970" y="422" fill="#F2EEE6">boundary work           0 J</text>
+
+    <text x="970" y="482" fill="#E6B85C" font-weight="700">BALANCE CLAIMS</text>
+    <text x="970" y="522" fill="#58D6D0">PASS  total mass balance</text>
+    <text x="970" y="554" fill="#58D6D0">PASS  energy balance</text>
+    <text x="970" y="586" fill="#58D6D0">PASS  initial equation of state</text>
+    <text x="970" y="618" fill="#58D6D0">PASS  final equation of state</text>
+    <text x="970" y="666" fill="#B7C4CB">All residuals: 0</text>
+
+    <rect x="54" y="636" width="820" height="86" rx="10" fill="#0D1418" stroke="#29353D"/>
+    <text x="76" y="670" fill="#B7C4CB">ASSUMPTIONS: rigid, homogeneous, nonreacting, single-phase,</text>
+    <text x="76" y="700" fill="#B7C4CB">calorically perfect, perfectly mixed, adiabatic</text>
+
+    <rect x="54" y="748" width="1492" height="94" rx="10" fill="#0D1418" stroke="#29353D"/>
+    <text x="76" y="784" fill="#B7C4CB">NONCLAIMS: no aperture flow, choking, exterior, time history, recoil, plume, acoustics, case, certificate,</text>
+    <text x="76" y="816" fill="#B7C4CB">or empirical validation. Ambient inputs: none.</text>
+  </g>
+</svg>

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "reviewedAt": "2026-09-01",
+  "reviewedAt": "2026-09-02",
   "assets": [
     {
       "path": "docs/media/readme/cli-v0.6-current.png",
@@ -22,6 +22,28 @@
       "replacementHistory": [],
       "referencedBy": ["README.md"],
       "alt": "Current Go CLI printing braaap with the respectable rating"
+    },
+    {
+      "path": "docs/media/readme/reservoir-predict-v0.7-current.svg",
+      "kind": "current-cli-capture",
+      "status": "current",
+      "width": 1600,
+      "height": 900,
+      "bytes": 3979,
+      "maxBytes": 30000,
+      "sha256": "4cd580bbda07cfb22dc9059a8661ea5aa6e80c6b489a6a1cbc19247de1c99c20",
+      "origin": "project-authored-vector",
+      "capture": "go run . reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json",
+      "brief": "Current v0.7 text report for the exact finite-withdrawal ideal-mixture reservoir predictor",
+      "sourceRevision": "sha256:4cd580bbda07cfb22dc9059a8661ea5aa6e80c6b489a6a1cbc19247de1c99c20",
+      "license": "Apache-2.0",
+      "rightsStatus": "approved-for-public-repository",
+      "rightsBasis": "Project-authored vector transcription of Apache-2.0 project output with no third-party media input",
+      "rightsReviewedAt": "2026-09-02",
+      "reviewerRole": "repository-maintainer",
+      "replacementHistory": [],
+      "referencedBy": ["README.md"],
+      "alt": "Current v0.7 reservoir predictor reporting mixture endpoints, transfers, assumptions, nonclaims, and four balance checks"
     },
     {
       "path": "docs/media/readme/terminal-lab-concept-v1.svg",
@@ -120,21 +142,21 @@
       "status": "planned",
       "width": 256,
       "height": 256,
-      "bytes": 754,
+      "bytes": 702,
       "maxBytes": 10000,
-      "sha256": "7269e73ab4f09b3db42c44b12cba9009e7698eca093e411094df3cf5a41e9ecb",
+      "sha256": "1b3b8a242a0a2b8e3e32aa24b607d215a8b2f25f1236d4e938baea8edc6952cd",
       "origin": "project-authored-vector",
       "brief": "Open Isobar candidate mark with an open pressure contour and one asymmetric wavefront",
-      "sourceRevision": "sha256:7269e73ab4f09b3db42c44b12cba9009e7698eca093e411094df3cf5a41e9ecb",
+      "sourceRevision": "sha256:1b3b8a242a0a2b8e3e32aa24b607d215a8b2f25f1236d4e938baea8edc6952cd",
       "license": "Apache-2.0",
       "rightsStatus": "approved-for-public-repository",
       "rightsBasis": "Project-authored vector with no third-party source asset; candidate mark remains uncleared",
-      "rightsReviewedAt": "2026-09-01",
+      "rightsReviewedAt": "2026-09-02",
       "reviewerRole": "repository-maintainer",
       "replacementHistory": [],
       "clearanceStatus": "candidate-not-cleared",
-      "referencedBy": ["README.md"],
-      "alt": "Open Isobar candidate mark with an ivory open contour, cyan wavefront, and amber reference point"
+      "referencedBy": ["README.md", "docs/BRAND.md"],
+      "alt": "Open Isobar candidate mark with an ivory open contour and one cyan wavefront"
     }
   ]
 }

@@ -83,6 +83,9 @@ jobs:
           go test . -run '^TestMultiLawProbeLimitDoesNotInferCompatibility$'
           go test ./internal/scenarioprobe -run '^TestMinimalOpaqueUnresolvedCapabilityStopsAtOuterEnvelope$'
           go test . -run '^TestMinimalOpaqueUnresolvedCapabilityCLIContract$'
+          go test ./internal/idealmixturereservoir -run '^TestSyntheticMixtureClosedForms$'
+          go test ./internal/reservoirprediction -run '^TestPredictSyntheticClosedForms$'
+          go test . -run '^TestReservoirCLITextAndJSONFixtures$'
           go test . -run '^TestHelpRoutes$'
 
       - name: Check formatting
@@ -122,6 +125,9 @@ jobs:
           go test -run=^$ -fuzz=FuzzRegistrationConstructors -fuzztime=5s ./internal/catalogregistration
           go test -run=^$ -fuzz=FuzzDispositionConstructors -fuzztime=5s ./internal/evaluation
           go test -run=^$ -fuzz=FuzzValidate -fuzztime=5s ./internal/scenarioprobe
+          go test -run=^$ -fuzz=FuzzWithdrawFraction -fuzztime=5s ./internal/idealmixturereservoir
+          go test -run=^$ -fuzz=FuzzPredict -fuzztime=5s ./internal/reservoirprediction
+          go test -run=^$ -fuzz=FuzzInspect -fuzztime=5s ./internal/strictjson
 
       - name: Repeat tests in shuffled order
         run: go test -shuffle=on -count=20 ./...

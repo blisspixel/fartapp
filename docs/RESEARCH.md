@@ -29,13 +29,31 @@ government laboratories, and official project documentation are preferred.
   unresolved turbulent waveform detail. The audio closure and seed are part of
   provenance.
 - Wetness, breakup, and deposition require more than Weber or Stokes number.
+- Bulk mixture thermodynamics, trace species, reaction, condensation, primary
+  and secondary aerosol, exterior chemistry, observer detection, and hazard
+  interpretation are separate capabilities. Odor detectability is not toxicity.
+- Humorous morphology presets are localized presentation bundles over explicit,
+  inspectable source and material parameter patches. Body labels never select
+  composition, cleanliness, health, identity, or social meaning.
 - Dimensional similarity requires matching nondimensional equations, closures,
   dimensions, topology, normalized conditions, and active coefficients. Other
   law profiles define their own comparison signature.
 - Conservation, code verification, solution verification, empirical validation,
   and fictional-law consistency are separate certificate claims.
-- Alternate dimensions and universes get explicit law packs. Unsupported laws
-  fail explicitly rather than reusing Earth fluid equations.
+- Established physics, research toys, speculative mathematical models,
+  analogies, and fictional axioms receive distinct Lab evidence labels that do
+  not collapse into implementation maturity. Alternate dimensions and universes
+  get exact law packs. Unsupported laws fail explicitly rather than reusing
+  Earth fluid equations.
+- Model definition, implementation, immutable learned artifact, run, ensemble,
+  comparison, and localized display identity remain separate. Ensemble spread
+  describes only the uncertainty sources the member-generation rule represents.
+- Scientific ML begins as an optional bounded surrogate of verified outputs.
+  Learned closures remain inside solver-owned conservation, admissibility,
+  shifted-domain, calibration, and fallback gates.
+- A homogeneous Big Bang-scale request is cosmological initial data, not a
+  localized discharge into an exterior. Planck-scale and universe-creation
+  claims remain unsupported or explicitly fictional.
 - The story director reacts to retained claims and never rerolls an admitted
   case result.
 - Physical acoustics, diagnostic sonification, Symphony, and radio are separate
@@ -68,6 +86,9 @@ a bounded design consequence and an open question.
 | Protocol parity requires an application contract | [MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28) is stateless at its core and [A2A 1.0](https://a2a-protocol.org/v1.0.0/specification/) models longer agent tasks | Keep play handles, state, actions, knowledge, and replay in `PlayService`, not transport sessions | What smallest adapter set remains pleasant for unrelated agents? |
 | More modalities can reduce agent performance | [OmniPlay](https://arxiv.org/abs/2508.04361) evaluates reinforcing and conflicting image, video, audio, and text | Identify physical audio, radio, captions, and semantic observations as separate benchmark channels | Which combinations improve reasoning rather than add noise? |
 | Social generation needs situated review | [UNESCO's ICH ethical principles](https://ich.unesco.org/en/ethics-and-ich-00866) emphasize community participation, diversity, and context | Model plural positions and trigger focused review for recognizable living affinity | When is generated resemblance substantial enough to require review? |
+| Odor, concentration, and hazard are different claims | [Suarez et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC1727181/) measured several sulfur odorants in a small protocol-specific human study, while [NIOSH](https://www.cdc.gov/niosh/npg/npgd0337.html) warns that hydrogen-sulfide smell rapidly fatigues | Keep physical trace inventory, observer response, and scoped exposure interpretation in separate capabilities | Which observer models are useful without implying universal perception? |
+| Compactification mathematics does not establish extra dimensions | The current [Particle Data Group extra-dimensions review](https://pdg.lbl.gov/2025/reviews/rpp2025-rev-extra-dimensions.pdf) derives Kaluza-Klein reductions and reports model-dependent experimental limits | Implement exact published toy reductions before speculative string or portal presentation | Which compact topologies add educational value without encouraging a generic dimension slider? |
+| Cosmological expansion is not a centered explosion | The [Particle Data Group Big-Bang review](https://pdg.lbl.gov/2025/reviews/rpp2025-rev-bbang-cosmology.pdf) derives FLRW expansion from a homogeneous and isotropic relativistic model | Reclassify global release requests as cosmological initial-data problems and state the model domain | Which post-initial epochs can be supported with independently verified equations of state? |
 
 ## Law contexts and bounded generality
 
@@ -113,6 +134,16 @@ a bounded design consequence and an open question.
 
 ## Gas dynamics, reservoirs, and jets
 
+- [NASA/TM-2017-218239](https://ntrs.nasa.gov/citations/20170005533)
+  states open control-volume mass and internal-energy balances with enthalpy
+  carried by mass flow, heat transfer, and pressure-volume work. Its cryogenic
+  tank application is a governing-equation reference, not validation of the
+  Lab's calorically perfect endpoint model.
+- [NASA/CR-2010-216794/VOL2](https://ntrs.nasa.gov/citations/20100042398)
+  forms ideal-gas mixture properties from constituent mass fractions and
+  constituent gas constants, heat capacities, enthalpies, and entropy
+  functions. The current oracle deliberately implements only the constant heat
+  capacity subset.
 - [NASA Glenn: Mass Flow Choking](https://www.grc.nasa.gov/www/k-12/BGP/mflchk.html)
   derives the compressible mass-flow function and its Mach 1 maximum.
 - [NASA Glenn: Isentropic Flow Equations](https://www.grc.nasa.gov/www/k-12/airplane/isentrop.html)
@@ -171,6 +202,12 @@ a bounded design consequence and an open question.
 - [Flexible-wall instability study](https://doi.org/10.1017/jfm.2025.10860)
   shows that some modes survive reduced modeling while other regimes need a
   higher-dimensional coupled system. Fidelity must escalate by observable.
+- The [flexible-nozzle pulsed-jet experiments](https://doi.org/10.1017/jfm.2024.720)
+  and [vortex-ring formation experiments](https://doi.org/10.1017/S0022112097008410)
+  support explicit area, aspect, compliance, stored-energy, closure-history, and
+  stroke parameters. They do not supply biological body-size calibration or a
+  one-dimensional big-to-small morphology scale. Humorous creator presets are
+  therefore versioned parameter diffs with a separate localized presentation.
 - [Ffowcs Williams and Hawkings](https://doi.org/10.1098/rsta.1969.0031)
   provides a moving-surface acoustic analogy for later field tiers.
 - [Wave interactions in a screeching jet](https://arxiv.org/abs/2603.04786)
@@ -228,23 +265,136 @@ a bounded design consequence and an open question.
 - [NASA ideal rocket equation](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/ideal-rocket-equation/)
   provides the mass-ratio and delta-v reference.
 
-## Thermophysical, plasma, stellar, and relativistic profiles
+## Mixture chemistry, phase change, odor, and exposure
+
+- [Suarez et al.: gases responsible for human-flatus odor](https://pmc.ncbi.nlm.nih.gov/articles/PMC1727181/)
+  is an original 16-subject study that measured hydrogen sulfide, methanethiol,
+  and dimethyl sulfide under a specific collection and provocation protocol. It
+  supports species-resolved optional Earth-biological priors, not a universal
+  recipe, a complete odor model, or an identity inference.
+- The [NIST Chemistry WebBook](https://webbook.nist.gov/) supplies referenced
+  species thermochemistry, phase-change, vapor-pressure, and Henry-law data where
+  available. Coverage, method, uncertainty, and source revision remain
+  species-specific rather than becoming one trusted-property flag.
+- [NASA Chemical Equilibrium with Applications](https://www.nasa.gov/glenn/research/chemical-equilibrium-with-applications/)
+  and its [RP-1311 formulation](https://ntrs.nasa.gov/api/citations/19950013764/downloads/19950013764.pdf?attachment=true)
+  support equilibrium composition, mixture properties, condensed phases, and
+  ionized-species reference cases. Equilibrium calculations do not supply
+  finite-rate reaction history or an exterior kinetic mechanism.
+- [NASA/TP-20230015593](https://ntrs.nasa.gov/citations/20230015593)
+  relates ideal-mixture thermodynamics, equilibrium constants, reversible
+  reaction kinetics, free energy, entropy, and time-integration stability. It
+  supports future reaction-network verification obligations, not a decision to
+  add reactions to the current reservoir model.
+- [Pankow's gas-particle partitioning model](https://doi.org/10.1016/1352-2310(94)90093-0)
+  shows that secondary aerosol partition is an additional thermodynamic model,
+  not an automatic consequence of enabling particles. Primary emitted droplets
+  and particles remain distinct from condensate or aerosol formed downstream.
+- The [NASA JPL atmospheric kinetics evaluation](https://science.jpl.nasa.gov/projects/data-evaluation/)
+  provides critically evaluated reaction and photochemical data. It motivates
+  versioned exterior mechanisms with explicit oxidants, radiation, phases,
+  surfaces, and validity, not a universal ambient-chemistry switch.
+- [Greenman et al.](https://pubmed.ncbi.nlm.nih.gov/14691119/) measured different
+  concentration-response behavior for eight odorants and a small judge panel.
+  It supports compound-dependent, uncertain observer models but is an oral-odor
+  study, not flatus calibration or universal perception.
+- The official [NIOSH hydrogen-sulfide guide](https://www.cdc.gov/niosh/npg/npgd0337.html)
+  states that olfactory fatigue makes smell unreliable as a warning. The
+  [NIOSH methanethiol guide](https://www.cdc.gov/niosh/npg/npgd0425.html),
+  [ATSDR hydrogen-sulfide toxicological profile](https://www.atsdr.cdc.gov/toxprofiles/tp114-c2.pdf),
+  and [EPA acute-exposure document](https://www.epa.gov/sites/default/files/2014-11/documents/hydrogen_sulfide_final_volume9_2010.pdf)
+  demonstrate that health interpretation depends on compound, concentration,
+  duration, route, endpoint, population, and authority. Occupational and
+  emergency guidance is not a universal safe threshold or game difficulty
+  scale.
+
+These sources require separate bulk-mixture, trace-inventory, reaction,
+phase-equilibrium, aerosol, exterior-chemistry, observer-detection, and hazard
+capabilities. A passive trace approximation needs a declared mass, energy, and
+property-error bound. Missing exposure context produces an explicit refusal.
+Detectability cannot imply toxicity, lack of detection cannot imply safety, and
+composition cannot justify diet, disease, identity, or protected-trait claims.
+
+## Thermophysical, plasma, and stellar profiles
 
 - [NIST REFPROP](https://doi.org/10.18434/T4/1502528) provides reference
   thermophysical properties for many fluids and mixtures. Integration requires
   a separate license review.
 - [NIST humid-air thermodynamics review](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=935265)
   documents humid-air mixture behavior and model limits.
-- [NASA Chemical Equilibrium with Applications](https://www.nasa.gov/glenn/research/chemical-equilibrium-with-applications/)
-  supports equilibrium reacting and ionized-mixture reference cases.
 - [NRL Plasma Formulary 2023](https://www.nrl.navy.mil/Portals/38/PDF%20Files/NRL_Plasma_Formulary_2023.pdf)
   provides plasma scale and regime diagnostics.
 - [NASA CCMC AWSoM model](https://ccmc.gsfc.nasa.gov/models/SWMF~AWSoM_R~1.0/)
   demonstrates the MHD, thermal, wave, and kinetic ingredients of a serious
   solar-wind profile.
-- [Relativistic fluid dynamics review](https://link.springer.com/article/10.1007/s41114-021-00031-6)
-  covers conserved relativistic currents, compact objects, and equation-of-state
-  dependence.
+
+## Relativity, extra dimensions, strings, and cosmology
+
+- The [relativistic fluid dynamics review](https://link.springer.com/article/10.1007/s41114-021-00031-6)
+  covers conserved currents, compact objects, equations of state, and numerical
+  methods. It supports explicit relativistic profiles, not extrapolation by an
+  ordinary gas solver.
+- [GW150914](https://doi.org/10.1103/PhysRevLett.116.061102) directly detected a
+  gravitational-wave signal consistent with a binary black-hole merger and
+  strong-field general relativity. This evidence supports the theory in tested
+  observables; it does not validate an arbitrary imagined source, collapse
+  geometry, or dense-matter closure.
+- The [standard numerical-relativity testbeds](https://arxiv.org/abs/gr-qc/0305023)
+  provide shared linear-wave, gauge-wave, and cosmological fixtures for exposing
+  formulation, gauge, boundary, and stability failures. A black-hole-formation
+  claim additionally needs matter, constraint convergence, horizon diagnostics,
+  and applicable initial data.
+- The current [Particle Data Group extra-dimensions review](https://pdg.lbl.gov/2025/reviews/rpp2025-rev-extra-dimensions.pdf)
+  derives Kaluza-Klein reduction on a circle, including the mode spectrum and
+  effective coupling, and summarizes model-dependent force-law, astrophysical,
+  and collider limits. A verified mode calculation does not establish an extra
+  dimension in nature.
+- [Arkani-Hamed, Dimopoulos, and Dvali](https://arxiv.org/abs/hep-ph/9803315)
+  and [Randall and Sundrum](https://arxiv.org/abs/hep-ph/9905221) are primary
+  sources for flat large-extra-dimension and warped five-dimensional scenarios.
+  They are specific speculative models, not generic portal mechanics.
+- [Polchinski's D-brane result](https://arxiv.org/abs/hep-th/9510017) identifies
+  Dirichlet branes as charged objects in Type II string theory on which open
+  strings have specified boundary conditions. It does not make a brane an
+  observed material membrane or a route between universes.
+- The [current scale-separation review](https://arxiv.org/abs/2311.12105)
+  documents achievements and limitations of string compactifications. A string
+  pack must name its theory, critical dimension, background, compactification,
+  tension, coupling, sectors, state, and approximation rather than expose a
+  free-form dimension slider.
+- [Hawking's particle-creation calculation](https://doi.org/10.1007/BF02345020)
+  supports a separate semiclassical quantum-field-on-curved-spacetime model.
+  It is not direct empirical observation of astrophysical evaporation.
+- [Strominger and Vafa](https://arxiv.org/abs/hep-th/9601029) derive microscopic
+  entropy for a class of five-dimensional extremal BPS black holes. The result
+  cannot be generalized in the interface to arbitrary astrophysical or emitted
+  black holes.
+- [Donoghue's gravity effective-field-theory calculation](https://arxiv.org/abs/gr-qc/9405057)
+  separates controlled low-energy quantum corrections from unknown
+  high-energy completion. Planck-scale extrapolation without another justified
+  model must therefore fail explicitly.
+- The current [Particle Data Group Big-Bang review](https://pdg.lbl.gov/2025/reviews/rpp2025-rev-bbang-cosmology.pdf)
+  derives FLRW evolution, redshift, thermal history, and limiting radiation,
+  matter, and vacuum solutions. A homogeneous Big Bang case is cosmological
+  initial data, not an explosion from a localized reservoir into pre-existing
+  space.
+- The current [Particle Data Group inflation review](https://pdg.lbl.gov/2025/reviews/rpp2025-rev-inflation.pdf)
+  and the primary [Planck inflation analysis](https://arxiv.org/abs/1807.06211)
+  show that observations constrain model families but do not select one unique
+  inflaton potential or validate the classical `t = 0` boundary.
+- [Unruh's acoustic-horizon paper](https://doi.org/10.1103/PhysRevLett.46.1351)
+  derives a black-hole-like wave equation for sound in transonic flow. The
+  [2026 Analogue Gravity review](https://doi.org/10.1007/s41114-026-00064-9)
+  surveys the wider program. An acoustic analogue preserves named propagation
+  structure, not dynamical Einstein gravity, black-hole ontology, or quantum
+  gravity evidence.
+
+The implementation consequence is a visible epistemic ladder:
+`established_physics`, `research_toy`, `speculative_model`, `analogy`, and
+`fictional_axiom`. This Lab assessment remains separate from code verification,
+solution verification, empirical support, and scenario applicability. Current
+experimental constraints and assessments carry review dates instead of being
+embedded as timeless law facts.
 
 ## Dimensional analysis and numerical proof
 
@@ -332,6 +482,58 @@ optional C++20 Kokkos field library built separately for CPU, CUDA, HIP, and
 SYCL behind a narrow C ABI, and optional non-certifying Metal preview kernels.
 The ordinary executable remains CPU-complete and free of accelerator
 dependencies. See [COMPUTE.md](COMPUTE.md).
+
+## Model ensembles and scientific machine learning
+
+- ECMWF explains that an ensemble represents uncertainty through perturbed
+  initial conditions and model formulation in its
+  [forecast-uncertainty overview](https://www.ecmwf.int/en/research/modelling-and-prediction/quantifying-forecast-uncertainty).
+  Its current [AIFS v2 data service](https://www.ecmwf.int/en/forecasts/datasets/aifs-machine-learning-data)
+  provides deterministic and ensemble learned forecasts alongside the
+  physics-based IFS. This motivates plural model guidance, not a transfer of
+  weather skill or institutional authority to F.A.R.T. Lab.
+- [GenCast](https://www.nature.com/articles/s41586-024-08252-9) evaluates a
+  stochastic learned weather ensemble with proper probabilistic and joint
+  spatiotemporal criteria rather than only one deterministic point error. It
+  motivates explicit member-generation and calibration contracts.
+- [NeuralGCM](https://www.nature.com/articles/s41586-024-07744-y) combines a
+  numerical dynamical core with learned parameterizations and reports both
+  weather and climate experiments. Its documented failure to extrapolate to
+  substantially different future climates is direct evidence for visible
+  training-domain and OOD boundaries.
+- [Fourier Neural Operator](https://openreview.net/forum?id=c8P9NQVtmnO) and
+  [ML-accelerated CFD](https://doi.org/10.1073/pnas.2101784118) demonstrate
+  learned operator and correction patterns for PDE calculations. They do not
+  establish one universal PDE solver or justify removing the reference solver.
+- [Duraisamy](https://doi.org/10.1103/PhysRevFluids.6.050504) emphasizes
+  model-consistent training, physical constraints, and generalization limits
+  for machine-learning-augmented turbulence closures.
+- [Shankar et al.](https://doi.org/10.1103/PhysRevFluids.10.024605) report that
+  solver-in-the-loop differentiable closure training generalizes better than
+  offline learning in their tested flows and use ensembles to study closure
+  uncertainty. This supports qualifying learned closures inside the coupled
+  solver rather than only against saved labels.
+- [Zhang and Shu](https://doi.org/10.1016/j.jcp.2010.08.016) provide classical
+  positivity-preserving high-order conservation-law methods. Learned fluxes or
+  closures still pass solver-owned density, pressure, and energy admissibility
+  checks; a physics penalty is not a proof.
+- [Gneiting and Raftery](https://doi.org/10.1198/016214506000001437) define
+  proper scoring rules for probabilistic forecasts. Probability, calibration,
+  coverage, and sharpness are claimed only for a declared ensemble population,
+  observable, domain, and horizon.
+- The 2025
+  [critical assessment of ML in fluid dynamics](https://doi.org/10.1103/8t52-mtb9)
+  emphasizes unresolved generalization, data, validation, and community
+  benchmark problems. It supports starting with one bounded integral-output
+  surrogate and a preregistered baseline rather than an end-to-end learned
+  replacement.
+
+The architecture consequence is the separate model, implementation, immutable
+artifact, run, ensemble, and comparison identities specified in
+[MODELS.md](MODELS.md). Numerical, initial-condition, parameter, structural,
+closure, learned, and multi-model spreads do not share probability semantics by
+default. A learned model cannot be the sole judge of its own domain, uncertainty,
+or correctness.
 
 ## Scientific workflow, causality, and software correctness
 

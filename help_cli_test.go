@@ -25,6 +25,10 @@ func TestHelpRoutes(t *testing.T) {
 		{name: "scenario family", args: []string{"fartapp", "scenario", "help"}, want: scenarioHelp},
 		{name: "scenario validate topic", args: []string{"fartapp", "help", "scenario", "validate"}, want: scenarioValidateHelp},
 		{name: "scenario validate leaf", args: []string{"fartapp", "scenario", "validate", "unopened.json", "--format", "json", "--help"}, want: scenarioValidateHelp},
+		{name: "reservoir topic", args: []string{"fartapp", "help", "reservoir"}, want: reservoirHelp},
+		{name: "reservoir family", args: []string{"fartapp", "reservoir", "help"}, want: reservoirHelp},
+		{name: "reservoir predict topic", args: []string{"fartapp", "help", "reservoir", "predict"}, want: reservoirPredictHelp},
+		{name: "reservoir predict leaf", args: []string{"fartapp", "reservoir", "predict", "unopened.json", "--format", "json", "--help"}, want: reservoirPredictHelp},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -45,6 +49,7 @@ func TestRootHelpAdvertisesOnlyCurrentSurface(t *testing.T) {
 		"law list",
 		"law inspect",
 		"scenario validate",
+		"reservoir predict",
 		"no implicit Earth or other world",
 		"current probe resolves declared law contexts and capability references only",
 		"currently English presentations",
@@ -77,9 +82,11 @@ func TestHelpRouteErrors(t *testing.T) {
 		{args: []string{"fartapp", "help", "law", "list", "extra"}, want: "unknown help topic \"law list extra\"; run 'fartapp help' for available topics\n"},
 		{args: []string{"fartapp", "law", "help", "unknown"}, want: "usage: fartapp law help\n"},
 		{args: []string{"fartapp", "scenario", "help", "validate", "extra"}, want: "usage: fartapp scenario help\n"},
+		{args: []string{"fartapp", "reservoir", "help", "predict", "extra"}, want: "usage: fartapp reservoir help\n"},
 		{args: []string{"fartapp", "--help", "-h"}, want: "invalid help: --help may be specified only once\n"},
 		{args: []string{"fartapp", "law", "--help", "-h"}, want: "invalid law help: --help may be specified only once\n"},
 		{args: []string{"fartapp", "scenario", "-h", "--help"}, want: "invalid scenario help: --help may be specified only once\n"},
+		{args: []string{"fartapp", "reservoir", "-h", "--help"}, want: "invalid reservoir help: --help may be specified only once\n"},
 	}
 	for _, test := range tests {
 		var stdout bytes.Buffer

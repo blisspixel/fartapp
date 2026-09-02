@@ -13,6 +13,8 @@ Read:
 - [README.md](README.md) for product identity and current status.
 - [ROADMAP.md](ROADMAP.md) for sequencing and completion gates.
 - [docs/SIMULATION.md](docs/SIMULATION.md) for scientific claims.
+- [docs/MODELS.md](docs/MODELS.md) for model registry, ensemble, and scientific
+  machine-learning boundaries.
 - [docs/GAMEPLAY.md](docs/GAMEPLAY.md) for procedural story rules.
 - [docs/INTERFACES.md](docs/INTERFACES.md) for CLI-first boundaries.
 - [docs/AUDIO.md](docs/AUDIO.md) for acoustics, Symphony, radio, and music assets.
@@ -37,7 +39,8 @@ verification, and validation status.
 ## Current development setup
 
 Install the Go version declared in `go.mod`. Documentation lint uses Node.js 24
-and the locked npm toolchain. Then run:
+and the locked npm toolchain. PowerShell 7 is temporarily required for four
+repository-policy checks. Then run:
 
 ```sh
 npm ci --ignore-scripts
@@ -66,6 +69,9 @@ go test ./internal/scenarioprobe -run '^TestCaseOperationAbsenceIsInferredOnlyAf
 go test . -run '^TestMultiLawProbeLimitDoesNotInferCompatibility$'
 go test ./internal/scenarioprobe -run '^TestMinimalOpaqueUnresolvedCapabilityStopsAtOuterEnvelope$'
 go test . -run '^TestMinimalOpaqueUnresolvedCapabilityCLIContract$'
+go test ./internal/idealmixturereservoir -run '^TestSyntheticMixtureClosedForms$'
+go test ./internal/reservoirprediction -run '^TestPredictSyntheticClosedForms$'
+go test . -run '^TestReservoirCLITextAndJSONFixtures$'
 go test . -run '^TestHelpRoutes$'
 go vet ./...
 go run honnef.co/go/tools/cmd/staticcheck@v0.8.1 ./...
@@ -82,6 +88,9 @@ go test -run=^$ -fuzz=FuzzFiniteSnapshotAndLookup -fuzztime=5s ./internal/catalo
 go test -run=^$ -fuzz=FuzzRegistrationConstructors -fuzztime=5s ./internal/catalogregistration
 go test -run=^$ -fuzz=FuzzDispositionConstructors -fuzztime=5s ./internal/evaluation
 go test -run=^$ -fuzz=FuzzValidate -fuzztime=5s ./internal/scenarioprobe
+go test -run=^$ -fuzz=FuzzWithdrawFraction -fuzztime=5s ./internal/idealmixturereservoir
+go test -run=^$ -fuzz=FuzzPredict -fuzztime=5s ./internal/reservoirprediction
+go test -run=^$ -fuzz=FuzzInspect -fuzztime=5s ./internal/strictjson
 go test '-coverprofile=coverage.out' ./...
 pwsh ./scripts/check-go-coverage.ps1 -ProfilePath coverage.out -AggregateMinimum 90 -PackageMinimum 80
 ```
@@ -90,6 +99,44 @@ Run `gofmt` on every changed Go file. Total statement coverage must remain at or
 above 90 percent, and every non-generated package must remain at or above the 80
 percent floor. Domain, solver, archive, replay, and protocol code receive stricter
 changed-line and mutation gates described in [docs/QUALITY.md](docs/QUALITY.md).
+
+The PowerShell dependency, link, media, and coverage gates are active but
+transitional. The approved migration is a dependency-free Go checker with
+tested path behavior on Linux, macOS, and Windows. Its planned commands are
+documented in [docs/QUALITY.md](docs/QUALITY.md) and must not be presented as
+available until they ship. Do not add new policy to the PowerShell scripts or
+introduce another task runner for this migration. Thin platform wrappers are
+acceptable only when they forward arguments and exit status to the Go command.
+
+## Repository structure and review discipline
+
+For a new package or a meaningful file split, describe the responsibility of
+each file and the permitted dependency direction in the pull request. Prefer
+one coherent responsibility per file. Do not combine wire decoding, domain
+validation, numerical stepping, report construction, and interface presentation
+in one implementation unit, and do not fragment a small responsibility merely
+to reduce line counts.
+
+Before requesting review:
+
+- Remove dead fields, unused helpers, redundant wrappers, unreachable branches,
+  speculative interfaces, and comments that repeat the code.
+- Reuse parsing or validation only when the complete contract is identical.
+  Similar syntax with different authority, bounds, or error semantics is not a
+  shared abstraction.
+- Give each behavior test an independent expected result or a property that a
+  plausible mutation can violate. Coverage without discriminating assertions
+  is insufficient.
+- Exercise invalid, forged, boundary, and mismatch cases at the layer that owns
+  the invariant.
+- Review all assisted changes line by line for invented APIs, fake citations,
+  dependency drift, hidden platform assumptions, and claims not earned by the
+  implementation.
+
+The same acceptance standard applies to every contribution regardless of the
+tools used to prepare it. Do not add assistant names, generator bylines,
+authorship labels, or attribution comments to source, documentation, commits,
+fixtures, or product output.
 
 ## Pull requests
 
@@ -110,6 +157,9 @@ changed-line and mutation gates described in [docs/QUALITY.md](docs/QUALITY.md).
   architecture.
 - Do not add gameplay logic, hidden observations, or solver mutation access to
   CLI, MCP, A2A, TUI, Godot, spectator, or automation adapters.
+- Do not accept a change merely because aggregate coverage increased or all
+  existing tests remained green. Explain which defect the new evidence can
+  detect.
 
 For security-sensitive changes, include the attacker boundary, expected control,
 and focused regression proof. Report existing vulnerabilities through the

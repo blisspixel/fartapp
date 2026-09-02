@@ -135,6 +135,207 @@ Freestyle may expose extensive telemetry because the rules grant it. A ranked
 challenge does not leak hidden solver state through MCP, an accessibility tree,
 an error message, a resource URI, or an archive preview.
 
+## Agent Quality of Life contract
+
+This is the planned usability contract for advanced G5-style agents and simpler
+automation. It is not a claim that the current CLI already implements
+`PlayService`, MCP, A2A, task orchestration, or every operation below. A feature
+becomes current only when the applicable capability manifest, command help,
+schemas, examples, conformance tests, and product status documentation agree.
+
+The goal is not merely to make the game callable. An agent should be able to
+discover what exists, form a valid request, understand a bounded response,
+conduct long research work, recover from interruption, and collaborate without
+reverse-engineering prose or scraping presentation output.
+
+### Discovery, schemas, and examples
+
+Every applicable surface must expose one versioned capability catalog generated
+from the canonical service definitions. Discovery includes:
+
+- Stable semantic action, observation, artifact, role, and error identifiers.
+- Argument and result schemas, required capabilities, legal phases, authority,
+  declared cost dimensions, limits, and content or safety boundaries.
+- Supported protocol revision, adapter revision, optional extensions, and
+  negotiated feature flags.
+- Minimal, typical, boundary, refusal, and recovery examples using canonical
+  typed values. Localized labels may accompany examples but are never schema
+  keys.
+- Pagination, filters, exact lookup, and a catalog digest so an agent can cache
+  safely and detect a changed contract.
+
+Unsupported capabilities are omitted from legal actions and remain discoverable
+as unavailable only where revealing their existence is allowed. Discovery never
+reveals a hidden value, reference solution, private role, seed, nonce, or
+verifier-only field.
+
+Natural language is a drafting convenience over this catalog. A request first
+produces a typed, non-mutating proposal with assumptions, ambiguities, rejected
+effects, source spans where applicable, and schema references. The actor then
+accepts an exact proposal revision and digest. Drafting never implies acceptance
+and cannot silently choose a hidden default that changes scientific or gameplay
+state.
+
+### Adjustable observations
+
+An agent can request `brief`, `standard`, or `research` observation density, or
+use a field mask and declared response budget. It can ask for a full snapshot or
+a delta after an observation cursor. Concision changes representation only. It
+does not remove terminal status, remaining applicable budgets, uncertainty,
+provenance, safety information, required acknowledgments, or the means to
+discover legal actions.
+
+Truncation is explicit and returns omitted-field classes plus bounded continuation
+or artifact references. Summaries cite the retained facts and artifacts from
+which they were produced. An agent never has to parse decorative CLI tables,
+localized narration, terminal escape sequences, screenshots, or audio to obtain
+canonical machine information.
+
+Planned subscriptions deliver ordered observation deltas, task progress, newly
+available artifacts, messages, and terminal changes without client polling.
+Each delivery carries a cursor and service revision. Reconnect resumes from an
+acknowledged cursor when retention permits, otherwise it returns a typed
+`cursor_expired` result and the smallest authorized resynchronization path.
+Coalescing may reduce delivery frequency but cannot reorder canonical changes or
+hide a terminal transition.
+
+### Long-running work and interruption
+
+Long simulation, refinement, verification, export, batch, and campaign work uses
+an explicit task handle distinct from play identity. A task reports a typed
+phase, completed and remaining work where knowable, budget use, latest safe
+checkpoint, produced artifacts, warnings, and failure state. It reports a
+percentage only when the denominator is defined. Otherwise it reports named
+milestones and measured work without inventing certainty.
+
+Cancellation is cooperative, bounded, and acknowledged. The receipt states
+whether work stopped before acceptance, at a safe checkpoint, after a committed
+transition, or after completion. Cancellation never silently rewinds the Lab
+account, discards already committed evidence, or converts partial work into a
+successful result.
+
+Checkpoints are immutable and content-addressed. Resume identifies the exact
+checkpoint, parent task, service and pack compatibility, budgets already spent,
+and required role. An incompatible resume fails with a typed explanation and
+does not approximate state. Acting from an older checkpoint creates an explicit
+branch with a parent reference and branch-point digest. It never overwrites the
+original lineage.
+
+### Durable notebooks and artifacts
+
+An agent notebook is an append-only workspace for hypotheses, plans,
+observations, citations, artifact references, and declared conclusions. It is
+not authoritative simulation state and cannot turn an opinion into evidence.
+Entries cite stable observation revisions or content-addressed artifacts. A
+notebook can be private to a seat, shared with named roles, or published by an
+explicit action. Export and import preserve authorship as a role-scoped record
+without exposing credentials or private reasoning.
+
+Large arrays, fields, plots, audio, transcripts, certificates, archives, and
+proof material return durable bounded artifact references instead of flooding
+an observation. Metadata states media type, schema, byte size, digest,
+provenance, authorization, retention, and available ranges or projections.
+References do not grant more authority than the requesting handle and do not
+smuggle hidden state through names, sizes, previews, or error behavior.
+
+### Batch, sweep, and ensemble work
+
+Batch, parameter-sweep, and ensemble actions accept typed member definitions or
+a bounded generator, declared aggregation, concurrency ceiling, failure policy,
+and total work budget. The service validates the complete envelope before
+acceptance and exposes member costs or upper bounds. It never converts one
+budgeted action into unbounded hidden solver work.
+
+Members have stable identities and individual receipts. Partial failure remains
+visible, successful members remain referenceable, and retries address only
+failed or explicitly selected members. Aggregation never erases missing,
+refused, invalid, or inconclusive members. Execution order, worker count, and
+transport delivery order cannot change the defined account result. Numerical
+equivalence uses the solver's declared reproducibility contract rather than an
+unsupported promise of bitwise equality.
+
+### Recovery and deterministic local baselines
+
+Every failure returns a stable code, failing stage, human-readable explanation,
+machine details allowed by the role, retryability, budget effect, and one or
+more valid recovery actions when they exist. Revision conflicts return expected
+and current revisions. Schema failures identify exact fields. Capability
+failures name the required capability without revealing protected state. A
+retryable transport failure is not confused with a rejected game action.
+
+All mutating requests require an idempotency key. Repeating an accepted key with
+the same canonical request returns the original receipt. Reusing it for a
+different request is rejected. The service retains accepted keys for the
+published lifetime of the live play or task. An adapter may expire transport
+cache entries, but it cannot silently resubmit an expired key as a new mutation.
+An expired handle returns a typed recovery or terminal result.
+
+The planned SDK and protocol examples ship with offline deterministic local
+fixtures for discovery, drafting, start, observe, act, task progress,
+cancellation, checkpoint, resume, branch, notebook, batch, finish, and error
+recovery. These fixtures provide a stable control-plane baseline and declared
+scientific tolerances. They do not claim that every high-fidelity backend or
+hardware target is bitwise identical.
+
+### Fair roles and multi-agent coordination
+
+The knowledge policy is identical for equivalent roles across direct service,
+CLI JSONL, MCP `2026-07-28`, A2A `1.0`, TUI semantics, and native accessibility
+semantics. Concision, subscriptions, artifact metadata, progress, timing, and
+errors are tested as possible side channels. A richer transport cannot reveal
+more task-relevant state than its declared track permits.
+
+Multi-agent sessions provide explicit roles, inbox and outbox messages, shared
+artifact references, communication budgets, handoff receipts, role withdrawal,
+and deterministic conflict rules. Private seat observations and notebooks do
+not enter shared context without an authorized action. Agents may delegate work
+or transfer a role only when the ruleset grants that authority. A coordinator
+cannot bypass another role's observation or action policy.
+
+MCP and A2A provide parity of canonical intent and authorized information, not
+identical protocol shapes. MCP exposes bounded tools, resources,
+resource and task subscriptions, and long-running task controls for one
+agent-service relation. Its no-polling quality path uses negotiated
+`subscriptions/listen` notifications; Tasks polling remains a compatibility
+fallback for clients that do not negotiate subscriptions. A2A exposes the same
+underlying play and artifact semantics through A2A 1.0 tasks, messages,
+artifacts, role coordination, `SubscribeToTask` or streaming, and cancellation.
+Neither adapter shells out to the `fart` CLI, parses its output, or treats a CLI
+subprocess as the service. Both call the same in-process service boundary used
+by the CLI.
+
+There is no required dashboard, browser login, localhost website, hidden
+webview, or web-only setup step. A capable agent can complete every applicable
+machine workflow through an applicable direct-contract, CLI JSONL, MCP, or A2A
+surface. The TUI and native application remain first-class optional play
+surfaces, not secret control planes.
+
+### Quality gates for this contract
+
+Before an adapter claims Agent Quality of Life conformance, tests must prove:
+
+- Capability catalogs, schemas, examples, legal actions, and error codes agree
+  for shared canonical intents across direct service, CLI JSONL, MCP
+  2026-07-28, and A2A 1.0, while accurately declaring adapter-specific
+  capabilities.
+- Observation density, field masks, deltas, truncation, subscriptions, and
+  artifact projections preserve authorized information and reveal no hidden
+  fields.
+- Disconnect, duplicate delivery, retry, stale revision, cancellation, resumed
+  subscription, expired cursor, checkpoint, resume, and branch cases recover
+  without duplicate transitions or silent data loss.
+- Notebook and artifact authorization survives export, import, role handoff,
+  expiry, and attempted cross-seat access.
+- Batch, sweep, and ensemble results are invariant to allowed scheduling and
+  report every member disposition.
+- Deterministic offline fixtures pass without network access, a browser, a
+  daemon, a CLI subprocess inside an adapter, or optional presentation assets.
+- A hostile parity suite probes timing, error, progress, size, resource, and
+  accessibility channels for hidden-state leaks.
+- At least one sustained G5-style campaign completes with multiple roles,
+  disjoint observations, interruption, resume, branching, notebook handoff,
+  long-running work, and final verification.
+
 ## Natural-language generation
 
 Agents and humans may describe a desired case or result in ordinary language. The system

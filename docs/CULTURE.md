@@ -15,6 +15,39 @@ The most reliable comic target is the Lab itself: institutional confidence,
 excessive measurement, bureaucratic procedure, and a universal theory defeated
 by one inconvenient observer.
 
+## Humor charter and read-only cue boundary
+
+Humor is an optional interpretation of retained facts, not a source of facts. A
+versioned `HumorCue` may read applicable claims, classifications, absences,
+uncertainty, and presentation history. It may return localized wording, a
+caption, an accessible alternative, a presentation-order suggestion, or
+`no_joke`. The exact `no_joke` result is successful. It does not make a case,
+audience, locale, or reviewer humorless.
+
+A cue cannot write or select law context, scope, scenario input, solver state,
+numerics, physical classification, evidence, admission, safety policy, score,
+difficulty, record identity, or case-result identity. Comic timing is
+presentation ordering, not source-law time. Any randomness uses a separately
+named presentation stream and cannot perturb simulation, narrative-fact,
+challenge, or reconstruction streams.
+
+Useful cue families include expectation puncture, repetition with variation,
+deadpan classification, institutional overanalysis, evidence-bound callbacks,
+and the anti-joke in which silence, refusal, or an inconclusive result is the
+honest ending. A cue that mentions choking, wetness, vacuum acoustics, damage,
+or another regime requires the corresponding retained claim. It cannot use a
+requested spectacle as evidence that the spectacle occurred.
+
+Humor research supports several useful design hypotheses without establishing
+one universal formula. Playful incongruity and safe norm violation can help
+explain why a small bodily sound puncturing a formal setting is funny to some
+audiences. Scatological humor is also context-bound social communication, not a
+developmental or cultural constant. See
+[Benign Violations](https://doi.org/10.1177/0956797610376073),
+[Playing with Expectations](https://pmc.ncbi.nlm.nih.gov/articles/PMC5028384/),
+and
+[Scatological Children's Humour](https://www.sjaakvandergeest.socsci.uva.nl/pdf/culture_and_hygiene/Scatological_Humour.pdf).
+
 ## Real-world public-interest safeguards
 
 1. Bodily commonality does not imply cultural sameness.
@@ -57,6 +90,22 @@ They do not deterministically produce morality or a single social rule. Two
 worlds with the same habitat can build different institutions. Two participants
 in one institution can disagree. A collective may have no individual members,
 and an observer may have no social interpretation at all.
+
+## Morphology without body stereotyping
+
+An optional morphology preset is a bounded model or presentation input, not a
+species personality, culture, intelligence, moral status, comic rank, or claim
+about every member of a class. It can supply only capabilities and parameters
+that its owning profile defines. Locale, accent, name, music, clothing, food,
+religion, economics, and social behavior are never derived from morphology.
+
+Morphology-aware humor targets the Lab's assumption, instrument adapter, or
+bureaucratic category error. For example, an instrument may discover that its
+human-shaped diagram does not apply and issue a mortifyingly precise correction.
+The morphology or body is not the punchline. Different participants with the
+same morphology may disagree, and a participant may decline any body-based
+interpretation. A preset can therefore yield `no_joke` even when a reviewed cue
+exists for another situated context.
 
 The Lab is also a situated observer, not an omniscient narrator. Source-world
 participants may correct its translation, deny access to a sensory channel, or
@@ -126,6 +175,14 @@ It cannot come from pseudo-language, mock accents, national temperament,
 supposed cleanliness, food stereotypes, sacred material, or claims about how a
 population's bodies behave.
 
+Language choice, content preference, age or maturity profile, religious or
+cultural affiliation, and tolerance for direct bodily language are independent.
+The product never infers one from another. Locale packs transcreate cue intent
+instead of translating a source-language punchline word for word, and may omit
+the joke. Empirical work on culture-bound video-game humor found that literal
+translation can fail to preserve comprehension or appreciation; see
+[Translation and Reception of Culture-based Humor in a Video Game](https://doi.org/10.15749/jts.2013.14.1.006).
+
 The French mock standards debate in [DEBAT_NORMATIF.fr.md](DEBAT_NORMATIF.fr.md)
 is a prototype candidate, not approved localization. It requires francophone
 editorial and metrology review. Japanese-language work requires reviewers
@@ -136,7 +193,32 @@ translated joke ships from automated fluency confidence alone.
 Localization tests cover placeholder and unit preservation, Unicode
 normalization, grapheme width, bidirectional text, plural and grammatical
 agreement, line wrapping, terminal escape safety, stable semantic identifiers,
-and same-trace identity across every supported locale.
+same-trace identity across every supported locale, and exact identity of any
+applicable scientific output across joke choice, `no_joke`, register, caption,
+and accessible alternative.
+
+## Mixed-age and accessibility safeguards
+
+Concrete cause and effect, playful sound, repetition with variation, and visible
+prediction can provide a low entry point. Full units, assumptions, uncertainty,
+ledgers, and verification provide depth. These are presentation layers over one
+account, not separate child and expert physics engines. No player is required to
+enjoy bodily humor, and humor-off remains a complete product experience.
+
+Child-accessible content avoids humiliation, sexualization, graphic deposition,
+body shame, contamination panic, and coercive social play. It provides clear
+context, brief explanations, and an easy exit. The project makes no age-rating,
+educational-effect, or child-suitability claim without applicable content,
+privacy, accessibility, and regional review.
+
+Every joke remains available without one sensory channel. Sound cues have
+captions or text alternatives; visual cues have screen-reader or descriptive
+alternatives; haptics, bass, flashing, motion, rapid response, and voice chat are
+optional. Accessibility variants preserve the cue's intended information while
+remaining free to use a different comic construction. They do not alter score or
+scientific state. The
+[Xbox Accessibility Guidelines](https://learn.microsoft.com/en-us/xbox/accessibility/guidelines)
+provide a maintained game-specific review checklist.
 
 The complete interface and nonhuman observer contract is in
 [LOCALIZATION.md](LOCALIZATION.md).
