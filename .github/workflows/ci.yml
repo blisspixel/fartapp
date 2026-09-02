@@ -74,6 +74,8 @@ jobs:
           go test . -run '^TestMinimalOpaqueScenarioJSONFixture$'
           go test ./internal/scenarioprobe -run '^TestCaseOperationAbsenceIsInferredOnlyAfterSchemaValidation$'
           go test . -run '^TestMultiLawProbeLimitDoesNotInferCompatibility$'
+          go test ./internal/scenarioprobe -run '^TestMinimalOpaqueUnresolvedCapabilityStopsAtOuterEnvelope$'
+          go test . -run '^TestMinimalOpaqueUnresolvedCapabilityCLIContract$'
           go test . -run '^TestHelpRoutes$'
 
       - name: Check formatting

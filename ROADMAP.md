@@ -118,6 +118,11 @@ planned.
   parsed or catalog and capability resolution begin. It emits the same report
   for either context-entry order, leaves operation assessments unevaluated, and
   cannot represent coupling, compatibility, or a missing bridge.
+- [x] Add a minimal opaque unresolved-capability fixture that reaches exact law
+  resolution, stops at `capability_not_defined`, and proves the outer report
+  invents no capability result, evidence record, case, ambient input, or solver
+  claim. Case-operation selection is `not-declared`; admission and execution are
+  `not-applicable`, not admitted, executed, or refused.
 - [ ] Add dimension diagnostics only where selected law contexts define
   dimensional quantities.
 - [ ] Implement ideal-mixture finite-reservoir mass and energy balance.

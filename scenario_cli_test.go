@@ -56,6 +56,7 @@ const expectedAtemporalScenarioJSONSHA256 = "9b1a6d9ed0923cb11f455545f157c2a2805
 const expectedEarthScenarioJSONSHA256 = "77cecf0ed6413bb83ebd291f6729012f944d6261f5d8fe8fe028ca2113bc634c"
 const expectedMinimalOpaqueScenarioJSONSHA256 = "1fcdb855250eab6c943e0da2d64b7169ec253d4d778c822592774919e1276346"
 const expectedMultiLawProbeLimitJSONSHA256 = "36e4be2178d1ddc755631b0328bf08c4bcf28f9acc10425fa16ccaf20c3074af"
+const expectedUnresolvedCapabilityJSONSHA256 = "f841f67dbfb6c2d415d83ed58e234a855c4c0a5a4a78a531b7f5648752446e14"
 
 func TestScenarioCLITextAndJSONFixtures(t *testing.T) {
 	input := readScenarioFixture(t, "atemporal-probe.json")
@@ -359,6 +360,121 @@ func TestMultiLawProbeLimitDoesNotInferCompatibility(t *testing.T) {
 	} {
 		if bytes.Contains(first, []byte(forbidden)) {
 			t.Errorf("probe-limit report unexpectedly contains %q", forbidden)
+		}
+	}
+}
+
+func TestMinimalOpaqueUnresolvedCapabilityCLIContract(t *testing.T) {
+	input := readScenarioFixture(t, "minimal-opaque-unresolved-capability.json")
+	invokeJSON := func(args []string, stdin []byte) []byte {
+		t.Helper()
+		var stdout bytes.Buffer
+		var stderr bytes.Buffer
+		code := runWithInput(args, bytes.NewReader(stdin), &stdout, &stderr)
+		if code != 1 || stderr.Len() != 0 {
+			t.Fatalf("result = (%d, %q)", code, stderr.String())
+		}
+		return bytes.Clone(stdout.Bytes())
+	}
+
+	var textStdout bytes.Buffer
+	var textStderr bytes.Buffer
+	if code := runWithInput(
+		[]string{"fartapp", "scenario", "validate", "-"},
+		bytes.NewReader(input),
+		&textStdout,
+		&textStderr,
+	); code != 1 || textStdout.Len() != 0 ||
+		textStderr.String() != "scenario validation failed: FART-E-CAP-0001 capability_not_defined at \"/capability_requests/0/id\"\n" {
+		t.Fatalf("text result = (%d, %q, %q)", code, textStdout.String(), textStderr.String())
+	}
+
+	stdinArgs := []string{"fartapp", "scenario", "validate", "-", "--format", "json"}
+	first := invokeJSON(stdinArgs, input)
+	second := invokeJSON(stdinArgs, input)
+	if !bytes.Equal(first, second) {
+		t.Fatal("unresolved-capability report is not byte deterministic")
+	}
+	named := invokeJSON(
+		[]string{
+			"fartapp", "scenario", "validate",
+			filepath.FromSlash("testdata/scenarios/minimal-opaque-unresolved-capability.json"),
+			"--format", "json",
+		},
+		nil,
+	)
+	if !bytes.Equal(first, named) {
+		t.Fatal("named-file and standard-input reports differ")
+	}
+	reordered := []byte(`{"capability_requests":[{"id":"c0"}],"scope":{"id":"q0"},"law_context_set":{"contexts":[{"scope_id":"q0","version":"v0alpha1","id":"conformance.opaque.minimal"}]},"schema":"fart.scenario-probe/v0alpha1"}`)
+	if reorderedOutput := invokeJSON(stdinArgs, reordered); !bytes.Equal(first, reorderedOutput) {
+		t.Fatal("object-member order changed the unresolved-capability report")
+	}
+	digest := sha256.Sum256(first)
+	if got := hex.EncodeToString(digest[:]); got != expectedUnresolvedCapabilityJSONSHA256 {
+		t.Fatalf(
+			"unresolved-capability JSON SHA-256 = %s, want %s",
+			got,
+			expectedUnresolvedCapabilityJSONSHA256,
+		)
+	}
+
+	var report scenarioprobe.Report
+	if err := json.Unmarshal(first, &report); err != nil {
+		t.Fatalf("json.Unmarshal: %v", err)
+	}
+	if report.Valid() || report.DocumentStatus != "invalid" || report.DocumentSchema != "" ||
+		report.LawContext != nil || report.Scope != nil || len(report.Capabilities) != 0 ||
+		len(report.EvidenceRegistry) != 0 || len(report.Environment.ConsultedInputs) != 2 ||
+		report.Environment.ConsultedInputs[0] != "document_bytes" ||
+		report.Environment.ConsultedInputs[1] != "built_in_law_catalog" ||
+		len(report.Environment.AmbientInputs) != 0 || len(report.Diagnostics) != 1 {
+		t.Fatalf("report = %#v", report)
+	}
+	stages := report.ValidationStages
+	if stages.Syntax.Status != "valid" || stages.Syntax.ReasonCode != "" ||
+		stages.Schema.Status != "valid" || stages.Schema.ReasonCode != "" ||
+		stages.LawResolution.Status != "resolved" || stages.LawResolution.ReasonCode != "" ||
+		stages.CapabilityResolution.Status != "unresolved" ||
+		stages.CapabilityResolution.ReasonCode != "capability_not_defined" {
+		t.Fatalf("validation stages = %#v", stages)
+	}
+	diagnostic := report.Diagnostics[0]
+	if diagnostic.Code != "FART-E-CAP-0001" || diagnostic.Stage != "capability-resolution" ||
+		diagnostic.Path != "/capability_requests/0/id" ||
+		diagnostic.ReasonCode != "capability_not_defined" {
+		t.Fatalf("diagnostic = %#v", diagnostic)
+	}
+	wantOperation := scenarioprobe.CaseOperationDisposition{
+		Selection: scenarioprobe.StageAssessment{Status: "not-declared", ReasonCode: "probe_schema_has_no_operation"},
+		Admission: scenarioprobe.StageAssessment{Status: "not-applicable", ReasonCode: "operation_not_declared"},
+		Execution: scenarioprobe.StageAssessment{Status: "not-applicable", ReasonCode: "operation_not_declared"},
+	}
+	if report.RequestedCaseOperation != wantOperation {
+		t.Fatalf("requested case operation = %#v, want %#v", report.RequestedCaseOperation, wantOperation)
+	}
+	var root map[string]json.RawMessage
+	if err := json.Unmarshal(first, &root); err != nil {
+		t.Fatalf("json.Unmarshal object: %v", err)
+	}
+	wantKeys := []string{
+		"schema", "document_status", "validation_stages", "validation_environment",
+		"requested_case_operation", "diagnostics",
+	}
+	if len(root) != len(wantKeys) {
+		t.Fatalf("report keys = %v, want %v", root, wantKeys)
+	}
+	for _, key := range wantKeys {
+		if _, found := root[key]; !found {
+			t.Errorf("report omits key %q", key)
+		}
+	}
+	for _, forbidden := range []string{
+		"c0", "conformance.opaque.minimal", `"document_schema"`, `"law_context"`,
+		`"scope"`, `"capabilities"`, `"evidence_registry"`, `"q0"`,
+	} {
+		if bytes.Contains(first, []byte(forbidden)) {
+			t.Errorf("outer-envelope report unexpectedly contains %q", forbidden)
 		}
 	}
 }

@@ -128,6 +128,35 @@ tokens; that does not make them natural language, language-neutral notation, or
 universally shared meaning. The fixture proves a narrow software property, not
 that any represented reality is structureless.
 
+## Unresolved capability-reference outer envelope
+
+The next exact negative fixture is:
+
+```console
+fartapp scenario validate testdata/scenarios/minimal-opaque-unresolved-capability.json --format json
+```
+
+Its syntax and schema stages are valid. The exact
+`conformance.opaque.minimal@v0alpha1` catalog entry resolves, but the requested
+opaque token `c0` is not a capability in that entry. Capability resolution ends
+as `unresolved` with reason `capability_not_defined` and diagnostic
+`FART-E-CAP-0001` at `/capability_requests/0/id`. Overall `document_status` is
+`invalid`.
+
+The report consults exactly `document_bytes` and `built_in_law_catalog`, with no
+ambient inputs. It omits the root members `document_schema`, `law_context`,
+`scope`, `capabilities`, and `evidence_registry`; no partial capability or
+evidence object is fabricated. Because the schema is already known to contain
+no operation field, selection is `not-declared`, while admission and execution
+are `not-applicable`. This differs from a schema-stage failure, where all three
+operation assessments remain `not-evaluated`.
+
+This is capability-reference resolution evidence at the outer envelope. It is
+not a trust, policy, resource, mapping, admission, execution, ontology, or
+physics refusal. The report does not echo the unresolved token or resolved
+context, so it remains dependent on its input document and is not a retained,
+self-contained audit record.
+
 ## Multi-law probe limit fixture
 
 The executable negative boundary is:

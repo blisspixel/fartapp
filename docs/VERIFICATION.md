@@ -107,6 +107,13 @@ either entry or beginning catalog resolution. It therefore does not satisfy
 full scenario contract must supersede this boundary rejection with scoped
 contexts and explicit coupling evidence.
 
+The executable minimal opaque unresolved-capability fixture satisfies `SCN-004`
+only. It reaches exact law resolution and then ends at the minimum outer
+envelope without fabricating a capability result or evidence record. Because
+the report remains input-dependent and selects, admits, and executes no requested
+case operation, it is not retained-case, archive, admission-refusal, policy, or
+physical evidence.
+
 ## Numerical proof protocol
 
 For a field result, the project stores at least three independently selected

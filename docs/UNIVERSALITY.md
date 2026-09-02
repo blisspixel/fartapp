@@ -26,6 +26,14 @@ allocating a record identity. `outside_representable_ontology` can likewise end
 at this boundary. A failed attempt to represent something does not create a
 fictional in-ontology case merely so the failure has somewhere to live.
 
+The minimal opaque unresolved-capability fixture makes the capability-resolution
+boundary executable. A syntax-valid, schema-valid input with an exact law
+reference can still end without a capability result, case, ambient default, or
+solver. Its case-operation axes report selection `not-declared` and admission
+and execution `not-applicable`. The `capability_not_defined` result is
+name-resolution evidence only, not a law, policy, ontology, or case-operation
+admission, execution, or refusal result.
+
 ## The committed-case kernel belongs to the Lab
 
 Once an operation is admitted and commits a Lab case record, its minimum record

@@ -54,6 +54,8 @@ go test ./internal/scenarioprobe -run '^TestMinimalOpaqueProbeRequiresNoLocalize
 go test . -run '^TestMinimalOpaqueScenarioJSONFixture$'
 go test ./internal/scenarioprobe -run '^TestCaseOperationAbsenceIsInferredOnlyAfterSchemaValidation$'
 go test . -run '^TestMultiLawProbeLimitDoesNotInferCompatibility$'
+go test ./internal/scenarioprobe -run '^TestMinimalOpaqueUnresolvedCapabilityStopsAtOuterEnvelope$'
+go test . -run '^TestMinimalOpaqueUnresolvedCapabilityCLIContract$'
 go test . -run '^TestHelpRoutes$'
 go vet ./...
 go run honnef.co/go/tools/cmd/staticcheck@v0.8.1 ./...

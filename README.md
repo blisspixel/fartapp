@@ -142,6 +142,15 @@ context. All operation assessments remain `not-evaluated`. This is a probe-limit
 rejection, not a finding that the named contexts are incompatible or that an
 inter-law bridge is missing.
 
+`testdata/scenarios/minimal-opaque-unresolved-capability.json` reaches the next
+stage without adding a domain noun. The minimal opaque law resolves, the opaque
+capability token `c0` does not, and the report stops at
+`capability_not_defined`. It creates no capability result, evidence record,
+case, ambient default, or solver claim. Its case-operation axes report selection
+`not-declared` and admission and execution `not-applicable`. This is exact
+capability-reference resolution evidence, not a case-operation admission,
+execution, or policy-refusal result.
+
 The next CLI slice is also executable:
 
 ```console

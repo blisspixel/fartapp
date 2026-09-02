@@ -51,6 +51,19 @@ const minimalOpaqueProbe = `{
   "capability_requests": [{"id": "catalog.inspect"}]
 }`
 
+const unresolvedCapabilityProbe = `{
+  "schema": "fart.scenario-probe/v0alpha1",
+  "law_context_set": {
+    "contexts": [{
+      "id": "conformance.opaque.minimal",
+      "version": "v0alpha1",
+      "scope_id": "q0"
+    }]
+  },
+  "scope": {"id": "q0"},
+  "capability_requests": [{"id": "c0"}]
+}`
+
 func TestAtemporalProbeHasNoAmbientOrEarthRequirements(t *testing.T) {
 	report := Validate([]byte(atemporalProbe))
 	if !report.Valid() {
@@ -143,6 +156,43 @@ func TestMinimalOpaqueProbeRequiresNoLocalizedPresentationOrOptionalStructuralMo
 	reordered := `{"capability_requests":[{"id":"catalog.inspect"}],"scope":{"id":"q0"},"law_context_set":{"contexts":[{"scope_id":"q0","version":"v0alpha1","id":"conformance.opaque.minimal"}]},"schema":"fart.scenario-probe/v0alpha1"}`
 	if second := Validate([]byte(reordered)); !reflect.DeepEqual(report, second) {
 		t.Fatalf("member order changed report:\n%#v\n%#v", report, second)
+	}
+}
+
+func TestMinimalOpaqueUnresolvedCapabilityStopsAtOuterEnvelope(t *testing.T) {
+	want := Report{
+		Schema:         ReportSchema,
+		DocumentStatus: "invalid",
+		ValidationStages: ValidationStages{
+			Syntax:               StageAssessment{Status: "valid"},
+			Schema:               StageAssessment{Status: "valid"},
+			LawResolution:        StageAssessment{Status: "resolved"},
+			CapabilityResolution: StageAssessment{Status: "unresolved", ReasonCode: "capability_not_defined"},
+		},
+		Environment: ValidationEnvironment{
+			ConsultedInputs: []string{"document_bytes", "built_in_law_catalog"},
+			AmbientInputs:   []string{},
+		},
+		RequestedCaseOperation: absentCaseOperationDisposition(),
+		Diagnostics: []Diagnostic{{
+			Code:       "FART-E-CAP-0001",
+			Stage:      "capability-resolution",
+			Path:       "/capability_requests/0/id",
+			ReasonCode: "capability_not_defined",
+		}},
+	}
+	first := Validate([]byte(unresolvedCapabilityProbe))
+	if !reflect.DeepEqual(first, want) {
+		t.Fatalf("report = %#v, want %#v", first, want)
+	}
+	reordered := `{"capability_requests":[{"id":"c0"}],"scope":{"id":"q0"},"law_context_set":{"contexts":[{"scope_id":"q0","version":"v0alpha1","id":"conformance.opaque.minimal"}]},"schema":"fart.scenario-probe/v0alpha1"}`
+	if got := Validate([]byte(reordered)); !reflect.DeepEqual(got, want) {
+		t.Fatalf("reordered report = %#v, want %#v", got, want)
+	}
+	first.Environment.ConsultedInputs[0] = "mutated"
+	first.Diagnostics[0].ReasonCode = "mutated"
+	if got := Validate([]byte(unresolvedCapabilityProbe)); !reflect.DeepEqual(got, want) {
+		t.Fatalf("later report = %#v, want %#v", got, want)
 	}
 }
 
@@ -535,7 +585,8 @@ func TestInputFailureStages(t *testing.T) {
 
 func FuzzValidate(f *testing.F) {
 	for _, seed := range []string{
-		atemporalProbe, earthProbe, minimalOpaqueProbe, "", "null", "{}", "{", "{}{}",
+		atemporalProbe, earthProbe, minimalOpaqueProbe, unresolvedCapabilityProbe,
+		"", "null", "{}", "{", "{}{}",
 	} {
 		f.Add([]byte(seed))
 	}
