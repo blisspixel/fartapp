@@ -22,6 +22,13 @@
     portability, archives, packaging, and recovery are product features.
 12. **Quality stays measurable.** Formatting and lint are clean, tests pass, core
     coverage remains at least 80 percent, and CI is green.
+13. **Culture stays situated.** Worlds contain disagreement, institutions, and
+    power; the translator can fail, refuse, or preserve a private boundary.
+14. **Every surface is honest.** CLI, TUI, native, MCP, A2A, accessibility, and
+    automation lower into one canonical play service under declared knowledge
+    and budget policies.
+15. **Music stays music.** Physical acoustics, sonification, Symphony, radio,
+    and speech remain separately controllable and scientifically labeled.
 
 ## Evidence
 

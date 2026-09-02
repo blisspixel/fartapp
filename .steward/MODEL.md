@@ -19,6 +19,9 @@ ROADMAP.md                authoritative progressive plan
 docs/SIMULATION.md        scientific and numerical contract
 docs/GAMEPLAY.md          modes, story, seeds, and progression
 docs/INTERFACES.md        CLI, TUI, native, archive, and release contract
+docs/AUDIO.md             acoustics, sonification, Symphony, and radio contract
+docs/AGENT_PLAY.md        play service, agent protocols, grades, and benchmarks
+docs/CULTURE.md           cultural, religious, economic, and review safeguards
 docs/RESEARCH.md          authoritative source basis
 fart.go                   current reference behavior
 fart_test.go              current tests

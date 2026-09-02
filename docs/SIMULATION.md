@@ -196,6 +196,12 @@ That is procedural audio derived from event state plus a stochastic closure. It
 is not a prerecorded emission. A resolved compressible solver can later provide
 sources for an acoustic analogy or a directly resolved acoustic field.
 
+Physical acoustics is distinct from diagnostic sonification, Symphony Mode, and
+radio. Sonification declares a data mapping. Symphony declares an artistic
+mapping. Radio is independent presentation. None can overwrite the physical
+history or borrow scientific status from it. The complete audio contract is in
+[AUDIO.md](AUDIO.md).
+
 Vacuum has no propagating exterior acoustic wave. Structural vibration, sound
 inside a pressurized vehicle, ballistic payload, and recoil can remain. A clean,
 cold gas exhaust is not automatically visible. Visibility requires particles,
@@ -307,17 +313,19 @@ exists.
 
 ## Identity and provenance
 
-The project keeps five identities separate:
+The project keeps six identities separate:
 
 1. **Scenario identity:** normalized author intent, law profile, inputs, and
    seed before solving.
 2. **Physical-result identity:** authoritative event graph under a solver,
    numerical contract, and declared tolerance policy.
-3. **Narrative identity:** resolved world, culture, storylets, facts, and
-   narrative streams.
+3. **Narrative identity:** resolved world, situated perspectives, storylets,
+   facts, and narrative streams.
 4. **Presentation identity:** language, layout, camera, audio-device path,
    accessibility, and rendering choices.
-5. **Archive-byte identity:** exact serialized container bytes.
+5. **Play-session identity:** rules, initial identity, roles, ordered canonical
+   action journal, checkpoints, branches, and produced artifacts.
+6. **Archive-byte identity:** exact serialized container bytes.
 
 A presentation change must not alter scenario or physical-result identity. An
 archive may be migrated or recompressed without pretending that byte identity
@@ -402,9 +410,9 @@ Determinism has explicit levels:
 
 The engine uses fixed iteration order, deterministic reductions, exact unit
 normalization where possible, and counter-based or independently keyed random
-streams. Physics, parcel, audio, narrative, and presentation streams are
-separate. Scheduling, terminal width, localization, and camera choices cannot
-alter the event identity.
+streams. Physics, parcel, physical-audio closure, score, radio, narrative, and
+presentation streams are separate. Scheduling, terminal width, localization,
+camera, station, and subscriber choices cannot alter the event identity.
 
 ## Uncertainty, sensitivity, and identifiability
 
@@ -436,7 +444,8 @@ The certificate includes scenario, law, equation, closure, solver, numerics, and
 consumer hashes; active signature; extrema and positivity; local and global
 ledgers; refinement; uncertainty channels; regime evidence; random stream keys;
 unsupported effects; and provenance for audio, visuals, haptics, narrative, and
-damage.
+damage. A play receipt separately binds the knowledge policy, action journal,
+budgets, branches, result artifacts, and score vector.
 
 ## Verification gates
 

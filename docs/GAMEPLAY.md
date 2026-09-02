@@ -28,7 +28,8 @@ result without a setup questionnaire.
 A Quick Play transmission:
 
 1. Prints its title and replay seed immediately.
-2. Introduces one world, one source, one cultural fact, and one question.
+2. Introduces one world, one source, one situated cultural perspective, and one
+   question.
 3. Runs one valid analytical event.
 4. Renders the event and one consequence.
 5. Explains one physical reason for the outcome.
@@ -39,9 +40,9 @@ The default mix favors approximately 60 percent ordinary or low-energy events,
 cosmic events. This distribution is a tuning target, not a hidden physics input.
 Graphic payload and extinction content remain opt-in.
 
-Low magnitude never means low importance. A quiet pfft can complete a ritual,
-make first contact, resolve a court case, expose an exquisite resonance, or fail
-at precisely the funniest moment.
+Low magnitude never means low importance. A quiet pfft can complete a docking
+signal, make first contact, resolve a court case, expose an exquisite resonance,
+or fail at precisely the funniest moment.
 
 ### The playable learning loop
 
@@ -62,9 +63,10 @@ admits when the selected model cannot support the requested claim.
 ## Broadcast mode
 
 `fart broadcast --seed <seed>` is the seeded interdimensional show. It generates
-a law profile, world, source, morphology, senses, culture, situation, physical
-scenario, and stakes question. It runs the simulation, freezes its identity,
-and assembles a watchable episode from immutable facts.
+a law profile, world, source, morphology, senses, institutions, situated
+perspectives, situation, physical scenario, and stakes question. It runs the
+simulation, freezes its identity, and assembles a watchable episode from
+immutable facts.
 
 A standard episode uses these beats:
 
@@ -136,6 +138,8 @@ A challenge contract declares:
 - Verification tolerances.
 - A reference solution or proof of feasibility.
 - Accessibility options and which scoring axes they affect.
+- Expected action horizon, observation profile, branching, stochasticity,
+  irreversibility, proof burden, modality, and team size.
 
 Scores are vectors rather than explosive yield alone:
 
@@ -195,7 +199,9 @@ Initial namespaces include:
 cosmos.laws
 cosmos.topology
 world.environment
-culture.norms
+culture.context
+culture.institutions
+culture.positions
 culture.language
 entity.morphology
 entity.senses
@@ -209,6 +215,8 @@ director.selection
 director.pacing
 language.realization
 presentation.audio
+presentation.radio
+presentation.score
 presentation.visual
 presentation.camera
 ```
@@ -229,7 +237,7 @@ law profile
   -> habitat
   -> source capabilities
   -> observer senses
-  -> culture
+  -> institutions and situated perspectives
   -> situation and stakes
   -> valid physical scenario
   -> simulation
@@ -238,11 +246,14 @@ law profile
   -> player rendering
 ```
 
-Generated cultures are connected systems, not random costumes and syllables.
-Habitat, energy economics, coordination, sensory channels, and attitudes toward
-venting constrain each other. A generated culture must not be a thin analogue
-of a real protected group, and review must look for stereotype-shaped clusters
-rather than only banned words.
+Generated societies are plural systems, not random costumes and syllables.
+Habitat, economics, coordination, and sensory channels create pressures and
+possibilities, but they do not determine morality or one universal norm. The
+same world can contain institutions, competing positions, uneven authority, and
+change. A generated society must not be a thin analogue of a living community,
+and review must look for stereotype-shaped clusters rather than only banned
+words. The translator is a situated participant and can return
+`UNTRANSLATABLE`, private, or refused.
 
 A storylet declares its identifier, version, episode phase, state and fact
 predicates, knowledge requirements, exclusions, priority, cooldown, duration,
@@ -253,6 +264,26 @@ diegetic.
 Start with authored storylets and deterministic grammars. Runtime unrestricted
 text generation would weaken replay, safety review, offline use, localization,
 fact provenance, and archive longevity.
+
+## Symphony, radio, and agent seats
+
+Physical acoustics, diagnostic sonification, Symphony Mode, radio, and speech
+remain separate lanes. Symphony consumes normalized event features and produces
+a versioned semantic score. Radio consumes a deterministic station schedule and
+presentation seed. Neither can write physics, canon, challenge state, or score.
+The detailed contract is in [AUDIO.md](AUDIO.md).
+
+Broadcast can assign operator, collaborator, scientist, translator,
+commentator, director, verifier, and spectator roles to humans or agents. Each
+role has an explicit knowledge policy and action authority. Private seat
+observations never leak into the public spectator stream. External commentary
+is archived if it becomes part of a replay, but it remains an opinion and never
+the only copy of a measured fact.
+
+Action and simulation-work budgets, not model brand or hardware price, govern
+ranked play. Structured, visual, accessible, omnimodal, multi-agent, and human
+tracks remain distinct. Their shared environment and challenge-grade contract
+is in [AGENT_PLAY.md](AGENT_PLAY.md).
 
 ## Episode archives
 
@@ -279,7 +310,8 @@ The comic formula is:
 
 1. Absolute institutional sincerity.
 2. A precise physical fact.
-3. A disproportionate but internally coherent cultural consequence.
+3. A situated and internally coherent response that defeats the institution's
+   universal theory.
 
 The joke targets pomposity, bureaucracy, overconfidence, and the refusal to stop
 measuring. It does not target a real culture, identity, disability, body type, or
@@ -314,13 +346,19 @@ accessibility setup appears before the first audiovisual event.
 - Malicious archive tests fail safely.
 - The seed museum and failure corpus catch repeated jokes, contradictions,
   hidden rerolls, unsupported claims, and unsafe culture analogues.
+- Cultural regression cases catch monoculture, colonial gaze, pseudo-language,
+  sacred-practice targeting, sanitation stigma, coercion, and humiliation.
 - Representative playtests separately measure humor, comprehension, pacing,
   grossness controls, science-density controls, and whether ordinary events
   remain worth replaying and sharing.
 - Learning checks test prediction and transfer for vacuum acoustics, choking,
   conservation, and similarity without turning play into an exam.
-- Every TUI or native action exposes an equivalent CLI command, scenario change,
-  or archive operation.
+- Every canonical gameplay or laboratory intent and every gameplay-relevant fact
+  is available on each applicable surface. Presentation gestures can differ but
+  cannot create hidden physics, narrative, scoring, or progression capability.
+- The same canonical action trace produces equivalent state digests, journals,
+  artifacts, and permitted observations through direct services, CLI JSONL,
+  MCP, A2A, TUI, and native adapters.
 - Disabled-player testing occurs before public native release.
 
 The research basis is listed in [RESEARCH.md](RESEARCH.md).

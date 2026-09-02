@@ -28,6 +28,15 @@ government laboratories, and official project documentation are preferred.
   fail explicitly rather than reusing Earth fluid equations.
 - The story director reacts to immutable event facts and never rerolls a valid
   outcome.
+- Physical acoustics, diagnostic sonification, Symphony, and radio are separate
+  audio lanes with different truth claims and tests.
+- Social meaning is represented through situated perspectives, institutions,
+  disagreement, and power, never one generated `culture.norms` fact.
+- CLI, MCP, A2A, TUI, accessibility, and native automation lower into one
+  canonical play reducer with explicit knowledge and budget policies.
+- There is no universal agent-difficulty meaning for Level 4. F.A.R.T. Lab uses
+  measurable challenge grades and separate semantic, visual, omnimodal,
+  multi-agent, and human tracks.
 - The CLI is the first complete product, the TUI is the second, and the native
   Godot app begins only after both are excellent.
 
@@ -44,6 +53,9 @@ a bounded design consequence and an open question.
 | Complex model conclusions need sensitivity analysis | [Saltelli et al.](https://doi.org/10.1002/9780470725184) covers global sensitivity methods | Report influential inputs, interactions, and nonidentifiability | Which methods fit interactive latency and mixed variables? |
 | Sonification must be perceptually evaluated | The [NSF sonification report](https://digitalcommons.unl.edu/psychfacpub/444/) calls for control, interchange, and perceptual testing | Treat sound as both consequence and auditory display, with separate tests | Which mappings teach without ruining the joke or accessibility? |
 | Generator robustness does not establish entertainment | The [PCG literature](https://www.pcgbook.com/) provides generation and evaluation methods, not a universal fun metric | Pair seed sweeps with a curated corpus and human playtests | Which repetition and pacing measures predict shareability? |
+| Protocol parity requires an application contract | [MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28) is stateless at its core and [A2A 1.0](https://a2a-protocol.org/latest/specification/) models longer agent tasks | Keep play handles, state, actions, knowledge, and replay in `PlayService`, not transport sessions | What smallest adapter set remains pleasant for unrelated agents? |
+| More modalities can reduce agent performance | [OmniPlay](https://arxiv.org/abs/2508.04361) evaluates reinforcing and conflicting image, video, audio, and text | Identify physical audio, radio, captions, and semantic observations as separate benchmark channels | Which combinations improve reasoning rather than add noise? |
+| Social generation needs situated review | [UNESCO's ICH ethical principles](https://ich.unesco.org/en/ethics-and-ich-00866) emphasize community participation, diversity, and context | Model plural positions and trigger focused review for recognizable living affinity | When is generated resemblance substantial enough to require review? |
 
 ## Gas dynamics, reservoirs, and jets
 
@@ -182,6 +194,108 @@ a bounded design consequence and an open question.
   for perceptual testing. Procedural audio and data sonification share event
   provenance, but their entertainment and information goals are evaluated
   separately.
+- [ITU-R BS.1770-5](https://www.itu.int/rec/R-REC-BS.1770-5-202311-I/en)
+  defines program-loudness and true-peak measurement algorithms. It supports
+  reproducible measurement, not one mandatory artistic target or a substitute
+  for safe monitor gain.
+- [ITU-R BS.1534-3](https://www.itu.int/rec/R-REC-BS.1534-3-201510-I/en)
+  and [ITU-R BS.1116-3](https://www.itu.int/rec/R-REC-BS.1116-3-201502-I/en)
+  provide controlled methods for intermediate and small audio impairments.
+  Listening tests for realism, mapping quality, transitions, and fatigue need
+  different stimuli and questions.
+
+## Music generation and radio production
+
+- The [Eleven Music v2 release](https://elevenlabs.io/docs/changelog/2026/6/15)
+  documents `music_v2`, structured plans, compose, streaming, and upload API
+  support.
+- The official [compose endpoint](https://elevenlabs.io/docs/api-reference/music/compose)
+  documents prompt or composition-plan input, explicit `model_id`, output
+  formats, duration limits, and a seed that improves consistency without
+  guaranteeing exact reproduction after service changes.
+- The [composition-plan guide](https://elevenlabs.io/docs/eleven-api/guides/how-to/music/composition-plans)
+  supports ordered v2 chunks with styles, lyrics, and durations. The pipeline
+  freezes accepted audio bytes because a provider seed is not an archive.
+- The [music quickstart](https://elevenlabs.io/docs/eleven-api/guides/cookbooks/music)
+  documents detailed responses containing audio and the resolved plan and
+  rejects artist, song, and copied-lyric references.
+- [Eleven Music model-specific terms](https://elevenlabs.io/eleven-music-model-specific-terms),
+  [Music Terms](https://elevenlabs.io/music-terms), and plan rights can change
+  independently from this repository's Apache License 2.0. Generated assets
+  therefore require a project rights decision at release time. Provider access
+  never runs during ordinary CI or becomes a player dependency.
+
+## Agent environments and interoperability
+
+- The [MCP 2026-07-28 release](https://blog.modelcontextprotocol.io/posts/2026-07-28/)
+  removes the initialize handshake and protocol session, adds discovery and
+  header routing, moves long-running Tasks into an extension, and deprecates
+  Roots, Sampling, Logging, and legacy HTTP+SSE. Stateful games should return
+  explicit application handles.
+- The official [MCP conformance framework](https://github.com/modelcontextprotocol/conformance)
+  validates messages and scenarios for declared protocol revisions. Its
+  2026-07-28 coverage and open harness issues must be pinned and reported rather
+  than hidden in a permanent expected-failure baseline.
+- The [A2A 1.0 specification](https://a2a-protocol.org/latest/specification/)
+  defines Agent Cards, skills, messages, tasks, artifacts, streaming, bindings,
+  authorization, and capability equivalence. The latest reviewed patch is
+  [v1.0.1](https://github.com/a2aproject/A2A/releases/tag/v1.0.1), while wire
+  negotiation remains `1.0`.
+- The official [A2A and MCP comparison](https://github.com/a2aproject/A2A/blob/main/docs/topics/a2a-and-mcp.md)
+  treats MCP as agent-to-tool interoperability and A2A as coordination between
+  autonomous agents. F.A.R.T. Lab keeps them as sibling adapters.
+- The [A2A TCK](https://github.com/a2aproject/a2a-tck) tests declared protocol
+  bindings, while the [A2A ITK](https://github.com/a2aproject/a2a-itk) exercises
+  cross-SDK and multi-hop behavior. Using an SDK is not itself conformance.
+- [Gymnasium's environment API](https://gymnasium.farama.org/api/env/) separates
+  natural termination from budget truncation. [PettingZoo](https://pettingzoo.farama.org/)
+  provides sequential and simultaneous multi-agent environment contracts.
+- [TALES](https://arxiv.org/abs/2504.14128) and its
+  [official suite](https://github.com/microsoft/tale-suite) show long-horizon
+  failure from lost evidence, incorrect inferences, and undiscovered mechanics
+  across deterministic text adventures.
+- [BALROG](https://arxiv.org/abs/2411.13543) and its
+  [official environment](https://github.com/balrog-ai/BALROG) motivate
+  procedural worlds, partial progress, held-out instances, and separate visual
+  and language tracks over action horizons reaching far beyond short tool use.
+- [ORAK](https://arxiv.org/abs/2506.03610) and its
+  [official repository](https://github.com/krafton-ai/ORAK) provide direct
+  precedent for text and visual game agents connected through MCP.
+- [GameWorld](https://arxiv.org/abs/2604.07429) normalizes semantic and GUI
+  actions into a budgeted event space and compares paused and real-time play.
+  Its own level labels and limited reported human baseline are not adopted as a
+  universal standard.
+- [OmniGameArena](https://arxiv.org/abs/2606.09826) motivates measuring
+  improvement over repeated play and transfer to held-out variants rather than
+  reporting only cold-start completion.
+
+## Culture, religion, and public interest
+
+- [Harvard's Religious Literacy Project](https://rpl.hds.harvard.edu/what-we-do/our-approach/core-principles)
+  treats religions as internally diverse, changing, embedded in culture, and
+  shaped by power. A world therefore cannot receive one deterministic religious
+  or moral rule from its environment.
+- [UNESCO's ethical principles for intangible cultural heritage](https://ich.unesco.org/en/ethics-and-ich-00866)
+  emphasize community participation, diversity, consent, and customary access.
+  Sacred or private contexts are boundaries, not random comic props.
+- The [Design Justice Network Principles](https://designjustice.org/read-the-principles)
+  center people affected by design decisions and support focused, compensated
+  review when content closely resembles a living community.
+- The [WHO and UNICEF Joint Monitoring Programme](https://washdata.org/reports)
+  documents sanitation and privacy as material inequalities. Poverty,
+  inadequate sanitation, incontinence, and involuntary anatomy are not spectacle
+  or shorthand for lesser personhood.
+- [Bringing Dark Patterns to Light](https://www.ftc.gov/reports/bringing-dark-patterns-light)
+  documents manipulative interface practices. The complete core stays offline,
+  account-free, telemetry-free, and free of streaks, fear of missing out, loot
+  boxes, and pay-to-win systems.
+- [WCAG 2.2](https://www.w3.org/TR/WCAG22/) and the Xbox Accessibility
+  Guidelines inform equivalent meaning, controllable timing, input alternatives,
+  captions, and clear state across terminal and native surfaces.
+
+These sources do not certify generated humor as respectful or funny. Structural
+checks catch predictable failures; situated people judge meaning, dignity, and
+comic quality.
 
 ## Procedural play, narrative, and accessibility
 

@@ -19,6 +19,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
 
+      - name: Lint Markdown
+        run: npx --yes markdownlint-cli2@0.20.0
+
       - name: Set up Go
         uses: actions/setup-go@v7
         with:

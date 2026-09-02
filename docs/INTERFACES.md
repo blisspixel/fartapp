@@ -26,10 +26,15 @@ fart-domain      quantities, laws, schemas, regimes, scenario types
 fart-core        deterministic solvers and proof ledgers
 fart-archive     .fart read/write, validation, hashes, migrations
 fart-audio       deterministic offline procedural synthesis
+fart-score       diagnostic sonification and Symphony score mappings
+fart-radio       station catalogs, schedules, captions, and presentation state
 fart-narrative   seeded content, fact predicates, and episode timelines
-fart-services    simulate, play, inspect, sweep, translate, verify, export
+fart-services    canonical play reducer, observations, simulation, and proof
+fart-agent-protocol  actions, observations, roles, budgets, and receipts
 fart-cli         command presentation
 fart-tui         terminal presentation over fart-services
+fart-mcp         optional MCP adapter over fart-services
+fart-a2a         optional A2A adapter over fart-services
 fart-gdext       thin native Godot adapter
 xtask            fixtures, schemas, completions, manuals, release tasks
 ```
@@ -44,6 +49,13 @@ no dependency on Godot. The render thread consumes immutable or double-buffered
 snapshots from a background simulation worker. There is no browser runtime,
 webview, HTML UI, local HTTP service, Electron, or Tauri shell.
 
+The canonical `PlayService` owns session state. Its public operations start,
+observe, list actions, act, checkpoint, branch, finish, and export. CLI, TUI,
+Godot, MCP, A2A, spectators, and native automation are adapters over that
+service. They cannot import solver mutation APIs or maintain private gameplay
+branches. The service can remain in process; an explicitly started A2A endpoint
+is interoperability infrastructure, not the application UI.
+
 ## Interface 1: CLI Lab
 
 The CLI stands on its own for play, science, automation, regression, and people
@@ -56,6 +68,8 @@ fart
 fart quick --seed 42 --record run.fart
 fart broadcast --seed 42 --length standard
 fart freestyle bathroom.toml --set reservoir.pressure="106 kPa"
+fart play start challenge:dry-c-sharp-01 --seed 42 --json
+fart play act PLAY_HANDLE --action set_pressure --value "180 kPa" --json
 ```
 
 When `fart` runs in an interactive terminal, it launches Quick Play. With
@@ -83,7 +97,10 @@ fart compare small.fart large.fart --nondimensional
 fart translate source.fart --target-world hush-3.toml --mode strict
 fart verify run.fart --refine timestep
 fart replay run.fart --mode exact
-fart export run.fart --format wav -o emission.wav
+fart audio render run.fart --lane physical -o emission.wav
+fart symphony render run.fart --mode split -o score.wav
+fart radio play drift-93-7 --seed 42
+fart mcp serve --transport stdio
 fart lab run.fart
 fart schema scenario
 fart completions powershell
@@ -140,6 +157,7 @@ The interface never collapses these identities:
 | Physical result | Solver, numerics, or authoritative state changes | Presentation cannot change it |
 | Narrative | Resolved world, storylets, or narrative streams change | Camera and terminal width cannot change it |
 | Presentation | Language, layout, device, camera, or accessibility changes | No physical claim follows from it |
+| Play session | Rules, initial identity, participants, canonical action journal, or branch changes | Transport and subscriber order cannot change it |
 | Archive bytes | Serialization or container bytes change | Byte equality is never confused with semantic equality |
 
 `fart provenance` traverses the typed event graph. `fart explain` presents a
@@ -198,6 +216,9 @@ history.jsonl
 certificate.json
 fields/<content-hash>.bin
 consumers/audio.json
+consumers/score.json
+session/journal.jsonl
+session/checkpoints.json
 ```
 
 Canonical JSON metadata uses RFC 8785. Schemas use JSON Schema 2020-12. Large
@@ -221,7 +242,12 @@ A `.fartshow` episode bundle adds resolved world, culture, narrative streams,
 fact-provenance timeline, transcript, and optional presentation assets. Seeds
 alone are not sufficient for archival replay because content packs evolve.
 
-## Procedural audio
+A session save adds the ruleset, initial identity, roles, privacy-safe actor
+identifiers, ordered action journal, checkpoint hashes, branch lineage, artifact
+identities, and completion receipt. Opaque live play handles and credentials are
+never archived.
+
+## Audio, Symphony, and radio
 
 The normative offline export begins with deterministic 48 kHz PCM16 RIFF/WAVE.
 The pure audio core emits sample buffers from event source terms, a documented
@@ -232,14 +258,21 @@ The TUI may offer optional audio-device playback. Offline WAV must work without
 an audio device. Godot consumes the same synthesized frames in real time. Device
 resampling is presentation behavior and does not redefine the certified WAV.
 
+Diagnostic sonification declares its units, calibration, mapping, clipping,
+quantization, and information loss. Symphony Mode produces a semantic score
+from event features. Radio is an independent station-pack presentation layer.
+Their identities, controls, manifests, and scientific boundaries are defined in
+[AUDIO.md](AUDIO.md).
+
 ## Interface 2: Terminal Lab
 
 The TUI should feel like htop for an absurd research instrument. It ships in the
 single `fart` binary as `fart lab`, while remaining a separate crate over the
 same services.
 
-Views include overview, emitter, interface, plume and payload, acoustics, proof
-ledger, timeline, translation, and Broadcast narration.
+Views include overview, emitter, interface, plume and payload, acoustics,
+Symphony score, radio, agent and spectator status, proof ledger, timeline,
+translation, and Broadcast narration.
 
 Responsive breakpoints:
 
@@ -262,7 +295,9 @@ Quality requirements:
 - Snapshot tests target the cell buffer, not terminal escape sequences.
 - PTY and ConPTY smoke tests cover launch, resize, quit, cancellation, panic,
   and restoration.
-- Every action can display or copy its equivalent CLI command.
+- Every canonical intent uses the shared service contract and can display or
+  copy a CLI representation when one is meaningful. Presentation-only focus and
+  layout gestures stay presentation-only.
 
 ## Interface 3: Native Lab
 
@@ -275,6 +310,13 @@ Native quality includes keyboard, mouse, controller, remapping, accessibility
 setup before first play, safe saves, crash handling, clean uninstall, native
 packaging, signing, notarization where applicable, and deterministic archive
 export that the CLI can reproduce.
+
+An opt-in, visibly indicated automation mode lets visual agents use captured
+frames, synchronized platform accessibility semantics, focus, keyboard,
+pointer, controller, and accessibility-invoke operations. It exercises the
+rendered application and ordinary input path rather than calling gameplay
+internals. It uses inherited standard I/O where practical and never opens an
+always-listening local port.
 
 The first native room is the Tiled Chamber. Before native implementation begins,
 the same scenario must already run, verify, replay, translate, render audio, and
@@ -295,6 +337,11 @@ Every merge eventually enforces:
   secret scanning, and generated-artifact cleanliness.
 - TUI snapshots and terminal restoration smoke tests.
 - Headless Godot extension smoke tests once native work begins.
+- Direct-service, CLI JSONL, MCP, A2A, TUI, and native same-trace conformance.
+- Knowledge-policy, role, idempotency, retry, cancellation, and observation-leak
+  tests.
+- Official MCP and A2A conformance reports for every advertised protocol and
+  binding.
 
 Release archives include executables, licenses, README, completions, manual
 pages, schemas, checksums, SBOM, and provenance. macOS uses Developer ID,

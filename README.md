@@ -7,7 +7,8 @@
 F.A.R.T. Lab is the world's most overengineered and fun fart app. It is a vulgar
 comedy game, a serious simulation laboratory, and a Universal Flatulence
 Translator for connecting beings, worlds, dimensions, and universes through the
-one joke every civilization eventually discovers.
+absurd possibility that pressure, surprise, and bodily humor might give very
+different beings something to laugh about.
 
 The familiar Earth profile starts with a pressure vessel, a compliant opening,
 and an exterior. From one physical event it derives the plume, sound, vibration,
@@ -16,7 +17,9 @@ may describe a machine, colony, planet, star, distributed intelligence, or
 fictional higher-dimensional source under explicitly different laws.
 
 There is no menu of prerecorded farts. If the pressure history changes, every
-observable changes with it.
+observable changes with it. Every emission is a snowflake produced from its
+scenario, laws, closure, observer, and seed. A deliberate replay can reproduce
+that exact snowflake, but the game never swaps in a canned sound or animation.
 
 ## Project status
 
@@ -186,6 +189,18 @@ The lab gives memorable names to real constraints:
   exterior, observer, and numerical setting with explicit units and proof.
 - **Challenges and campaign:** solve constrained scientific puzzles and progress
   from ordinary pffts to universal translation and optional apocalypse physics.
+- **Symphony Mode:** hear one event as physical acoustics, diagnostic
+  sonification, or an inspectable musical interpretation without confusing the
+  three.
+- **Agent Play:** humans and software agents play the same deterministic game
+  through CLI commands, a bounded MCP adapter, or longer A2A tasks, with
+  declared sensors, actions, budgets, and score vectors.
+
+Broadcast and Quick Play can carry an optional in-world radio service for long,
+pleasant viewing sessions. Chill electronica, deep house, alternative hip-hop,
+dub techno, and chamber minimalism carry subtle alternate-world lore without
+turning every song into a novelty track. Radio changes presentation only. It
+cannot alter physics, narrative canon, scores, or replay identity.
 
 The master episode seed derives named, versioned random streams for laws, worlds,
 entities, physics, narration, audio, and presentation. Changing terminal width,
@@ -230,7 +245,13 @@ fart sweep bathroom.toml --vary reservoir.pressure="105 kPa..800 kPa" --steps 64
 fart compare small.fart large.fart --nondimensional
 fart verify run.fart --refine timestep
 fart replay run.fart --check-hash
-fart export run.fart --format json,csv,wav
+fart audio render run.fart --lane physical --output emission.wav
+fart symphony render run.fart --mode split --output score.wav
+fart radio play drift-93-7 --seed 42
+fart play start challenge:choked-cheek-01 --seed 42 --json
+fart play act PLAY_HANDLE --action set_pressure --value "180 kPa" --json
+fart mcp serve --transport stdio
+fart export run.fart --format json,csv,wav,score
 ```
 
 Names and flags remain provisional until their schemas are implemented. The
@@ -305,6 +326,7 @@ source packs must say where that energy came from.
 | Rust physics core and CLI | Deterministic production simulation, headless play, proof, archives, translation, and replay |
 | Rust terminal UI | Cross-platform live instrumentation over the same commands and event state |
 | Native Godot client | Native input, visualization, procedural audio, rooms, haptics, and game progression |
+| MCP and A2A adapters | Bounded agent access to the same play services, observations, archives, and tasks |
 
 The Go implementation remains intentionally small. Once an analytical model and
 its fixtures are trustworthy there, the Rust production core must match them
@@ -320,8 +342,12 @@ The project will use three fidelity levels behind the same event contract:
 For the detailed scientific contract, see
 [docs/SIMULATION.md](docs/SIMULATION.md). For the interface and release rules,
 see [docs/INTERFACES.md](docs/INTERFACES.md). The research basis and model
-boundaries are collected in [docs/RESEARCH.md](docs/RESEARCH.md). A simulated
-PhD-level computer-science design review and its resulting commitments are in
+boundaries are collected in [docs/RESEARCH.md](docs/RESEARCH.md). Audio,
+Symphony Mode, and radio are specified in [docs/AUDIO.md](docs/AUDIO.md). Agent
+play and interoperability are specified in
+[docs/AGENT_PLAY.md](docs/AGENT_PLAY.md). Cultural and public-interest safeguards
+are specified in [docs/CULTURE.md](docs/CULTURE.md). A simulated PhD-level
+computer-science design review and its resulting commitments are in
 [docs/DESIGN_REVIEW.md](docs/DESIGN_REVIEW.md).
 
 ## Proof, not vibes
@@ -385,6 +411,7 @@ The idea is deliberately silly. The implementation should be flawless.
 See [CONTRIBUTING.md](CONTRIBUTING.md),
 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md).
 
-No open-source license has been granted yet. Public visibility allows reading
-and forking through GitHub, but does not by itself grant broader reuse rights. A
-deliberate license decision is tracked in the roadmap.
+Repository-owned source code, documentation, and approved project media are
+licensed under the [Apache License 2.0](LICENSE). A media manifest records any
+separately licensed third-party material and the release approval for generated
+assets.

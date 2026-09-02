@@ -5,3 +5,7 @@ coverage.out
 .steward/deliberations.json
 .steward/eventlog.jsonl
 .steward/receipts.jsonl
+.env
+.env.*
+!.env.example
+.radio-work/

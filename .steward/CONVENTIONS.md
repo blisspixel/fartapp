@@ -13,13 +13,16 @@
 
 - The Go oracle remains small, auditable, and independent.
 - Rust owns production domain types, solvers, ledgers, archives, services, CLI,
-  terminal UI, and native extension adapter.
+  terminal UI, audio, scores, radio, agent protocols, and native extension
+  adapter.
 - Godot owns native presentation and input, never authoritative physics or story
   facts.
 - Stored contracts are versioned, hashed, unit-aware, and explicit about law and
   dimension.
 - Random systems use named substreams and cannot depend on execution order.
 - Every interface can export an archive reproducible by the CLI.
+- Every interface lowers canonical intents through `PlayService`; adapters do
+  not own gameplay state or import solver mutation APIs.
 - No embedded browser, webview, local HTTP service, or network dependency is part
   of the desktop architecture.
 

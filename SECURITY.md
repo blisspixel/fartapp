@@ -33,3 +33,20 @@ Future archive and content-pack readers treat all imported material as untrusted
 Future releases must preserve offline operation, explicit filesystem writes,
 bounded resource use, deterministic provenance, and no embedded browser or local
 web-service architecture.
+
+Optional MCP and A2A adapters are interoperability surfaces, not the desktop
+application architecture. Local protocol services start only through an
+explicit command. MCP defaults to inherited standard I/O. A2A initially binds
+to loopback with a random, role-bound capability kept out of arguments, logs,
+archives, and shell history.
+
+Non-loopback service requires TLS, authentication, per-session and per-role
+authorization, expiry, quotas, concurrency and size limits, cancellation, and a
+separate threat review. Agent Cards, invites, task lists, artifacts, and
+spectator streams are scoped to the caller. Imported agent text, lore, lyrics,
+archives, resource identifiers, and terminal content are untrusted data.
+
+No game or protocol action grants shell access, loads native code, follows an
+arbitrary URL, writes an arbitrary path, or reads credentials. Push
+notifications remain disabled until webhook authentication, duplicate delivery,
+HTTPS validation, SSRF defenses, rate limits, and retry budgets are verified.

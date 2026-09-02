@@ -74,6 +74,37 @@ sound funny, expose its seed, explain one surprising fact, produce a small
 evidence bundle, and invite one meaningful variation. Build that walking
 skeleton before the archive and architecture become elaborate.
 
+**Project:** If CLI is first, should every later surface call the CLI?
+
+**Reviewer:** No. CLI first is a delivery discipline, not an architectural
+privilege. Put canonical actions, observations, roles, revisions, journals, and
+budgets in one in-process play service. CLI, terminal, native, MCP, A2A,
+accessibility, and automation are adapters. Then compare their state transitions
+and permitted information with the same trace.
+
+**Project:** How do agents make the project better rather than merely automate
+it?
+
+**Reviewer:** Give them an environment with hidden but discoverable mechanics,
+active sensing, scarce experiment budgets, delayed effects, a durable notebook,
+and proof obligations. Publish your own measurable difficulty grades. Separate
+semantic, visual, omnimodal, multi-agent, and matched human tracks so interface
+advantages do not masquerade as intelligence.
+
+**Project:** Can Symphony Mode and radio coexist with scientific audio?
+
+**Reviewer:** Only if they remain different truth claims. Physical acoustics is
+a model output. Sonification is a declared information mapping. Symphony is an
+artistic mapping. Radio is independent presentation. Test that each can be
+removed or changed without altering physics, story canon, scores, or replay.
+
+**Project:** Is the premise really universal?
+
+**Reviewer:** The protocol can aspire to universal translation. The joke cannot
+assume universal agreement. Model situated perspectives, institutions,
+disagreement, authority, privacy, and failed translation. Make the Lab's
+overconfidence the safest recurring target.
+
 ## Commitments accepted into the plan
 
 1. Move the first playable and inspectable ordinary pfft into the Go-oracle
@@ -95,6 +126,12 @@ skeleton before the archive and architecture become elaborate.
    and representative human playtests.
 10. Publish measurable CLI startup, first-output, run, cancellation, memory, and
     archive-size budgets on named reference systems.
+11. Put every human and agent surface over one canonical play reducer with
+    explicit knowledge, action, identity, and resource contracts.
+12. Keep physical acoustics, diagnostic sonification, Symphony, radio, and
+    speech separately controllable, reproducible, and scientifically labeled.
+13. Represent social meaning through situated, plural perspectives and make
+    `UNTRANSLATABLE`, private, and refused successful outcomes.
 
 ## Questions the implementation must answer
 
@@ -111,6 +148,12 @@ skeleton before the archive and architecture become elaborate.
 - Do ordinary low-energy seeds remain funny, replayable, and shareable without
   relying on spectacle?
 - Can a new contributor understand why a result is trusted from the CLI alone?
+- Can one canonical action trace produce the same journal and allowed facts
+  through CLI JSONL, MCP, A2A, TUI, and native controls?
+- Can a G4 campaign test planning, recovery, transfer, and proof without leaking
+  hidden simulator state or ranking compute wealth?
+- Can radio remain worth listening to when the premise is invisible for an
+  entire track?
 
 The design target is not advanced theory wearing a fart costume. It is a
 playable demonstration of how knowledge is built: declare assumptions, make a

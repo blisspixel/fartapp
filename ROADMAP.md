@@ -27,12 +27,17 @@ native third. A checkbox means merged, documented, and verified behavior.
 - [x] Add cross-platform CI for formatting, vet, tests, and at least 80 percent
   Go statement coverage.
 - [x] Add security, contribution, conduct, and release-readiness policies.
-- [ ] Make a deliberate license decision. Public visibility alone does not grant
-  reuse rights.
+- [x] License repository-owned source code, documentation, and approved project
+  media under Apache License 2.0, with separate rights recorded for any
+  third-party material.
 - [ ] Ratify the event ontology, law profile, modes, story-director rules,
   accessibility matrix, seed RFC, and archive threat model.
 - [ ] Ratify event-identity, typed-provenance, law-capability, content-pack trust,
   performance-budget, and human-evaluation RFCs.
+- [ ] Ratify canonical play actions, observations, roles, knowledge policies,
+  journals, revisions, idempotency, surface parity, and input timing.
+- [ ] Ratify physical-audio, diagnostic-sonification, Symphony, radio-catalog,
+  cultural-safeguard, and agent/spectator threat-model RFCs.
 - [ ] Version the current toy behavior as permanent oracle fixtures.
 
 Exit gate: a clean clone passes CI, the public history scan is clean, repository
@@ -61,6 +66,10 @@ fun and useful without Rust, a TUI, or a graphical application.
 ## v0.8: Rust production core and typed CLI
 
 - [ ] Create `fart-domain`, `fart-core`, `fart-services`, and `fart-cli` crates.
+- [ ] Implement the canonical in-process `PlayService` reducer, observation
+  projector, knowledge policy, and typed action model inside `fart-services`.
+- [ ] Route the walking skeleton through `PlayService`; adapters cannot import
+  solver mutation APIs directly.
 - [ ] Match all versioned Go oracle fixtures within documented tolerances.
 - [ ] Freeze the Go oracle's owned equations and fixture schema; require exact,
   manufactured, or independently derived references so two implementations do
@@ -78,6 +87,8 @@ TTY and a pipe, and reproduces under its declared determinism level.
 ## v0.9: Certified event archive
 
 - [ ] Implement canonical scenario, manifest, history, and certificate records.
+- [ ] Add play-session identity, ordered action journals, actor roles,
+  checkpoints, branch lineage, transition receipts, and privacy-safe saves.
 - [ ] Begin with the simplest bounded streamable history representation; add
   Arrow or another columnar layer only after named profiles miss measured
   budgets.
@@ -98,6 +109,8 @@ fail safely, and cancellation leaves either one valid archive or no archive.
 - [ ] Add recoil and observer sampling.
 - [ ] Add deterministic procedural WAV from interface motion, compact sources,
   and a labeled stochastic turbulence closure.
+- [ ] Keep physical acoustics and diagnostic sonification separate, with
+  declared calibration, confidence, safety limiting, and synchronized text.
 - [ ] Implement no-exterior-sound vacuum behavior and visible-emission
   requirements.
 - [ ] Promote the v0.7 walking skeleton into `fart quick` with one authored
@@ -111,8 +124,9 @@ TUI or graphical application.
 ## v0.11: Seeded worlds and Broadcast
 
 - [ ] Implement a 256-bit master seed and versioned named substreams.
-- [ ] Add law, habitat, source, senses, culture, situation, and scenario grammar
-  stages with bounded generation.
+- [ ] Add law, habitat, source, senses, situated cultural context,
+  institutions, positions, situation, and scenario grammar stages with bounded
+  generation.
 - [ ] Add a read-only event-fact API and authored storylets with fact provenance.
 - [ ] Add `fart broadcast`, immutable event playback, transcript, and `.fartshow`
   episode archives.
@@ -123,6 +137,8 @@ TUI or graphical application.
 - [ ] Run at least 10,000 deterministic seed cases with expressive-range reports.
 - [ ] Run representative human reviews for humor, comprehension, pacing,
   grossness controls, science density, and ordinary-event replay value.
+- [ ] Add regression gates for monoculture, colonial gaze, pseudo-language,
+  sacred-practice targeting, sanitation stigma, coercion, and humiliation.
 
 Exit gate: every seed terminates or fails explicitly within a fixed budget, no
 valid event is rerolled for drama, and the archived episode replays its resolved
@@ -144,6 +160,58 @@ Exit gate: exact translations round-trip, incompatible targets say why they fail
 presentation mappings never claim physical equivalence, and challenge scoring
 rewards precision and verification as well as magnitude.
 
+## v0.13: Sound, Symphony, and in-world radio
+
+- [ ] Create `fart-audio`, `fart-score`, and `fart-radio` consumers over the
+  authoritative event and presentation services.
+- [ ] Ship evidence, concert, and split Symphony modes with versioned mappings,
+  fixed calibration, arbitrary tuning, pitch confidence, and explicit loss.
+- [ ] Add Snowflake Etude, Comparative Canon, Similarity Fugue, and
+  Conservation Concerto through CLI commands and semantic score export.
+- [ ] Add a deterministic offline station catalog and scheduler, independent
+  controls, synchronized lyrics, captions, and presentation-only identity.
+- [ ] Author the first three station packs: Drift 93.7, Night Side 106.1, and
+  The Local Medium 88.4, with music-first editorial and cultural review.
+- [ ] Add a manual, spend-bounded Eleven Music v2 development pipeline that
+  reads `ELEVENLABS_API_KEY` only from the environment, never runs in ordinary
+  CI, and freezes approved bytes and hashes.
+- [ ] Require a compact manifest, source and similarity review, and explicit
+  rights approval before any music asset enters the public repository or a
+  release package.
+- [ ] Prove that radio, Symphony, mixing, captions, lyrics, and station controls
+  cannot change physics, narrative canon, challenge scores, or replay identity.
+
+Exit gate: one snowflake can be heard as physical evidence and as an inspectable
+score, one Broadcast remains pleasant for a long listening session, every lane
+works offline, and removing the radio catalog leaves the complete game intact.
+
+## v0.14: First-class agent and spectator play
+
+- [ ] Freeze versioned observation, action, receipt, play-handle, role, budget,
+  challenge-grade, match, and roster schemas.
+- [ ] Ship exact human and machine CLI paths before protocol adapters, including
+  strict JSONL, legal-random, greedy, notebook-planning, and scripted baselines.
+- [ ] Add G0 through G2 challenge generators, held-out variants, seed
+  commitments, hash-chained journals, and reproducible benchmark reports.
+- [ ] Add an MCP `2026-07-28` stdio adapter with explicit play handles,
+  structured observations, bounded resources, Tasks, cancellation, and no
+  hidden transport session.
+- [ ] Add an A2A 1.0 Agent Card, role-bound tasks, streaming, artifacts,
+  cancellation, inbound seats, outbound rosters, and read-only spectators.
+- [ ] Add capability budgets and separate Researcher, Operator, Accessible
+  Operator, Omnimodal, Consortium, and matched human tracks.
+- [ ] Prove transition parity, information parity, idempotency, retry safety,
+  role isolation, observation nonleakage, and exact CLI replay across adapters.
+- [ ] Pass official MCP conformance and Inspector checks plus the A2A TCK for
+  every advertised binding and cross-SDK ITK tests.
+- [ ] Complete protocol-input, authorization, terminal-injection, archive,
+  resource-exhaustion, SSRF, and remote-hosting security reviews.
+
+Exit gate: a human through CLI, a semantic MCP agent, and an A2A participant can
+complete the same Quick Play and representative challenge under declared
+capability budgets. Canonical journals and results agree, unauthorized requests
+fail safely, and human CLI play remains offline and requires no network.
+
 ## 1.0: Exceptional CLI Lab
 
 - [ ] Complete Quick Play, Broadcast, Freestyle, Challenge, Campaign,
@@ -155,6 +223,13 @@ rewards precision and verification as well as magnitude.
 - [ ] Generate shell completions, manual pages, schemas, examples, and command
   reference from the typed command model.
 - [ ] Ship deterministic offline audio without requiring an audio device.
+- [ ] Ship physical audio, diagnostic sonification, Symphony, radio, semantic
+  agent audio, and independent accessible controls without confusing their
+  scientific status.
+- [ ] Ship one G3 challenge and the `C-Sharp Correspondence` G4 research
+  campaign with repeated-seed, transfer, recovery, and proof-quality reports.
+- [ ] Publish agent schemas, protocol compatibility, threat models, conformance
+  evidence, benchmark methodology, and matched human baselines.
 - [ ] Add signed or notarized release artifacts, checksums, SBOM, provenance,
   install and uninstall tests, and named platform baselines.
 - [ ] Complete archive fuzzing, dependency review, security scan, content review,
@@ -167,7 +242,8 @@ product's identity.
 ## 2.0: Terminal Lab
 
 - [ ] Add `fart-tui` with overview, emitter, interface, plume, payload,
-  acoustics, proof, timeline, translation, and Broadcast views.
+  acoustics, score, radio, agent, proof, timeline, translation, and Broadcast
+  views.
 - [ ] Support wide, standard, compact, and minimum layouts.
 - [ ] Support Unicode and ASCII, truecolor through reduced color, keyboard-only,
   remappable keys, optional mouse, and append-only screen-reader mode.
@@ -175,6 +251,8 @@ product's identity.
   interrupts.
 - [ ] Add cell-buffer snapshots plus PTY and ConPTY smoke tests.
 - [ ] Prove that every TUI action has a CLI, scenario, or archive equivalent.
+- [ ] Run the same canonical action and observation conformance suite against
+  TUI controls, live deltas, spectators, and station presentation.
 
 Exit gate: Terminal Lab has feature parity with CLI services, adds no solver or
 story branches, and passes native terminal tests on all supported systems.
@@ -189,6 +267,11 @@ story branches, and passes native terminal tests on all supported systems.
 - [ ] Show live values, active groups, regime causes, uncertainty, and proof.
 - [ ] Add remappable keyboard, mouse, and controller input plus first-run
   accessibility setup.
+- [ ] Add real platform accessibility semantics and an opt-in, visibly indicated
+  native automation driver for pixels-only and accessibility-assisted agents.
+- [ ] Prove screenshots, semantic nodes, input actions, audio captions, and the
+  session reducer cite synchronized presentation revisions without exposing
+  hidden state.
 - [ ] Package, sign, smoke test, install, run, export, and cleanly uninstall on
   Windows, macOS, and Linux.
 
@@ -221,6 +304,13 @@ available in CLI and TUI, and every consumer cites the same event history.
 - [ ] Add alternate-dimensional and fictional-law profiles with explicit axioms,
   compatibility maps, and no false empirical-validation claims.
 
+### Interdimensional Consortium
+
+- [ ] Add G5 multi-agent campaigns with disjoint roles, communication budgets,
+  agent dropout, held-out universes, and shared proof artifacts.
+- [ ] Measure cold-start ability, improvement, retention, recovery, and transfer
+  without collecting private reasoning traces.
+
 ### Apocalypse Mode
 
 - [ ] Add laboratory, planetary, and stellar source budgets before adding damage.
@@ -237,6 +327,8 @@ available in CLI and TUI, and every consumer cites the same event history.
 - New presentation consumes the authoritative event graph.
 - New narrative claims cite event facts and cannot modify simulation state.
 - New interfaces preserve CLI parity.
+- Adapters over the canonical play service preserve transition and information
+  parity for their declared track.
 - Every milestone delivers at least one player-visible improvement, one better
   scientific claim or boundary, and one stronger verification result.
 - High-energy content changes the source model before it changes the scale.

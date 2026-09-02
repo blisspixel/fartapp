@@ -10,6 +10,10 @@ the completed v0.1 through v0.5 Go seed and defines the progressive path to the
 - Terminal instrumentation only after the CLI is complete.
 - Native Godot application only after CLI and TUI are excellent.
 - Every physics, story, proof, and gameplay feature follows that promotion path.
+- Audio, Symphony, radio, and first-class human and agent play must be complete
+  in CLI before later surfaces promote them.
+- MCP, A2A, TUI, and native clients remain adapters over one canonical play
+  service with declared knowledge, action, and compute budgets.
 
 ## Evidence
 
