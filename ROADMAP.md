@@ -22,11 +22,11 @@ native third. A checkbox means merged, documented, and verified behavior.
 
 ## v0.6: Public and product foundation
 
-- [ ] Publish the reviewed repository with generated operational logs and their
+- [x] Publish the reviewed repository with generated operational logs and their
   sensitive history removed.
-- [ ] Add cross-platform CI for formatting, vet, tests, and at least 80 percent
+- [x] Add cross-platform CI for formatting, vet, tests, and at least 80 percent
   Go statement coverage.
-- [ ] Add security, contribution, conduct, and release-readiness policies.
+- [x] Add security, contribution, conduct, and release-readiness policies.
 - [ ] Make a deliberate license decision. Public visibility alone does not grant
   reuse rights.
 - [ ] Ratify the event ontology, law profile, modes, story-director rules,
