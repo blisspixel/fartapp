@@ -108,9 +108,11 @@ planned.
   over the ratified full scenario report. Ship its minimal atemporal, observerless,
   nonconserving, recurrence-free, and no-implicit-bridge counterexamples in the
   same milestone.
-- [ ] Add a presentation-free minimal opaque fixture proving that catalog,
-  schema, and machine inspection require no human language or optional
-  structural module.
+- [x] Add a minimal opaque fixture proving that JSON catalog inspection and
+  scenario-schema validation require no localized human-language presentation
+  object or optional structural module. Treat the remaining locale-invariant
+  engineering tokens as versioned Lab protocol symbols, not universal language
+  or shared meaning.
 - [ ] Add dimension diagnostics only where selected law contexts define
   dimensional quantities.
 - [ ] Implement ideal-mixture finite-reservoir mass and energy balance.

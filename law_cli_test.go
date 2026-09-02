@@ -23,9 +23,10 @@ earth.continuum.si@v0alpha1 [design-candidate]
 conformance.relation.atemporal@v0alpha1 [schema-conformance]
   Atemporal relation conformance context
   A relation-only context with no required ordering, geometry, units, source, or observer.
+conformance.opaque.minimal@v0alpha1 [schema-conformance]
 `
 
-const expectedLawListJSON = `{"schema":"fart.law-context-list/v0alpha1","law_contexts":[{"id":"earth.continuum.si","version":"v0alpha1","maturity":"design-candidate","presentations":[{"locale":"en","message_key":"law.earth-continuum-si","name":"Earth continuum mechanics in SI","description":"Biology-neutral candidate context for continuum discharge models under declared Earth conditions; no solver is implemented yet."}]},{"id":"conformance.relation.atemporal","version":"v0alpha1","maturity":"schema-conformance","presentations":[{"locale":"en","message_key":"law.conformance-relation-atemporal","name":"Atemporal relation conformance context","description":"A relation-only context with no required ordering, geometry, units, source, or observer."}]}]}
+const expectedLawListJSON = `{"schema":"fart.law-context-list/v0alpha1","law_contexts":[{"id":"earth.continuum.si","version":"v0alpha1","maturity":"design-candidate","presentations":[{"locale":"en","message_key":"law.earth-continuum-si","name":"Earth continuum mechanics in SI","description":"Biology-neutral candidate context for continuum discharge models under declared Earth conditions; no solver is implemented yet."}]},{"id":"conformance.relation.atemporal","version":"v0alpha1","maturity":"schema-conformance","presentations":[{"locale":"en","message_key":"law.conformance-relation-atemporal","name":"Atemporal relation conformance context","description":"A relation-only context with no required ordering, geometry, units, source, or observer."}]},{"id":"conformance.opaque.minimal","version":"v0alpha1","maturity":"schema-conformance"}]}
 `
 
 const expectedEarthInspectionText = `LAW CONTEXT
@@ -126,8 +127,36 @@ test:law-cli-fixtures [software/go-test]
   go test . -run ^TestLawCLITextAndJSONFixtures$
 `
 
+const expectedMinimalOpaqueInspectionText = `LAW CONTEXT
+
+ID: conformance.opaque.minimal
+Version: v0alpha1
+Maturity: schema-conformance
+
+CAPABILITY REPORT
+Law context: conformance.opaque.minimal@v0alpha1
+
+catalog.inspect
+  law definition:      not-applicable (application_capability)
+  implementation:      available
+  closure:             not-required
+  applicability:       applicable
+  evidence:            verified (software_fixture)
+  evidence references: test:law-catalog-inspection, test:law-cli-fixtures
+  trust:               built-in-candidate
+  backend feasibility: not-required (application_capability)
+  resource feasibility: within-default-budget
+
+EVIDENCE REGISTRY
+test:law-catalog-inspection [software/go-test]
+  go test ./internal/lawcatalog -run ^TestBuiltInCatalog$
+test:law-cli-fixtures [software/go-test]
+  go test . -run ^TestLawCLITextAndJSONFixtures$
+`
+
 // The digest is an exact fixture for compact deterministic JSON inspection.
 const expectedEarthInspectionJSONSHA256 = "4445c07e794b98cc1a916a06235ac2b9b1012e973f6cb4a40d74b6d3b860beef"
+const expectedMinimalOpaqueInspectionJSONSHA256 = "0a6aa6e1033e8be255b98e6099fe31b5340afca5b93f472a64f1ff0b600ed2c4"
 
 func TestLawCLITextAndJSONFixtures(t *testing.T) {
 	tests := []struct {
@@ -140,6 +169,7 @@ func TestLawCLITextAndJSONFixtures(t *testing.T) {
 		{name: "list json", args: []string{"fartapp", "law", "list", "--format", "json"}, want: expectedLawListJSON},
 		{name: "inspect earth text", args: []string{"fartapp", "law", "inspect", "earth.continuum.si"}, want: expectedEarthInspectionText},
 		{name: "inspect atemporal text", args: []string{"fartapp", "law", "inspect", "conformance.relation.atemporal@v0alpha1"}, want: expectedAtemporalInspectionText},
+		{name: "inspect minimal opaque text", args: []string{"fartapp", "law", "inspect", "conformance.opaque.minimal@v0alpha1"}, want: expectedMinimalOpaqueInspectionText},
 		{name: "help", args: []string{"fartapp", "law", "help"}, want: lawHelp},
 		{name: "help flag", args: []string{"fartapp", "law", "--help"}, want: lawHelp},
 		{name: "short help flag", args: []string{"fartapp", "law", "-h"}, want: lawHelp},
@@ -164,6 +194,7 @@ func TestLawCLITextAndJSONFixtures(t *testing.T) {
 			}
 		})
 	}
+	t.Run("inspect minimal opaque JSON evidence", assertMinimalOpaqueLawInspectionJSONFixture)
 }
 
 func TestLawInspectionJSONFixture(t *testing.T) {
@@ -214,7 +245,67 @@ func TestLawInspectionJSONFixture(t *testing.T) {
 	}
 }
 
-func TestLanguageFreeTextFormatter(t *testing.T) {
+func TestMinimalOpaqueLawInspectionJSONFixture(t *testing.T) {
+	assertMinimalOpaqueLawInspectionJSONFixture(t)
+}
+
+func assertMinimalOpaqueLawInspectionJSONFixture(t *testing.T) {
+	t.Helper()
+	invoke := func() []byte {
+		t.Helper()
+		var stdout bytes.Buffer
+		var stderr bytes.Buffer
+		args := []string{
+			"fartapp", "law", "inspect", "conformance.opaque.minimal@v0alpha1",
+			"--format", "json",
+		}
+		if code := run(args, &stdout, &stderr); code != 0 {
+			t.Fatalf("exit code = %d, stderr = %q", code, stderr.String())
+		}
+		return bytes.Clone(stdout.Bytes())
+	}
+
+	first := invoke()
+	second := invoke()
+	if !bytes.Equal(first, second) {
+		t.Fatal("minimal opaque JSON inspection output is not byte deterministic")
+	}
+	digest := sha256.Sum256(first)
+	if got := hex.EncodeToString(digest[:]); got != expectedMinimalOpaqueInspectionJSONSHA256 {
+		t.Fatalf(
+			"minimal opaque JSON inspection SHA-256 = %s, want %s",
+			got,
+			expectedMinimalOpaqueInspectionJSONSHA256,
+		)
+	}
+
+	var inspection lawcatalog.Inspection
+	if err := json.Unmarshal(first, &inspection); err != nil {
+		t.Fatalf("json.Unmarshal: %v", err)
+	}
+	if err := lawcatalog.ValidateInspection(inspection); err != nil {
+		t.Fatalf("ValidateInspection: %v", err)
+	}
+	if len(inspection.LawContext.Presentations) != 0 ||
+		len(inspection.LawContext.StructuralModules) != 0 ||
+		len(inspection.LawContext.ExtensionRoles) != 0 ||
+		len(inspection.CapabilityReport.Capabilities[0].Presentations) != 0 {
+		t.Fatalf(
+			"inspection contains localized presentation, structural module, or extension role: %#v",
+			inspection,
+		)
+	}
+	for _, forbiddenKey := range []string{
+		"description", "extension_roles", "locale", "name", "presentations",
+		"structural_modules",
+	} {
+		if bytes.Contains(first, []byte(`"`+forbiddenKey+`"`)) {
+			t.Errorf("minimal opaque JSON unexpectedly contains key %q", forbiddenKey)
+		}
+	}
+}
+
+func TestPresentationFreeContextTextFormatter(t *testing.T) {
 	inspection := lawcatalog.Inspection{
 		Schema: lawcatalog.InspectionSchema,
 		LawContext: lawcatalog.Context{
@@ -230,7 +321,7 @@ func TestLanguageFreeTextFormatter(t *testing.T) {
 	output := formatLawInspection(inspection)
 	if !strings.Contains(output, "ID: relation.atemporal") ||
 		strings.Contains(output, "Name:") || strings.Contains(output, "Description:") {
-		t.Fatalf("language-free inspection output = %q", output)
+		t.Fatalf("presentation-free context inspection output = %q", output)
 	}
 }
 

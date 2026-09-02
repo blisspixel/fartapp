@@ -108,6 +108,7 @@ earth.continuum.si@v0alpha1 [design-candidate]
 conformance.relation.atemporal@v0alpha1 [schema-conformance]
   Atemporal relation conformance context
   A relation-only context with no required ordering, geometry, units, source, or observer.
+conformance.opaque.minimal@v0alpha1 [schema-conformance]
 ```
 
 `law inspect earth.continuum.si` reports law definition, implementation,
@@ -124,6 +125,12 @@ solver or an empirical claim about reality. It proves that catalog inspection
 works without ordering, geometry, dimensions, units, a localized source, or an
 observer before the Earth oracle grows further. Software evidence IDs resolve
 inside each inspection to exact Go package and test targets that CI executes.
+
+`conformance.opaque.minimal` is a schema-conformance probe whose dedicated JSON
+inspection and minimal scenario report contain no localized presentation
+objects or declared optional structural modules. Its IDs, reason codes, and JSON
+member names are locale-invariant Lab protocol tokens, not a universal language
+or shared meaning. The English text formatter remains a presentation layer.
 
 The next CLI slice is also executable:
 

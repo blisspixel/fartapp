@@ -8,6 +8,8 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/blisspixel/fartapp/internal/lawcatalog"
 )
 
 const atemporalProbe = `{
@@ -34,6 +36,19 @@ const earthProbe = `{
   },
   "scope": {"id": "s0"},
   "capability_requests": [{"id": "flow.subsonic"}]
+}`
+
+const minimalOpaqueProbe = `{
+  "schema": "fart.scenario-probe/v0alpha1",
+  "law_context_set": {
+    "contexts": [{
+      "id": "conformance.opaque.minimal",
+      "version": "v0alpha1",
+      "scope_id": "q0"
+    }]
+  },
+  "scope": {"id": "q0"},
+  "capability_requests": [{"id": "catalog.inspect"}]
 }`
 
 func TestAtemporalProbeHasNoAmbientOrEarthRequirements(t *testing.T) {
@@ -80,6 +95,54 @@ func TestAtemporalProbeHasNoAmbientOrEarthRequirements(t *testing.T) {
 	report.Schema = "fart.scenario-validation/v999"
 	if report.Valid() {
 		t.Fatal("report with an unsupported report schema was valid")
+	}
+}
+
+func TestMinimalOpaqueProbeRequiresNoLocalizedPresentationOrOptionalStructuralModule(t *testing.T) {
+	report := Validate([]byte(minimalOpaqueProbe))
+	if !report.Valid() {
+		t.Fatalf("Validate: %#v", report.Diagnostics)
+	}
+	if report.LawContext.ID != "conformance.opaque.minimal" ||
+		report.LawContext.Version != "v0alpha1" || report.Scope.ID != "q0" {
+		t.Fatalf("law context or scope = (%#v, %#v)", report.LawContext, report.Scope)
+	}
+	if len(report.Capabilities) != 1 {
+		t.Fatalf("capability count = %d, want 1", len(report.Capabilities))
+	}
+	capability := report.Capabilities[0]
+	if capability.ID != "catalog.inspect" || capability.Resolution != "resolved" ||
+		capability.LawDefinition != (lawcatalog.Assessment{Status: "not-applicable", ReasonCode: "application_capability"}) ||
+		capability.Implementation != (lawcatalog.Assessment{Status: "available"}) ||
+		capability.Closure != (lawcatalog.Assessment{Status: "not-required"}) ||
+		capability.Applicability != (lawcatalog.Assessment{Status: "applicable"}) ||
+		capability.Evidence != (lawcatalog.Assessment{Status: "verified", ReasonCode: "software_fixture"}) ||
+		capability.Trust != (lawcatalog.Assessment{Status: "built-in-candidate"}) ||
+		capability.BackendFeasibility != (lawcatalog.Assessment{Status: "not-required", ReasonCode: "application_capability"}) ||
+		capability.ResourceFeasibility != (lawcatalog.Assessment{Status: "within-default-budget"}) {
+		t.Fatalf("capability = %#v", capability)
+	}
+	wantEvidence := []string{"test:law-catalog-inspection", "test:law-cli-fixtures"}
+	if !reflect.DeepEqual(capability.EvidenceReferences, wantEvidence) {
+		t.Fatalf("evidence references = %q, want %q", capability.EvidenceReferences, wantEvidence)
+	}
+	wantInputs := []string{"document_bytes", "built_in_law_catalog"}
+	if !reflect.DeepEqual(report.Environment.ConsultedInputs, wantInputs) ||
+		len(report.Environment.AmbientInputs) != 0 {
+		t.Fatalf("validation environment = %#v", report.Environment)
+	}
+	if report.RequestedCaseOperation != absentCaseOperationDisposition() ||
+		report.ValidationStages != successfulValidationStages() {
+		t.Fatalf(
+			"operation or validation stages = (%#v, %#v)",
+			report.RequestedCaseOperation,
+			report.ValidationStages,
+		)
+	}
+
+	reordered := `{"capability_requests":[{"id":"catalog.inspect"}],"scope":{"id":"q0"},"law_context_set":{"contexts":[{"scope_id":"q0","version":"v0alpha1","id":"conformance.opaque.minimal"}]},"schema":"fart.scenario-probe/v0alpha1"}`
+	if second := Validate([]byte(reordered)); !reflect.DeepEqual(report, second) {
+		t.Fatalf("member order changed report:\n%#v\n%#v", report, second)
 	}
 }
 
@@ -423,7 +486,9 @@ func TestInputFailureStages(t *testing.T) {
 }
 
 func FuzzValidate(f *testing.F) {
-	for _, seed := range []string{atemporalProbe, earthProbe, "", "null", "{}", "{", "{}{}"} {
+	for _, seed := range []string{
+		atemporalProbe, earthProbe, minimalOpaqueProbe, "", "null", "{}", "{", "{}{}",
+	} {
 		f.Add([]byte(seed))
 	}
 	f.Add([]byte{'{', '"', 'x', '"', ':', '"', 0xff, '"', '}'})

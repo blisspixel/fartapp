@@ -54,6 +54,7 @@ test:law-cli-fixtures [software/go-test]
 
 const expectedAtemporalScenarioJSONSHA256 = "9b1a6d9ed0923cb11f455545f157c2a2805c1b78b6cc82ee0222aed0087df12b"
 const expectedEarthScenarioJSONSHA256 = "77cecf0ed6413bb83ebd291f6729012f944d6261f5d8fe8fe028ca2113bc634c"
+const expectedMinimalOpaqueScenarioJSONSHA256 = "1fcdb855250eab6c943e0da2d64b7169ec253d4d778c822592774919e1276346"
 
 func TestScenarioCLITextAndJSONFixtures(t *testing.T) {
 	input := readScenarioFixture(t, "atemporal-probe.json")
@@ -142,6 +143,98 @@ func TestScenarioCLIUnavailableCapabilityIsAValidProbe(t *testing.T) {
 		capability.Applicability.Status != "undetermined" ||
 		report.RequestedCaseOperation.Execution.Status != "not-applicable" {
 		t.Fatalf("report = %#v", report)
+	}
+}
+
+func TestMinimalOpaqueScenarioJSONFixture(t *testing.T) {
+	input := readScenarioFixture(t, "minimal-opaque-probe.json")
+	invoke := func(args []string, stdin []byte) []byte {
+		t.Helper()
+		var stdout bytes.Buffer
+		var stderr bytes.Buffer
+		code := runWithInput(
+			args,
+			bytes.NewReader(stdin),
+			&stdout,
+			&stderr,
+		)
+		if code != 0 || stderr.Len() != 0 {
+			t.Fatalf("result = (%d, %q)", code, stderr.String())
+		}
+		return bytes.Clone(stdout.Bytes())
+	}
+
+	stdinArgs := []string{"fartapp", "scenario", "validate", "-", "--format", "json"}
+	first := invoke(stdinArgs, input)
+	second := invoke(stdinArgs, input)
+	if !bytes.Equal(first, second) {
+		t.Fatal("minimal opaque scenario JSON is not byte deterministic")
+	}
+	named := invoke(
+		[]string{
+			"fartapp", "scenario", "validate",
+			filepath.FromSlash("testdata/scenarios/minimal-opaque-probe.json"),
+			"--format", "json",
+		},
+		nil,
+	)
+	if !bytes.Equal(first, named) {
+		t.Fatal("named-file and standard-input reports differ")
+	}
+	reordered := []byte(`{"capability_requests":[{"id":"catalog.inspect"}],"scope":{"id":"q0"},"law_context_set":{"contexts":[{"scope_id":"q0","version":"v0alpha1","id":"conformance.opaque.minimal"}]},"schema":"fart.scenario-probe/v0alpha1"}`)
+	if reorderedOutput := invoke(stdinArgs, reordered); !bytes.Equal(first, reorderedOutput) {
+		t.Fatal("input member order changed canonical report bytes")
+	}
+	digest := sha256.Sum256(first)
+	if got := hex.EncodeToString(digest[:]); got != expectedMinimalOpaqueScenarioJSONSHA256 {
+		t.Fatalf(
+			"minimal opaque scenario JSON SHA-256 = %s, want %s",
+			got,
+			expectedMinimalOpaqueScenarioJSONSHA256,
+		)
+	}
+
+	var report scenarioprobe.Report
+	if err := json.Unmarshal(first, &report); err != nil {
+		t.Fatalf("json.Unmarshal: %v", err)
+	}
+	if !report.Valid() || report.LawContext.ID != "conformance.opaque.minimal" ||
+		report.Scope.ID != "q0" || len(report.Capabilities) != 1 ||
+		report.Capabilities[0].ID != "catalog.inspect" ||
+		len(report.Environment.AmbientInputs) != 0 ||
+		report.RequestedCaseOperation.Selection.Status != "not-declared" {
+		t.Fatalf("report = %#v", report)
+	}
+	wantInputs := []string{"document_bytes", "built_in_law_catalog"}
+	if len(report.Environment.ConsultedInputs) != len(wantInputs) ||
+		report.Environment.ConsultedInputs[0] != wantInputs[0] ||
+		report.Environment.ConsultedInputs[1] != wantInputs[1] {
+		t.Fatalf("consulted inputs = %q, want %q", report.Environment.ConsultedInputs, wantInputs)
+	}
+	var root map[string]json.RawMessage
+	if err := json.Unmarshal(first, &root); err != nil {
+		t.Fatalf("json.Unmarshal object: %v", err)
+	}
+	wantKeys := []string{
+		"schema", "document_status", "validation_stages", "document_schema",
+		"law_context", "scope", "capabilities", "evidence_registry",
+		"validation_environment", "requested_case_operation",
+	}
+	if len(root) != len(wantKeys) {
+		t.Fatalf("report keys = %v, want %v", root, wantKeys)
+	}
+	for _, key := range wantKeys {
+		if _, found := root[key]; !found {
+			t.Errorf("report omits key %q", key)
+		}
+	}
+	for _, forbiddenKey := range []string{
+		"description", "extension_roles", "locale", "name", "occurrence",
+		"presentations", "realization", "structural_modules",
+	} {
+		if bytes.Contains(first, []byte(`"`+forbiddenKey+`"`)) {
+			t.Errorf("minimal opaque scenario JSON unexpectedly contains key %q", forbiddenKey)
+		}
 	}
 }
 

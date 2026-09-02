@@ -173,7 +173,7 @@ tiny fixtures for these cases:
 
 | Fixture | Concepts intentionally absent | Required result |
 | --- | --- | --- |
-| Minimal opaque | Presentation text and every optional structural module | Catalog and schema inspection still work from stable tokens |
+| Minimal opaque | Localized human-language presentation and every optional structural module | JSON catalog inspection and scenario-schema validation succeed using locale-invariant engineering tokens defined only by the Lab protocol |
 | Atemporal relation | Time, state, geometry, units, source, and observer | Relation capability resolves without fabricated fields |
 | Nonspatial transfer | Geometry, localized emitter, gas, and Earth quantities | Only the declared transfer relation appears |
 | Partial order | A global clock and total event order | Views preserve incomparability rather than sorting it away |
@@ -185,6 +185,12 @@ tiny fixtures for these cases:
 | No shared observable | A common comparison coordinate | Translation returns `no_shared_observable` |
 | Unrepresentable | Finite identification or encoding | The Lab returns `outside_representable_ontology` without simulating |
 | Lossy spatial projection | Native source geometry matching the display | The artifact records embedding, distortion, and information loss |
+
+Those tokens are finite machine symbols, not natural language,
+language-neutral notation, or universally shared meaning. The minimal opaque
+fixture proves only that this exact application-level capability request does
+not require localized presentation or a declared optional structural module. It
+does not claim that the represented reality lacks structure.
 
 Passing one fixture does not establish real-world universality. Together they
 prevent ordinary Earth discharge, human narrative, and three-dimensional UI

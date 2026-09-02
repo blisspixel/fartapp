@@ -95,6 +95,11 @@ reference uncertainty before the benchmark is marked active.
 | ADP-001 | Surface transition parity | One canonical action journal through every adapter | Core revision, result, scientific artifacts, and certificate digests agree |
 | ADP-002 | Surface information parity | Track-specific observation audit | No surface leaks verifier state or bypasses its declared sensor and budget policy |
 
+The executable minimal opaque probe currently satisfies only the catalog and
+pre-admission scenario-schema slice of `ONT-001`. It selects no case operation
+and creates no record, archive, or certificate. Those retained-case round trips
+remain planned and the benchmark stays a candidate.
+
 ## Numerical proof protocol
 
 For a field result, the project stores at least three independently selected

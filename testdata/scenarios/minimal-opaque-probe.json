@@ -1,0 +1,20 @@
+{
+  "schema": "fart.scenario-probe/v0alpha1",
+  "law_context_set": {
+    "contexts": [
+      {
+        "id": "conformance.opaque.minimal",
+        "version": "v0alpha1",
+        "scope_id": "q0"
+      }
+    ]
+  },
+  "scope": {
+    "id": "q0"
+  },
+  "capability_requests": [
+    {
+      "id": "catalog.inspect"
+    }
+  ]
+}

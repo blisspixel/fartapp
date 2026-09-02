@@ -22,13 +22,14 @@ Read:
 - [docs/LOCALIZATION.md](docs/LOCALIZATION.md) for semantic, language, script,
   and optional communication-profile contracts.
 - [docs/METROLOGY.md](docs/METROLOGY.md) for the Reference Pfft and traceability.
-- [docs/SNOWFLAKES.md](docs/SNOWFLAKES.md) for event identity and artifacts.
+- [docs/SNOWFLAKES.md](docs/SNOWFLAKES.md) for record identity, optional
+  context-occurrence identity, and artifacts.
 - [docs/QUALITY.md](docs/QUALITY.md) for progressive engineering gates.
 
 New capabilities must appear in the CLI before the terminal or native layers.
-New narrative must react to event facts and cannot alter simulation state. New
-physics must state equations, assumptions, units, validity, verification, and
-validation status.
+New narrative must react to retained claims and cannot alter the authoritative
+Lab account. New physics must state equations, assumptions, units, validity,
+verification, and validation status.
 
 ## Current development setup
 
@@ -45,8 +46,12 @@ go mod verify
 go build ./...
 go test ./internal/lawcatalog -run '^TestBuiltInCatalog$'
 go test . -run '^TestLawCLITextAndJSONFixtures$'
+go test ./internal/lawcatalog -run '^TestMinimalOpaqueContextHasNoLocalizedPresentationOrOptionalStructuralModule$'
+go test . -run '^TestMinimalOpaqueLawInspectionJSONFixture$'
 go test ./internal/scenarioprobe -run '^TestAtemporalProbeHasNoAmbientOrEarthRequirements$'
 go test . -run '^TestScenarioCLITextAndJSONFixtures$'
+go test ./internal/scenarioprobe -run '^TestMinimalOpaqueProbeRequiresNoLocalizedPresentationOrOptionalStructuralModule$'
+go test . -run '^TestMinimalOpaqueScenarioJSONFixture$'
 go test . -run '^TestHelpRoutes$'
 go vet ./...
 go run honnef.co/go/tools/cmd/staticcheck@v0.8.1 ./...
@@ -70,7 +75,7 @@ changed-line and mutation gates described in [docs/QUALITY.md](docs/QUALITY.md).
 - Keep the change focused and explain the observable behavior.
 - Add or update tests for behavior and failure cases.
 - Update contracts and roadmap status only when implementation earns it.
-- Preserve deterministic output and explicit seeds.
+- Preserve deterministic output and explicit seeds where generation applies.
 - Keep machine-readable stdout free of progress and diagnostics.
 - Do not add generated binaries, coverage files, local paths, credentials,
   personal metadata, or raw automation receipts.

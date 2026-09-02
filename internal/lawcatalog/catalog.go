@@ -186,6 +186,23 @@ var builtInInspections = []Inspection{
 			Capabilities: []Capability{availableMetadataCapability()},
 		},
 	},
+	{
+		Schema: InspectionSchema,
+		LawContext: Context{
+			ID:       "conformance.opaque.minimal",
+			Version:  "v0alpha1",
+			Maturity: "schema-conformance",
+		},
+		CapabilityReport: CapabilityReport{
+			Schema:           ReportSchema,
+			EvidenceRegistry: softwareEvidenceRegistry(),
+			LawContext: LawContextRef{
+				ID:      "conformance.opaque.minimal",
+				Version: "v0alpha1",
+			},
+			Capabilities: []Capability{presentationFreeMetadataCapability()},
+		},
+	},
 }
 
 func presentations(messageKey, name, description string) []LocalizedPresentation {
@@ -245,6 +262,12 @@ func availableMetadataCapability() Capability {
 		BackendFeasibility:  Assessment{Status: "not-required", ReasonCode: "application_capability"},
 		ResourceFeasibility: Assessment{Status: "within-default-budget"},
 	}
+}
+
+func presentationFreeMetadataCapability() Capability {
+	capability := availableMetadataCapability()
+	capability.Presentations = nil
+	return capability
 }
 
 func plannedPhysicsCapability(id, description string) Capability {

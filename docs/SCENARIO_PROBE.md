@@ -103,6 +103,28 @@ time, source, emitter, interface, exterior, body, observer, geometry,
 measurement, backend, resource budget, or solver configuration. Later schemas
 may add these only through context-owned, capability-checked contracts.
 
+## Minimal opaque conformance fixture
+
+The narrower negative-space fixture is executable through both catalog and
+scenario JSON surfaces:
+
+```console
+fartapp law inspect conformance.opaque.minimal@v0alpha1 --format json
+fartapp scenario validate testdata/scenarios/minimal-opaque-probe.json --format json
+```
+
+The exact catalog entry declares no localized presentation object, optional
+structural module, extension role, or domain capability. It requests only the
+Lab-level `catalog.inspect` capability. Its minimal scenario selects no case
+operation and creates no case record.
+
+Only the dedicated JSON outputs are conformance evidence for absence of those
+optional fields. Text output remains a current-English presentation. Stable
+IDs, reason codes, and JSON member names are locale-invariant engineering
+tokens; that does not make them natural language, language-neutral notation, or
+universally shared meaning. The fixture proves a narrow software property, not
+that any represented reality is structureless.
+
 ## Validation report
 
 For fixed executable and catalog contents, the deterministic report schema is

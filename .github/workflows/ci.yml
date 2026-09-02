@@ -66,8 +66,12 @@ jobs:
         run: |
           go test ./internal/lawcatalog -run '^TestBuiltInCatalog$'
           go test . -run '^TestLawCLITextAndJSONFixtures$'
+          go test ./internal/lawcatalog -run '^TestMinimalOpaqueContextHasNoLocalizedPresentationOrOptionalStructuralModule$'
+          go test . -run '^TestMinimalOpaqueLawInspectionJSONFixture$'
           go test ./internal/scenarioprobe -run '^TestAtemporalProbeHasNoAmbientOrEarthRequirements$'
           go test . -run '^TestScenarioCLITextAndJSONFixtures$'
+          go test ./internal/scenarioprobe -run '^TestMinimalOpaqueProbeRequiresNoLocalizedPresentationOrOptionalStructuralModule$'
+          go test . -run '^TestMinimalOpaqueScenarioJSONFixture$'
           go test . -run '^TestHelpRoutes$'
 
       - name: Check formatting

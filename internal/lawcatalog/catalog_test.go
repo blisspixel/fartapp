@@ -2,6 +2,7 @@ package lawcatalog
 
 import (
 	"encoding/json"
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -11,8 +12,8 @@ func TestBuiltInCatalog(t *testing.T) {
 	if listing.Schema != ListSchema {
 		t.Fatalf("list schema = %q, want %q", listing.Schema, ListSchema)
 	}
-	if len(listing.LawContexts) != 2 {
-		t.Fatalf("law context count = %d, want 2", len(listing.LawContexts))
+	if len(listing.LawContexts) != 3 {
+		t.Fatalf("law context count = %d, want 3", len(listing.LawContexts))
 	}
 
 	for _, reference := range []string{
@@ -20,6 +21,8 @@ func TestBuiltInCatalog(t *testing.T) {
 		"earth.continuum.si@v0alpha1",
 		"conformance.relation.atemporal",
 		"conformance.relation.atemporal@v0alpha1",
+		"conformance.opaque.minimal",
+		"conformance.opaque.minimal@v0alpha1",
 	} {
 		inspection, found := Inspect(reference)
 		if !found {
@@ -31,6 +34,101 @@ func TestBuiltInCatalog(t *testing.T) {
 	}
 	if _, found := Inspect("missing.context"); found {
 		t.Fatal("missing context was found")
+	}
+	if len(listing.LawContexts[2].Presentations) != 0 ||
+		listing.LawContexts[2].ID != "conformance.opaque.minimal" {
+		t.Fatalf("minimal opaque summary = %#v", listing.LawContexts[2])
+	}
+	assertMinimalOpaqueContext(t)
+}
+
+func TestMinimalOpaqueContextHasNoLocalizedPresentationOrOptionalStructuralModule(t *testing.T) {
+	assertMinimalOpaqueContext(t)
+}
+
+func assertMinimalOpaqueContext(t *testing.T) {
+	t.Helper()
+	inspection, found := Inspect("conformance.opaque.minimal@v0alpha1")
+	if !found {
+		t.Fatal("minimal opaque context was not found")
+	}
+	if err := ValidateInspection(inspection); err != nil {
+		t.Fatalf("ValidateInspection: %v", err)
+	}
+	if len(inspection.LawContext.Presentations) != 0 ||
+		len(inspection.LawContext.StructuralModules) != 0 ||
+		len(inspection.LawContext.ExtensionRoles) != 0 {
+		t.Fatalf(
+			"law context contains localized presentation, structural module, or extension role: %#v",
+			inspection.LawContext,
+		)
+	}
+	if len(inspection.CapabilityReport.Capabilities) != 1 ||
+		len(inspection.CapabilityReport.Capabilities[0].Presentations) != 0 {
+		t.Fatalf("capability contains localized presentation: %#v", inspection.CapabilityReport.Capabilities)
+	}
+	if got, want := inspection.CapabilityReport.Capabilities[0], presentationFreeMetadataCapability(); !reflect.DeepEqual(got, want) {
+		t.Fatalf("minimal opaque capability = %#v, want %#v", got, want)
+	}
+	encoded, err := json.Marshal(inspection)
+	if err != nil {
+		t.Fatalf("json.Marshal: %v", err)
+	}
+	for _, forbidden := range []string{
+		"description", "extension_roles", "locale", "name", "presentations",
+		"structural_modules",
+	} {
+		if strings.Contains(string(encoded), forbidden) {
+			t.Errorf("minimal opaque inspection unexpectedly contains %q: %s", forbidden, encoded)
+		}
+	}
+	var root map[string]json.RawMessage
+	if err = json.Unmarshal(encoded, &root); err != nil {
+		t.Fatalf("json.Unmarshal root: %v", err)
+	}
+	assertJSONKeys(t, root, "schema", "law_context", "capability_report")
+	var context map[string]json.RawMessage
+	if err = json.Unmarshal(root["law_context"], &context); err != nil {
+		t.Fatalf("json.Unmarshal law context: %v", err)
+	}
+	assertJSONKeys(t, context, "id", "version", "maturity")
+	var report map[string]json.RawMessage
+	if err = json.Unmarshal(root["capability_report"], &report); err != nil {
+		t.Fatalf("json.Unmarshal capability report: %v", err)
+	}
+	assertJSONKeys(t, report, "schema", "law_context", "capabilities", "evidence_registry")
+	var capabilities []map[string]json.RawMessage
+	if err = json.Unmarshal(report["capabilities"], &capabilities); err != nil {
+		t.Fatalf("json.Unmarshal capabilities: %v", err)
+	}
+	if len(capabilities) != 1 {
+		t.Fatalf("capability JSON count = %d, want 1", len(capabilities))
+	}
+	assertJSONKeys(
+		t,
+		capabilities[0],
+		"id",
+		"law_definition",
+		"implementation",
+		"closure",
+		"applicability",
+		"evidence",
+		"evidence_references",
+		"trust",
+		"backend_feasibility",
+		"resource_feasibility",
+	)
+}
+
+func assertJSONKeys(t *testing.T, object map[string]json.RawMessage, expected ...string) {
+	t.Helper()
+	if len(object) != len(expected) {
+		t.Fatalf("JSON keys = %v, want %v", object, expected)
+	}
+	for _, key := range expected {
+		if _, found := object[key]; !found {
+			t.Errorf("JSON object omits key %q", key)
+		}
 	}
 }
 
@@ -63,6 +161,26 @@ func TestCatalogReturnsDefensiveCopies(t *testing.T) {
 		fresh.CapabilityReport.EvidenceRegistry[0].GoTest != "TestBuiltInCatalog" {
 		t.Fatalf("catalog inspection was mutated: %#v", fresh)
 	}
+
+	opaque, _ := Inspect("conformance.opaque.minimal")
+	opaque.LawContext.Presentations = append(
+		opaque.LawContext.Presentations,
+		LocalizedPresentation{Locale: "en", MessageKey: "mutated", Name: "mutated"},
+	)
+	opaque.LawContext.StructuralModules = append(
+		opaque.LawContext.StructuralModules,
+		StructuralModule{ID: "mutated"},
+	)
+	opaque.CapabilityReport.Capabilities[0].Presentations = append(
+		opaque.CapabilityReport.Capabilities[0].Presentations,
+		LocalizedPresentation{Locale: "en", MessageKey: "mutated", Name: "mutated"},
+	)
+	freshOpaque, _ := Inspect("conformance.opaque.minimal")
+	if len(freshOpaque.LawContext.Presentations) != 0 ||
+		len(freshOpaque.LawContext.StructuralModules) != 0 ||
+		len(freshOpaque.CapabilityReport.Capabilities[0].Presentations) != 0 {
+		t.Fatalf("minimal opaque inspection was mutated: %#v", freshOpaque)
+	}
 }
 
 func TestInspectRejectsAmbiguousUnversionedReference(t *testing.T) {
@@ -82,7 +200,7 @@ func TestInspectRejectsAmbiguousUnversionedReference(t *testing.T) {
 	}
 }
 
-func TestAtemporalRelationContextNeedsNoEarthOrLanguageFields(t *testing.T) {
+func TestAtemporalRelationContextNeedsNoEarthOrPresentationFields(t *testing.T) {
 	inspection := neutralInspection()
 	if err := ValidateInspection(inspection); err != nil {
 		t.Fatalf("ValidateInspection: %v", err)
@@ -289,7 +407,7 @@ func neutralInspection() Inspection {
 				Scope:     "software",
 				Kind:      "go-test",
 				GoPackage: ".",
-				GoTest:    "TestAtemporalRelationContextNeedsNoEarthOrLanguageFields",
+				GoTest:    "TestAtemporalRelationContextNeedsNoEarthOrPresentationFields",
 			}},
 			Capabilities: []Capability{capability},
 		},
