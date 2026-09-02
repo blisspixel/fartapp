@@ -4,12 +4,25 @@ $repositoryRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot ".."))
 $failures = [System.Collections.Generic.List[string]]::new()
 $checkedLinks = 0
 $linkPattern = [regex]'!?\[[^\]]*\]\((?<target><[^>]+>|[^)\s]+)'
+$pathComparison = if ($IsWindows) {
+    [System.StringComparison]::OrdinalIgnoreCase
+}
+else {
+    [System.StringComparison]::Ordinal
+}
 
 $markdownFiles = Get-ChildItem -LiteralPath $repositoryRoot -Recurse -File -Filter "*.md" |
     Where-Object {
-        $_.FullName -notlike "*\node_modules\*" -and
-        $_.FullName -notlike "*\.git\*" -and
-        $_.FullName -notlike "*\.steward\DECISIONS\*"
+        $relativePath = [System.IO.Path]::GetRelativePath(
+            $repositoryRoot,
+            $_.FullName
+        ).Replace("\", "/")
+        -not (
+            $relativePath.StartsWith("node_modules/", [System.StringComparison]::Ordinal) -or
+            $relativePath.StartsWith("vendor/", [System.StringComparison]::Ordinal) -or
+            $relativePath.StartsWith(".git/", [System.StringComparison]::Ordinal) -or
+            $relativePath.StartsWith(".steward/DECISIONS/", [System.StringComparison]::Ordinal)
+        )
     }
 
 foreach ($file in $markdownFiles) {
@@ -39,7 +52,7 @@ foreach ($file in $markdownFiles) {
         $checkedLinks++
         if (-not $candidate.StartsWith(
             $repositoryRoot + [System.IO.Path]::DirectorySeparatorChar,
-            [System.StringComparison]::OrdinalIgnoreCase
+            $pathComparison
         )) {
             $failures.Add("local link escapes repository: $($file.Name) -> $target")
             continue
