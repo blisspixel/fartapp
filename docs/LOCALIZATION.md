@@ -1,12 +1,16 @@
 # Language, localization, and universal translation
 
-F.A.R.T. Lab is not an English simulation translated after the fact. Physics,
-event identity, units, actions, observations, and proof use stable semantic
-identifiers. Human language is one presentation and authoring surface over that
-model. Nonhuman communication may use sound, image, pressure, chemistry,
-electromagnetism, collective state, or a declared fictional channel.
+F.A.R.T. Lab is not an English simulation translated after the fact. When
+present, law-defined quantities, identities, actions, observations, and proof
+claims use stable semantic identifiers. None of those concepts is mandatory.
+A communication profile may use symbolic language, sound, image, pressure,
+chemistry, electromagnetism, collective state, a declared fictional channel, or
+no Lab-accessible mapping. Human language is one optional profile, not the
+reference class.
 
-This is a design contract. The current toy CLI is English-only.
+This is a design contract. Text in the current Go oracle is an English-only
+presentation. Its stable IDs and JSON fields are locale-invariant engineering
+tokens, which does not make them language-neutral or universally meaningful.
 
 ## A locale-invariant reference
 

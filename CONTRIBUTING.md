@@ -20,7 +20,7 @@ Read:
   adapters, fairness, and benchmark rules.
 - [docs/CULTURE.md](docs/CULTURE.md) for cultural and public-interest safeguards.
 - [docs/LOCALIZATION.md](docs/LOCALIZATION.md) for semantic, language, script,
-  and nonhuman communication contracts.
+  and optional communication-profile contracts.
 - [docs/METROLOGY.md](docs/METROLOGY.md) for the Reference Pfft and traceability.
 - [docs/SNOWFLAKES.md](docs/SNOWFLAKES.md) for event identity and artifacts.
 - [docs/QUALITY.md](docs/QUALITY.md) for progressive engineering gates.
@@ -47,6 +47,7 @@ go test ./internal/lawcatalog -run '^TestBuiltInCatalog$'
 go test . -run '^TestLawCLITextAndJSONFixtures$'
 go test ./internal/scenarioprobe -run '^TestAtemporalProbeHasNoAmbientOrEarthRequirements$'
 go test . -run '^TestScenarioCLITextAndJSONFixtures$'
+go test . -run '^TestHelpRoutes$'
 go vet ./...
 go run honnef.co/go/tools/cmd/staticcheck@v0.8.1 ./...
 go run golang.org/x/vuln/cmd/govulncheck@v1.7.0 ./...

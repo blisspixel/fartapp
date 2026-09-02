@@ -38,6 +38,24 @@ network-backed files where the host supports them. The byte limit is not a read
 deadline. Standard input and special or remote files can therefore wait on their
 providers; the probe performs no hidden timeout or background read.
 
+Portable named-file use is identical across supported systems:
+
+```console
+fartapp scenario validate scenario.json --format json
+```
+
+Standard input is explicit. POSIX shells can redirect it:
+
+```console
+fartapp scenario validate - --format json < scenario.json
+```
+
+PowerShell can pipe the same document:
+
+```powershell
+Get-Content -Raw scenario.json | fartapp scenario validate - --format json
+```
+
 ## Candidate document
 
 The wire schema is explicitly provisional:

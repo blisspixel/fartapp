@@ -17,16 +17,69 @@ Usage:
 Commands:
   list     List built-in candidate law contexts.
   inspect  Show one context and all eight capability axes.
+
+Help:
+  fartapp help law list
+  fartapp help law inspect
+
+Inspection is read-only and invokes no solver or realization. Text output is a
+current English presentation; stable IDs and JSON fields are locale-invariant
+engineering tokens, not a claim of shared language or meaning.
+
+Examples:
+  fartapp law list
+  fartapp law inspect conformance.relation.atemporal@v0alpha1
 `
 
-const lawListHelp = `Usage: fartapp law list [--format text|json]
+const lawListHelp = `List built-in candidate law contexts.
 
-List built-in candidate law contexts. Localized prose is optional metadata.
+Usage:
+  fartapp law list [--format text|json]
+
+Options:
+  --format text  Write concise text with optional English presentation metadata.
+  --format json  Write the complete locale-invariant typed catalog listing.
+  -h, --help     Show this help.
+
+Examples:
+  fartapp law list
+  fartapp law list --format json
+
+Exit status:
+  0  The built-in catalog was written successfully.
+  1  Usage, option, encoding, or detected output failure.
+
+Next:
+  Run 'fartapp law inspect <id@version>' to inspect every capability axis.
 `
 
-const lawInspectHelp = `Usage: fartapp law inspect <law-context-id[@version]> [--format text|json]
+const lawInspectHelp = `Inspect one candidate law-context revision and all eight capability axes.
 
-Inspect one exact law-context revision. An unversioned ID resolves only when the catalog contains one version.
+Usage:
+  fartapp law inspect <law-context-id[@version]> [--format text|json]
+
+Arguments:
+  law-context-id  Exact locale-invariant ID. Add @version for an exact revision.
+
+Options:
+  --format text  Write concise text with optional English presentation metadata.
+  --format json  Write the complete locale-invariant typed inspection.
+  -h, --help     Show this help.
+
+Resolution:
+  An unversioned ID resolves only when the built-in catalog contains one
+  matching version. Inspection does not invoke a solver or realization.
+
+Examples:
+  fartapp law inspect conformance.relation.atemporal@v0alpha1
+  fartapp law inspect earth.continuum.si --format json
+
+Exit status:
+  0  The requested catalog entry was written successfully.
+  1  Usage, option, resolution, encoding, or detected output failure.
+
+Recovery:
+  Run 'fartapp law list' to discover exact IDs and versions.
 `
 
 func runLaw(args []string, stdout, stderr io.Writer) int {
@@ -34,67 +87,71 @@ func runLaw(args []string, stdout, stderr io.Writer) int {
 		writeDiagnostic(stderr, "usage: fartapp law <list|inspect> [--format text|json]\n")
 		return 1
 	}
-	if len(args) == 1 && (args[0] == "help" || hasLawHelp(args)) {
+	if repeatedHelpRequest(args) {
+		writeDiagnostic(stderr, "invalid law help: --help may be specified only once\n")
+		return 1
+	}
+	if args[0] == "help" {
+		if len(args) != 1 {
+			writeDiagnostic(stderr, "usage: fartapp law help\n")
+			return 1
+		}
+		return writeText(stdout, stderr, lawHelp)
+	}
+	if isHelpRequest(args) {
 		return writeText(stdout, stderr, lawHelp)
 	}
 
 	switch args[0] {
 	case "list":
-		if hasLawHelp(args[1:]) {
-			return writeText(stdout, stderr, lawListHelp)
-		}
-		positional, format, err := parseOutputFormat(args[1:])
+		options, err := parseOutputOptions(args[1:])
 		if err != nil {
 			writeDiagnostic(stderr, "invalid law list: %v\n", err)
 			return 1
 		}
-		if len(positional) != 0 {
+		if len(options.positional) != 0 {
 			writeDiagnostic(stderr, "usage: fartapp law list [--format text|json]\n")
 			return 1
 		}
-		return writeValue(stdout, stderr, format, lawcatalog.List(), formatLawList)
-	case "inspect":
-		if hasLawHelp(args[1:]) {
-			return writeText(stdout, stderr, lawInspectHelp)
+		if options.help {
+			return writeText(stdout, stderr, lawListHelp)
 		}
-		positional, format, err := parseOutputFormat(args[1:])
+		return writeValue(stdout, stderr, options.format, lawcatalog.List(), formatLawList)
+	case "inspect":
+		options, err := parseOutputOptions(args[1:])
 		if err != nil {
 			writeDiagnostic(stderr, "invalid law inspect: %v\n", err)
 			return 1
 		}
-		if len(positional) != 1 {
+		if len(options.positional) > 1 || (!options.help && len(options.positional) != 1) {
 			writeDiagnostic(stderr, "usage: fartapp law inspect <law-context-id[@version]> [--format text|json]\n")
 			return 1
 		}
-		inspection, resolution := lawcatalog.Resolve(positional[0])
+		if options.help {
+			return writeText(stdout, stderr, lawInspectHelp)
+		}
+		inspection, resolution := lawcatalog.Resolve(options.positional[0])
 		switch resolution {
 		case lawcatalog.ResolutionAmbiguous:
 			writeDiagnostic(
 				stderr,
 				"ambiguous law context %s: specify id@version\n",
-				quoteInput(positional[0]),
+				quoteInput(options.positional[0]),
 			)
 			return 1
 		case lawcatalog.ResolutionNotFound:
-			writeDiagnostic(stderr, "unknown law context %s\n", quoteInput(positional[0]))
+			writeDiagnostic(stderr, "unknown law context %s\n", quoteInput(options.positional[0]))
 			return 1
 		case lawcatalog.ResolutionFound:
 		default:
 			writeDiagnostic(stderr, "resolve law context: internal resolution error\n")
 			return 1
 		}
-		return writeValue(stdout, stderr, format, inspection, formatLawInspection)
+		return writeValue(stdout, stderr, options.format, inspection, formatLawInspection)
 	default:
-		if hasLawHelp(args[1:]) {
-			return writeText(stdout, stderr, lawHelp)
-		}
 		writeDiagnostic(stderr, "unknown law command %s\n", quoteInput(args[0]))
 		return 1
 	}
-}
-
-func hasLawHelp(args []string) bool {
-	return hasHelpOption(args)
 }
 
 func formatLawList(document lawcatalog.ListDocument) string {

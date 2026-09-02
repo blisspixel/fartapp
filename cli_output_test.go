@@ -9,47 +9,49 @@ import (
 	"testing"
 )
 
-func TestParseOutputFormat(t *testing.T) {
+func TestParseOutputOptions(t *testing.T) {
 	tests := []struct {
 		name       string
 		args       []string
 		positional []string
 		format     outputFormat
+		help       bool
 		wantError  string
 	}{
 		{name: "default", args: []string{"value"}, positional: []string{"value"}, format: outputText},
 		{name: "separate json", args: []string{"--format", "json", "value"}, positional: []string{"value"}, format: outputJSON},
 		{name: "joined text", args: []string{"value", "--format=text"}, positional: []string{"value"}, format: outputText},
+		{name: "long help", args: []string{"--help"}, format: outputText, help: true},
+		{name: "short help after value", args: []string{"value", "-h"}, positional: []string{"value"}, format: outputText, help: true},
+		{name: "help with format", args: []string{"--format=json", "--help"}, format: outputJSON, help: true},
 		{name: "stdin", args: []string{"-"}, positional: []string{"-"}, format: outputText},
 		{name: "terminator", args: []string{"--", "--format=json"}, positional: []string{"--format=json"}, format: outputText},
+		{name: "help after terminator", args: []string{"--", "--help"}, positional: []string{"--help"}, format: outputText},
 		{name: "missing value", args: []string{"--format"}, wantError: "requires text or json"},
+		{name: "help consumed as value", args: []string{"--format", "--help"}, wantError: "unsupported format"},
 		{name: "empty joined value", args: []string{"--format="}, wantError: "unsupported format"},
 		{name: "unsupported", args: []string{"--format", "yaml"}, wantError: "unsupported format"},
 		{name: "duplicate mixed", args: []string{"--format=json", "--format", "text"}, wantError: "only once"},
+		{name: "duplicate help", args: []string{"--help", "-h"}, wantError: "only once"},
 		{name: "unknown option", args: []string{"--wat"}, wantError: "unknown option"},
+		{name: "help with value", args: []string{"--help=1"}, wantError: "unknown option"},
+		{name: "long single dash", args: []string{"-help"}, wantError: "unknown option"},
+		{name: "question help", args: []string{"-?"}, wantError: "unknown option"},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			positional, format, err := parseOutputFormat(test.args)
+			options, err := parseOutputOptions(test.args)
 			if test.wantError != "" {
 				if err == nil || !bytes.Contains([]byte(err.Error()), []byte(test.wantError)) {
 					t.Fatalf("error = %v, want containing %q", err, test.wantError)
 				}
 				return
 			}
-			if err != nil || fmt.Sprint(positional) != fmt.Sprint(test.positional) || format != test.format {
-				t.Fatalf("result = (%q, %v, %v), want (%q, %v, nil)", positional, format, err, test.positional, test.format)
+			if err != nil || fmt.Sprint(options.positional) != fmt.Sprint(test.positional) ||
+				options.format != test.format || options.help != test.help {
+				t.Fatalf("result = (%#v, %v), want positional %q format %v help %t", options, err, test.positional, test.format, test.help)
 			}
 		})
-	}
-}
-
-func TestHelpOptionHonorsTerminator(t *testing.T) {
-	if !hasHelpOption([]string{"value", "--help"}) || !hasHelpOption([]string{"-h"}) {
-		t.Fatal("help option not detected")
-	}
-	if hasHelpOption([]string{"--", "--help"}) || hasHelpOption(nil) {
-		t.Fatal("non-option help was detected")
 	}
 }
 

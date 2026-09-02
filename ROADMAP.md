@@ -51,7 +51,7 @@ a scientific, usability, accessibility, security, or quality gate.
 - [ ] Ratify Reference Pfft, occurrence, trace, reconstruction, re-enactment,
   record-nonce and `event_nonce` wire semantics, natural-language interpretation,
   Plumeprint, and Fartflake RFCs.
-- [ ] Ratify locale-neutral semantic identifiers, language packs, typography,
+- [ ] Ratify locale-invariant semantic identifiers, language packs, typography,
   nonhuman observer communication, translation loss, and locale parity RFCs.
 - [x] Version the current toy behavior as permanent exact-output fixtures, reject
   ambiguous and out-of-range input safely, test output failure, fuzz arguments,
@@ -66,7 +66,7 @@ Exit gate: a clean clone passes CI, the public history scan is clean, repository
 visibility is confirmed public, and planned systems are clearly labeled as
 planned.
 
-## v0.7: Capability-neutral Go oracle and first Earth-continuum profile
+## v0.7: Law-context Go oracle and first Earth-continuum specialization
 
 - [ ] Freeze biology-neutral `ref:rp1:v1`, its exact SI constant chain,
   conventional exterior, reference observer, comparison vector, uncertainty
@@ -89,7 +89,11 @@ planned.
   strictly parse file or stdin JSON, reject duplicate and unknown members, keep
   document validity separate from unratified realization admission, and prove
   the atemporal fixture uses no ambient or Earth default.
-- [ ] Add capability-neutral `scenario validate` and scenario refusal inspection
+- [x] Add dependency-free root and nested help for every and only implemented
+  command path. Distinguish the permanent v0.6 oracle from experimental v0.7
+  probes, label current English text as presentation, and keep JSON tokens
+  locale-invariant without claiming shared language or meaning.
+- [ ] Add profile-neutral `scenario validate` and scenario refusal inspection
   over the ratified full scenario report. Ship its minimal atemporal, observerless,
   nonconserving, recurrence-free, and no-implicit-bridge counterexamples in the
   same milestone.
@@ -110,6 +114,10 @@ Exit gate: zero-flow, adiabatic, isothermal, choking, positivity, conservation,
 and trusted blowdown fixtures pass. The biology-neutral reference fixture cannot
 silently enter a laboratory pressure regime. The walking skeleton is already
 fun and useful without Rust, a TUI, or a graphical application.
+A first-time operator can discover every implemented command from root help
+without receiving a planned command or an implicit Earth, body, observer,
+scientific-language, or realization default. Current English remains explicitly
+labeled as presentation.
 
 ## v0.8: Rust production core and typed CLI
 
@@ -227,8 +235,9 @@ TUI or graphical application.
   contradictory, unsafe, or scientifically unsupported episodes.
 - [ ] Prove that narration, localization, terminal size, accessibility, camera,
   and presentation streams cannot change the occurrence-result identity.
-- [ ] Add versioned human-language and nonhuman observer communication profiles
-  with explicit channel capabilities, ambiguity, loss, and refusal to map.
+- [ ] Add versioned communication profiles with explicit channel capabilities,
+  ambiguity, loss, and refusal to map. Human language is one optional profile,
+  not the reference class.
 - [ ] Test distributed, continuous, non-symbolic, non-compositional, stateful,
   and observer-coupled communication without assuming a universal meaning graph.
 - [ ] Prove a supplied scenario seed reconstructs the setting while a default
@@ -497,7 +506,7 @@ observables beyond tolerance. The complete application remains CPU-capable.
 - [ ] Freeze semantic versioning, command, JSON, JSONL, error-code, schema,
   archive-compatibility, deprecation, migration, supported-platform, minimum
   toolchain, release-line, and security-support contracts.
-- [ ] Complete at least one nonhuman, non-acoustic play path through typed CLI
+- [ ] Complete at least one nonsymbolic, non-acoustic play path through typed CLI
   and agent JSONL without fabricated social or Earth-discharge fields.
 - [ ] Complete compensated disabled-player testing, remediation, and retesting
   for the full CLI golden path without scoring penalties for accessibility aids.

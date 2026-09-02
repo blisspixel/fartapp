@@ -17,15 +17,22 @@ const (
 	outputJSON
 )
 
-func parseOutputFormat(args []string) ([]string, outputFormat, error) {
-	format := outputText
+type outputOptions struct {
+	positional []string
+	format     outputFormat
+	help       bool
+}
+
+func parseOutputOptions(args []string) (outputOptions, error) {
+	result := outputOptions{format: outputText}
 	seenFormat := false
+	seenHelp := false
 	optionsEnded := false
-	positional := make([]string, 0, len(args))
+	result.positional = make([]string, 0, len(args))
 	for index := 0; index < len(args); index++ {
 		argument := args[index]
 		if optionsEnded {
-			positional = append(positional, argument)
+			result.positional = append(result.positional, argument)
 			continue
 		}
 		if argument == "--" {
@@ -35,54 +42,49 @@ func parseOutputFormat(args []string) ([]string, outputFormat, error) {
 
 		var value string
 		switch {
+		case argument == "-h" || argument == "--help":
+			if seenHelp {
+				return outputOptions{}, fmt.Errorf("--help may be specified only once")
+			}
+			seenHelp = true
+			result.help = true
+			continue
 		case argument == "--format":
 			if seenFormat {
-				return nil, 0, fmt.Errorf("--format may be specified only once")
+				return outputOptions{}, fmt.Errorf("--format may be specified only once")
 			}
 			seenFormat = true
 			index++
 			if index == len(args) {
-				return nil, 0, fmt.Errorf("--format requires text or json")
+				return outputOptions{}, fmt.Errorf("--format requires text or json")
 			}
 			value = args[index]
 		case strings.HasPrefix(argument, "--format="):
 			if seenFormat {
-				return nil, 0, fmt.Errorf("--format may be specified only once")
+				return outputOptions{}, fmt.Errorf("--format may be specified only once")
 			}
 			seenFormat = true
 			value = strings.TrimPrefix(argument, "--format=")
 		case strings.HasPrefix(argument, "-") && argument != "-":
-			return nil, 0, fmt.Errorf("unknown option %s", quoteInput(argument))
+			return outputOptions{}, fmt.Errorf("unknown option %s", quoteInput(argument))
 		default:
-			positional = append(positional, argument)
+			result.positional = append(result.positional, argument)
 			continue
 		}
 
 		switch value {
 		case "text":
-			format = outputText
+			result.format = outputText
 		case "json":
-			format = outputJSON
+			result.format = outputJSON
 		default:
-			return nil, 0, fmt.Errorf(
+			return outputOptions{}, fmt.Errorf(
 				"unsupported format %s; expected text or json",
 				quoteInput(value),
 			)
 		}
 	}
-	return positional, format, nil
-}
-
-func hasHelpOption(args []string) bool {
-	for _, argument := range args {
-		if argument == "--" {
-			return false
-		}
-		if argument == "-h" || argument == "--help" {
-			return true
-		}
-	}
-	return false
+	return result, nil
 }
 
 func writeText(stdout, stderr io.Writer, output string) int {

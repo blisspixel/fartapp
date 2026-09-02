@@ -11,16 +11,29 @@ import (
 	"github.com/blisspixel/fartapp/internal/scenarioprobe"
 )
 
-const scenarioHelp = `F.A.R.T. Lab experimental scenario probe
+const scenarioHelp = `F.A.R.T. Lab experimental scenario-document probe
 
 Usage:
   fartapp scenario validate <scenario.json|-> [--format text|json]
 
 Commands:
-  validate  Validate one capability-neutral probe without realization.
+  validate  Validate a bounded document of law-scoped capability requests.
+
+Help:
+  fartapp help scenario validate
+
+The provisional envelope supplies no implicit Earth or other world, source,
+body, species, gas, geometry, time, observer, identity, mapping, seed, admission
+policy, or solver.
+
+Text output is a current English presentation. Stable IDs and JSON fields are
+locale-invariant engineering tokens, not a claim of shared language or meaning.
+
+Example:
+  fartapp scenario validate testdata/scenarios/atemporal-probe.json
 `
 
-const scenarioValidateHelp = `Validate one capability-neutral scenario probe without realization.
+const scenarioValidateHelp = `Validate a bounded document of law-scoped capability requests without realization.
 
 Usage:
   fartapp scenario validate <scenario.json|-> [--format text|json]
@@ -46,7 +59,7 @@ Exit status:
 
 Examples:
   fartapp scenario validate testdata/scenarios/atemporal-probe.json
-  fartapp scenario validate - --format json < scenario.json
+  fartapp scenario validate testdata/scenarios/atemporal-probe.json --format json
 
 Recovery:
   Correct the first reported diagnostic and run validation again. JSON output
@@ -58,35 +71,43 @@ func runScenario(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		writeDiagnostic(stderr, "usage: fartapp scenario validate <scenario.json|-> [--format text|json]\n")
 		return 1
 	}
-	if len(args) == 1 && (args[0] == "help" || hasHelpOption(args)) {
+	if repeatedHelpRequest(args) {
+		writeDiagnostic(stderr, "invalid scenario help: --help may be specified only once\n")
+		return 1
+	}
+	if args[0] == "help" {
+		if len(args) != 1 {
+			writeDiagnostic(stderr, "usage: fartapp scenario help\n")
+			return 1
+		}
+		return writeText(stdout, stderr, scenarioHelp)
+	}
+	if isHelpRequest(args) {
 		return writeText(stdout, stderr, scenarioHelp)
 	}
 	if args[0] != "validate" {
-		if hasHelpOption(args[1:]) {
-			return writeText(stdout, stderr, scenarioHelp)
-		}
 		writeDiagnostic(stderr, "unknown scenario command %s\n", quoteInput(args[0]))
 		return 1
 	}
-	if hasHelpOption(args[1:]) {
-		return writeText(stdout, stderr, scenarioValidateHelp)
-	}
-	positional, format, err := parseOutputFormat(args[1:])
+	options, err := parseOutputOptions(args[1:])
 	if err != nil {
 		writeDiagnostic(stderr, "invalid scenario validate: %v\n", err)
 		return 1
 	}
-	if len(positional) != 1 {
+	if len(options.positional) > 1 || (!options.help && len(options.positional) != 1) {
 		writeDiagnostic(stderr, "usage: fartapp scenario validate <scenario.json|-> [--format text|json]\n")
 		return 1
 	}
-
-	report := readAndValidateScenario(positional[0], stdin)
-	if report.Valid() {
-		return writeValue(stdout, stderr, format, report, formatScenarioReport)
+	if options.help {
+		return writeText(stdout, stderr, scenarioValidateHelp)
 	}
-	if format == outputJSON {
-		if writeValue(stdout, stderr, format, report, formatScenarioReport) != 0 {
+
+	report := readAndValidateScenario(options.positional[0], stdin)
+	if report.Valid() {
+		return writeValue(stdout, stderr, options.format, report, formatScenarioReport)
+	}
+	if options.format == outputJSON {
+		if writeValue(stdout, stderr, options.format, report, formatScenarioReport) != 0 {
 			return 1
 		}
 		return 1

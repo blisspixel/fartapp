@@ -60,6 +60,7 @@ executable check exists.
 | `CLI-001` | Valid toy levels have exact permanent output | Golden table and executable test | Preserve as Go and Rust oracle fixtures |
 | `CLI-002` | Arbitrary input cannot panic or produce unbounded output | Seeded Go fuzz target | Nightly retained-corpus fuzzing |
 | `CLI-003` | Diagnostics never contaminate successful stdout | Exact fixtures and fuzz property | JSONL framing and broken-pipe conformance |
+| `CLI-004` | Root, family, leaf, and topic help expose only implemented command paths without semantic work | Byte-identical route fixtures, tripwire input, executable test, and fuzz property | Generate CLI, manual, and completion help from one typed Rust command model |
 | `ONT-001` | Catalog inspection requires no Earth discharge role | Executable atemporal relation-only Go catalog fixture | Extend the proof to scenario, archive, certificate, and every adapter with dedicated counterexamples |
 | `CAP-001` | Capability reports keep eight decision axes independent | Exact localized-text and deterministic JSON Go fixtures | Cross-adapter schema and refusal conformance |
 | `SCN-001` | Scenario-probe validity does not imply realization or admission | Exact atemporal and unavailable-Earth text and JSON fixtures | Ratified scenario admission and refusal conformance |

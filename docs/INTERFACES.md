@@ -1,9 +1,9 @@
 # Interface and release strategy
 
-F.A.R.T. Lab is CLI first by design. The command line is the complete,
-scriptable scientific instrument and a finished way to play. Later interfaces
-improve observation and sensation without becoming alternate sources of physics,
-story truth, or hidden capability.
+F.A.R.T. Lab is CLI first by design. The planned 1.0 command line is specified
+as the complete, scriptable scientific instrument and a finished way to play.
+Later interfaces improve observation and sensation without becoming alternate
+sources of physics, story truth, or hidden capability.
 
 ## Permanent promotion rule
 
@@ -126,8 +126,13 @@ device feature, or protocol method.
 
 ## Interface 1: CLI Lab
 
-The CLI stands on its own for play, science, automation, regression, and people
-who prefer terminals.
+The CLI is designed to stand on its own for play, science, automation,
+regression, and people who prefer terminals.
+
+Commands written as `fart` in this section describe the planned installed 1.0
+product unless a subsection explicitly says they exist now. The current Go
+oracle is named `fartapp`; it implements the permanent intensity path, law
+catalog inspection, scenario-document validation, and their exact help routes.
 
 ### Immediate play
 
@@ -141,7 +146,8 @@ fart play start challenge:dry-c-sharp-01 --seed 42 --json
 fart play act PLAY_HANDLE --action set_pressure --value "180 kPa" --json
 ```
 
-When `fart` runs in an interactive terminal, it launches Quick Play. With
+Planned 1.0 behavior: when `fart` runs in an interactive terminal, it launches
+Quick Play. With
 redirected input or output, it prints concise help and exits without prompting.
 No play command writes into the current directory unless the player explicitly
 requests `--record` or `--output`.
@@ -158,7 +164,7 @@ Natural language is a first-class authoring surface for humans and agents, not a
 second simulation engine. A request compiles into one reviewable typed proposal:
 
 Display language never enters an event identifier, field name, regime code, or
-archive comparison. Locale packs and nonhuman communication profiles follow
+archive comparison. Locale packs and optional communication profiles follow
 [LOCALIZATION.md](LOCALIZATION.md); the complete typed machine surface remains
 usable without any natural-language model.
 
@@ -263,8 +269,9 @@ fart man event-run
 fart explain-error FART-E-PHYS-0042
 ```
 
-Help leads with working examples, then purpose, usage, arguments, units,
-defaults, validity, output, exit codes, and related commands. Errors contain a
+Help begins with a clear purpose and usage, then includes applicable arguments,
+units, defaults, validity, output, working examples, exit codes, recovery, and
+related commands. Errors contain a
 stable code, the bad field or token, why it failed, what remains unchanged, and
 the most useful recovery command. `doctor` checks installation provenance,
 configuration, directories, terminal features, audio capability, plugin and
@@ -350,11 +357,17 @@ The current v0.7 probe is:
 ```console
 fartapp scenario validate testdata/scenarios/atemporal-probe.json
 fartapp scenario validate - --format json
+fartapp --help
+fartapp help law inspect
+fartapp help scenario validate
 ```
 
 It accepts only the provisional strict JSON envelope documented in
 [SCENARIO_PROBE.md](SCENARIO_PROBE.md). The broader command family below remains
-planned.
+planned. Root and nested help enumerate every and only current command path.
+They identify the permanent v0.6 string oracle separately from experimental
+v0.7 probes and label current English text as presentation rather than a shared
+language assumption.
 
 ```console
 fart scenario init -o reference-enclosure.toml

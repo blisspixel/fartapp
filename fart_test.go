@@ -145,11 +145,24 @@ func TestExecutable(t *testing.T) {
 	if got, want := string(output), "braaap (respectable)\n"; got != want {
 		t.Fatalf("output = %q, want %q", got, want)
 	}
+
+	command = exec.Command(binaryPath, "--help")
+	output, err = command.CombinedOutput()
+	if err != nil || string(output) != rootHelp {
+		t.Fatalf("run executable root help: %v\n%s", err, output)
+	}
+
+	command = exec.Command(binaryPath, "help", "scenario", "validate")
+	output, err = command.CombinedOutput()
+	if err != nil || string(output) != scenarioValidateHelp {
+		t.Fatalf("run executable help: %v\n%s", err, output)
+	}
 }
 
 func FuzzRun(f *testing.F) {
 	for _, seed := range []string{
-		"", "0", "1", "5", "6", "+1", "01", " 1 ", "nope", "text", "json", "--help",
+		"", "0", "1", "5", "6", "+1", "01", " 1 ", "nope", "text", "json", "help", "-h", "--help",
+		"law", "list", "inspect", "scenario", "validate",
 		"earth.continuum.si", "earth.continuum.si@v0alpha1",
 		"conformance.relation.atemporal",
 		`{"schema":"fart.scenario-probe/v0alpha1","law_context_set":{"contexts":[{"id":"conformance.relation.atemporal","version":"v0alpha1","scope_id":"s0"}]},"scope":{"id":"s0"},"capability_requests":[{"id":"catalog.inspect"}]}`,
@@ -170,6 +183,7 @@ func FuzzRun(f *testing.F) {
 			{"fartapp", input},
 			{"fartapp", "law", "inspect", input},
 			{"fartapp", "law", "list", "--format", input},
+			{"fartapp", "help", input},
 			{"fartapp", "scenario", "validate", "-", "--format", "json"},
 		}
 		for _, args := range argumentSets {
@@ -185,7 +199,10 @@ func FuzzRun(f *testing.F) {
 				t.Fatalf("mixed stdout %q and stderr %q", stdout1, stderr1)
 			}
 			limit := 256
-			if len(args) >= 2 && args[1] == "scenario" {
+			if code1 == 0 && len(args) >= 2 &&
+				(args[1] == "help" || args[1] == "-h" || args[1] == "--help") {
+				limit = 8 * 1024
+			} else if len(args) >= 2 && args[1] == "scenario" {
 				limit = 32 * 1024
 			} else if code1 == 0 && len(args) >= 2 && args[1] == "law" {
 				limit = 16 * 1024

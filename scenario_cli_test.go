@@ -277,7 +277,7 @@ func TestScenarioCLIHelpAndUsage(t *testing.T) {
 		"65,536 bytes",
 		"Exit status:",
 		"scenario validate testdata/scenarios/atemporal-probe.json",
-		"scenario validate - --format json < scenario.json",
+		"scenario validate testdata/scenarios/atemporal-probe.json --format json",
 		"Recovery:",
 	} {
 		if !strings.Contains(scenarioValidateHelp, required) {
@@ -300,6 +300,11 @@ func TestScenarioCLIHelpAndUsage(t *testing.T) {
 		{args: []string{"fartapp", "scenario", "validate"}, wantCode: 1, wantStderr: "usage: fartapp scenario validate <scenario.json|-> [--format text|json]\n"},
 		{args: []string{"fartapp", "scenario", "validate", "-", "extra"}, wantCode: 1, wantStderr: "usage: fartapp scenario validate <scenario.json|-> [--format text|json]\n"},
 		{args: []string{"fartapp", "scenario", "validate", "-", "--unknown"}, wantCode: 1, wantStderr: "invalid scenario validate: unknown option \"--unknown\"\n"},
+		{args: []string{"fartapp", "scenario", "validate", "-", "--unknown", "--help"}, wantCode: 1, wantStderr: "invalid scenario validate: unknown option \"--unknown\"\n"},
+		{args: []string{"fartapp", "scenario", "unknown", "--help"}, wantCode: 1, wantStderr: "unknown scenario command \"unknown\"\n"},
+		{args: []string{"fartapp", "scenario", "validate", "--format", "--help"}, wantCode: 1, wantStderr: "invalid scenario validate: unsupported format \"--help\"; expected text or json\n"},
+		{args: []string{"fartapp", "scenario", "validate", "--format", "xml", "--help"}, wantCode: 1, wantStderr: "invalid scenario validate: unsupported format \"xml\"; expected text or json\n"},
+		{args: []string{"fartapp", "scenario", "validate", "-", "extra", "--help"}, wantCode: 1, wantStderr: "usage: fartapp scenario validate <scenario.json|-> [--format text|json]\n"},
 	}
 	for _, test := range tests {
 		var stdout bytes.Buffer

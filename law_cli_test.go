@@ -147,7 +147,6 @@ func TestLawCLITextAndJSONFixtures(t *testing.T) {
 		{name: "list help after format", args: []string{"fartapp", "law", "list", "--format", "json", "--help"}, want: lawListHelp},
 		{name: "inspect help", args: []string{"fartapp", "law", "inspect", "--help"}, want: lawInspectHelp},
 		{name: "inspect short help after id", args: []string{"fartapp", "law", "inspect", "earth.continuum.si", "-h"}, want: lawInspectHelp},
-		{name: "unknown help", args: []string{"fartapp", "law", "nope", "--help"}, want: lawHelp},
 	}
 
 	for _, tt := range tests {
@@ -244,12 +243,19 @@ func TestLawCLIErrors(t *testing.T) {
 	}{
 		{name: "missing command", args: []string{"fartapp", "law"}, want: "usage: fartapp law <list|inspect> [--format text|json]\n"},
 		{name: "unknown command", args: []string{"fartapp", "law", "nope"}, want: "unknown law command \"nope\"\n"},
+		{name: "unknown command with help", args: []string{"fartapp", "law", "nope", "--help"}, want: "unknown law command \"nope\"\n"},
 		{name: "list positional", args: []string{"fartapp", "law", "list", "extra"}, want: "usage: fartapp law list [--format text|json]\n"},
+		{name: "list help after terminator", args: []string{"fartapp", "law", "list", "--", "--help"}, want: "usage: fartapp law list [--format text|json]\n"},
 		{name: "missing format", args: []string{"fartapp", "law", "list", "--format"}, want: "invalid law list: --format requires text or json\n"},
+		{name: "help as format", args: []string{"fartapp", "law", "list", "--format", "--help"}, want: "invalid law list: unsupported format \"--help\"; expected text or json\n"},
 		{name: "invalid format", args: []string{"fartapp", "law", "list", "--format", "xml"}, want: "invalid law list: unsupported format \"xml\"; expected text or json\n"},
 		{name: "duplicate format", args: []string{"fartapp", "law", "list", "--format", "json", "--format", "text"}, want: "invalid law list: --format may be specified only once\n"},
+		{name: "duplicate help", args: []string{"fartapp", "law", "list", "--help", "-h"}, want: "invalid law list: --help may be specified only once\n"},
+		{name: "unknown option with help", args: []string{"fartapp", "law", "list", "--unknown", "--help"}, want: "invalid law list: unknown option \"--unknown\"\n"},
 		{name: "missing id", args: []string{"fartapp", "law", "inspect"}, want: "usage: fartapp law inspect <law-context-id[@version]> [--format text|json]\n"},
 		{name: "extra id", args: []string{"fartapp", "law", "inspect", "a", "b"}, want: "usage: fartapp law inspect <law-context-id[@version]> [--format text|json]\n"},
+		{name: "extra id with help", args: []string{"fartapp", "law", "inspect", "a", "b", "--help"}, want: "usage: fartapp law inspect <law-context-id[@version]> [--format text|json]\n"},
+		{name: "inspect help after terminator", args: []string{"fartapp", "law", "inspect", "--", "--help"}, want: "unknown law context \"--help\"\n"},
 		{name: "unknown id", args: []string{"fartapp", "law", "inspect", "missing.context"}, want: "unknown law context \"missing.context\"\n"},
 		{name: "hostile id bounded", args: []string{"fartapp", "law", "inspect", longID}, want: "unknown law context \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...\"\n"},
 	}
@@ -311,9 +317,9 @@ func TestLawCLIOutputFailures(t *testing.T) {
 }
 
 func TestLawHelpers(t *testing.T) {
-	positional, format, err := parseOutputFormat([]string{"earth.continuum.si", "--format", "json"})
-	if err != nil || len(positional) != 1 || positional[0] != "earth.continuum.si" || format != outputJSON {
-		t.Fatalf("parseOutputFormat = (%q, %v, %v)", positional, format, err)
+	options, err := parseOutputOptions([]string{"earth.continuum.si", "--format", "json"})
+	if err != nil || len(options.positional) != 1 || options.positional[0] != "earth.continuum.si" || options.format != outputJSON {
+		t.Fatalf("parseOutputOptions = (%#v, %v)", options, err)
 	}
 	if got := joinModuleIDs(nil); got != "" {
 		t.Fatalf("joinModuleIDs(nil) = %q, want empty", got)

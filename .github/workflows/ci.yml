@@ -68,6 +68,7 @@ jobs:
           go test . -run '^TestLawCLITextAndJSONFixtures$'
           go test ./internal/scenarioprobe -run '^TestAtemporalProbeHasNoAmbientOrEarthRequirements$'
           go test . -run '^TestScenarioCLITextAndJSONFixtures$'
+          go test . -run '^TestHelpRoutes$'
 
       - name: Check formatting
         shell: bash

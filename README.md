@@ -12,9 +12,13 @@ recognition, confusion, and trademark review before brand lock.
 
 F.A.R.T. Lab is the world's most overengineered and fun fart app. It is a vulgar
 comedy game, a serious simulation laboratory, and a Universal Flatulence
-Translator for connecting beings, worlds, dimensions, and universes through the
-absurd possibility that release, surprise, and institutional overanalysis might
-give radically different observers something to laugh about.
+Translator for attempting mappings among declared law contexts, structures,
+relations, signals, and representations. When compatible participants and humor
+exist, release, surprise, and institutional overanalysis might connect beings,
+worlds, dimensions, or universes. Universal describes an extensible protocol
+for mappings and exact failures to map. It does not claim universal physics,
+semantics, observability, or humor. A shared laugh is the comedy premise, not a
+schema requirement.
 
 “Fart” is the comic umbrella, not the scientific ontology. The engine begins
 with only a Lab-local record identity, a law-context set, a scope, and
@@ -52,6 +56,12 @@ one opaque scope, and explicit capability requests without applying defaults or
 performing a realization. It does not contain a physical solver yet, and it
 labels that absence explicitly. The next goal is not a graphical wrapper. It is
 a genuinely excellent, cross-platform command-line laboratory.
+
+Run `fartapp --help` or `fartapp help` to discover every command implemented in
+the current oracle. Topic routes such as `fartapp help law inspect` and
+`fartapp help scenario validate` are byte-identical to their leaf help. Help
+lists no planned command as executable and performs no simulation, file read,
+catalog resolution, environment probe, or network action.
 
 The wider product will be built in this order:
 
@@ -181,7 +191,7 @@ non-normative [French standards debate](docs/DEBAT_NORMATIF.fr.md).
 
 ## The scientific premise
 
-The capability-neutral bounded occurrence contract is:
+The profile-neutral bounded occurrence contract is:
 
 > The Lab identifies a finite record of a realization under one or more
 > versioned law contexts. Those contexts alone declare whether source-law
@@ -310,7 +320,7 @@ event can be wet and choked at the same time.
 | Solar | A stellar law and source profile produces an energy release through a declared comic interface |
 
 These English joke labels are localized presentation aliases over stable,
-locale-neutral Earth-regime codes. Archives, APIs, scores, and certificates
+locale-invariant Earth-regime codes. Archives, APIs, scores, and certificates
 never use a body word, Earth language, or species assumption as the scientific
 identity.
 
@@ -670,8 +680,8 @@ in [docs/VERIFICATION.md](docs/VERIFICATION.md). Brand, public remix, and
 merchandise plans are in [docs/BRAND.md](docs/BRAND.md),
 [docs/COMMUNITY.md](docs/COMMUNITY.md), and
 [docs/MERCHANDISE.md](docs/MERCHANDISE.md), with mark status in
-[TRADEMARKS.md](TRADEMARKS.md). Locale-neutral semantics, human languages, and
-nonhuman observer communication are specified in
+[TRADEMARKS.md](TRADEMARKS.md). Locale-invariant semantic tokens and optional
+symbolic or nonsymbolic communication profiles are specified in
 [docs/LOCALIZATION.md](docs/LOCALIZATION.md).
 
 ## Proof, not vibes

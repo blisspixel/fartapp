@@ -15,6 +15,16 @@ func run(args []string, stdout, stderr io.Writer) int {
 }
 
 func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
+	if len(args) >= 2 && repeatedHelpRequest(args[1:]) {
+		writeDiagnostic(stderr, "invalid help: --help may be specified only once\n")
+		return 1
+	}
+	if len(args) == 2 && isHelpRequest(args[1:]) {
+		return writeText(stdout, stderr, rootHelp)
+	}
+	if len(args) >= 2 && args[1] == "help" {
+		return runHelp(args[2:], stdout, stderr)
+	}
 	if len(args) >= 2 && args[1] == "law" {
 		return runLaw(args[2:], stdout, stderr)
 	}

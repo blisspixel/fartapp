@@ -9,7 +9,7 @@ government laboratories, and official project documentation are preferred.
 
 ## Decisions changed by the research
 
-- The capability-neutral bounded core is Lab-local record identity, law-context set,
+- The profile-neutral bounded core is Lab-local record identity, law-context set,
   scope, and provenance. Outside-formalism cases fail explicitly.
   Emitter, interface, exterior, dimensional equations, human anatomy, and Earth
   physics are capability-selected profile structures.
@@ -464,6 +464,11 @@ comic quality.
 
 - [Command Line Interface Guidelines](https://clig.dev/) supports a human-first,
   composable, predictable command experience.
+- [GNU argument syntax conventions](https://sourceware.org/glibc/manual/latest/html_node/Argument-Syntax.html)
+  support `--` as the option terminator and `-` as a conventional standard
+  stream operand.
+- [Go signal documentation](https://go.dev/pkg/os/signal/#hdr-SIGPIPE)
+  defines the native fd 1 and fd 2 `SIGPIPE` behavior preserved by the CLI.
 - [The Update Framework](https://theupdateframework.io/) defines signed metadata
   roles and defenses against rollback, freeze, and mix-and-match attacks used by
   the standalone update design.
