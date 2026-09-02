@@ -81,7 +81,7 @@ Their candidate ownership is:
 
 | Current field | Candidate owning contract |
 | --- | --- |
-| `law_definition` | Catalog declaration profile with exact authority and separate maturity |
+| `law_definition` | Catalog Registration Profile after separately ratified Declaration Authority Resolution, Declaration Attribution Scope, and Catalog Lookup Closure; maturity remains separate |
 | `implementation` | Provider or build profile bound to implementation revision and platform contract |
 | `closure` | No generic field; optional formal-system specification-sufficiency or law-specific closure profile |
 | `applicability` | Case or operation evaluation with exact request binding and validity rules |
@@ -133,8 +133,9 @@ The profile composes with the shared evaluation disposition:
 A future product evaluator must not convert invalid input, unresolved authority,
 ambiguous scope, incomplete lookup, or omission into `not_registered`. The
 structural experiment validates binding syntax and result shape only. It does
-not establish that a lookup was closed or authoritative. Those product semantics
-must exist before a CLI or wire projection can be ratified.
+not resolve an authority reference, establish declaration-attribution scope,
+close a catalog lookup domain, or produce a closed-lookup witness. Those product
+semantics must exist before a CLI or wire projection can be ratified.
 
 The package defines no maturity value or ordering. It makes no source-law truth,
 scientific validity, implementation, applicability, evidence, authorization,
@@ -145,6 +146,56 @@ Current `candidate`, `declared`, `not-declared`, and
 `not-applicable/application_capability` values are not mapped into this profile.
 They currently conflate registration presence, authority, and maturity, so every
 existing report byte remains provisional and unchanged.
+
+## Finite catalog snapshot experiment
+
+The internal, non-wire experiment in `internal/cataloglookup` stores a
+bounded immutable copy of positive structural registrations under one exact
+catalog-scope reference. `SnapshotLookup` accepts only an exact same-scope
+binding, decides membership against every stored registration, and retains the
+snapshot with the structural result.
+
+Within this experiment, `registered` means the complete binding is in the
+supplied in-process set. `not_registered` means only that the binding is absent
+from that set. An empty snapshot can therefore produce `not_registered`, but
+only relative to its explicitly empty set. A scope mismatch is an error and
+never becomes absence. Input order has no semantic effect, duplicate entries
+are rejected, and the package API does not expose the underlying structural
+`catalogregistration.Result`. Callers must retain `SnapshotLookup` to validate
+the snapshot-relative membership claim.
+
+This finite-snapshot property does not establish that an external catalog was
+fully supplied, that a catalog-scope or authority reference resolves, that an
+attribution rule exists, or that any registration is true. It defines no source
+time, chronology, person, institution, lawgiver, observer, object, quantity,
+language, network, universe, operation, evidence, trust, or maturity. It adds no
+wire form and changes no current output byte.
+
+## Catalog lookup closure gate
+
+The product meaning requires three later contracts:
+
+- **Declaration Authority Resolution:** exactly one matching authority record in
+  the exact catalog-scope revision, with no implied legitimacy, permission,
+  jurisdiction, trust, authorship, ownership, personhood, agency, or source-law
+  standing.
+- **Declaration Attribution Scope:** an exact revisioned Lab rule defining which
+  registration records count as attributed to the resolved authority, with no
+  implicit alias, delegation, hierarchy, inheritance, or cross-authority
+  equivalence.
+- **Catalog Lookup Closure:** a finite Lab software-enumeration property over one
+  exact catalog-scope revision and attribution scope. It is not a claim that
+  reality, possible capabilities, or an external catalog are finite or complete.
+
+A future query-bound closed-lookup witness must retain the exact binding,
+resolved authority record, attribution-scope revision, lookup-contract revision,
+and closed membership domain. Only zero matching records in that domain may
+produce product `not_registered`. A positive result must identify its exact
+matching registration record. Invalid bindings, unresolved or ambiguous
+authority, unresolved attribution scope, open or incomplete content,
+unavailable content, and conflicting duplicates remain typed owner-profile
+outcomes or diagnostics. They are never shared evaluation-disposition kinds and
+never aliases for absence.
 
 ## Current provisional tagged variants
 

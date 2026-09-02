@@ -584,6 +584,27 @@ comic quality.
 - [cargo-dist configuration](https://axodotdev.github.io/cargo-dist/book/reference/config.html)
   is a possible release scaffold that must be pinned and reviewed before use.
 
+## Catalog identity and bounded lookup
+
+- [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986) separates identifying a
+  resource from interacting with it and leaves scheme-specific resolution to
+  the scheme. The Lab therefore treats opaque references as identity material,
+  not proof that anything was accessed, resolved, or trusted. Current candidate
+  tokens are not URIs and reserve no URI scheme.
+- [SHACL](https://www.w3.org/TR/shacl/) demonstrates that a closed constraint
+  names the exact property dimension it closes. F.A.R.T. Lab applies the same
+  discipline to catalog membership without adopting RDF or SHACL as a product
+  format: closure over one supplied membership set is not closure over an
+  external catalog or over possible capabilities.
+- [RFC 6920](https://www.rfc-editor.org/rfc/rfc6920) is relevant to a future
+  algorithm-qualified content identity. A digest can bind a name to bytes, but
+  it cannot establish authority, completeness, meaning, or truth. No snapshot
+  digest or canonical encoding is adopted by the current internal experiment.
+- [RFC 9162](https://www.rfc-editor.org/rfc/rfc9162) defines Merkle inclusion
+  proofs and append-only consistency proofs. Those do not by themselves prove
+  general nonmembership, so the current bounded experiment checks the complete
+  in-process set and leaves authenticated remote lookup to later review.
+
 ## Language, scripts, and observer communication
 
 - [Unicode Locale Data Markup Language](https://unicode.org/reports/tr35/)

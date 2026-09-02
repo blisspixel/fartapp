@@ -62,10 +62,13 @@ candidate now enforces that evaluated results contain one outcome accepted by
 their owning contract while non-evaluated results contain none. It does not
 create a shared outcome vocabulary or new protocol. A second internal, non-wire
 experiment separates exact catalog registration from maturity and from the
-current conflated `law_definition` tokens. Neither experiment is a new CLI or
-wire contract. The project does not contain a physical solver yet, and it labels
-that absence explicitly. The next goal is not a graphical wrapper. It is a
-genuinely excellent, cross-platform command-line laboratory.
+current conflated `law_definition` tokens. A third internal experiment performs
+exact membership decisions against a bounded immutable in-process set supplied
+by its caller while retaining that snapshot as the result witness. None of these
+experiments is a new CLI or wire contract. The project does not contain a
+physical solver yet, and it labels that absence explicitly. The next goal is not
+a graphical wrapper. It is a genuinely excellent, cross-platform command-line
+laboratory.
 
 Run `fartapp --help` or `fartapp help` to discover every command implemented in
 the current oracle. Topic routes such as `fartapp help law inspect` and

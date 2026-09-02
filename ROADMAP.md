@@ -101,11 +101,21 @@ planned.
   exact catalog scope, declaration authority, subject revision, and capability.
   Keep `registered`, `not_registered`, and `not_evaluated` structural, omit
   maturity, and preserve the current `law_definition` bytes without mapping.
+- [x] Add an internal, non-wire finite catalog snapshot experiment. Defensively
+  copy a bounded set of positive registrations, decide only exact same-scope
+  membership, retain the snapshot witness, and interpret `not_registered` only
+  as absence from that supplied in-process set. Do not claim external catalog
+  completeness, authority resolution, attribution scope, or truth.
+- [ ] Ratify Declaration Authority Resolution, Declaration Attribution Scope,
+  and Catalog Lookup Closure separately. Require a query-bound closed-lookup
+  witness before product `not_registered`; keep invalid input, unresolved or
+  ambiguous authority, unresolved attribution scope, and open, incomplete, or
+  unavailable content distinct. Require no source-law time, observer,
+  participant, object, physical quantity, localized presentation, or operation.
 - [ ] Ratify the presentation-free Catalog Registration Profile and expose its
-  read-only CLI result only after exact authority-reference resolution and
-  attribution scope within a closed Lab catalog, product identifier grammar,
-  migration semantics, and exact positive, negative, cross-authority,
-  atemporal, and minimal-opaque fixtures agree.
+  read-only CLI result only after those three gates, product identifier grammar,
+  migration semantics, and exact positive, negative, cross-authority, atemporal,
+  and minimal-opaque fixtures agree.
 - [ ] Ratify implementation inventory, optional specification-sufficiency,
   applicability, claim evidence, authorization, execution-planning, and
   resource-admission profiles separately. Do not call the current eight-field
@@ -198,6 +208,9 @@ labeled as presentation.
 - [ ] Separate semantic keys from display strings, use locale-aware quantities,
   and test pseudo-locales, grapheme width, bidirectional text, and hostile
   translated input without changing case-result identity.
+- [ ] Ratify a presentation-selection profile with an explicit requested locale,
+  fallback policy, fallback report, and no-presentation result. Catalog order,
+  first-authored text, and ambient locale never select semantic behavior.
 - [ ] Implement and canonical-JSON-round-trip tiny ontology fixtures for a
   non-gaseous transfer, a discrete graph, an atemporal or partially ordered
   law, a distributed nonlinguistic observer, an occurrence with no emitter or
@@ -260,7 +273,9 @@ fail safely, and cancellation leaves either one valid archive or no archive.
 - [ ] Promote the v0.7 walking skeleton into `fart quick` with one authored
   world, source, cultural stake, consequence, causal explanation, runnable
   counterfactual, certificate, witness, reconstruction, and inspect path.
-- [ ] Make bare `fart` always start with the banal Reference Pfft. Pressure
+- [ ] Make interactive bare `fart` start through a named Quick Play product
+  profile with the banal Reference Pfft. Redirected or noninteractive CLI,
+  machine output, MCP, and A2A never inherit that Earth profile. Pressure
   vessels, extreme sources, graphic payloads, and catastrophe stay explicit.
 - [ ] Pilot the ordinary-event comedy, comprehension, grossness-control, and
   accessibility evaluation without showing participants the project pitch.
@@ -539,6 +554,9 @@ observables beyond tolerance. The complete application remains CPU-capable.
 - [ ] Ship named reviewed BCP 47 locale packs spanning left-to-right,
   right-to-left, and representative Han, kana, and Hangul script behavior, plus
   pseudo-locales and a complete locale-invariant machine surface.
+- [ ] Ship the ratified presentation-selection profile without implicit English,
+  first-authored, catalog-order, or operating-system-locale effects on machine
+  output, identity, registration, lookup, evidence, or case results.
 - [ ] Freeze a consistent command grammar with short play modes, noun-then-verb
   scientific groups, contextual examples, stable error codes, suggestions that
   never auto-execute, `doctor`, configuration provenance, schemas, manuals, and

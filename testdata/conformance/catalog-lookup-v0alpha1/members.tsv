@@ -1,0 +1,12 @@
+snapshot_id	catalog_id	catalog_revision	authority_id	authority_revision	subject_id	subject_revision	capability
+multi	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.first
+multi	catalog.scope	r1	authority.b	r2	subject.b	r2	capability.middle
+multi	catalog.scope	r1	authority.c	r3	subject.c	r3	capability.last
+order_forward	order.scope	r1	authority.a	r1	subject.a	r1	capability.a
+order_forward	order.scope	r1	authority.b	r1	subject.b	r1	capability.b
+order_reverse	order.scope	r1	authority.b	r1	subject.b	r1	capability.b
+order_reverse	order.scope	r1	authority.a	r1	subject.a	r1	capability.a
+duplicate	duplicate.scope	r1	authority.a	r1	subject.a	r1	capability.a
+duplicate	duplicate.scope	r1	authority.a	r1	subject.a	r1	capability.a
+member_scope_mismatch	other.scope	r1	authority.a	r1	subject.a	r1	capability.a
+invalid_member	invalid.scope	r1	authority.a	r1	subject.a	r1	Capability

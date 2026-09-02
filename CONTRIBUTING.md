@@ -47,6 +47,7 @@ pwsh ./scripts/check-links.ps1
 pwsh ./scripts/check-media.ps1
 go mod verify
 go build ./...
+go test ./internal/cataloglookup -run '^TestLookupCorpus$'
 go test ./internal/catalogregistration -run '^TestRegistrationCorpus$'
 go test ./internal/evaluation -run '^TestDispositionCorpus$'
 go test ./internal/lawcatalog -run '^TestBuiltInCatalog$'
@@ -69,6 +70,7 @@ go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
 go test ./...
 go test -shuffle=on -count=20 ./...
 go test -run=^$ -fuzz=FuzzRun -fuzztime=5s .
+go test -run=^$ -fuzz=FuzzFiniteSnapshotAndLookup -fuzztime=5s ./internal/cataloglookup
 go test -run=^$ -fuzz=FuzzRegistrationConstructors -fuzztime=5s ./internal/catalogregistration
 go test -run=^$ -fuzz=FuzzDispositionConstructors -fuzztime=5s ./internal/evaluation
 go test -run=^$ -fuzz=FuzzValidate -fuzztime=5s ./internal/scenarioprobe

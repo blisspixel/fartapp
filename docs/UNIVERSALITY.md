@@ -110,6 +110,14 @@ forbids an outcome. Generic `unknown` and `undetermined` are not shared process
 states. Case, measurement, operation, backend, policy, and budget bindings may
 be absent or unevaluated and belong to enclosing contracts when applicable.
 
+A finite catalog snapshot can close membership only over the exact set stored
+inside that Lab artifact. `not_registered` then means only that this set contains
+no exact binding match. Product Catalog Lookup Closure must additionally bind an
+exact catalog-scope revision, resolved declaration-authority reference, and
+declaration-attribution scope. Neither form is ontological completeness. An
+authority reference is an attribution key and need not identify a person,
+institution, agent, owner, lawgiver, organism, location, or universe.
+
 No current field may be collapsed into or inferred solely from another. A
 fictional axiom can be implemented and formally checked without being
 empirically validated. A real-world model can be defined yet unavailable on a

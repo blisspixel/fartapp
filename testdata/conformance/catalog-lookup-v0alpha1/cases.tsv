@@ -1,0 +1,14 @@
+case_id	snapshot_id	catalog_id	catalog_revision	authority_id	authority_revision	subject_id	subject_revision	capability	expect
+first_member	multi	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.first	registered
+middle_member	multi	catalog.scope	r1	authority.b	r2	subject.b	r2	capability.middle	registered
+last_member	multi	catalog.scope	r1	authority.c	r3	subject.c	r3	capability.last	registered
+absent_capability	multi	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.absent	not_registered
+absent_authority_id	multi	catalog.scope	r1	authority.other	r1	subject.a	r1	capability.first	not_registered
+absent_authority_revision	multi	catalog.scope	r1	authority.a	r9	subject.a	r1	capability.first	not_registered
+absent_subject_id	multi	catalog.scope	r1	authority.a	r1	subject.other	r1	capability.first	not_registered
+absent_subject_revision	multi	catalog.scope	r1	authority.a	r1	subject.a	r9	capability.first	not_registered
+empty_snapshot	empty	empty.scope	r1	authority.a	r1	subject.a	r1	capability.a	not_registered
+catalog_id_mismatch	multi	other.scope	r1	authority.a	r1	subject.a	r1	capability.first	scope_mismatch
+catalog_revision_mismatch	multi	catalog.scope	r9	authority.a	r1	subject.a	r1	capability.first	scope_mismatch
+forward_order	order_forward	order.scope	r1	authority.a	r1	subject.a	r1	capability.a	registered
+reverse_order	order_reverse	order.scope	r1	authority.a	r1	subject.a	r1	capability.a	registered
