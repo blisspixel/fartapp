@@ -97,10 +97,19 @@ planned.
   outcome. Represent no generic `unknown` or `undetermined` disposition, require
   no source time or familiar domain concept, and preserve every current wire
   byte.
-- [ ] Ratify catalog authority, implementation inventory, optional
-  specification-sufficiency, applicability, claim evidence, authorization,
-  execution-planning, and resource-admission profiles separately. Do not call
-  the current eight-field projection a universal assessment core.
+- [x] Add an internal, non-wire Catalog Registration Profile experiment over one
+  exact catalog scope, declaration authority, subject revision, and capability.
+  Keep `registered`, `not_registered`, and `not_evaluated` structural, omit
+  maturity, and preserve the current `law_definition` bytes without mapping.
+- [ ] Ratify the presentation-free Catalog Registration Profile and expose its
+  read-only CLI result only after exact authority-reference resolution and
+  attribution scope within a closed Lab catalog, product identifier grammar,
+  migration semantics, and exact positive, negative, cross-authority,
+  atemporal, and minimal-opaque fixtures agree.
+- [ ] Ratify implementation inventory, optional specification-sufficiency,
+  applicability, claim evidence, authorization, execution-planning, and
+  resource-admission profiles separately. Do not call the current eight-field
+  projection a universal assessment core.
 - [ ] Ratify the singular capability-report wire contract only after the
   required profile gates plus exact law-context binding, deterministic set
   ordering, optional presentation profile, class-compatible evidence records,

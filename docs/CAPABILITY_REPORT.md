@@ -105,6 +105,47 @@ failures, not scientific insufficiency.
 Omission from a capability collection means only “not reported.” It never means
 `law_does_not_define`, impossible, incompatible, refused, or unavailable.
 
+## Catalog registration experiment
+
+The first owner-profile experiment in `internal/catalogregistration` remains
+internal and non-wire. One four-part binding contains three exact revisioned
+references plus one capability token:
+
+- the catalog scope named by the binding;
+- the declaration authority to which a registration is attributed;
+- the subject revision for which registration is queried;
+- the capability token.
+
+Revision is identity material, not source-law time or chronological ordering.
+Declaration authority is catalog attribution. It does not establish authorship,
+personhood, legal ownership, legitimacy, jurisdiction, trust, or universal
+standing. The current opaque reference does not distinguish a Lab application,
+law context, or any other authority category. Those variants need separate
+review before product integration.
+
+The profile composes with the shared evaluation disposition:
+
+- `not_evaluated` has no registration-presence outcome;
+- evaluated `registered` can produce a positive structural `Registration` value;
+- evaluated `not_registered` cannot produce that value and applies only to the
+  exact binding.
+
+A future product evaluator must not convert invalid input, unresolved authority,
+ambiguous scope, incomplete lookup, or omission into `not_registered`. The
+structural experiment validates binding syntax and result shape only. It does
+not establish that a lookup was closed or authoritative. Those product semantics
+must exist before a CLI or wire projection can be ratified.
+
+The package defines no maturity value or ordering. It makes no source-law truth,
+scientific validity, implementation, applicability, evidence, authorization,
+backend, resource, case, occurrence, realization, or operation claim. Its token
+grammar and TSV cases are bounded Go-domain candidates, not product protocol.
+
+Current `candidate`, `declared`, `not-declared`, and
+`not-applicable/application_capability` values are not mapped into this profile.
+They currently conflate registration presence, authority, and maturity, so every
+existing report byte remains provisional and unchanged.
+
 ## Current provisional tagged variants
 
 The Go validator currently treats each status and reason combination as a

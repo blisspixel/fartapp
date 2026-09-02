@@ -1,0 +1,17 @@
+case_id	action	catalog_id	catalog_revision	authority_id	authority_revision	subject_id	subject_revision	capability	expect
+registered	registered	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	valid_registered
+not_registered	not_registered	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.missing	valid_not_registered
+not_evaluated	not_evaluated	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	valid_not_evaluated
+authority_revision_identity	authority_revision_distinct	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	distinct_binding
+catalog_revision_identity	catalog_revision_distinct	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	distinct_binding
+subject_revision_identity	subject_revision_distinct	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	distinct_binding
+capability_identity	capability_distinct	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	distinct_binding
+catalog_id_identity	catalog_id_distinct	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	distinct_binding
+authority_id_identity	authority_id_distinct	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	distinct_binding
+subject_id_identity	subject_id_distinct	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	distinct_binding
+valid_binding	binding	catalog.scope	r1	authority.a	r1	subject.a	r1	capability.a	valid_binding
+empty_capability	binding	catalog.scope	r1	authority.a	r1	subject.a	r1		invalid_token
+uppercase_authority	binding	catalog.scope	r1	Authority	r1	subject.a	r1	capability.a	invalid_token
+punctuation_capability	binding	catalog.scope	r1	authority.a	r1	subject.a	r1	:	invalid_token
+adjacent_separator_subject	binding	catalog.scope	r1	authority.a	r1	subject..a	r1	capability.a	invalid_token
+non_ascii_catalog	binding	catalog.é	r1	authority.a	r1	subject.a	r1	capability.a	invalid_token
