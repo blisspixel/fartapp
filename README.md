@@ -704,7 +704,10 @@ For the detailed scientific contract, see
 see [docs/INTERFACES.md](docs/INTERFACES.md). The research basis and model
 boundaries are collected in [docs/RESEARCH.md](docs/RESEARCH.md). The bounded
 meaning of “universal” and its negative-space conformance matrix are in
-[docs/UNIVERSALITY.md](docs/UNIVERSALITY.md). Audio,
+[docs/UNIVERSALITY.md](docs/UNIVERSALITY.md). The eight-axis assessment core and
+singular capability-report ratification gate are recorded in
+[docs/CAPABILITY_REPORT.md](docs/CAPABILITY_REPORT.md); the current `v0alpha1`
+report remains provisional. Audio,
 Symphony Mode, and radio are specified in [docs/AUDIO.md](docs/AUDIO.md). Agent
 play and interoperability are specified in
 [docs/AGENT_PLAY.md](docs/AGENT_PLAY.md). Cultural and public-interest safeguards

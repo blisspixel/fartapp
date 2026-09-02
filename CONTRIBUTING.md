@@ -25,6 +25,8 @@ Read:
 - [docs/SNOWFLAKES.md](docs/SNOWFLAKES.md) for record identity, optional
   context-occurrence identity, and artifacts.
 - [docs/QUALITY.md](docs/QUALITY.md) for progressive engineering gates.
+- [docs/CAPABILITY_REPORT.md](docs/CAPABILITY_REPORT.md) for the report
+  ratification candidate, unresolved semantics, and conformance gate.
 
 New capabilities must appear in the CLI before the terminal or native layers.
 New narrative must react to retained claims and cannot alter the authoritative

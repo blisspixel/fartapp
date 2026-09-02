@@ -92,8 +92,17 @@ planned.
   definition, implementation, closure, applicability, evidence, trust, backend
   feasibility, and resource feasibility separate without requiring Earth roles
   or localized prose.
-- [ ] Ratify the capability-report wire schema before calling it canonical or
-  freezing it for the Rust service and protocol adapters.
+- [ ] Ratify the eight-axis capability-assessment core after tightening the
+  identifier grammar, defining `unknown` versus `undetermined` and process
+  non-evaluation, publishing shared bounds, and passing an independent positive
+  and negative conformance corpus. Keep presentation and evidence payloads out
+  of this core.
+- [ ] Ratify the singular capability-report wire contract only after the
+  preceding assessment-core gate plus exact law-context binding, deterministic
+  set ordering, optional presentation profile, class-compatible evidence
+  records, referential closure, normative prose, a Draft 2020-12 machine schema,
+  and exact Go fixtures. Keep law-list, law-inspection, scenario, operation,
+  case, and adapter envelopes provisional.
 - [x] Add a dependency-free, read-only `scenario validate` probe for one exact
   law revision, one opaque scope, and explicit capability requests. Bound and
   strictly parse file or stdin JSON, reject duplicate and unknown members, keep
