@@ -57,9 +57,13 @@ intensity from 1 to 5 and prints a deterministic, rated emission. A new read-onl
 law catalog lists and inspects candidate law contexts through the same typed
 localized-text and JSON report. A strict scenario probe validates one exact law,
 one opaque scope, and explicit capability requests without applying defaults or
-performing a realization. It does not contain a physical solver yet, and it
-labels that absence explicitly. The next goal is not a graphical wrapper. It is
-a genuinely excellent, cross-platform command-line laboratory.
+performing a realization. An internal, non-wire evaluation-disposition
+candidate now enforces that evaluated results contain one outcome accepted by
+their owning contract while non-evaluated results contain none. It does not
+create a shared outcome vocabulary or new protocol. The project does not contain
+a physical solver yet, and it labels that absence explicitly. The next goal is
+not a graphical wrapper. It is a genuinely excellent, cross-platform
+command-line laboratory.
 
 Run `fartapp --help` or `fartapp help` to discover every command implemented in
 the current oracle. Topic routes such as `fartapp help law inspect` and
@@ -111,20 +115,24 @@ conformance.relation.atemporal@v0alpha1 [schema-conformance]
 conformance.opaque.minimal@v0alpha1 [schema-conformance]
 ```
 
-`law inspect earth.continuum.si` reports law definition, implementation,
-closure, applicability, evidence, trust, backend feasibility, and resource
-feasibility independently. `--format json` emits the same typed candidate report
-as deterministic compact JSON. This experimental inspection report names one
-exact versioned law context. Coupled occurrences will use the complete ratified
-`LawContextSet`, scope-assignment, and inter-law coupling contracts instead of a
-misleading list of bare IDs. Neither report requires an Earth discharge role or
-localized prose.
+`law inspect earth.continuum.si` reports eight distinct, non-collapsing alpha
+fields for law definition, implementation, closure, applicability, evidence,
+trust, backend feasibility, and resource feasibility. They are not one
+universal assessment algebra; their future catalog, provider, formal-system,
+case, evidence, authorization, execution-planning, and resource-admission
+contracts are being separated. `--format json` emits the same typed candidate
+report as deterministic compact JSON. This experimental inspection report names
+one exact versioned law context. Coupled occurrences will use the complete
+ratified `LawContextSet`, scope-assignment, and inter-law coupling contracts
+instead of a misleading list of bare IDs. Neither report requires an Earth
+discharge role or localized prose.
 
 `conformance.relation.atemporal` is a schema-conformance counterexample, not a
-solver or an empirical claim about reality. It proves that catalog inspection
-works without ordering, geometry, dimensions, units, a localized source, or an
-observer before the Earth oracle grows further. Software evidence IDs resolve
-inside each inspection to exact Go package and test targets that CI executes.
+solver or an empirical claim about reality. Its fixture demonstrates catalog
+inspection without ordering, geometry, dimensions, units, a localized source,
+or an observer before the Earth oracle grows further. Software evidence IDs
+resolve inside each inspection to exact Go package and test targets that CI
+executes.
 
 `conformance.opaque.minimal` is a schema-conformance probe whose dedicated JSON
 inspection and minimal scenario report contain no localized presentation
@@ -305,23 +313,25 @@ state and a versioned classification policy, not hidden presets.
 law context set + bounded case scope
       |
       v
-participants, couplings, rules, measurement interactions, or declared absences
+applicable retained relations, claims, and optional interactions
       |
       v
-immutable provenance graph under declared law and measurement contexts
+Lab provenance graph under the declared applicable contexts
       |
-      +-> read-only view profiles and generic representations
-      +-> compatible adapters: audio, visuals, haptics, narrative, damage
+      +-> optional views and representations
+      +-> compatible optional adapters and presentations
 ```
 
-Every branch cites the same authoritative Lab account. State, relations,
-measured claims, audio blocks, narrative claims, and rendered frames may use
-different applicable orderings and resolutions, but every projection records
-its inputs, transformation, uncertainty, and hash. A causal edge is claimed only
-where the selected law context defines it. Measurement back-action is committed
-before an applicable realization and enters the case-result identity. A view or
-presentation preference is read-only. Interface layers may render, sonify, and
-explain retained claims, but they must not invent a second scientific account.
+Every enabled branch cites the same authoritative Lab account. State, measured
+claims, uncertainty, audio, narrative, rendered frames, and their orderings
+appear only when selected contracts define them. Each projection records its
+applicable inputs, transformation, declared loss, and identity material. A
+causal edge is claimed only where a selected law context defines it. An accepted
+measurement interaction is committed earlier in the Lab journal than the result
+it affects; that transaction order is not source-law time. A read-only view or
+presentation preference cannot change the Lab account. Interface layers may
+render, sonify, and explain retained claims, but they must not invent a second
+scientific account.
 
 ## Earth discharge regime classification
 
@@ -428,10 +438,12 @@ The idea is inspired by the way QR-Bloom makes a 3D voxel tree readable as a QR
 code from above. This project will use an independent record-derived algorithm
 and will not copy its code, weights, shapes, or restricted source assets.
 
-The Lab encounter was unique. The record remains. Source-law recurrence stays a
-separate claim. See the complete [snowflake and artifact contract](docs/SNOWFLAKES.md).
+The Lab record identity is unique. No source-law occurrence, encounter, or
+recurrence claim follows. See the complete
+[snowflake and artifact contract](docs/SNOWFLAKES.md).
 
-The lab gives memorable names to real constraints:
+The Earth-continuum discharge profile gives memorable names to its declared
+constraints:
 
 - **The Choked Cheek Criterion:** the aperture reaches sonic mass flow at the
   critical pressure ratio.
@@ -440,8 +452,9 @@ The lab gives memorable names to real constraints:
 - **The No-Sound-in-Vacuum Lemma:** recoil and transported matter can remain, but
   an external acoustic wave cannot propagate without a medium. Visibility still
   requires particles, condensate, radiation, plasma, or another declared model.
-- **Conservation of Ass:** expelled mass, momentum, and energy must be accounted
-  for in the reservoir, plume, payload, boundaries, and environment.
+- **Conservation of Ass:** where the selected law defines these conserved
+  quantities, the declared control volume accounts for mass, momentum, and
+  energy across its reservoir, plume, payload, boundaries, and environment.
 
 ## Ways to play
 
@@ -455,10 +468,11 @@ The lab gives memorable names to real constraints:
   interdimensional television. The story director reacts only to
   context-scoped retained claims and never rerolls a polite result into a
   disaster.
-- **Chill Mode:** sparse admitted operations, long quiet intervals, excellent
-  radio, and slow visual art derived from retained claims and representations.
-  Earth profiles may add fields, vortices, spectra, uncertainty, and closing
-  ledgers. It has no score, grind, or prerecorded emission menu.
+- **Chill Mode:** sparse admitted operations or retained-claim pacing under a
+  Lab scheduler, with no score, grind, or prerecorded emission menu. A selected
+  presentation profile may add intervals, silence, radio, music, visual art, or
+  worlds. Earth profiles may add fields, vortices, spectra, uncertainty, and
+  closing ledgers.
 - **Freestyle Lab:** edit every supported law, scope, coupling, measurement,
   view, representation, and capability-selected extension, with units only
   where they exist.
@@ -516,11 +530,13 @@ The central learning loop is short enough to remain a game:
    solution, representation, or declared refusal.
 5. Review the evidence, then transfer the idea to a compatible context.
 
-The player learns by testing an explanation or relation, not by memorizing a wall
-of equations. Dimension-safe types prevent nonsense inputs, similarity enables
-scaling puzzles, committed streams make results reconstructable, and provenance
-makes every punchline auditable. Advanced theory earns a place only when it
-changes a player action, an observable, or a test.
+The player learns by testing an explanation or relation, not by memorizing a
+wall of equations. Typed structural validation rejects inputs outside the
+selected contract. Where a law declares dimensional quantities, dimension-safe
+types and similarity enable scaling puzzles. Committed streams make supported
+results reconstructable, and provenance makes every punchline auditable.
+Advanced theory earns a place only when it changes a player action, an
+observable, or a test.
 
 ## CLI Lab
 
@@ -578,11 +594,11 @@ not an animation that happens to display numbers. Like htop, it makes a large
 live system legible through stable spatial regions, sortable instruments,
 keyboard-first drill-down, compact status, and immediate anomaly visibility.
 
-The overview arranges generic case, law, scope, claim, measurement,
-view, comparison, invariant, uncertainty, provenance, solver, and proof
-instruments. A capability-driven registry adds a relation, dependency, or
-timeline view as applicable. For the Earth
-discharge profile those include:
+The minimum overview contains only the applicable outer-report or retained-record
+metadata. A capability-driven registry adds claim, measurement, observer/view,
+comparison, invariant, uncertainty, provenance, solver, proof, relation,
+dependency, or timeline instruments only when their contracts define them. For
+the Earth discharge profile those include:
 
 - Reservoir pressure, temperature, volume, mass, and energy.
 - Aperture area, compliance, mass flow, Mach number, and structural margin.
@@ -597,11 +613,12 @@ discharge profile those include:
 - Chill Mode pacing, field-art selection, music bus, presentation density, and
   unobtrusive proof status.
 
-Every pane can focus, sort, filter, freeze, compare, inspect provenance, explain
-the highlighted value, and copy the equivalent CLI command. Wide terminals show
-the coupled system at once. Standard terminals preserve the primary ledger and
-field views. Compact terminals use tabs. Below minimum size, the program gives
-clear guidance and offers append-only plain watch output.
+Every displayed pane supports the applicable subset of focus, sort, filter,
+freeze, compare, provenance inspection, explanation, and equivalent CLI command.
+Wide terminals show compatible instruments together. Standard and compact
+terminals prioritize declared instruments without inventing ledger, field, or
+timeline views. Below minimum size, the program gives clear guidance and offers
+append-only plain watch output.
 
 It will support modern terminals on Windows, macOS, and Linux, detect terminal
 capabilities, and provide reduced-color and ASCII fallbacks. Every action must
@@ -625,15 +642,15 @@ particle, deposition, consequence, and haptic projection responds continuously
 to the same occurrence history already inspectable in the CLI. The app adds a
 world and a feel. It does not add secret physics.
 
-Native Chill Mode lets compatible occurrences and mathematical structures
-breathe for long sessions. Music carries the atmosphere while low-attention
-occurrences or relations appear through capability-selected representations.
-In the Earth Reference Enclosure, that can mean ordinary subsonic events plus
+Native Chill Mode presents sparse operations or retained-claim pacing through
+the selected scheduler and presentation profiles. Music, silence, visual art,
+worlds, and presentation duration are optional. In the Earth Reference
+Enclosure, a human-audiovisual profile can add ordinary subsonic events,
 pressure fields, pathlines, vortices, spectra, Plumeprints, Fartflakes,
 uncertainty, and conservation as slow visual art. Bubble modes appear only when
 the later verified underwater pack is installed. Other profiles receive no
-invented Earth fields, geometry, audio, or emitter. Chill remains scoreless,
-offline, and free of engagement mechanics.
+invented Earth fields, geometry, audio, emitter, or temporal pacing. Chill
+remains scoreless, offline, and free of engagement mechanics.
 
 ## Long-term progression concept
 
@@ -704,8 +721,9 @@ For the detailed scientific contract, see
 see [docs/INTERFACES.md](docs/INTERFACES.md). The research basis and model
 boundaries are collected in [docs/RESEARCH.md](docs/RESEARCH.md). The bounded
 meaning of “universal” and its negative-space conformance matrix are in
-[docs/UNIVERSALITY.md](docs/UNIVERSALITY.md). The eight-axis assessment core and
-singular capability-report ratification gate are recorded in
+[docs/UNIVERSALITY.md](docs/UNIVERSALITY.md). The evaluation-disposition
+candidate, owner-profile decomposition, and singular capability-report
+ratification gate are recorded in
 [docs/CAPABILITY_REPORT.md](docs/CAPABILITY_REPORT.md); the current `v0alpha1`
 report remains provisional. Audio,
 Symphony Mode, and radio are specified in [docs/AUDIO.md](docs/AUDIO.md). Agent

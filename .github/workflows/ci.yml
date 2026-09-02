@@ -61,9 +61,10 @@ jobs:
       - name: Build executable
         run: go build ./...
 
-      - name: Verify registered schema evidence
+      - name: Verify registered contract evidence
         shell: bash
         run: |
+          go test ./internal/evaluation -run '^TestDispositionCorpus$'
           go test ./internal/lawcatalog -run '^TestBuiltInCatalog$'
           go test . -run '^TestLawCLITextAndJSONFixtures$'
           go test ./internal/lawcatalog -run '^TestMinimalOpaqueContextHasNoLocalizedPresentationOrOptionalStructuralModule$'
@@ -107,6 +108,7 @@ jobs:
         shell: bash
         run: |
           go test -run=^$ -fuzz=FuzzRun -fuzztime=5s .
+          go test -run=^$ -fuzz=FuzzDispositionConstructors -fuzztime=5s ./internal/evaluation
           go test -run=^$ -fuzz=FuzzValidate -fuzztime=5s ./internal/scenarioprobe
 
       - name: Repeat tests in shuffled order

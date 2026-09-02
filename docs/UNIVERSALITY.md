@@ -97,22 +97,25 @@ equations, symmetries, invariants, conserved currents, observations,
 interventions, and representations. This list is extensible and does not imply
 that the concepts are mutually independent or meaningful in every context.
 
-The Lab keeps eight questions separate for every requested capability:
+The current Go report keeps eight useful fields distinct: law definition,
+implementation, closure, applicability, evidence, trust, backend feasibility,
+and resource feasibility. They do not form one universal assessment algebra.
+They are an alpha projection across future catalog, provider, optional
+formal-system, case or operation, claim-evidence, authorization,
+execution-planning, and resource-admission contracts.
 
-1. Does the selected law define it?
-2. Is an implementation available?
-3. Does the requested model have closure where closure is meaningful?
-4. Is it applicable to this case and its measurement interactions?
-5. What evidence supports the exact claim?
-6. Does trust and policy permit the operation?
-7. Can the selected backend meet its precision and determinism contract?
-8. Can the declared resource budget support it?
+The smallest shared evaluation candidate distinguishes only `evaluated`, which
+requires one outcome owned by the selected profile, from `not_evaluated`, which
+forbids an outcome. Generic `unknown` and `undetermined` are not shared process
+states. Case, measurement, operation, backend, policy, and budget bindings may
+be absent or unevaluated and belong to enclosing contracts when applicable.
 
-A “no” or “not applicable” on one axis does not silently answer another.
-Fictional axioms can be implemented and mathematically checked without being
-empirically validated. A real-world model can be scientifically defined yet
-unavailable on the selected backend. A document can be valid while no requested
-operation is admissible. Realization is only one optional operation kind.
+No current field may be collapsed into or inferred solely from another. A
+fictional axiom can be implemented and formally checked without being
+empirically validated. A real-world model can be defined yet unavailable on a
+selected backend. A document can be valid while no operation was requested.
+Realization is only one optional operation kind. The decomposition gate is in
+[CAPABILITY_REPORT.md](CAPABILITY_REPORT.md).
 
 ## Identity and impermanence
 

@@ -92,17 +92,21 @@ planned.
   definition, implementation, closure, applicability, evidence, trust, backend
   feasibility, and resource feasibility separate without requiring Earth roles
   or localized prose.
-- [ ] Ratify the eight-axis capability-assessment core after tightening the
-  identifier grammar, defining `unknown` versus `undetermined` and process
-  non-evaluation, publishing shared bounds, and passing an independent positive
-  and negative conformance corpus. Keep presentation and evidence payloads out
-  of this core.
+- [x] Implement an internal, non-wire evaluation-disposition candidate in which
+  `evaluated` requires one profile-owned outcome and `not_evaluated` forbids an
+  outcome. Represent no generic `unknown` or `undetermined` disposition, require
+  no source time or familiar domain concept, and preserve every current wire
+  byte.
+- [ ] Ratify catalog authority, implementation inventory, optional
+  specification-sufficiency, applicability, claim evidence, authorization,
+  execution-planning, and resource-admission profiles separately. Do not call
+  the current eight-field projection a universal assessment core.
 - [ ] Ratify the singular capability-report wire contract only after the
-  preceding assessment-core gate plus exact law-context binding, deterministic
-  set ordering, optional presentation profile, class-compatible evidence
-  records, referential closure, normative prose, a Draft 2020-12 machine schema,
-  and exact Go fixtures. Keep law-list, law-inspection, scenario, operation,
-  case, and adapter envelopes provisional.
+  required profile gates plus exact law-context binding, deterministic set
+  ordering, optional presentation profile, class-compatible evidence records,
+  referential closure, normative prose, a Draft 2020-12 machine schema, and
+  exact Go fixtures. Keep law-list, law-inspection, scenario, operation, case,
+  and adapter envelopes provisional.
 - [x] Add a dependency-free, read-only `scenario validate` probe for one exact
   law revision, one opaque scope, and explicit capability requests. Bound and
   strictly parse file or stdin JSON, reject duplicate and unknown members, keep
@@ -166,9 +170,9 @@ labeled as presentation.
 - [ ] Implement the canonical in-process `PlayService` reducer, read-only view
   projector, measurement-interaction boundary, knowledge policy, and typed
   action model inside `fart-services`.
-- [ ] Implement one `CapabilityService` and typed `CapabilityReport` separating
-  law concepts, implementation, closure, applicability, evidence grade, trust,
-  backend feasibility, and resource refusal for every adapter.
+- [ ] Implement one `CapabilityService` whose typed report composes only the
+  applicable catalog, provider, formal-system, case, evidence, authorization,
+  execution-planning, and resource-admission profiles for every adapter.
 - [ ] Route the walking skeleton through `PlayService`; adapters cannot import
   solver mutation APIs directly.
 - [ ] Match all versioned Go oracle fixtures within documented tolerances.
@@ -269,9 +273,10 @@ TUI or graphical application.
   provenance. Context-occurrence claims remain an optional capability.
 - [ ] Add `fart broadcast`, immutable retained-evidence playback, transcript,
   and `.fartshow` episode archives.
-- [ ] Add `fart chill` as a scoreless, sparse, offline ambient stream using the
-  same operation and evidence contracts, record nonces, radio, and recording
-  policy.
+- [ ] Add `fart chill` as a scoreless, sparse, offline Lab stream using the same
+  applicable operation and evidence contracts. Record nonces and recording
+  policy remain explicit; pacing, radio, music, silence, visual art, and worlds
+  are optional scheduler or presentation profiles.
 - [ ] Maintain a curated seed museum and a regression corpus for dull, repeated,
   contradictory, unsafe, or scientifically unsupported episodes.
 - [ ] Prove that narration, localization, terminal size, accessibility, camera,
@@ -410,9 +415,11 @@ fail safely, and human CLI play remains offline and requires no network.
   distortion, accessibility, evidence-status, and loss metadata before 2D or 3D
   artifact formats.
 - [ ] Implement versioned evidence and artifact views for Plumeprints.
-- [ ] Map normalized source histories, interface modes, vortex and impulse
-  skeletons, species, payload, deposition, observer response, active groups,
-  uncertainty, and ledger state through typed provenance.
+- [ ] Map only applicable retained structures, relations, or features through
+  typed provenance. The Earth-discharge artifact profile may add normalized
+  source histories, interface modes, vortex and impulse skeletons, species,
+  payload, deposition, observer response, active groups, uncertainty, and
+  ledger state.
 - [ ] Implement the independent Fartflake generator with deterministic topology,
   LOD, mesh, thumbnail, and terminal outputs.
 - [ ] Encode only a safe content-addressed record or retained-trace reference in
@@ -574,14 +581,15 @@ product's identity.
 
 ## 2.0: Terminal Lab
 
-- [ ] Add `fart-tui` with generic case, law, scope, claim, measurement, view,
-  comparison, invariant, uncertainty, provenance, solver, and proof panes plus
-  capability-selected Earth discharge, score, radio, Chill, agent, timeline,
-  translation, and Broadcast views.
-- [ ] Make the overview an htop-style live scientific instrument with stable
-  spatial panes, dense scan paths, sortable instruments, focus, filter, freeze,
-  compare, provenance drill-down, uncertainty, solver health, ledger closure,
-  regime transitions, live Plumeprint, and copyable CLI equivalents.
+- [ ] Add `fart-tui` with a minimum outer-report or retained-record surface.
+  Attach claim, measurement, observer/view, comparison, invariant, uncertainty,
+  solver, proof, Earth discharge, score, radio, Chill, agent, timeline,
+  translation, and Broadcast panes only through declared capabilities.
+- [ ] Make the overview an htop-style live instrument with stable spatial panes,
+  dense scan paths, sortable instruments, focus, filter, and copyable CLI
+  equivalents. Add compare, provenance drill-down, uncertainty, solver health,
+  ledger closure, regime transitions, and live Plumeprint only when the selected
+  profiles define them.
 - [ ] Support wide, standard, compact, and minimum layouts.
 - [ ] Support Unicode and explicitly labeled ASCII transliteration or fallback
   locales, truecolor through reduced color, keyboard-only, remappable keys,
@@ -602,7 +610,8 @@ product's identity.
 - [ ] Complete compensated disabled-player testing, remediation, and retesting
   across interactive and append-only TUI paths.
 - [ ] Open RP-1 and the deliberate no-occurrence conformance case with no gas,
-  geometry, acoustics, mass, or localized emitter without empty Earth-only panes.
+  geometry, acoustics, mass, localized emitter, measurement, observer, time,
+  solver, score, narrative, or presentation pane unless declared.
 
 Exit gate: Terminal Lab has feature parity with CLI services, adds no solver or
 story branches, and passes native terminal tests on all supported systems.
@@ -620,9 +629,10 @@ story branches, and passes native terminal tests on all supported systems.
   non-acoustic conformance case. It must not fabricate a room, emitter,
   geometry, sound, haptics, or Earth-only pane.
 - [ ] Build the full native Chill Mode with sparse admitted operations,
-  retained-claim presentations, restrained
-  radio mixing, slow field and topology art, science overlays, world continuity,
-  and independent motion, flashing, grossness, audio, and display-sleep controls.
+  retained-claim pacing, and optional scheduler and presentation profiles for
+  radio mixing, field or topology art, science overlays, and world continuity.
+  Provide independent motion, flashing, grossness, audio, and display-sleep
+  controls whenever those channels are present.
 - [ ] Use one curated and inspectable discharge path from pfft through supported
   dry, wet, choked, and underexpanded laboratory cases.
 - [ ] Show live values, active groups, regime causes, uncertainty, and proof.

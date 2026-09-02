@@ -1,0 +1,13 @@
+case_id	action	owner	outcome	expect
+evaluated_available	evaluated	implementation	available	valid
+evaluated_unavailable	evaluated	implementation	unavailable	valid
+evaluated_invalid	evaluated	implementation	invalid	invalid_outcome
+evaluated_missing_outcome	evaluated	implementation	-	invalid_outcome
+evaluated_authorized	evaluated	authorization	permitted	valid
+cross_owner_outcome	evaluated	authorization	available	invalid_outcome
+evaluated_no_validator	evaluated_no_validator	implementation	available	missing_validator
+not_evaluated	not_evaluated	implementation	-	valid
+not_evaluated_with_outcome	not_evaluated	implementation	available	invalid_disposition
+zero_value	zero	implementation	-	invalid_disposition
+forged_not_evaluated_outcome	forged	implementation	available	invalid_disposition
+forged_unknown_kind	forged_kind	implementation	-	invalid_disposition

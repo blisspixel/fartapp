@@ -25,8 +25,9 @@ Read:
 - [docs/SNOWFLAKES.md](docs/SNOWFLAKES.md) for record identity, optional
   context-occurrence identity, and artifacts.
 - [docs/QUALITY.md](docs/QUALITY.md) for progressive engineering gates.
-- [docs/CAPABILITY_REPORT.md](docs/CAPABILITY_REPORT.md) for the report
-  ratification candidate, unresolved semantics, and conformance gate.
+- [docs/CAPABILITY_REPORT.md](docs/CAPABILITY_REPORT.md) for evaluation
+  disposition, owner-profile decomposition, unresolved semantics, and the
+  report ratification gate.
 
 New capabilities must appear in the CLI before the terminal or native layers.
 New narrative must react to retained claims and cannot alter the authoritative
@@ -46,6 +47,7 @@ pwsh ./scripts/check-links.ps1
 pwsh ./scripts/check-media.ps1
 go mod verify
 go build ./...
+go test ./internal/evaluation -run '^TestDispositionCorpus$'
 go test ./internal/lawcatalog -run '^TestBuiltInCatalog$'
 go test . -run '^TestLawCLITextAndJSONFixtures$'
 go test ./internal/lawcatalog -run '^TestMinimalOpaqueContextHasNoLocalizedPresentationOrOptionalStructuralModule$'
@@ -66,6 +68,7 @@ go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
 go test ./...
 go test -shuffle=on -count=20 ./...
 go test -run=^$ -fuzz=FuzzRun -fuzztime=5s .
+go test -run=^$ -fuzz=FuzzDispositionConstructors -fuzztime=5s ./internal/evaluation
 go test -run=^$ -fuzz=FuzzValidate -fuzztime=5s ./internal/scenarioprobe
 go test '-coverprofile=coverage.out' ./...
 pwsh ./scripts/check-go-coverage.ps1 -ProfilePath coverage.out -AggregateMinimum 90 -PackageMinimum 80

@@ -2,13 +2,15 @@
 
 Status: design candidate, not ratified.
 
-This document records the gate for a future singular capability-report wire
-contract. The current Go oracle emits
+This document records the decomposition gate for a future singular
+capability-report wire contract. The current Go oracle emits
 `fart.law-capability-report/v0alpha1`. That token remains provisional. Neither
 this document nor the current output is a stable cross-language contract.
 
-The intended report answers eight separately reported, non-collapsing questions
-about named capabilities under one exact catalog entry. It is not a scenario,
+The current report places eight separately reported, non-collapsing questions
+about named capabilities under one exact catalog entry. Those questions do not
+form one universal assessment algebra. They belong to several Lab-level
+contracts that may be absent or unevaluated. The report is not a scenario,
 operation request, admission decision, case, occurrence, realization, solver
 result, certificate, or cross-context compatibility report.
 
@@ -31,43 +33,74 @@ freeze accidental limitations:
   ratified distinction;
 - `within-default-budget` does not identify the budget profile it assessed.
 
-The roadmap therefore separates the assessment algebra from the surrounding
-report. The eight-axis core is the first ratification candidate. Presentation,
-evidence payloads, singular catalog binding, scenarios, and operations remain
-separate versioned contracts.
+More fundamentally, the eight fields mix catalog authority, implementation
+inventory, scientific-model assessment, case applicability, claim evidence,
+authorization, execution planning, and resource admission. Requiring all eight
+as a universal core would turn the current application workflow into an
+ontology requirement.
 
-## Candidate assessment core
+The roadmap therefore separates a minimal evaluation disposition from
+profile-owned outcomes and their enclosing contracts. Presentation, evidence
+payloads, singular catalog binding, scenarios, and operations remain separate
+versioned contracts. The existing eight-field report remains a useful alpha
+projection while that decomposition is tested.
 
-A reported capability has one machine identifier and exactly eight required
-assessment objects:
+## Candidate evaluation disposition
 
-1. `law_definition`: whether the selected law context defines the capability.
-2. `implementation`: whether the Lab has an implementation.
-3. `closure`: whether the declared formal system contains sufficient relations
-   and conditions to determine the capability, including governing equations,
-   constitutive or closure relations, and applicable boundary, initial, and
-   interaction conditions where those concepts are meaningful.
-4. `applicability`: whether the capability applies to the declared subject and
-   inputs, if applicability has been evaluated.
-5. `evidence`: what kind of support exists for the exact claim.
-6. `trust`: whether provenance and policy permit the requested use.
-7. `backend_feasibility`: whether a selected execution backend can meet the
-   declared compute contract, where a backend is required.
-8. `resource_feasibility`: whether an identified resource budget can support
-   the requested evaluation or use.
+The smallest shared candidate describes only whether a Lab evaluation produced
+an outcome. A future enclosing profile must name the evaluator and exact input
+binding:
 
-No axis may be collapsed into or inferred solely from another. Any cross-axis
-consistency constraint must be explicit and separately validated. A law can
-define a capability with no implementation. An implementation can exist without
-closure for a case. A backend can be available while policy refuses an
-operation. An application-level operation can be outside source-law definition
-while still needing trust, backend, and budget evaluation.
+- `not_evaluated`: the evaluator produced no outcome. This makes no claim that
+  the question is meaningful, answerable, unknown, or ordered in source-law
+  time.
+- `evaluated`: the declared procedure completed and produced exactly one
+  outcome owned by that evaluator's profile.
 
-Case, measurement, operation, backend, policy, and budget inputs belong to a
-future enclosing evaluation contract. The assessment core can report their
-outcomes but cannot by itself prove that those inputs existed or were evaluated.
-Missing authored input values are a separate validation concern. Their absence
-must not be reported as failure of scientific or formal closure.
+`not_evaluated` forbids an outcome. `evaluated` requires one. Explanatory
+diagnostics may identify missing or unresolved prerequisites, but they do not
+fabricate an outcome. `not_applicable` and
+`no_supported_determination`, when an owning profile defines them, are evaluated
+outcomes rather than aliases for skipped evaluation.
+
+Generic `unknown` and `undetermined` are not part of this shared candidate.
+Formal outcomes such as multiple admissible results, insufficient constraints,
+failure of a declared decision procedure, or budget exhaustion belong to the
+profile that defines their meaning and limits.
+
+This candidate is Lab-process state only. It requires no source time, observer,
+body, object, language, geometry, quantity, operation, backend, policy, or
+budget. An implementation experiment must remain internal and non-wire until
+its owning inputs and outcome types are explicit.
+
+## Current axes and future owners
+
+No current axis may be collapsed into or inferred solely from another. Any
+cross-axis consistency constraint must be explicit and separately validated.
+Their candidate ownership is:
+
+| Current field | Candidate owning contract |
+| --- | --- |
+| `law_definition` | Catalog declaration profile with exact authority and separate maturity |
+| `implementation` | Provider or build profile bound to implementation revision and platform contract |
+| `closure` | No generic field; optional formal-system specification-sufficiency or law-specific closure profile |
+| `applicability` | Case or operation evaluation with exact request binding and validity rules |
+| `evidence` | Evidence about individually identified claims, not one capability-wide grade |
+| `trust` | Split among provenance assurance and operation authorization or refusal |
+| `backend_feasibility` | Execution plan bound to implementation, backend, precision, and determinism contract |
+| `resource_feasibility` | Admission decision bound to an explicit resource-budget profile |
+
+An optional `specification_sufficiency` profile may ask whether a declared
+evaluator established that every capability-defined specification obligation
+resolves and that the requested result relation is well formed. It cannot by
+itself assert deductive closure, completeness, consistency, existence,
+uniqueness, determinism, temporal initial-value structure, numerical
+well-posedness, stability, computability, decidability, or empirical truth.
+Continuum profiles may define their own narrower closure checks.
+
+Case, measurement, operation, backend, policy, and budget inputs belong to
+future enclosing contracts. Missing required authored values are validation
+failures, not scientific insufficiency.
 
 Omission from a capability collection means only “not reported.” It never means
 `law_does_not_define`, impossible, incompatible, refused, or unavailable.
@@ -97,14 +130,16 @@ ratification, complete report fixtures must witness every retained variant and
 cross-axis mutations must demonstrate for corpus fixtures that a pair from one
 axis is rejected by another.
 
-The intended distinction is also provisional:
+The current intended distinction is provisional and cannot be carried into the
+shared disposition unchanged:
 
 - `unknown` means the question is meaningful but the Lab has no supported
-  result from the declared inputs.
-- `undetermined` means the question cannot be answered until a named later
-  evaluation, such as scenario applicability, has occurred.
-- `not_evaluated` is a reason explaining process state, not evidence that the
-  underlying answer is absent or unknowable.
+  result from the declared inputs, but current `unknown/not_evaluated` conflates
+  that epistemic claim with process non-evaluation.
+- `undetermined` currently means a prerequisite Lab stage has not run. It does
+  not establish mathematical underdetermination or source-law time.
+- `not_evaluated` explains Lab process state. It is not evidence that the
+  underlying answer is absent, unknowable, inapplicable, or false.
 
 These definitions must be tested against every retained pair before they become
 normative.
@@ -121,9 +156,8 @@ This means the Lab application owns the inspection operation. The selected law
 context is its subject, not its defining authority. `candidate` and `declared`
 instead attribute definition to the selected law context.
 
-Application ownership cannot force the other seven answers. Future Lab
-operations may still require closure, evidence, trust, a backend, or an explicit
-budget.
+Application ownership cannot force the other seven current fields. Each future
+profile must evaluate only its owned question from its declared binding.
 
 ## Presentation boundary
 
@@ -136,8 +170,8 @@ protocol tokens. They are not natural language, language-neutral notation, or
 universally shared meaning. The current locale label is a bounded application
 token, not a claim of complete BCP 47 validation.
 
-The first assessment-core schema should not include presentation. A later
-singular report may reference a separately versioned presentation profile.
+The evaluation-disposition candidate includes no presentation. A later singular
+report may reference a separately versioned presentation profile.
 The current text renderer prefers an English entry and otherwise selects the
 first authored presentation. That fallback is order-sensitive. A future
 unordered presentation profile must replace it with an explicit fallback rule.
@@ -174,8 +208,9 @@ Before a singular report can be v1:
 For each document accepted by a sound reference-integrity validator, validation
 can establish that a pointer resolves to the declared class. It cannot establish
 that the evidence is true, sufficient, applicable, or current.
-Both `evidence_references` and evidence payloads remain outside the assessment
-core. The core retains only the tagged evidence assessment.
+Both `evidence_references` and evidence payloads remain outside the shared
+evaluation disposition. Evidence outcomes belong to a separately reviewed claim
+evidence profile.
 
 ## Ordering and encoding
 
@@ -222,7 +257,25 @@ own tagged union, and remain paired with normative prose for constraints JSON
 Schema cannot express directly. No runtime network fetch or general schema
 dependency is required for the producer-only Go oracle.
 
-## Ratification corpus
+## Evaluation-disposition experiment
+
+The first executable experiment in `internal/evaluation` is internal and
+non-wire. Its bounded, separately stored, manually authored TSV corpus includes:
+
+- `evaluated` with exactly one profile-owned outcome;
+- `not_evaluated` with no outcome;
+- invalid profile outcomes, a missing validator, the invalid zero value, a forged
+  unknown kind, and a forged non-evaluated value carrying an outcome;
+- no shared kind or constructor for generic `unknown` or `undetermined`;
+- fixtures requiring no source time, observer, physical quantity, geometry,
+  language, or workflow-stage sequence.
+
+The corpus records Go-domain behavior only. It does not create a product schema,
+reserve a discriminator, or change the current report bytes. Its implementation
+and authorization examples use different fixture-owned types so the shared
+candidate cannot absorb a profile vocabulary by accident.
+
+## Report ratification corpus
 
 The future corpus must be implementation-independent and usable unchanged by Go,
 Rust, CLI, TUI, native, MCP, and A2A adapters. It includes:
@@ -247,22 +300,24 @@ implementation.
 
 ## Ratification exit gate
 
-The assessment core can become v1 only when:
+The shared evaluation disposition can leave internal-candidate status only when:
 
-1. Every term and tagged variant has one unambiguous definition.
-2. The identifier grammar and every resource bound are explicit.
-3. A bounded strict parser and independent positive and negative corpus agree.
-4. Current Go law and scenario projections conform without hidden defaults.
-5. Presentation and evidence payloads remain outside the core.
+1. Its input binding and profile-owned outcome boundary are explicit.
+2. Positive and negative fixtures cover every constructor invariant.
+3. It cannot represent generic uncertainty, applicability, refusal, or failure
+   as process non-evaluation.
+4. Current Go law and scenario outputs remain byte-identical.
+5. No source-law ordering, observer, object, quantity, geometry, or language is
+   required.
 
-The singular capability report can become v1 only after the assessment core,
+Each owner profile can become v1 only after its authority, exact inputs,
+outcomes, resource bounds, conformance corpus, and nonclaims are ratified. The
+singular capability report can become v1 only after the required profiles,
 law-context binding, ordering, optional presentation profile, evidence payload
 profiles, referential closure, machine schema, semantic prose, and exact Go
 fixtures agree.
 
-`fart.capability-assessment/v1` and `fart.law-capability-report/v1` are working
-candidate discriminators only. They are inactive and unreserved until their
-normative artifacts and conformance suites land together.
+No v1 capability-assessment or capability-report discriminator is reserved.
 
 Passing those gates would provide evidence of wire conformance. For each
 document accepted by a sound validator, validation could establish internal
