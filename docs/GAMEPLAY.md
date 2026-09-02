@@ -2,36 +2,40 @@
 
 F.A.R.T. Lab treats science as the deadpan foil and comedy as the interpretation
 layer. The result should be the world's most overengineered and fun fart app,
-whether an occurrence has a person-like source, a machine, a civilization, a
-planet, a star, no localized source at all, or no mapping into our universe's
-categories.
+whether a represented case supports a person-like source, a machine, a
+civilization, a planet, a star, no localized source at all, no source-law
+occurrence concept, or no mapping into our universe's categories.
 
-## Up to four layers of an episode
+## Up to five layers of an episode
 
-1. **Native occurrence:** what the selected law contexts say is realized.
-2. **Lab normalization:** applicable participants, relations, couplings,
+1. **Bounded Lab case:** the committed record, law-context set, scope, inputs,
+   requested capabilities, and Lab-level provenance.
+2. **Context evaluation, when supported:** what the selected laws permit the Lab
+   to solve, realize, compare, validate, or refuse.
+3. **Lab normalization:** applicable participants, relations, couplings,
    measurement interactions, retained claims, invariants, representations, and
    declared absences that make
-   the occurrence inspectable. Emitter, interface, exterior, and transported
+   the case inspectable. Emitter, interface, exterior, and transported
    quantities are optional Earth-discharge extensions.
-3. **Situated interpretation, when present:** what compatible agents,
-   collectives, institutions, or systems think the event means.
-4. **Player translation, when requested:** the text, audio, graphics,
+4. **Situated interpretation, when present:** what compatible agents,
+   collectives, institutions, or systems think the case means.
+5. **Player translation, when requested:** the text, audio, graphics,
    measurements, or other channels through which an operator can experience it.
 
-Every occurrence representable by the Lab has the native-occurrence and
-Lab-normalization layers. It need not
-have an observer, agent, individual, society, culture, language, name, body, or
-story. Interpretation and player translation are optional projections that must
-declare their capabilities and losses. The canonical pipeline accepts an
-unobserved event, a non-agent sensor, a distributed collective without
-individuals, a machine without culture, a planetary field, and an observer with
-no body, sound, or language without inventing personae or institutions.
+Every representable case has only the bounded Lab-case layer unconditionally.
+It need not have a realization, occurrence, observer, agent, individual,
+society, culture, language, name, body, or story. Context evaluation, situated
+interpretation, player translation, and Lab normalization declare their
+capabilities and losses.
+The canonical pipeline accepts an observerless relation, a non-agent sensor, a
+distributed collective without individuals, a machine without culture, a
+planetary field, and an observer with no body, sound, or language without
+inventing personae or institutions.
 
-A player-facing sound may be a translation of vibration, chemistry,
-electromagnetism, gravity, or another sensory channel. The interface says when
-it is translating. It never implies that every universe communicates through
-air pressure and ears.
+A player-facing sound may be signal transcoding from a supported channel,
+diagnostic sonification of retained values, or an experience analogy. The
+interface labels which transformation occurred and its losses. It never implies
+that every context communicates through air pressure and ears.
 
 ## Quick Play
 
@@ -40,13 +44,17 @@ result without a setup questionnaire.
 
 A Quick Play transmission:
 
-1. Prints its title, scenario seed, and record-nonce commitment immediately.
+1. Prints its title and case identity, plus an optional generation seed and
+   record-nonce commitment when they apply.
 2. Introduces the applicable scope and one question. A world, source, or
    situated perspective appears only when the selected capabilities support it.
-3. Runs one valid analytical event.
-4. Renders the supported result and one consequence or relation.
-5. Explains the strongest relation that the law contexts support.
-6. Offers exactly three next actions: inspect, re-enact, or generate another.
+3. Evaluates one admitted case through a supported operation.
+4. Renders the supported result and any applicable consequence or relation, or
+   an exact absence or refusal.
+5. Explains a supported relation when one exists and otherwise explains the
+   exact limit.
+6. Offers exactly three applicable next actions, such as inspect, vary, or
+   generate another.
 
 The bare `fart` command always begins with the low-energy Reference Pfft. It is
 banal by default, although its imperfection and consequence remain unique.
@@ -64,7 +72,8 @@ Every authored lesson and generated episode supports this loop without forcing
 the player through a lecture:
 
 1. **Predict:** choose or state an expected outcome or relation.
-2. **Realize:** run the committed scenario, labeled Emit where appropriate.
+2. **Evaluate:** run the supported operation, labeled Realize or Emit only where
+   applicable.
 3. **Inspect:** compare the prediction with supported claims or observations.
 4. **Explain:** traverse a causal, derivational, constraint, dependency, or
    correlational account with assumptions and uncertainty.
@@ -72,8 +81,8 @@ the player through a lecture:
    an alternate solution, representation, or declared refusal.
 6. **Transfer:** try the same idea in a compatible context.
 
-Every player-facing explanation names the strongest relation the law supports.
-It offers a runnable intervention only when intervention semantics exist and
+Every player-facing explanation names the strongest supported relation when one
+exists and otherwise names the exact limit. It offers a runnable intervention only when intervention semantics exist and
 otherwise offers a comparison, alternate solution, or precise refusal. It
 distinguishes causal model structure from correlation and admits when the
 selected model cannot support the requested claim.
@@ -81,11 +90,12 @@ selected model cannot support the requested claim.
 ## Broadcast mode
 
 `fart broadcast --seed <seed>` is the seeded interdimensional show. It generates
-a law-context set, occurrence scope, provenance-bearing realization, and question.
+a law-context set, bounded scope, supported operation, and question.
 Worlds, sources, geometry, observations, morphology, senses, agents,
 institutions, situated perspectives, language, and social stakes are
-capability-selected extensions. It runs the applicable realization procedure,
-freezes its identity, and assembles a watchable episode from supported facts.
+capability-selected extensions. It runs the applicable evaluation or
+realization procedure, commits the Lab record, and assembles a watchable episode
+from supported claims.
 
 A standard human-facing episode may use these beats, skipping or replacing any
 beat whose concepts do not exist:
@@ -103,18 +113,18 @@ beat whose concepts do not exist:
 
 The story director may:
 
-- Select a compatible template before simulation.
-- Generate and validate initial conditions.
+- Select a compatible template before an admitted operation executes.
+- Supply or generate and validate applicable case inputs.
 - Select cameras, instruments, narration, pacing, and display density.
-- Pause or visibly compress playback time.
-- Choose reaction storylets whose predicates match context-scoped occurrence claims.
+- Pause or visibly compress presentation playback or ordering when supported.
+- Choose reaction storylets whose predicates match retained claims.
 - Let characters hold incorrect beliefs when dialogue marks them as beliefs.
 
 The story director may not:
 
-- Write simulation state after a scenario is accepted.
+- Write the authoritative Lab account after a scenario is accepted.
 - Change law, pressure, payload, timestep, fidelity, or seed to rescue a story.
-- Rerun a valid event because the result was insufficiently dramatic.
+- Rerun an admitted case because the result was insufficiently dramatic.
 - Invent sound in vacuum, deposition without transported matter, or damage
   without an applicable transfer and target model.
 - Hide failed or inconclusive verification.
@@ -152,7 +162,7 @@ mathematical structure into restrained art:
 - Vortex skeletons, pathlines, wavefronts, room modes, and bubble oscillations.
 - Dimensionless trajectories, spectra, Plumeprints, Fartflakes, and closing
   conservation ledgers.
-- Slow camera motion and context-specific palettes that never alter the occurrence account.
+- Slow camera motion and context-specific palettes that never alter the Lab account.
 
 Other profiles use only their supported relations and representations. They do
 not receive invented fields, spatial motion, spectra, emitters, or ledgers.
@@ -169,9 +179,9 @@ intensity, time, audio, geometry, payload, or deposition.
 Chill Mode has no streak, daily task, idle reward, advertisement, engagement
 timer, or penalty for leaving. It pauses cleanly, can run entirely offline, and
 does not prevent display sleep unless the player asks. Ephemeral mode destroys
-record nonces after presentation. Recording must be selected before a record is
-realized. Radio and event density are presentation controls and cannot reroll or
-modify an occurrence account.
+record nonces after presentation. Recording must be selected before the admitted
+record-producing operation executes. Radio and presentation density are
+presentation controls and cannot reroll or modify the Lab account.
 
 ## Freestyle Lab
 
@@ -219,7 +229,7 @@ identity are never score axes. Technical deposition mass, containment, or
 cleanup resources may be scored only in an identity-neutral controlled
 laboratory challenge.
 Privacy and consent are eligibility constraints, not bonus points. Changing
-identity metadata cannot alter the occurrence account, score, reward, or difficulty.
+identity metadata cannot alter the Lab account, score, reward, or difficulty.
 
 Examples include a perfect C-sharp without a wet transition, the lowest-energy
 formal protocol translation between two compatible profiles, a bubble symphony at depth, a
@@ -255,10 +265,11 @@ fear of missing out, and a simple bigger-number ladder.
 
 ## Scenario seeds and unique record nonces
 
-Each episode has a 256-bit scenario seed for reconstructable scope and setup
-generation. Each Lab record also receives a 256-bit `RecordNonce`, exposed in
-the public schema under the comic field name `event_nonce`. Named,
-versioned substreams are derived from stable data:
+Each procedurally generated episode has a 256-bit scenario seed for
+reconstructable scope and setup generation. Nongenerated cases omit it. Each
+committed Lab record also receives a 256-bit `RecordNonce`, exposed in the
+public schema under the comic field name `event_nonce`. When generation is
+selected, named, versioned substreams are derived from stable data:
 
 ```text
 episode format version
@@ -272,10 +283,10 @@ counter
 The minimal namespaces are:
 
 ```text
-occurrence.law
-occurrence.scope
-occurrence.realization
-occurrence.provenance
+case.law
+case.scope
+case.operation
+record.provenance
 ```
 
 Capability-selected extensions include:
@@ -292,13 +303,14 @@ observer.morphology
 observer.senses
 observer.persona
 source.parameters
-event.payload
+earth.event.payload
+occurrence.realization
 physics.turbulence
 physics.parcels
 physics.numerics
 director.selection
 director.pacing
-language.realization
+presentation.language
 presentation.audio
 presentation.radio
 presentation.score
@@ -306,13 +318,13 @@ presentation.visual
 presentation.camera
 ```
 
-Use a counter-based or equivalently splittable generator. Do not use one mutable
-global random stream. Applicable world, interpretation, participant or source
-setup, and story selection derive from the scenario seed. Realization
-microstructure and applicable payload draws derive from the record nonce and
-normalized scenario digest. Localization,
+When generation is selected, use a counter-based or equivalently splittable
+generator. Do not use one mutable global random stream. Applicable world,
+interpretation, participant or source setup, and story selection derive from
+the scenario seed. Realization microstructure and applicable payload draws
+derive from the record nonce and normalized scenario digest. Localization,
 terminal dimensions, subtitles, camera, frame rate, and content filters cannot
-alter the occurrence-result hash. Player choices branch by stable beat and choice
+alter the case-result hash. Player choices branch by stable beat and choice
 identifiers, never wall-clock input timing.
 
 An explicitly recorded archive stores resolved content and the nonce needed for
@@ -323,8 +335,9 @@ content pack creates a new episode identity and does not rewrite an old show.
 ## Content pipeline
 
 ```text
-law-context set + occurrence scope
-  -> supported realization and provenance
+law-context set + bounded case scope
+  -> supported operation and Lab provenance
+  -> optional source-law occurrence or realization claims
   -> capability-selected observations and representations
   -> optional world, habitat, source, agents, institutions, and stakes
   -> optional reaction storylets
@@ -362,8 +375,9 @@ fact provenance, and archive longevity.
 ## Symphony, radio, Chill Mode, and agent seats
 
 Physical acoustics, diagnostic sonification, Symphony Mode, radio, and speech
-remain separate lanes. Symphony consumes normalized event features and produces
-a versioned semantic score. Radio consumes a deterministic station schedule and
+remain separate lanes. Symphony consumes compatible retained features and
+produces a versioned semantic score. Physical acoustics contribute only where
+the selected context supports acoustics. Radio consumes a deterministic station schedule and
 presentation seed. Neither can write physics, canon, challenge state, or score.
 The detailed contract is in [AUDIO.md](AUDIO.md).
 
@@ -374,8 +388,9 @@ observations never leak into the public spectator stream. External commentary
 is archived if it becomes part of a replay, but it remains an opinion and never
 the only copy of a measured fact.
 
-Action and simulation-work budgets, not model brand or hardware price, govern
-ranked play. Structured, visual, accessible, omnimodal, multi-agent, and human
+Action and operation-work or evaluation-work budgets, not model brand or
+hardware price, govern ranked play. Structured, visual, accessible, omnimodal,
+multi-agent, and human
 tracks remain distinct. Their shared environment and challenge-grade contract
 is in [AGENT_PLAY.md](AGENT_PLAY.md).
 
@@ -383,15 +398,15 @@ is in [AGENT_PLAY.md](AGENT_PLAY.md).
 
 A shareable episode bundle contains:
 
-- Master seed and named-stream manifest.
-- Law-context set, occurrence scope, realization provenance, record identity,
-  and certificate.
+- Optional master seed and named-stream manifest when generation uses them.
+- Law-context set, bounded case scope, operation provenance, optional
+  realization claims, record identity, and certificate.
 - Applicable implementation and content-pack versions and hashes.
 - Optional world, source, culture, interpretation, names, and grammar choices.
 - Optional presentation beat ordering with claim provenance. It is never
   source-law temporal order.
 - Optional text transcript, procedural audio, and native presentation assets.
-- Parent episode and stable branch choice for remixes.
+- Optional parent episode and stable branch choice for remixes.
 
 Archives exclude usernames, home paths, machine identifiers, and telemetry by
 default. Importers treat archives and content packs as untrusted. They reject
@@ -424,7 +439,7 @@ haptics disabled. The CLI supports plain text and redirected output. The TUI has
 reduced-color, keyboard-only, append-only, and explicitly labeled ASCII
 transliteration or fallback modes. ASCII does not claim locale parity when the
 original script is unavailable. Native accessibility setup appears before the
-first audiovisual event.
+first audiovisual presentation.
 
 ## Acceptance gates
 
@@ -434,13 +449,14 @@ first audiovisual event.
 - Every lab-claim sentence cites a scenario or retained-claim path.
 - Mutation tests catch sound in vacuum, impossible deposition, hidden rerolls,
   premature outcome knowledge, and presentation changes that alter the
-  occurrence account.
+  Lab account.
 - Ordinary low-energy events are at least half of default Quick Play and receive
   full setup, result, consequence, explanation, and callback treatment.
-- Occurrence random streams are independent of narrative, presentation, execution
-  order, terminal dimensions, localization, and accessibility settings.
-- Archive round trips preserve record and context-occurrence identity claims,
-  optional presentation beat ordering, stream manifest, certificate, and hashes.
+- Case and operation streams are independent of narrative, presentation,
+  execution order, terminal dimensions, localization, and accessibility settings.
+- Archive round trips preserve record identity, any applicable
+  context-occurrence identity claims, optional presentation beat ordering, any
+  applicable stream manifest, certificate, and hashes.
 - Malicious archive tests fail safely.
 - The seed museum and failure corpus catch repeated jokes, contradictions,
   hidden rerolls, unsupported claims, and unsafe culture analogues.

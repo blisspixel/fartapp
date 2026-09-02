@@ -19,8 +19,9 @@ belongs in the product.
 
 | Phrase | Actual job |
 | --- | --- |
-| Every fart is a snowflake | Each realization has its own occurrence and trace |
-| `EVENT PASSED` | The live realization has ended |
+| Every fart is a snowflake | Each Lab encounter and retained record is distinct; occurrence and realization are context-owned |
+| `CASE COMMITTED` | One authoritative Lab account was retained |
+| `EVENT PASSED` | A selected context says its live event ended; otherwise this label is inapplicable |
 | `TRACE RETAINED` | Evidence remains, not the encounter |
 | The ledger balances | Conservation checks passed |
 | Conservation of Ass | Conserved transfers have not vanished from the model |
@@ -29,7 +30,7 @@ belongs in the product.
 | Same Pi, different sky | Similarity under different sources, scales, or worlds |
 | External acoustics unavailable | The exterior has no supported sound channel |
 | Banal by default | The reference event is intentionally ordinary |
-| No prerecorded farts | Every consumer shares one simulated cause |
+| No prerecorded farts | Every consumer cites one authoritative Lab account |
 
 Official copy introduces phrases slowly. Community language is allowed to be
 better than planned copy.
@@ -54,7 +55,7 @@ verification certificate.
 
 ## Share cards
 
-- **Occurrence Card:** scope, law contexts, provenance, and supported relations.
+- **Case Card:** scope, law contexts, provenance, and supported relations.
 - **Witness Card:** what was measured, plus location, ordering, and uncertainty
   only when those concepts exist.
 - **Ledger Card:** applicable residuals, implementation, refinement, and claim state.
@@ -66,9 +67,10 @@ verification certificate.
 Fields are capability-selected, so an absent source, observer, location, time,
 solver, unit, or uncertainty never becomes a blank or fake zero. Every card
 includes meaningful alt text, a short record identifier, schema and applicable
-implementation versions, a visible `SIMULATED OCCURRENCE` label, and no default personal
-or tool byline. Local export is the default. The complete game does not require
-an account, public gallery, or web application.
+implementation versions, an operation-specific status, and no default personal
+or tool byline. `SIMULATED OCCURRENCE` appears only where both simulation and
+occurrence semantics exist. Local export is the default. The complete game does
+not require an account, public gallery, or web application.
 
 Share tools default to fictional entity handles and strip names, account
 handles, precise location, machine data, archive secrets, and unrelated
@@ -137,7 +139,7 @@ People can contribute without writing simulation code:
 - **Verification Report:** invariant, convergence, fuzz, or platform evidence.
 
 The project recognizes contributors in history, release notes, optional
-profiles, and asset metadata where requested. The Occurrence Card itself remains
+profiles, and asset metadata where requested. The Case Card itself remains
 about the occurrence record. Required third-party notices remain available even
 though the product carries no visible creator or tool attribution.
 

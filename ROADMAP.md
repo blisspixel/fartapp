@@ -7,8 +7,10 @@ F.A.R.T. Lab grows in three complete products:
    headlessly on Windows, macOS, and Linux. It does not imply every later model.
 2. **2.0 Terminal Lab:** an htop-style interface makes the same instrument live
    and legible without adding hidden capability.
-3. **3.0 Native Lab:** a polished Godot application makes proven events spatial,
-   audible, haptic, cinematic, and destructible without becoming a web wrapper.
+3. **3.0 Native Lab:** a polished Godot application makes compatible retained
+   claims experiential through capability-selected projections and exact
+   no-mapping results, without becoming a web wrapper. Relation-only,
+   observerless, nonspatial, and nonacoustic cases remain first-class.
 
 Every physics, narrative, and gameplay feature ships CLI first, TUI second,
 native third. A checkbox means merged, documented, and verified behavior.
@@ -37,22 +39,28 @@ a scientific, usability, accessibility, security, or quality gate.
 - [x] License repository-owned source code, documentation, and approved project
   media under Apache License 2.0, with separate rights recorded for any
   third-party material.
-- [ ] Ratify `Occurrence`, `EmissionAnalogue`, and Earth `DischargeEvent`
-  boundaries, bounded representability, multi-law contexts and bridge rules,
-  optional law structures, structured no-mapping results, modes, story-director rules,
-  accessibility matrix, seed RFC, and archive threat model.
-- [ ] Ratify event-identity, typed-provenance, law-capability, content-pack trust,
-  performance-budget, and human-evaluation RFCs.
+- [ ] Ratify the bounded Lab record separately from optional `Occurrence` and
+  `Realization` capabilities, plus `EmissionAnalogue` classifiers and the Earth
+  `DischargeEvent` specialization. Freeze representability limits, multi-law
+  contexts and bridge rules, optional law structures, structured no-mapping
+  results, modes, story-director rules, accessibility matrix, seed RFC, and
+  archive threat model.
+- [ ] Ratify record identity, optional context-occurrence identity,
+  typed-provenance, law-capability, content-pack trust, performance-budget, and
+  human-evaluation RFCs.
 - [ ] Ratify measurement interactions separately from read-only views and
   presentation, plus canonical play actions, roles, knowledge policies,
   journals, revisions, idempotency, surface parity, and input timing.
 - [ ] Ratify physical-audio, diagnostic-sonification, Symphony, radio-catalog,
   cultural-safeguard, and agent/spectator threat-model RFCs.
-- [ ] Ratify Reference Pfft, occurrence, trace, reconstruction, re-enactment,
-  record-nonce and `event_nonce` wire semantics, natural-language interpretation,
-  Plumeprint, and Fartflake RFCs.
+- [ ] Ratify Reference Pfft, optional occurrence, trace, reconstruction,
+  re-enactment, record-nonce, and legacy `event_nonce` wire semantics,
+  natural-language interpretation, Plumeprint, and Fartflake RFCs.
 - [ ] Ratify locale-invariant semantic identifiers, language packs, typography,
   nonhuman observer communication, translation loss, and locale parity RFCs.
+- [ ] Ratify the bounded universality contract and its negative-space
+  conformance matrix. Require every schema, command, pane, story beat, and agent
+  observation to identify the law or Lab-level contract that owns its concepts.
 - [x] Version the current toy behavior as permanent exact-output fixtures, reject
   ambiguous and out-of-range input safely, test output failure, fuzz arguments,
   and smoke test the executable.
@@ -68,14 +76,16 @@ planned.
 
 ## v0.7: Law-context Go oracle and first Earth-continuum specialization
 
-- [ ] Freeze biology-neutral `ref:rp1:v1`, its exact SI constant chain,
-  conventional exterior, reference observer, comparison vector, uncertainty
-  budget, traceability graph, and non-normative status.
+- [ ] Freeze biology-neutral `ref:rp1:v1`, its reviewed local SI definition
+  chain pinned to BIPM SI Brochure 9th edition version 4.01 and any adopted SI
+  Reference Point 1.0.0 records, including source revisions and digests, plus
+  its conventional exterior, reference observer, comparison vector,
+  uncertainty budget, traceability graph, and non-normative status.
 - [ ] Define the exact `RP-1 definition event` separately from imperfect,
   one-time everyday realizations.
-- [ ] Add record, optional context-occurrence identity claims, law-context, scope, provenance,
-  measurement, view, comparison, numerical, scenario, history, and certificate
-  schemas, with emitter,
+- [ ] Add record, optional context-occurrence identity claims, law-context,
+  scope, provenance, measurement, view, comparison, numerical, scenario,
+  history, and certificate schemas, with emitter,
   interface, exterior, and payload as Earth discharge extensions.
 - [x] Add dependency-free `law list` and `law inspect` commands with versioned
   experimental localized-text and deterministic JSON fixtures. Keep law
@@ -87,8 +97,9 @@ planned.
 - [x] Add a dependency-free, read-only `scenario validate` probe for one exact
   law revision, one opaque scope, and explicit capability requests. Bound and
   strictly parse file or stdin JSON, reject duplicate and unknown members, keep
-  document validity separate from unratified realization admission, and prove
-  the atemporal fixture uses no ambient or Earth default.
+  document validity separate from operation selection and admission, and prove
+  the atemporal fixture uses no ambient, Earth, occurrence, or realization
+  default.
 - [x] Add dependency-free root and nested help for every and only implemented
   command path. Distinguish the permanent v0.6 oracle from experimental v0.7
   probes, label current English text as presentation, and keep JSON tokens
@@ -97,6 +108,9 @@ planned.
   over the ratified full scenario report. Ship its minimal atemporal, observerless,
   nonconserving, recurrence-free, and no-implicit-bridge counterexamples in the
   same milestone.
+- [ ] Add a presentation-free minimal opaque fixture proving that catalog,
+  schema, and machine inspection require no human language or optional
+  structural module.
 - [ ] Add dimension diagnostics only where selected law contexts define
   dimensional quantities.
 - [ ] Implement ideal-mixture finite-reservoir mass and energy balance.
@@ -149,13 +163,17 @@ labeled as presentation.
   mappings, and stable interpretation receipts before acceptance.
 - [ ] Separate semantic keys from display strings, use locale-aware quantities,
   and test pseudo-locales, grapheme width, bidirectional text, and hostile
-  translated input without changing event identity.
+  translated input without changing case-result identity.
 - [ ] Implement and canonical-JSON-round-trip tiny ontology fixtures for a
   non-gaseous transfer, a discrete graph, an atemporal or partially ordered
   law, a distributed nonlinguistic observer, an occurrence with no emitter or
   exterior, a state-altering measurement distinct from a passive view, a
   coupled multi-law occurrence with an explicit bridge, and inapplicable Earth
   quantities.
+- [ ] Complete the negative-space conformance matrix in
+  `docs/UNIVERSALITY.md`, including partial-order, cyclic, nonsymbolic,
+  no-bridge, explicit-bridge, no-shared-observable, unrepresentable, and lossy
+  spatial-projection cases.
 - [ ] Make CLI inspection capability-driven so an unsupported or inapplicable
   concept never appears as a fake zero, empty Earth panel, or sentinel value.
 - [ ] Test Windows, macOS, and Linux with formatting, Clippy, docs, tests,
@@ -164,18 +182,18 @@ labeled as presentation.
 
 Exit gate: a headless Rust run agrees with the Go oracle, behaves correctly in a
 TTY and a pipe, reproduces under its declared determinism level, and passes all
-ontology fixtures. Measurement interaction changes occurrence-result identity;
+ontology fixtures. Measurement interaction changes case-result identity;
 view and presentation changes do not.
 
-## v0.9: Certified event archive
+## v0.9: Certified case archive
 
 - [ ] Implement canonical scenario, manifest, history, and certificate records.
 - [ ] Add play-session identity, ordered action journals, actor roles,
   checkpoints, branch lineage, transition receipts, and privacy-safe saves.
-- [ ] Store occurrence, trace, reconstruction, and re-enactment lineage
+- [ ] Store optional occurrence, trace, reconstruction, and re-enactment lineage
   separately. Replay presents retained evidence and never claims recurrence.
 - [ ] Support explicit ephemeral, witness-only, and full-reconstruction recording
-  policies selected before an event.
+  policies selected before an admitted record-producing operation.
 - [ ] Begin with the simplest bounded streamable history representation; add
   Arrow or another columnar layer only after named profiles miss measured
   budgets.
@@ -221,20 +239,22 @@ TUI or graphical application.
 
 - [ ] Implement a 256-bit scenario seed, separate 256-bit record nonce,
   commitment policy, and versioned named substreams.
-- [ ] Add a scope-first grammar for law contexts, realization, and provenance,
-  with capability-selected habitat, source, measurement, view, agents, senses,
+- [ ] Add a scope-first grammar for law contexts, case operations, and record
+  provenance, with capability-selected realization, habitat, source,
+  measurement, view, agents, senses,
   situated context, institutions, positions, and social stakes. No optional
   layer is invented merely to complete a pipeline.
-- [ ] Add a read-only context-scoped occurrence-claim API and authored storylets
-  with claim provenance.
-- [ ] Add `fart broadcast`, immutable retained-occurrence playback, transcript, and `.fartshow`
-  episode archives.
+- [ ] Add a read-only retained-claim API and authored storylets with claim
+  provenance. Context-occurrence claims remain an optional capability.
+- [ ] Add `fart broadcast`, immutable retained-evidence playback, transcript,
+  and `.fartshow` episode archives.
 - [ ] Add `fart chill` as a scoreless, sparse, offline ambient stream using the
-  same generated occurrences, record nonces, radio, and recording policy.
+  same operation and evidence contracts, record nonces, radio, and recording
+  policy.
 - [ ] Maintain a curated seed museum and a regression corpus for dull, repeated,
   contradictory, unsafe, or scientifically unsupported episodes.
 - [ ] Prove that narration, localization, terminal size, accessibility, camera,
-  and presentation streams cannot change the occurrence-result identity.
+  and presentation streams cannot change the case-result identity.
 - [ ] Add versioned communication profiles with explicit channel capabilities,
   ambiguity, loss, and refusal to map. Human language is one optional profile,
   not the reference class.
@@ -249,9 +269,9 @@ TUI or graphical application.
 - [ ] Add regression gates for monoculture, colonial gaze, pseudo-language,
   sacred-practice targeting, sanitation stigma, coercion, and humiliation.
 
-Exit gate: every seed terminates or fails explicitly within a fixed budget, no
-valid event is rerolled for drama, and a recorded episode replays its resolved
-evidence without claiming the occurrence happened again.
+Exit gate: every seed terminates or refuses explicitly within a fixed budget, no
+valid case is rerolled for drama, and a recorded episode replays its resolved
+evidence without claiming that any optional context occurrence happened again.
 
 ## v0.12: Freestyle, proof, and translation
 
@@ -264,12 +284,22 @@ evidence without claiming the occurrence happened again.
 - [ ] Add constrained approximate translation with explicit residuals,
   infeasibility, and Pareto choices.
 - [ ] Bind translation witnesses to source and target `LawContextSet` hashes,
-  scope assignments, inter-law bridge hashes, and mapped context-occurrence
-  identities. A coupled occurrence has no global source identity unless a bridge
-  defines one.
+  scope assignments, inter-law bridge hashes, and any applicable mapped
+  context-occurrence identities or their explicit absence. A coupled occurrence
+  has no global source identity unless a bridge defines one.
 - [ ] Separate semantic translation, structural mapping, signal transcoding,
   and experience analogy, with typed reasons for incompatibility, absence,
   privacy, refusal, prohibition, undecidability, and unknown results.
+- [ ] Ratify staged interpretation records that keep law-supported claims,
+  formal or physical classification, structural mapping, semantic hypotheses,
+  localized gloss, and optional comic overlay separate.
+- [ ] Represent channel, segmentation, structural, ontology, context, ordering,
+  and locale loss as applicable typed axes. Preserve multiple hypotheses,
+  dissent, and abstention instead of publishing one translation-confidence
+  scalar.
+- [ ] Ship the fictional Intercontextual Emission Interpretation Council case as
+  a conformance story: partial structural mapping, no semantic equivalence, a
+  labeled comic gloss, and Marketing's universal claim under formal protest.
 - [ ] Add ordinary Everyday Phenomena and Wind Tunnel challenge sets.
 
 Exit gate: exact translations round-trip, incompatible targets say why they fail,
@@ -281,7 +311,7 @@ rewards precision and verification as well as magnitude.
 - [ ] Complete qualified name, design-mark, and sound-mark clearance before
   locking names or mastering branded audio and station assets.
 - [ ] Create `fart-audio`, `fart-score`, and `fart-radio` consumers over the
-  authoritative occurrence-account and presentation services.
+  authoritative Lab-account and presentation services.
 - [ ] Create `pressure-standard.v1`, an original six-second certified audio
   ident built from the fixed `RP-1 definition event`, score mapping, spatial render,
   haptic envelope, captions, safety report, and provenance.
@@ -364,20 +394,22 @@ fail safely, and human CLI play remains offline and requires no network.
   uncertainty, and ledger state through typed provenance.
 - [ ] Implement the independent Fartflake generator with deterministic topology,
   LOD, mesh, thumbnail, and terminal outputs.
-- [ ] Encode only a safe content-addressed event reference in one declared
-  orthographic verification view, with a conventional flat code fallback.
+- [ ] Encode only a safe content-addressed record or retained-trace reference in
+  one declared orthographic verification view, with a conventional flat code
+  fallback.
 - [ ] Add `artifact plumeprint`, `artifact grow`, `artifact verify`, `artifact
   compare`, and GLB, STL, PNG, and SVG export through the CLI.
 - [ ] Test manifold promises, degeneracy, normals, poly and byte budgets,
   scannability across scale, blur, lighting, and rasterization, alt text,
   privacy, hostile payloads, and evidence-versus-art labels.
-- [ ] Prove artifact generation cannot change the occurrence account,
+- [ ] Prove artifact generation cannot change the authoritative Lab account,
   certificates, scores, or identity sets.
 
-Exit gate: one ordinary event produces a scientifically inspectable Plumeprint,
+Exit gate: one ordinary Earth-discharge case produces a scientifically
+inspectable Plumeprint,
 a distinct 3D Fartflake, a safe scannable reference, and a terminal rendering,
 all from one provenance graph and without copying QR-Bloom code or assets. A
-nonspatial conformance event either produces a declared lossy projection or a
+nonspatial conformance case either produces a declared lossy projection or a
 precise unsupported result.
 
 ## v0.16: Brand, community, and public culture foundation
@@ -388,12 +420,14 @@ precise unsupported result.
 - [ ] Optically draw and test the Open Isobar candidate at icon, terminal,
   print, embroidery, vinyl, engraving, enamel, light, dark, one-bit, and
   high-contrast sizes.
-- [ ] Publish reviewed brand, trademark, community-kit, event-artifact,
+- [ ] Publish reviewed brand, trademark, community-kit, record-artifact,
   merchandise, and asset-rights policies with a machine-readable manifest.
 - [ ] Keep Core Marks distinct from a CC0 community kit and a visibly different
   `UNOFFICIAL FIELD OBSERVATION` badge.
 - [ ] Ship local Witness, Ledger, Boundary, and Postcard export cards with alt
-  text, privacy lint, schema version, and `SIMULATED EVENT` status.
+  text, privacy lint, schema version, and an operation-specific status.
+  `SIMULATED EVENT` is available only where both simulation and event semantics
+  exist.
 - [ ] Pilot The Standard Pfft, Grid Refinement Friday, and Same Pi, Different Sky
   without engagement traps or a proprietary social feed.
 - [ ] Open official community spaces only after private reporting, human
@@ -452,14 +486,16 @@ observables beyond tolerance. The complete application remains CPU-capable.
   relativistic, and broad fictional-law packs remain later capabilities unless
   separately promoted through every gate.
 - [ ] Complete Quick Play, Broadcast, Freestyle, Challenge, Campaign,
-  simulation, translation, proof, replay, and export command families.
+  evaluation, simulation, translation, proof, replay, and export command
+  families.
 - [ ] Complete Chill Mode as a calm append-only or live terminal experience with
-  sparse ordinary events, long silence, optional radio, math-derived visuals,
-  explicit recording, and no engagement mechanics.
+  sparse admitted operations and retained-claim presentations, plus optional
+  ordinary Earth events, long silence, radio, math-derived visuals, explicit
+  recording, and no engagement mechanics.
 - [ ] Make natural-language generation exceptional for humans and agents while
   preserving offline typed control, interpretation receipts, and explicit
   acceptance.
-- [ ] Ship the generic Occurrence Card plus capability-selected Witness Card,
+- [ ] Ship the generic Case Card plus capability-selected Witness Card,
   Plumeprint, Fartflake, and print-ready local exports.
 - [ ] Polish width-adaptive human output, errors, help, progress, plain mode,
   accessibility, hostile text, and pipe behavior.
@@ -517,7 +553,7 @@ product's identity.
 
 ## 2.0: Terminal Lab
 
-- [ ] Add `fart-tui` with generic occurrence, participant, coupling, measurement, view,
+- [ ] Add `fart-tui` with generic case, law, scope, claim, measurement, view,
   comparison, invariant, uncertainty, provenance, solver, and proof panes plus
   capability-selected Earth discharge, score, radio, Chill, agent, timeline,
   translation, and Broadcast views.
@@ -544,8 +580,8 @@ product's identity.
   TUI controls, live deltas, spectators, and station presentation.
 - [ ] Complete compensated disabled-player testing, remediation, and retesting
   across interactive and append-only TUI paths.
-- [ ] Open RP-1 and a non-Earth conformance occurrence with no gas, geometry,
-  acoustics, mass, or localized emitter without empty Earth-only panes.
+- [ ] Open RP-1 and the deliberate no-occurrence conformance case with no gas,
+  geometry, acoustics, mass, or localized emitter without empty Earth-only panes.
 
 Exit gate: Terminal Lab has feature parity with CLI services, adds no solver or
 story branches, and passes native terminal tests on all supported systems.
@@ -559,10 +595,11 @@ story branches, and passes native terminal tests on all supported systems.
   capability-driven projections. Ship the Tiled Chamber only as an optional
   authored Earth realization with responsive props, spatial audio, particles,
   deposition, recoil, haptics, and consequences.
-- [ ] Ship one playable native inspection path for the v0.8 non-Earth,
-  non-acoustic conformance occurrence. It must not fabricate a room, emitter,
+- [ ] Ship one playable native inspection path for the v0.8 no-occurrence,
+  non-acoustic conformance case. It must not fabricate a room, emitter,
   geometry, sound, haptics, or Earth-only pane.
-- [ ] Build the full native Chill Mode with sparse generated events, restrained
+- [ ] Build the full native Chill Mode with sparse admitted operations,
+  retained-claim presentations, restrained
   radio mixing, slow field and topology art, science overlays, world continuity,
   and independent motion, flashing, grossness, audio, and display-sleep controls.
 - [ ] Use one curated and inspectable discharge path from pfft through supported
@@ -583,7 +620,7 @@ story branches, and passes native terminal tests on all supported systems.
 Exit gate: the native app reproduces the certified Reference Enclosure scenario
 already available in CLI and TUI, labels every spatial view as a projection when
 the source is lower-dimensional, higher-dimensional, discrete, or nonspatial,
-and every consumer cites the same occurrence provenance.
+and every consumer cites the same Lab-account provenance.
 
 ## After the Reference Enclosure
 
@@ -634,9 +671,9 @@ and every consumer cites the same occurrence provenance.
 - Numerical work states applicable axioms, rules or equations, assumptions,
   units and dimensions where defined, validity, tolerances, verification, and
   validation status.
-- New presentation consumes the authoritative occurrence provenance graph.
-- New narrative claims cite context-scoped occurrence claims and cannot modify
-  the occurrence account.
+- New presentation consumes the authoritative Lab account.
+- New narrative claims cite context-scoped retained claims and cannot modify
+  the authoritative Lab account.
 - New interfaces preserve CLI parity.
 - Adapters over the canonical play service preserve transition and information
   parity for their declared track.

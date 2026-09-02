@@ -20,13 +20,16 @@ for mappings and exact failures to map. It does not claim universal physics,
 semantics, observability, or humor. A shared laugh is the comedy premise, not a
 schema requirement.
 
-“Fart” is the comic umbrella, not the scientific ontology. The engine begins
-with only a Lab-local record identity, a law-context set, a scope, and
-provenance. A
-declared classifier may then recognize a release, transfer, relaxation,
-boundary crossing, or another emission analogue. The occurrence need not have
-a source, interface, body, gas, geometry, linear time, passive observer,
-familiar causality, or even a mapping into an Earth category.
+“Fart” is the comic umbrella, not the scientific ontology. An admitted operation
+that commits a case begins with only a Lab-local record identity, a law-context
+set, an opaque scope, and Lab-level provenance. These describe the software
+record, not the furniture of reality. Pre-admission reports need not create that
+identity. A declared classifier may then recognize a release, transfer,
+relaxation, boundary crossing, or another emission analogue. Occurrence and
+realization are optional context concepts or operation capabilities. A case
+need not have a source, interface, body, gas, geometry, linear time, passive
+observer, familiar causality, objects, shared semantics, or even a mapping into
+an Earth category.
 
 The first Earth profile starts with a finite, low-energy synthetic emitter, a
 compliant opening, and an ordinary exterior. A pressure vessel belongs to a
@@ -37,11 +40,12 @@ a machine, colony, planet, star, distributed intelligence, source-free
 transition, or fictional structure under explicitly different laws.
 
 There is no menu of prerecorded farts. In the first Earth profile, a changed
-pressure history changes every dependent observable. More generally, every Lab
-capture gets a unique record identity derived from its law contexts, applicable
-scope, realization inputs, provenance, and nonce. Closure, observers, physical
-time, and source-law recurrence exist only when declared. Replay presents a
-retained record. Reconstruction repeats a declared procedure. Re-enactment
+pressure history changes every dependent observable. More generally, every
+committed Lab capture gets a unique record identity derived from its law contexts,
+applicable scope, operation inputs where present, provenance, and nonce.
+Closure, observers, physical time, and source-law recurrence exist only when
+declared. Replay presents a retained record. Reconstruction repeats a declared
+procedure. Re-enactment
 creates a new Lab encounter and makes only the equivalence claims its law
 profile supports. The game never swaps in a canned sound or animation.
 
@@ -130,8 +134,9 @@ SCENARIO PROBE DOCUMENT VALID
 Document schema: fart.scenario-probe/v0alpha1
 Law context: conformance.relation.atemporal@v0alpha1
 Scope: s0
-Realization admission: not-evaluated (admission_policy_unratified)
-Realization: not-performed (validation_only)
+Requested case operation: not-declared (probe_schema_has_no_operation)
+Operation admission: not-applicable (operation_not_declared)
+Operation execution: not-applicable (operation_not_declared)
 Validation stages:
   syntax:                 valid
   schema:                 valid
@@ -143,7 +148,7 @@ Ambient inputs: none
 
 The report continues with every capability axis and referenced software
 evidence. `--format json` provides the same locale-invariant typed result and
-the explicit admission and realization separation shown above. The parser is
+the explicit absence of any requested operation shown above. The parser is
 bounded, rejects duplicate and unknown JSON members, and never supplies an
 Earth, time, geometry, observer, identity, seed, or resource default. This is an
 experimental capability probe, not the full scenario schema or a claim that a
@@ -157,7 +162,7 @@ than receiving fake Earth fields. The shipped terminal application will be
 generated from measured service state and tested as a cell buffer, not painted
 to resemble a dashboard.
 
-![Planned native Earth-continuum simulation around one biology-neutral low-energy event in a functionless reference enclosure](docs/media/readme/ordinary-enclosure-concept-v1.webp)
+![Planned native Earth-continuum simulation around one biology-neutral low-energy case in a functionless reference enclosure](docs/media/readme/ordinary-enclosure-concept-v1.webp)
 
 Planned native concept for the biology-neutral Earth calibration fixture. It is
 one optional human-spatial projection, not a body, species, habitat, or
@@ -191,20 +196,19 @@ non-normative [French standards debate](docs/DEBAT_NORMATIF.fr.md).
 
 ## The scientific premise
 
-The profile-neutral bounded occurrence contract is:
+The minimum-assumption bounded record contract is:
 
-> The Lab identifies a finite record of a realization under one or more
-> versioned law contexts. Those contexts alone declare whether source-law
-> occurrence identity exists and which other concepts exist, including
-> ordering, state, participants, couplings, locality, observables,
-> transformations, invariants, and representations.
+> The Lab identifies a finite record under one or more versioned law contexts.
+> Those contexts alone declare whether occurrence, realization, source-law
+> identity, ordering, state, participants, couplings, locality, observables,
+> transformations, invariants, and representations exist.
 
 A `LawContextSet` contains one or more `LawContext` entries and assigns each
-applicable part of the occurrence scope to one entry. A typed `InterLawCoupling`
+applicable part of the case scope to one entry. A typed `InterLawCoupling`
 owns every bridge rule, compatibility condition, ordering relation, unit or
 representation conversion, and cross-context conservation claim. The ordinary
 case is a singleton set. The engine never treats two unrelated profiles as one
-coupled occurrence merely because a story says that universes met.
+coupled case merely because a story says that universes met.
 
 This formalism has an honest boundary. The Lab cannot represent a purported
 reality that cannot be identified, finitely encoded, versioned, or related to
@@ -212,10 +216,11 @@ anything expressible by its schemas. It returns
 `outside_representable_ontology` instead of calling that case simulated,
 unknown, or incompatible.
 
-An **emission analogue** is an occurrence that a declared classifier maps to a
-release, transfer, relaxation, or boundary crossing. It need not use linear
-time, separable domains, continuous geometry, local coupling, dimensional
-quantities, or an observer-independent state.
+An **emission analogue** is a classifier result mapping supported claims to a
+release, transfer, relaxation, boundary crossing, or another declared relation.
+It need not use occurrence semantics, linear time, separable domains,
+continuous geometry, local coupling, dimensional quantities, or an
+observer-independent state.
 
 The first Earth-continuum specialization selected for validation is
 intentionally biology-neutral:
@@ -232,9 +237,11 @@ dimension, metric, locality, fields, equations, units, symmetries, invariants,
 and conserved currents are optional modules. `not_applicable` is a valid result,
 never a fabricated zero or missing Earth field.
 
-The required top-level objects are `RecordIdentity`, `LawContextSet`,
-`Scope`, and `ProvenanceGraph`. This table expands their identity components and
-the optional profile objects:
+For an admitted operation that commits a Lab case, the required top-level
+objects are `RecordIdentity`, `LawContextSet`, `Scope`, and `ProvenanceGraph`.
+Pre-admission validation and refusal use the outer report envelope defined in
+[docs/UNIVERSALITY.md](docs/UNIVERSALITY.md). This table expands the accepted
+case identity components and optional profile objects:
 
 | Contract object | Requirement |
 | --- | --- |
@@ -243,9 +250,9 @@ the optional profile objects:
 | Law context set | One or more scoped law contexts plus explicit inter-law couplings |
 | Scope | Addressable application boundary with only the context-owned bindings or explicit absences that apply |
 | Provenance | Versioned inputs, transformations, claims, uncertainty, and retained evidence |
-| Measurement interaction | Accepted scenario input that may couple or back-react and therefore changes occurrence-result identity |
-| View profile | Knowledge, accessibility, and privacy projection over retained claims that never changes the occurrence account |
-| Presentation profile | Locale, layout, sonification, camera, and rendering choices that never change the occurrence account |
+| Measurement interaction | Accepted case input that may couple or back-react and therefore changes case-result identity |
+| View profile | Knowledge, accessibility, and privacy projection over retained claims that never changes the Lab account |
+| Presentation profile | Locale, layout, sonification, camera, and rendering choices that never change the Lab account |
 | Comparison signature | Law-selected relations, invariants, observables, and applicability |
 
 The `earth.continuum.si/discharge` specialization additionally defines:
@@ -260,16 +267,16 @@ The `earth.continuum.si/discharge` specialization additionally defines:
 | Numerics | Fidelity level, timestep policy, grid resolution, and random seed |
 
 When a law context declares dimensional equations, the simulator derives an
-active dimensionless signature. An Earth gas event may activate pressure ratio, Mach, Reynolds,
-Strouhal, Froude, Knudsen, Weber, Stokes, and particle-loading groups. Mach is
+active dimensionless signature. An Earth gas event may activate pressure ratio,
+Mach, Reynolds, Strouhal, Froude, Knudsen, Weber, Stokes, and particle-loading groups. Mach is
 not invented where no sound speed exists, and Weber is not reported where there
 is no material interface. The labels and jokes are consequences of calculated
 state and a versioned classification policy, not hidden presets.
 
-## One occurrence, many traceable projections
+## One Lab account, many traceable projections
 
 ```text
-law context set + occurrence scope
+law context set + bounded case scope
       |
       v
 participants, couplings, rules, measurement interactions, or declared absences
@@ -281,13 +288,14 @@ immutable provenance graph under declared law and measurement contexts
       +-> compatible adapters: audio, visuals, haptics, narrative, damage
 ```
 
-The same occurrence account drives every branch. State, relations, measured
-claims, audio blocks, narrative claims, and rendered frames may use different
-applicable orderings and resolutions, but every projection records its inputs,
-transformation, uncertainty, and hash. Measurement back-action is committed
-before realization and enters occurrence-result identity. A view or
+Every branch cites the same authoritative Lab account. State, relations,
+measured claims, audio blocks, narrative claims, and rendered frames may use
+different applicable orderings and resolutions, but every projection records
+its inputs, transformation, uncertainty, and hash. A causal edge is claimed only
+where the selected law context defines it. Measurement back-action is committed
+before an applicable realization and enters the case-result identity. A view or
 presentation preference is read-only. Interface layers may render, sonify, and
-explain the result, but they must not invent a second simulation story.
+explain retained claims, but they must not invent a second scientific account.
 
 ## Earth discharge regime classification
 
@@ -326,15 +334,16 @@ identity.
 
 ## The Flatulence Similarity Law
 
-For profiles with dimensional governing equations, two events are strictly similar only when their nondimensional governing
-equations, closures, spatial dimension, normalized geometry, boundary and
+For profiles with dimensional governing equations, two cases are strictly
+similar only when their nondimensional governing equations, closures, spatial
+dimension, normalized geometry, boundary and
 initial conditions, material functions, and active dimensionless coefficients
 match. Matching a short list of famous numbers is necessary in some models, but
 not sufficient in general.
 
 That conditional similarity protocol is Buckingham Pi analysis used as a game
 mechanic and a testable engine invariant. It enables a challenge such as
-reproducing an event at 1,000 times scale without merely multiplying every value
+reproducing a compatible case at 1,000 times scale without merely multiplying every value
 by 1,000.
 
 This Earth-profile similarity tool contributes to the Universal Flatulence
@@ -365,23 +374,23 @@ be a successful answer, but the archive retains the precise reason.
 
 ## Plumeprints and Fartflakes
 
-When a compatible human-spatial artifact projection is selected, an occurrence
-can leave two occurrence-derived artifacts:
+When a compatible human-spatial artifact projection is selected, a Lab record
+can leave two record-derived artifacts:
 
 - A **Plumeprint** is a compact two-dimensional scientific fingerprint made
   from supported normalized relations or features. Earth-discharge channels may
   include source history, interface motion, field structure, composition,
   active groups, measurement response, uncertainty, and ledger state.
 - A **Fartflake** is a deterministic three-dimensional sculpture grown from the
-  same occurrence provenance graph. In one declared verification view, its silhouette can
+  same Lab account. In one declared verification view, its silhouette can
   encode a safe, scannable reference to the retained trace.
 
 Each `ArtifactProjectionProfile` records the source structure, observation
 profile, target medium and dimensionality, preserved features, embedding,
 distortion, information loss, accessibility requirements, and whether the
-result is evidence, interpretation, or art. A nonspatial occurrence may produce a
+result is evidence, interpretation, or art. A nonspatial case may produce a
 declared lossy projection or a precise unsupported result. The artifact is never
-presented as the occurrence's native geometry.
+presented as native geometry.
 
 The evidence view keeps applicable axes, units, uncertainty, and provenance. The artifact
 view is for terminal display, sharing, merchandise, 3D printing, and memes. It
@@ -390,7 +399,7 @@ flat code fallback remains available, and no artifact embeds a public URL,
 private path, or tracking token without explicit action.
 
 The idea is inspired by the way QR-Bloom makes a 3D voxel tree readable as a QR
-code from above. This project will use an independent occurrence-derived algorithm
+code from above. This project will use an independent record-derived algorithm
 and will not copy its code, weights, shapes, or restricted source assets.
 
 The Lab encounter was unique. The record remains. Source-law recurrence stays a
@@ -410,27 +419,29 @@ The lab gives memorable names to real constraints:
 
 ## Ways to play
 
-- **Quick Play:** one command creates one coherent encounter valid under its
-  declared law contexts
-  with a visible scenario seed and nonce commitment, one consequence, and
-  useful witness and inspection commands. Recording is chosen before realization.
-- **Broadcast:** a seeded law context, occurrence scope, and optional world,
+- **Quick Play:** one command evaluates one coherent case under its declared law
+  contexts, with a visible case identity, an optional generation seed, a nonce
+  commitment when a record will be retained, a supported result, and any
+  applicable consequence or relation. Exact absence or refusal is a complete
+  result. Recording is chosen before the admitted operation.
+- **Broadcast:** a seeded law context, bounded scope, and optional world,
   source, observation, or situated interpretation unfold like
   interdimensional television. The story director reacts only to
-  context-scoped occurrence claims and never rerolls a polite result into a
+  context-scoped retained claims and never rerolls a polite result into a
   disaster.
-- **Chill Mode:** sparse generated events, long quiet intervals, excellent radio,
-  and slow visual art derived from supported relations and representations.
+- **Chill Mode:** sparse admitted operations, long quiet intervals, excellent
+  radio, and slow visual art derived from retained claims and representations.
   Earth profiles may add fields, vortices, spectra, uncertainty, and closing
   ledgers. It has no score, grind, or prerecorded emission menu.
 - **Freestyle Lab:** edit every supported law, scope, coupling, measurement,
   view, representation, and capability-selected extension, with units only
   where they exist.
-- **Challenges and campaign:** solve constrained scientific puzzles and progress
-  from ordinary pffts to universal translation and optional apocalypse physics.
-- **Symphony Mode:** hear one event as physical acoustics, diagnostic
-  sonification, or an inspectable musical interpretation without confusing the
-  three.
+- **Challenges and campaign:** solve constrained puzzles across compatible law
+  contexts. Earth-discharge paths may progress from ordinary pffts to optional
+  apocalypse physics, but they are not the universal prerequisite path.
+- **Symphony Mode:** hear compatible retained features as physical acoustics
+  where acoustics exist, diagnostic sonification, or an inspectable musical
+  interpretation without confusing the three.
 - **Agent Play:** humans and software agents play the same rule-governed game
   through CLI commands, a bounded MCP adapter, or longer A2A tasks, with
   declared observations, actions, budgets, and score vectors.
@@ -440,8 +451,8 @@ soundtrack profiles for long, pleasant viewing sessions. Chill electronica,
 deep house, dub techno, and chamber minimalism carry subtle alternate-context
 lore without turning every song into a novelty track. A station is diegetic
 only when its source profile actually supports audio broadcasting, hosts, and a
-radio-like institution. Radio changes presentation only. It cannot alter an
-occurrence account, narrative canon, scores, or replay identity.
+radio-like institution. Radio changes presentation only. It cannot alter a
+Lab account, narrative canon, scores, or replay identity.
 
 The native experience will open with **The Pressure Standard**, an original
 six-second certified calibration ident generated from a fixed reference event.
@@ -456,10 +467,10 @@ ledger responses will derive from one calibration definition. Fresh
 realizations may vary their microstructure while the six-second grammar and
 final instrument mark remain recognizable.
 
-The scenario seed derives minimal named streams for law, scope, realization,
-and provenance, plus optional streams for worlds, entities, narration, and
-presentation. A separate nonce commits the unique Lab record. Changing terminal
-width, language, camera, or a joke line cannot change the occurrence-result
+When declared, a scenario seed derives named streams for law, scope, case
+operation, and record provenance, plus optional streams for realization, worlds, entities,
+narration, and presentation. A separate nonce commits the unique Lab record.
+Changing terminal width, language, camera, or a joke line cannot change the case-result
 identity. A recorded episode archive preserves resolved story canon, the trace,
 and the exact evidence available for reconstruction. An unrecorded encounter is
 allowed to pass.
@@ -472,7 +483,7 @@ contracts.
 The central learning loop is short enough to remain a game:
 
 1. Predict what will happen and name the reason.
-2. Run one event and observe the result.
+2. Execute one supported operation and inspect its result.
 3. Ask for the strongest supported relation: causal, derivational,
    constraint-based, dependency-based, correlational, or explicitly unknown.
 4. Run an intervention when the law defines one; otherwise compare an alternate
@@ -493,18 +504,18 @@ eventual app. The planned command surface includes:
 ```console
 fart quick --seed F7-4PK9 --record run.fart
 fart broadcast --seed 42 --length standard
-fart chill --station drift-93-7 --event-density sparse
+fart chill --station drift-93-7 --presentation-density sparse
 fart ask "a polite dry pfft on a low-gravity station, under 20 J" --dry-run
 fart freestyle reference-enclosure.toml --set emitter.pressure="106 kPa"
-fart event run reference-enclosure.toml --output run.fart
-fart event inspect run.fart
-fart event explain run.fart --why regime.choked
-fart event provenance run.fart --to consumers/audio
-fart event branch run.fart --set exterior.pressure="0 Pa" --output vacuum.fart
-fart event sweep reference-enclosure.toml --vary emitter.pressure="105 kPa..800 kPa" --steps 64
-fart event compare small.fart large.fart --nondimensional
-fart event verify run.fart --refine timestep
-fart event reconstruct run.fart
+fart case run reference-enclosure.toml --output run.fart
+fart case inspect run.fart
+fart case explain run.fart --why regime.choked
+fart case provenance run.fart --to consumers/audio
+fart case branch run.fart --set exterior.pressure="0 Pa" --output vacuum.fart
+fart case sweep reference-enclosure.toml --vary emitter.pressure="105 kPa..800 kPa" --steps 64
+fart case compare small.fart large.fart --nondimensional
+fart case verify run.fart --refine timestep
+fart case reconstruct run.fart
 fart trace replay run.fart
 fart audio render run.fart --lane physical --output emission.wav
 fart symphony render run.fart --mode split --output score.wav
@@ -522,9 +533,9 @@ fart update
 
 Names and flags remain provisional until their schemas are implemented. The
 contract is not provisional: commands must compose in scripts, support stable
-machine-readable output, explain law-inadmissible states or relations, and never require a
-GUI. Human output should be useful at a terminal, while JSON, CSV, and event
-archives make every calculation inspectable.
+machine-readable output, explain law-inadmissible states or relations, and never
+require a GUI. Human output should be useful at a terminal, while JSON, CSV, and
+case archives make every calculation inspectable.
 
 The command tree uses short top-level play modes and consistent noun-then-verb
 scientific groups. Contextual help leads with executable examples. `doctor`
@@ -541,7 +552,7 @@ not an animation that happens to display numbers. Like htop, it makes a large
 live system legible through stable spatial regions, sortable instruments,
 keyboard-first drill-down, compact status, and immediate anomaly visibility.
 
-The overview arranges generic occurrence, participant, coupling, measurement,
+The overview arranges generic case, law, scope, claim, measurement,
 view, comparison, invariant, uncertainty, provenance, solver, and proof
 instruments. A capability-driven registry adds a relation, dependency, or
 timeline view as applicable. For the Earth
@@ -557,7 +568,7 @@ discharge profile those include:
 - Capability-selected timeline or relation view, measurement and view profiles,
   artifact state, optional interpretation, radio, and agent or spectator
   activity where enabled.
-- Chill Mode pacing, field-art selection, music bus, event density, and
+- Chill Mode pacing, field-art selection, music bus, presentation density, and
   unobtrusive proof status.
 
 Every pane can focus, sort, filter, freeze, compare, inspect provenance, explain
@@ -568,7 +579,7 @@ clear guidance and offers append-only plain watch output.
 
 It will support modern terminals on Windows, macOS, and Linux, detect terminal
 capabilities, and provide reduced-color and ASCII fallbacks. Every action must
-have an equivalent CLI command or event-file edit so the TUI never becomes a
+have an equivalent CLI command or case-file edit so the TUI never becomes a
 second, untestable control plane. Cell-buffer snapshots, PTY and ConPTY tests,
 grapheme and bidirectional-text cases, terminal restoration tests, and measured
 render and input budgets make polish executable.
@@ -637,10 +648,10 @@ laboratory, and extreme source packs must say where their energy came from.
 
 | Layer | Responsibility |
 | --- | --- |
-| Go oracle | Tiny, auditable reference equations, event fixtures, and diagnostics |
-| Rust physics core and CLI | Deterministic production simulation, CPU reference, headless play, proof, archives, translation, and replay |
+| Go oracle | Tiny, auditable reference equations, case fixtures, and diagnostics |
+| Rust production core and CLI | Deterministic evaluation and simulation, CPU reference, headless play, proof, archives, translation, and replay |
 | Native compute backends | Optional C++20 Kokkos builds for CPU, CUDA, HIP, and SYCL, plus non-certifying Metal preview kernels |
-| Rust terminal UI | Cross-platform live instrumentation over the same commands and occurrence account |
+| Rust terminal UI | Cross-platform live instrumentation over the same commands and Lab account |
 | Native Godot client | Native input, visualization, procedural audio, rooms, haptics, and game progression |
 | MCP and A2A adapters | Bounded agent access to the same play services, observations, archives, and tasks |
 
@@ -648,7 +659,8 @@ The Go implementation remains intentionally small. Once an analytical model and
 its fixtures are trustworthy there, the Rust production core must match them
 within documented tolerances before it can power the CLI, TUI, or native app.
 
-The project will use four fidelity families behind the same event contract:
+The Earth-continuum implementation will use four fidelity families behind the
+same Lab-account contract:
 
 1. A canonical analytical oracle for finite-reservoir flow, compliance,
    choking, recoil, reduced puffs, active signatures, and global ledgers.
@@ -664,15 +676,20 @@ The project will use four fidelity families behind the same event contract:
 For the detailed scientific contract, see
 [docs/SIMULATION.md](docs/SIMULATION.md). For the interface and release rules,
 see [docs/INTERFACES.md](docs/INTERFACES.md). The research basis and model
-boundaries are collected in [docs/RESEARCH.md](docs/RESEARCH.md). Audio,
+boundaries are collected in [docs/RESEARCH.md](docs/RESEARCH.md). The bounded
+meaning of “universal” and its negative-space conformance matrix are in
+[docs/UNIVERSALITY.md](docs/UNIVERSALITY.md). Audio,
 Symphony Mode, and radio are specified in [docs/AUDIO.md](docs/AUDIO.md). Agent
 play and interoperability are specified in
 [docs/AGENT_PLAY.md](docs/AGENT_PLAY.md). Cultural and public-interest safeguards
 are specified in [docs/CULTURE.md](docs/CULTURE.md). A simulated PhD-level
 computer-science design review and its resulting commitments are in
-[docs/DESIGN_REVIEW.md](docs/DESIGN_REVIEW.md). The Reference Pfft and its exact
-constant chain are in [docs/METROLOGY.md](docs/METROLOGY.md). Event identity and
-3D artifacts are in [docs/SNOWFLAKES.md](docs/SNOWFLAKES.md). Progressive
+[docs/DESIGN_REVIEW.md](docs/DESIGN_REVIEW.md). The fictional, non-normative
+[intercontextual council record](docs/CONSORTIUM.md) prototypes loss-aware
+translation humor. The Reference Pfft and its exact
+constant chain are in [docs/METROLOGY.md](docs/METROLOGY.md). Record identity,
+optional context identity, and 3D artifacts are in
+[docs/SNOWFLAKES.md](docs/SNOWFLAKES.md). Progressive
 engineering gates are in [docs/QUALITY.md](docs/QUALITY.md).
 CPU, GPU, precision, portability, and Mojo decisions are in
 [docs/COMPUTE.md](docs/COMPUTE.md). The benchmark registry and claim rules are
@@ -696,8 +713,8 @@ Every completed simulation should be able to emit a certificate containing:
   `not_applicable`, unknown, and unverified reasons.
 - Measurement, view, and presentation transformations, including measurement
   back-action, projection loss, or capability refusal.
-- Evidence that every enabled consumer used the same occurrence provenance.
-- Record, context-occurrence identity claims, occurrence-result, trace, and
+- Evidence that every enabled consumer cited the same authoritative Lab account.
+- Record, optional context-occurrence identity claims, case-result, trace, and
   reconstruction-lineage identifiers.
 
 Certificate claims are independent: replayable, internally consistent, code

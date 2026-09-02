@@ -103,15 +103,15 @@ disagreement, and power relationship. The joke can target the guild paperwork
 without declaring an entire people irrational.
 
 Radio provides another useful plurality. Different stations may interpret the
-same certified event as art, equipment failure, public policy, or a perfect
-pressure transient. Hosts may be wrong when their claims are clearly diegetic
+same certified Earth-discharge case as art, equipment failure, public policy,
+or a perfect pressure transient. Hosts may be wrong when their claims are clearly diegetic
 opinions and other positions remain possible.
 
 ## Localization humor
 
 Localization may add real comedy, but it cannot implement “the French fart,”
-“the Japanese fart,” or any other national bodily preset. The physics result,
-event identity, score, and artifact features are identical across locales.
+“the Japanese fart,” or any other national bodily preset. The case result,
+applicable identity claims, score, and artifact features are identical across locales.
 
 Locale-specific humor can come from:
 
@@ -143,7 +143,7 @@ The complete interface and nonhuman observer contract is in
 
 ## Impermanence as influence
 
-The project's event identity is informed by serious discussions of Japanese
+The project's encounter and record-identity design is informed by serious discussions of Japanese
 aesthetics and tea practice, including mono no aware, ichigo ichie, and the
 distinct histories of wabi and sabi. The design conclusion is not a visual skin.
 It is the separation of one passing occurrence from its retained evidence and
@@ -160,8 +160,10 @@ review.
 - The complete core game works offline without an account or telemetry.
 - No streaks, appointment mechanics, artificial grind, loot boxes, fear of
   missing out, or pay-to-win systems.
-- Money never changes event odds, solver fidelity, challenge actions, or rank.
-- Ranked play fixes action, observation, fidelity, and simulation-work budgets.
+- Money never changes case-result odds, implementation fidelity, challenge
+  actions, or rank.
+- Ranked play fixes action, observation, fidelity, operation-work, and
+  evaluation-work budgets.
 - Ranked play never scores wall-clock speed. Faster hardware may reduce waiting
   but cannot expose more truth, attempts, branches, fidelity, or score.
 - Players and agents receive the same authorized observation contract and cannot

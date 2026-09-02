@@ -21,8 +21,9 @@ const expectedAtemporalScenarioText = `SCENARIO PROBE DOCUMENT VALID
 Document schema: fart.scenario-probe/v0alpha1
 Law context: conformance.relation.atemporal@v0alpha1
 Scope: s0
-Realization admission: not-evaluated (admission_policy_unratified)
-Realization: not-performed (validation_only)
+Requested case operation: not-declared (probe_schema_has_no_operation)
+Operation admission: not-applicable (operation_not_declared)
+Operation execution: not-applicable (operation_not_declared)
 Validation stages:
   syntax:                 valid
   schema:                 valid
@@ -51,8 +52,8 @@ test:law-cli-fixtures [software/go-test]
   go test . -run ^TestLawCLITextAndJSONFixtures$
 `
 
-const expectedAtemporalScenarioJSONSHA256 = "cf509eba1b2a85b8e812c9dd3fdb18f7f3d80c36d1fb4cab5109f5ec5e3acc76"
-const expectedEarthScenarioJSONSHA256 = "336a73ea0e22b8c520e393aafee75fcc7675466673b08f3f02a925dabdfaab96"
+const expectedAtemporalScenarioJSONSHA256 = "9b1a6d9ed0923cb11f455545f157c2a2805c1b78b6cc82ee0222aed0087df12b"
+const expectedEarthScenarioJSONSHA256 = "77cecf0ed6413bb83ebd291f6729012f944d6261f5d8fe8fe028ca2113bc634c"
 
 func TestScenarioCLITextAndJSONFixtures(t *testing.T) {
 	input := readScenarioFixture(t, "atemporal-probe.json")
@@ -102,10 +103,13 @@ func TestScenarioCLITextAndJSONFixtures(t *testing.T) {
 	if err := json.Unmarshal(first, &report); err != nil {
 		t.Fatalf("json.Unmarshal: %v", err)
 	}
-	if !report.Valid() || report.Realization.Status != "not-performed" {
+	if !report.Valid() || report.RequestedCaseOperation.Execution.Status != "not-applicable" {
 		t.Fatalf("report = %#v", report)
 	}
-	for _, forbidden := range []string{"emitter", "locale", "observer", "presentation", "time", "unit"} {
+	for _, forbidden := range []string{
+		"emitter", "locale", "observer", "occurrence", "presentation",
+		"realization", "time", "unit",
+	} {
 		if bytes.Contains(first, []byte(forbidden)) {
 			t.Errorf("JSON unexpectedly contains %q", forbidden)
 		}
@@ -136,7 +140,7 @@ func TestScenarioCLIUnavailableCapabilityIsAValidProbe(t *testing.T) {
 	capability := report.Capabilities[0]
 	if capability.Implementation.Status != "unavailable" ||
 		capability.Applicability.Status != "undetermined" ||
-		report.Realization.Status != "not-performed" {
+		report.RequestedCaseOperation.Execution.Status != "not-applicable" {
 		t.Fatalf("report = %#v", report)
 	}
 }

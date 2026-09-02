@@ -1,7 +1,7 @@
 # First-class agent play
 
 F.A.R.T. Lab is designed as a real environment for humans and software agents,
-not as a simulation with amusing tool names. Agents predict, experiment,
+not as a thin simulation wrapper with amusing tool names. Agents predict, experiment,
 observe, keep evidence, recover from mistakes, cooperate, and submit verifiable
 results. There is no `make_optimal_fart` action and no hidden shortcut around
 the game.
@@ -20,7 +20,7 @@ CLI       TUI       Godot       MCP       A2A       native automation
         |                   |                   |
   session reducer    observation projector   artifact store
         |                   |                   |
-  physics and story    knowledge policy      event archives
+  case evaluation      knowledge policy      case archives
   audio and score      accessibility view    journals and saves
 ```
 
@@ -35,9 +35,10 @@ Its revisions and transitions belong to the PlayService control plane. They do
 not imply discrete source-law time, Markov state, or familiar causality:
 
 ```text
-start(ruleset, scenario, seed_request, event_policy, role,
+start(ruleset, scenario, optional_seed_request, operation_policy, role,
       measurement_interaction_profile, view_profile)
-  -> play_handle, observation, legal_actions, budgets, seed_commitment
+  -> play_handle, observation, legal_actions, budgets,
+     optional_generation_commitment, optional_record_commitment
 
 act(play_handle, expected_revision, idempotency_key, action)
   -> transition_receipt, observation, terminated, truncated, account_digest
@@ -47,24 +48,31 @@ finish(play_handle)
 ```
 
 `terminated` means the play objective reached a declared terminal condition.
-`truncated` means a declared action, time, energy, memory, or simulation-work
-budget ended the attempt. A retry with the same idempotency key returns the
+`truncated` means a declared action, time, energy, memory, operation-work, or
+evaluation-work budget ended the attempt. A retry with the same idempotency key returns the
 original transition. A stale expected revision is rejected. One ordered writer
 per session selects canonical service revisions, so transport timing, frame
 rate, terminal width, subscriber order, and protocol retries cannot change the
-occurrence account. A source-law clock or physical tick exists only when a
+Lab account. A source-law clock or physical tick exists only when a
 selected evolution profile defines it.
 
-For public reproducible play, `seed_request` contains the player-selected seed
-and the response may reveal it. For ranked play, the evaluator selects a hidden
-seed and nonce, then returns only:
+For generated public play, `optional_seed_request` may contain a
+player-selected seed and the response may reveal it. A nongenerated case omits
+the seed. When a ranked case uses generation, the evaluator selects a hidden
+seed and record nonce. Before play, it returns commitments only:
 
 ```text
-seed_commitment = H(seed || normalized_scenario_digest || event_nonce)
+generation_commitment = H(seed || normalized_scenario_digest || event_nonce)
+record_commitment = H(normalized_scenario_digest || event_nonce)
 ```
 
+A nongenerated ranked case has only the record commitment when recording is
+selected.
+
 Here `event_nonce` is the public wire name for a `RecordNonce`. It commits the
-Lab record and realization, not context-occurrence identity claims.
+Lab record and case result. It affects realization identity only when a selected
+operation defines realization, and it never changes context-occurrence identity
+claims by itself.
 
 The evaluator reveals the committed values after completion. A ranked caller
 cannot choose or inspect them before play.
@@ -79,7 +87,8 @@ allowed by their role and challenge track.
 
 A play-session identity binds:
 
-- Ruleset, scenario or episode, law pack, content pack, and initial seed.
+- Ruleset, scenario or episode, law pack, content pack, and any applicable
+  initial seed.
 - Participants, seats, roles, and declared measurement, view, and action profiles.
 - The ordered canonical action journal and every transition receipt.
 - Checkpoints, parent session, branch point, and produced artifact identities.
@@ -117,7 +126,7 @@ An observation includes only what the selected knowledge policy permits:
   supplies one.
 - Objective, rules, terminal state, and remaining budgets.
 - Player-visible facts with units, uncertainty, and provenance.
-- Events since a supplied cursor.
+- Observations and service changes since a supplied cursor.
 - Legal actions with argument schemas and cost previews.
 - Relevant semantic objects, controls, relationships, and media resources.
 - Score-vector progress without unrevealed verifier fields.
@@ -128,7 +137,7 @@ an error message, a resource URI, or an archive preview.
 
 ## Natural-language generation
 
-Agents and humans may describe a desired event in ordinary language. The system
+Agents and humans may describe a desired case or result in ordinary language. The system
 compiles the request into the same typed scenario proposal and canonical action
 plan used by every exact interface. It is meant to be one of the most expressive
 fart generators available without weakening scientific control.
@@ -205,8 +214,9 @@ declared omnimodal task may deliberately mix radio and physical acoustics.
 When an evolution profile defines paused and real-time semantics, each
 applicable track also declares a clock division:
 
-- **Paused decision:** the simulation stops at decision boundaries and model
-  inference latency is reported but excluded from world evolution.
+- **Paused decision:** operation evaluation and presentation stop at decision
+  boundaries. Model inference latency is reported but excluded from any
+  applicable represented evolution.
 - **Real time:** the world continues during inference, deadlines are canonical,
   and latency affects the result.
 
@@ -258,7 +268,7 @@ private feasibility oracle, obtain an unbudgeted refinement, or bypass the
 action ledger.
 
 Large immutable material is exposed as bounded resources such as
-`fart://events/{hash}`, `fart://episodes/{hash}`,
+`fart://records/{hash}`, `fart://episodes/{hash}`,
 `fart://sessions/{id}/transcript`, and `fart://schemas/{version}`. Refinement,
 high-fidelity simulation, long audio rendering, and large exports may use the
 MCP Tasks extension. Prompts can help an agent learn the game, but they are not
@@ -293,7 +303,7 @@ An Agent Card may advertise these implemented skills:
 - `fartlab.direct.v1`
 
 An A2A Task represents a campaign, match, experiment, or team role, not every
-physics tick. Messages coordinate work. Artifacts carry observations, legal
+backend step. Messages coordinate work. Artifacts carry observations, legal
 actions, notebooks, plots, transcripts, archives, certificates, and scores. A
 task references an application play handle but never becomes game identity.
 
@@ -309,7 +319,8 @@ until a deadline, reveal together, and resolve conflicts with a versioned
 deterministic rule. Deadlines, missing actions, disconnect grace, role handoff,
 agent dropout, ties, and cancellation are part of the ruleset. A2A cancellation
 maps explicitly to a natural termination, budget truncation, role withdrawal,
-or no-op. It never silently rewinds physics. Requests carry `A2A-Version: 1.0`.
+or no-op. It never silently rewinds the authoritative Lab account. Requests
+carry `A2A-Version: 1.0`.
 
 The first binding is authenticated JSON-RPC over explicitly started loopback
 HTTP with streaming. HTTP+JSON and gRPC are advertised only after equivalent
@@ -328,7 +339,7 @@ Automation begins only through an explicit launch mode, uses inherited standard
 I/O where practical, displays a visible indication, and does not open an
 always-listening port. Screenshots and accessibility trees cite the same
 presentation revision. Semantic nodes reveal only presented information, never
-scene-tree paths or hidden simulation nodes.
+scene-tree paths or hidden evaluation state.
 
 ## Fairness, safety, and anti-cheat
 
@@ -341,8 +352,8 @@ Trust is graduated:
 
 - **Sandbox:** unrestricted local play, mods, and branches.
 - **Reproducible:** fixed pack and solver hashes with a complete journal.
-- **Ranked:** committed seed and rules, authoritative execution or replay, and a
-  signed completion receipt.
+- **Ranked:** committed rules and any applicable seed, authoritative execution
+  or replay, and a signed completion receipt.
 - **Research:** complete provenance and proof requirements without assuming a
   leaderboard.
 
@@ -366,8 +377,9 @@ protocol fields are untrusted data, never executable instructions.
 
 Two invariants govern every adapter:
 
-1. **Transition parity:** the same seed and canonical action trace produce the
-   same core account digest, journal, occurrence result, scientific artifacts, and
+1. **Transition parity:** the same accepted initial case, any applicable seed,
+   and canonical action trace produce the same core account digest, journal,
+   case result, scientific artifacts, and
    certificate. Presentation artifacts may differ but cite the same canonical
    presentation revision.
 2. **Information parity:** surfaces in one track expose equivalent

@@ -66,7 +66,7 @@ executable check exists.
 | `SCN-001` | Scenario-probe validity does not imply realization or admission | Exact atemporal and unavailable-Earth text and JSON fixtures | Ratified scenario admission and refusal conformance |
 | `SCN-002` | Atemporal scenario probing consults no ambient or Earth default | Validator over document bytes and the compiled-in catalog, explicit empty ambient-input report, and counterexample fixture | Provider tripwires and broader orthogonal ontology suite |
 | `OBS-001` | Observation capabilities and back-action remain explicit | Design contract | Passive, distributed, and coupled observer tests |
-| `PHY-001` | One authoritative occurrence account drives all consumers | Design contract | Typed provenance traversal tests |
+| `ACC-001` | Every enabled projection cites one authoritative Lab account without inventing causal structure | Design contract | Typed claim and transformation traversal tests |
 | `PHY-002` | Applicable conserved transfers close for the declared boundary | Design contract | Exact and tolerance-based ledger properties |
 | `PHY-003` | Earth-profile exterior sound is absent in vacuum | Design contract | Analytical and field-solver fixtures |
 | `ID-001` | Replay presents a record and never claims recurrence | Design contract | Archive and UI language conformance |
@@ -74,7 +74,7 @@ executable check exists.
 | `DET-001` | Presentation streams cannot change physical identity | Design contract | Same-trace differential tests |
 | `SURF-001` | CLI, TUI, native, MCP, and A2A lower to canonical actions | Design contract | Adapter golden and differential fuzz tests |
 | `ART-001` | Spatial artifacts declare projection, distortion, and loss | Design contract | Feature and artifact manifest verification |
-| `LOC-001` | Localization cannot change occurrence results, identity sets, or score | Design contract | Cross-locale same-trace tests |
+| `LOC-001` | Localization cannot change case results, applicable identity sets, or score | Design contract | Cross-locale same-trace tests |
 | `CMP-001` | Backend choice cannot silently change laws, rules, equations, or precision class | Design contract | Capability refusal and scenario-digest tests |
 | `CMP-002` | Accelerated results preserve certified observables within tolerance | Design contract | CPU, Kokkos, CUDA, HIP, and SYCL differential suite |
 
@@ -145,7 +145,7 @@ empirical validation.
   Unicode, ASCII, color, and screen-reader snapshots.
 - PTY and ConPTY tests prove resize, interruption, panic, and terminal restoration.
 - Native tests bind frame, audio, haptic, caption, accessibility, and action
-  revisions to the same occurrence account.
+  revisions to the same Lab account.
 - MCP and A2A run official conformance suites plus retry, cancellation,
   idempotency, authorization, leak, backpressure, and resource-limit tests.
 - Archives receive round-trip, migration, malformed-input, decompression,

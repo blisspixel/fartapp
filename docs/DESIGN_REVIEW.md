@@ -16,29 +16,32 @@ skepticism.
 **Project:** What should the player actually learn?
 
 **Reviewer:** Not a list of equations. Give the player an epistemic loop:
-predict, realize, inspect, explain with the strongest relation the law supports,
-and test it. A three-second Earth pfft can teach more than a page of exposition
+predict, execute a supported operation, inspect, explain the strongest supported
+relation or the exact limit, and test it. A three-second Earth pfft can teach more than a page of exposition
 when a supported intervention is immediate and runnable. For a constraint-only
 law, compare alternate solutions instead of inventing causality.
 
-**Project:** We require one authoritative event history. Is that the right
-abstraction?
+**Project:** We require one authoritative account. Is that the right
+abstraction even when a context defines no event or history?
 
-**Reviewer:** Preserve one authoritative simulation account under the declared
-law contexts and measurement interactions, but do not force every consumer into
-one master-rate array. Applicable fields, measurements, audio, narration, and
-rendering operate at their own orderings and resolutions. Use an immutable
-provenance graph. Commit state-altering measurement before realization. Keep
-views and presentation read-only. Every projection should cite its inputs,
+**Reviewer:** Preserve one authoritative Lab account under the declared law
+contexts and measurement interactions, but do not force every case to be a
+simulation or every consumer into one master-rate array. Applicable relations,
+fields, measurements, audio, narration, and rendering operate at their own
+declared orderings and resolutions. Use an immutable Lab-evidence graph. Commit
+state-altering measurement before an applicable realization. Keep views and
+presentation read-only. Every projection should cite its inputs,
 transformation, applicable ordering, uncertainty, and hash. Do not claim
-observer-independent truth where the selected contexts do not define one.
+source-law time, causality, occurrence, or observer-independent truth where the
+selected contexts do not define them.
 
 **Project:** What if another universe has no linear time, metric, emitter,
 exterior, conservation law, or propositional language?
 
-**Reviewer:** Then those cannot be mandatory schema fields. Require only record
-and optional context-occurrence identity claims, a law-context set, scope, and provenance inside
-the Lab's bounded formalism. Everything else is a capability: ordering, state,
+**Reviewer:** Then those cannot be mandatory schema fields. Require only a
+Lab-local record identity, law-context set, opaque scope, and Lab provenance.
+Everything else is a capability, including occurrence, realization, source-law
+identity, ordering, state,
 participants, couplings, geometry, equations, units, measurement, views, and
 invariants. Test tiny counterexamples before archive and UI schemas freeze
 around Earth gas. A precise `not_applicable` is better than a fake zero. If a
@@ -127,16 +130,17 @@ overconfidence the safest recurring target.
 
 1. Move the first playable and inspectable ordinary pfft into the Go-oracle
    milestone, then preserve it through the Rust migration.
-2. Model one authoritative occurrence account as a typed, immutable,
-   multi-order provenance graph under declared law contexts and measurement
-   interactions, with read-only views and presentation.
+2. Model one authoritative Lab account as a typed, immutable, capability-aware
+   provenance graph under declared law contexts and measurement interactions,
+   with no implicit source-law time or causality and with read-only views and
+   presentation.
 3. Give law contexts explicit capabilities, compatibility witnesses, trust
    classes, and unsupported states.
 4. Freeze the Go oracle's scope and compare both implementations with
    independently derived references.
-5. Make predict, emit, inspect, explain, vary, and transfer a first-class play
-   loop.
-6. Separate scenario, record, context-occurrence identity claims, occurrence-result, view,
+5. Make predict, evaluate, inspect, explain, vary, and transfer a first-class
+   play loop. Use Emit only where supported.
+6. Separate scenario, record, context-occurrence identity claims, case-result, view,
    narrative, presentation, and archive-byte identities.
 7. Treat semantic Pi groups as authored scientific contracts that tooling
    verifies, not meanings automatically discovered from a matrix.
@@ -161,7 +165,7 @@ overconfidence the safest recurring target.
 - Can a player predict vacuum acoustics, choking, conservation, or similarity
   more accurately after play and transfer the idea to a new scenario?
 - Can every audio block, rendered frame, damage event, and lab-claim sentence
-  traverse provenance back to authoritative occurrence claims or relations that
+  traverse provenance back to authoritative retained claims or relations that
   the selected law and measurement contexts actually define?
 - Can strict translation produce a compatibility witness and round-trip within
   its declared tolerance?

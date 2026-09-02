@@ -205,7 +205,7 @@ fart reference trace run.fart --quantity observer.acoustic_exposure
 ```
 
 The bare command favors immediacy and impermanence. It does not persist a full
-archive unless the player selects recording. `fart event run scenario.toml
+archive unless the player selects recording. `fart case run scenario.toml
 --output run.fart` remains the explicit laboratory path for durable work.
 
 ## Reference hierarchy

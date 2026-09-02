@@ -9,15 +9,22 @@ government laboratories, and official project documentation are preferred.
 
 ## Decisions changed by the research
 
-- The profile-neutral bounded core is Lab-local record identity, law-context set,
-  scope, and provenance. Outside-formalism cases fail explicitly.
+- The minimum-assumption bounded core is Lab-local record identity, law-context
+  set, scope, and provenance. Inputs outside a selected formalism receive an
+  explicit outer-envelope refusal, which is a successful instrument result.
   Emitter, interface, exterior, dimensional equations, human anatomy, and Earth
   physics are capability-selected profile structures.
+- The project defines no law-neutral transient-transport model. “Transient”
+  requires a declared ordering or evolution structure, while “transport”
+  requires a declared carrier, adjacency, boundary, port, or coupling. The
+  minimum-assumption bounded core validates, orchestrates, compares, records,
+  and refuses. A law
+  context owns every actual realization semantics.
 - Ordinary Earth-biological pressure excursions are far below the ideal-gas
   choking threshold. Choked, underexpanded, locally supersonic, and
   shock-containing are separate labels.
-- Finite events begin as starting jets or puffs. Steady round-jet scaling is a
-  conditional far-field limit.
+- Finite Earth-discharge emissions begin as starting jets or puffs. Steady
+  round-jet scaling is a conditional far-field limit.
 - Coarse state history constrains procedural audio but does not uniquely contain
   unresolved turbulent waveform detail. The audio closure and seed are part of
   provenance.
@@ -29,8 +36,8 @@ government laboratories, and official project documentation are preferred.
   and fictional-law consistency are separate certificate claims.
 - Alternate dimensions and universes get explicit law packs. Unsupported laws
   fail explicitly rather than reusing Earth fluid equations.
-- The story director reacts to context-scoped occurrence claims and never rerolls a valid
-  outcome.
+- The story director reacts to retained claims and never rerolls an admitted
+  case result.
 - Physical acoustics, diagnostic sonification, Symphony, and radio are separate
   audio lanes with different truth claims and tests.
 - Social meaning is optional. When supported, it is represented through situated
@@ -51,7 +58,8 @@ a bounded design consequence and an open question.
 
 | Claim | Evidence and supported scope | Implementation consequence | Open question |
 | --- | --- | --- | --- |
-| Derived artifacts need traceable provenance | [W3C PROV-DM](https://www.w3.org/TR/prov-dm/) defines entities, activities, derivations, and constraints | Use a typed occurrence provenance graph with versioned derivation edges | What minimal subset stays pleasant in a CLI? |
+| Derived artifacts need traceable provenance | [W3C PROV-DM](https://www.w3.org/TR/prov-dm/) defines entities, activities, derivations, and constraints, but its activities and ordering are not a universal source-law ontology | Use a typed Lab-evidence graph with versioned derivation edges; add source-law meaning only when declared | What minimal subset stays pleasant in a CLI? |
+| Cross-law preservation claims require typed evidence | [Goguen and Burstall's institution theory](https://doi.org/10.1145/147508.147524) defines signatures, models, sentences, satisfaction, and a satisfaction condition under changes of notation | For institution-like packs, require a checked satisfaction-preservation witness; other packs require a law-specific structural, signal, or conformance witness, or a structured no-mapping result | How should contexts without proposition-like truth expose conformance? |
 | Units can be part of program correctness | [Kennedy on units of measure](https://www.microsoft.com/en-us/research/publication/relational-parametricity-and-units-of-measure/) proves dimensional invariance properties for a typed language | Make invalid dimensional combinations difficult to represent | Which quantities need runtime profiles rather than compile-time dimensions? |
 | Prediction before explanation can improve transfer | [Kapur's controlled studies](https://doi.org/10.1111/cogs.12107) concern mathematics learning | Let players predict, fail productively, then inspect and transfer | Does this effect hold for short fluid-dynamics play sessions? |
 | Complex model conclusions need sensitivity analysis | [Saltelli et al.](https://doi.org/10.1002/9780470725184) covers global sensitivity methods | Report influential inputs, interactions, and nonidentifiability | Which methods fit interactive latency and mixed variables? |
@@ -60,6 +68,48 @@ a bounded design consequence and an open question.
 | Protocol parity requires an application contract | [MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28) is stateless at its core and [A2A 1.0](https://a2a-protocol.org/v1.0.0/specification/) models longer agent tasks | Keep play handles, state, actions, knowledge, and replay in `PlayService`, not transport sessions | What smallest adapter set remains pleasant for unrelated agents? |
 | More modalities can reduce agent performance | [OmniPlay](https://arxiv.org/abs/2508.04361) evaluates reinforcing and conflicting image, video, audio, and text | Identify physical audio, radio, captions, and semantic observations as separate benchmark channels | Which combinations improve reasoning rather than add noise? |
 | Social generation needs situated review | [UNESCO's ICH ethical principles](https://ich.unesco.org/en/ethics-and-ich-00866) emphasize community participation, diversity, and context | Model plural positions and trigger focused review for recognizable living affinity | When is generated resemblance substantial enough to require review? |
+
+## Law contexts and bounded generality
+
+- [Goguen and Burstall: Institutions](https://doi.org/10.1145/147508.147524)
+  provides a rigorous reference for signatures, models, sentences,
+  satisfaction, and satisfaction invariance under changes of notation. For
+  institution-like contexts, the project borrows the discipline of checked
+  preservation. It does not force contexts without proposition-like truth into
+  institution semantics.
+- [Discrete Exterior Calculus](https://arxiv.org/abs/math/0508341) develops
+  calculus on simplicial complexes in arbitrary finite dimension. It motivates
+  algebraic incidence and boundary-of-boundary tests separately from
+  metric-dependent operators, while still assuming a finite-dimensional
+  simplicial structure.
+- [Finite Element Exterior Calculus](https://doi.org/10.1090/S0273-0979-10-01278-4) relates
+  stability to differential complexes, subcomplexes, and bounded cochain
+  projections. It supports structure-preserving specialist solvers, not a
+  dimension-free universal solver.
+- [LeFloch and Okutmustur: Hyperbolic conservation laws on spacetimes](https://arxiv.org/abs/0810.0255)
+  formulates conservation laws geometrically on a differential manifold with
+  boundary using flux fields of forms. Its result still assumes global
+  hyperbolicity and its induced time-orientation, a foliation by compact slices,
+  and the required volume-form structure.
+- [The causal set approach to quantum gravity](https://doi.org/10.1007/s41114-019-0023-1)
+  explicitly postulates a locally finite partial order. It is useful negative
+  evidence that discrete ordering is a profile assumption, not a result of an
+  assumption-free core.
+- [Structured versus Decorated Cospans](https://doi.org/10.32408/compositionality-4-3)
+  provides compositional formalisms for open systems and illustrates them with
+  circuits, Petri nets, dynamical systems, and epidemiological models. It
+  motivates explicit typed interfaces for composable packs. Cospan structure
+  alone does not establish semantic compatibility or preservation across law
+  contexts; those claims require separate witnesses.
+- In diffeomorphism-invariant Lagrangian gravity with matter,
+  [Iyer and Wald](https://doi.org/10.1103/PhysRevD.50.846) construct currents and
+  charges from the selected fields, Lagrangian, and infinitesimal
+  diffeomorphism. This motivates requiring every conservation pane to name its
+  current, governing assumptions, boundary, sources, and applicability basis.
+- A [2025 preprint on formalizing dimensional analysis in Lean](https://arxiv.org/abs/2509.13142)
+  reports machine-checked dimensional homogeneity and a Buckingham Pi
+  implementation. It is a proof-obligation reference, not a decision to add
+  Lean to the runtime.
 
 ## Gas dynamics, reservoirs, and jets
 
@@ -140,9 +190,21 @@ a bounded design consequence and an open question.
 - [Role of viscosity in turbulent drop breakup](https://doi.org/10.1017/jfm.2023.345)
   treats the transition as probabilistic and shows why Weber number alone is not
   a universal Boolean boundary.
-- [The Atomizing Pulsed Jet](https://arxiv.org/abs/2405.01959) reports complex
+- [The atomising pulsed jet](https://doi.org/10.1017/jfm.2025.218) reports complex
   sheet, ligament, droplet, and bubble topology plus a nonconvergent numerical
   droplet peak near three grid cells. It directly motivates cutoff reporting.
+- [A unified HTC multiphase model of continuum mechanics](https://doi.org/10.1016/j.jcp.2024.113553)
+  develops a broad nonequilibrium continuum framework across fluids and solids,
+  while its numerical examples use a restricted simplified three-phase model.
+  It is a research candidate, not a selected universal multiphase model.
+- A [preprint survey of isothermal and isentropic Baer-Nunziato-type models](https://arxiv.org/abs/2407.06919)
+  details hyperbolicity, symmetrization, entropy pairs, relaxation, and physical
+  constraints. It supports model-specific admissibility gates.
+- [A curl-free finite-volume and finite-difference two-phase scheme](https://doi.org/10.1007/s10915-024-02733-9)
+  preserves the selected model's relative-velocity curl constraint to machine
+  precision in the absence of algebraic source terms. This motivates
+  model-specific executable invariant tests, not a generic multiphase
+  guarantee.
 - [Evaporating turbulent jet-spray DNS](https://arxiv.org/abs/2010.07689)
   reports clustering and heterogeneous histories that violate naive local
   isolated-droplet assumptions.
@@ -188,11 +250,17 @@ a bounded design consequence and an open question.
 
 - [Buckingham: On Physically Similar Systems](https://doi.org/10.1103/PhysRev.4.345)
   is the original Pi-theorem formulation.
-- [BIPM SI Brochure](https://www.bipm.org/en/publications/si-brochure) defines
-  the International System of Units and exact defining constants inherited by
-  the first Earth law profile. Those constants define coordinates, not a
-  physiology or one scalar fart unit.
-- The [International Vocabulary of Metrology](https://www.bipm.org/en/committees/jc/jcgm/publications)
+- [BIPM SI Brochure, 9th edition version 4.01](https://www.bipm.org/en/publications/si-brochure)
+  is the current 2026 reference for the International System of Units and the
+  exact numerical values of its defining constants. The first Earth law profile
+  adopts those unit definitions; they do not define a source physiology or a
+  scalar fart unit.
+- [BIPM SI Reference Point 1.0.0](https://www.bipm.org/en/-/2026-06-18-the-first-stable-version-of-the-si-reference-point)
+  is the first stable machine-actionable representation of core SI reference
+  information. A runtime would use a reviewed, pinned local representation,
+  never live network resolution, and redistribution remains subject to license
+  review.
+- The [International Vocabulary of Metrology](https://doi.org/10.59161/JCGM200-2012)
   distinguishes measurands, calibration, metrological traceability, and
   uncertainty concepts used by the Reference Pfft procedure.
 - [Barth and Ohlberger: finite-volume methods](https://ntrs.nasa.gov/citations/20030020790)
@@ -214,6 +282,10 @@ a bounded design consequence and an open question.
   gives observed-order and Grid Convergence Index practices.
 - [JCGM Guide to the Expression of Uncertainty in Measurement](https://doi.org/10.59161/JCGM100-2008E)
   supports explicit uncertainty categories and reporting.
+- The 2026 JCGM [amendment on nonlinearity in measurement models](https://doi.org/10.59161/PPDI3267)
+  and [GUM-5 worked examples](https://doi.org/10.59161/YNLY8209) are required
+  review inputs when a certificate propagates measurement uncertainty through a
+  nonlinear regime classifier or derived measured observable.
 - [NIST numerical reproducibility program](https://www.nist.gov/programs-projects/numerical-reproducibility)
   motivates careful cross-platform reproducibility contracts.
 - [Salmon et al.: counter-based random numbers](https://doi.org/10.1145/2063384.2063405)
@@ -264,8 +336,8 @@ dependencies. See [COMPUTE.md](COMPUTE.md).
 ## Scientific workflow, causality, and software correctness
 
 - [W3C PROV-DM](https://www.w3.org/TR/prov-dm/) supplies a domain-neutral model
-  for entities, activities, derivations, and provenance constraints. The event
-  graph borrows those distinctions without requiring a web runtime.
+  for entities, activities, derivations, and provenance constraints. The Lab
+  provenance graph borrows those distinctions without requiring a web runtime.
 - [Kennedy: Relational Parametricity and Units of Measure](https://www.microsoft.com/en-us/research/publication/relational-parametricity-and-units-of-measure/)
   connects a type system for units with invariance under unit changes. It
   supports dimension-safe core APIs, not a claim that static types replace
@@ -281,23 +353,25 @@ dependencies. See [COMPUTE.md](COMPUTE.md).
   automatic proof.
 - The [National Academies reproducibility report](https://doi.org/10.17226/25303)
   distinguishes computational reproducibility from broader scientific
-  replication. That distinction informs event identities and certificate claims.
+  replication. That distinction informs record, case-result, applicable
+  occurrence identities, and certificate claims.
 
 ## Learning, explanation, and auditory display
 
 - [Kapur: Productive Failure in Learning Math](https://doi.org/10.1111/cogs.12107)
   reports improved conceptual understanding and transfer when problem solving
-  precedes instruction in its studied setting. The project's predict, emit,
-  explain, vary, transfer loop is a hypothesis to test, not a guaranteed effect.
+  precedes instruction in its studied setting. The project's predict, evaluate,
+  explain, vary, transfer loop is a hypothesis to test, with Emit used only
+  where applicable, not a guaranteed effect.
 - [Improving Comprehension of Numbers in the News](https://www.microsoft.com/en-us/research/publication/improving-comprehension-of-numbers-in-the-news/)
   reports controlled experiments in which contextual perspectives improved
   numerical recall and estimation. Explanation cards should connect absurd
   outputs to familiar scale without substituting analogy for units.
 - The [NSF Sonification Report](https://digitalcommons.unl.edu/psychfacpub/444/)
   defines sonification as nonspeech audio used to convey information and calls
-  for perceptual testing. Procedural audio and data sonification share event
-  provenance, but their entertainment and information goals are evaluated
-  separately.
+  for perceptual testing. Procedural audio and data sonification share
+  retained-case provenance, but their entertainment and information goals are
+  evaluated separately.
 - [ITU-R BS.1770-5](https://www.itu.int/rec/R-REC-BS.1770-5-202311-I/en)
   defines program-loudness and true-peak measurement algorithms. It supports
   reproducible measurement, not one mandatory artistic target or a substitute
@@ -524,6 +598,19 @@ comic quality.
   because it lets translators control grammar and expression without assembling
   sentences from fragments. Adoption still requires dependency and terminal
   rendering review.
+- The NASA History volume
+  [*Archaeology, Anthropology, and Interstellar Communication*](https://www.nasa.gov/history/history-publications-and-resources/nasa-history-series/archaeology-anthropology-and-interstellar-communication/),
+  an edited collection rather than an agency consensus statement, examines why
+  detecting structure or sharing physical regularities would not by itself
+  settle interpretation. The project takes this as motivation to preserve
+  competing hypotheses and exact no-mapping results instead of treating
+  mathematics as a universal semantic language.
+- [Project CETI](https://www.projectceti.org/research/index) describes a workflow
+  combining audio, video, behavior, field robotics, synchronized annotation,
+  machine learning, and playback-based validation. F.A.R.T. Lab treats this
+  context-rich workflow as a design analogy, not evidence that signal structure
+  alone establishes meaning or that the method generalizes across species or
+  law contexts.
 - Human language is one observer communication channel. Pressure, spectra,
   chemistry, fields, images, gestures, and unknown channels use the same
   capability and loss model without being forced through English prose.

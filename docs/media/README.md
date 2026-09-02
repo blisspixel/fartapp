@@ -17,7 +17,7 @@ Rules:
 - Brand files record their separate clearance state. Public asset approval is
   not trademark clearance.
 - No file may contain a secret, username, machine name, absolute local path,
-  account detail, private event reference, or tracking URL.
+  account detail, private record reference, or tracking URL.
 - Optimize losslessly where practical. A larger replacement needs a justified
   byte budget in the manifest.
 - Update the digest and review fields whenever bytes change.

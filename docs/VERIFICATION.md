@@ -52,11 +52,11 @@ reference uncertainty before the benchmark is marked active.
 
 | ID | Model or invariant | Reference and observable | Candidate acceptance evidence |
 | --- | --- | --- | --- |
-| ONT-001 | Optional Earth roles | Occurrence with no emitter, interface, exterior, gas, geometry, or units | Schema, archive, certificate, and CLI round-trip without sentinel or fake-zero fields |
+| ONT-001 | Minimum bounded case | Case with no occurrence, realization, emitter, interface, exterior, gas, geometry, units, or presentation text | Schema, archive, certificate, and CLI round-trip without sentinel, fake-zero, or implicit operation fields |
 | ONT-002 | Optional law structures | Discrete graph, atemporal, cyclic, and partially ordered constraint fixtures | Only declared ordering, state, metric, dimensional, and invariant capabilities appear; serialization order creates no source time |
 | ONT-003 | Multiple law contexts | Two scoped contexts joined only by an explicit inter-law bridge | Bridge compatibility, representation, ordering, and conservation claims match the declared coupling; an undeclared bridge fails |
-| OBS-001 | Measurement contract | Passive, distributed, probabilistic, and state-altering fixtures | Accessible results and back-action match the declared measurement operator and provenance; coupled measurement changes occurrence-result identity |
-| OBS-002 | Read-only view contract | Knowledge, privacy, accessibility, locale, and layout variations over one retained account | Permitted claims change as declared while scenario and occurrence-result identities remain fixed |
+| OBS-001 | Measurement contract | Passive, distributed, probabilistic, and state-altering fixtures | Accessible results and back-action match the declared measurement operator and provenance; coupled measurement changes case-result identity |
+| OBS-002 | Read-only view contract | Knowledge, privacy, accessibility, locale, and layout variations over one retained account | Permitted claims change as declared while scenario and case-result identities remain fixed |
 | MAP-001 | Mapping taxonomy | Semantic, structural, signal, analogy, and every no-mapping reason | Stable code, evidence, loss, policy, and changeability fields agree across locales and surfaces |
 | ALG-001 | Unit and coordinate invariance | Equivalent authored units and transformed coordinates | Canonical scenario and observables agree to the declared arithmetic contract |
 | ALG-002 | Dimensional group basis | Exact rational dimension matrix | Exact null space, dimensionless authored groups, rank and basis recorded |
@@ -88,10 +88,10 @@ reference uncertainty before the benchmark is marked active.
 | ACO-003 | Rectangular room | Analytical modal frequencies | Resolved modes within 1 percent before lossy-wall validation |
 | ACO-004 | Vacuum lemma | Exterior with no material medium | Exactly no exterior propagating acoustic channel; recoil and internal vibration remain |
 | SYS-001 | Conservation of Ass | Closed and open control volumes | Double-entry mass, species, momentum, and energy ledgers close to stated tolerance |
-| SYS-002 | Cross-modal causality | Occurrence provenance consumer audit | Every enabled audio, visual, haptic, damage, and fact output has a valid derivation |
+| SYS-002 | Cross-projection account coherence | Lab-account consumer audit | Every enabled audio, visual, haptic, damage, and fact output cites compatible retained claims and transformations; causal language appears only where declared |
 | SYS-003 | Oracle parity | Go fixtures and Rust implementation | Declared observables match within exact or numeric tolerance across platforms |
 | SYS-004 | Similarity family | Scaled same-law cases | Normalized observables agree only where full active similarity conditions hold |
-| ARC-001 | Event archive | Round trip and adversarial corpus | Canonical members survive; traversal, bombs, duplicates, links, and corruption fail closed |
+| ARC-001 | Case archive | Round trip and adversarial corpus | Canonical members survive; traversal, bombs, duplicates, links, and corruption fail closed |
 | ADP-001 | Surface transition parity | One canonical action journal through every adapter | Core revision, result, scientific artifacts, and certificate digests agree |
 | ADP-002 | Surface information parity | Track-specific observation audit | No surface leaks verifier state or bypasses its declared sensor and budget policy |
 

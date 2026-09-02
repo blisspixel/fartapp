@@ -72,6 +72,7 @@ func resolveDocument(document Document) Report {
 
 	report := baseReport("document_bytes", "built_in_law_catalog")
 	report.DocumentStatus = "valid"
+	report.RequestedCaseOperation = absentCaseOperationDisposition()
 	report.ValidationStages = successfulValidationStages()
 	report.DocumentSchema = document.Schema
 	report.LawContext = &lawcatalog.LawContextRef{ID: context.ID, Version: context.Version}

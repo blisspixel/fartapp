@@ -1,9 +1,11 @@
 # Compute architecture
 
 F.A.R.T. Lab is CPU-complete and accelerator-aware. A supported CPU must be able
-to run every canonical equation and benchmark, although high-fidelity cases may
-be slow. GPUs reduce time to solution. They do not change the governing
-equations, grant accuracy, or turn an unvalidated closure into science.
+to run every shipped canonical operation appropriate to its declared
+capability, including equation solvers, rule evaluators, constraint engines,
+mapping witnesses, and conformance checks. High-fidelity cases may be slow.
+GPUs reduce time to solution. They do not change governing laws, grant
+accuracy, or turn an unvalidated closure into science.
 
 This is a design contract. The current repository contains only the tiny Go CLI
 and no CFD or GPU implementation.
@@ -27,8 +29,8 @@ The project chooses languages by assurance and hardware fit, not fashion:
 C++ is confined to the production field-kernel library and a narrow versioned C
 ABI. Kokkos owns device-local mesh arrays, field stages, parcels, halos, and
 reductions inside that library. C++ does not own scenarios, archives, units,
-event identity, validation policy, or the CLI. Rust owns lifecycle and host
-allocation across the boundary and treats device failures as typed results. The
+record or case-result identity, validation policy, or the CLI. Rust owns
+lifecycle and host allocation across the boundary and treats device failures as typed results. The
 Go oracle never depends on the field library or an accelerator.
 
 No Python, JavaScript, JVM, browser, or vendor runtime is required to run the
@@ -71,8 +73,8 @@ The planned diagnostic surface is:
 fart compute list
 fart compute inspect cuda:0
 fart doctor --compute
-fart event run case.toml --backend auto --precision verified
-fart event verify run.fart --compare-backends cpu,cuda
+fart case run case.toml --backend auto --precision verified
+fart case verify run.fart --compare-backends cpu,cuda
 fart benchmark run field-core --backend cuda --output evidence/
 ```
 

@@ -153,8 +153,9 @@ No play command writes into the current directory unless the player explicitly
 requests `--record` or `--output`.
 
 Quick Play is a polished result, not a random parameter dump. Broadcast resolves
-a law context, scope, and realization deterministically, then adds a world,
-source, story, observation, or narrative ordering only when supported.
+a law context, scope, and supported operation deterministically. It adds a
+realization, world, source, story, observation, or narrative ordering only when
+supported.
 Freestyle is guided when interactive, but every choice has a scenario or flag
 equivalent.
 
@@ -163,7 +164,7 @@ equivalent.
 Natural language is a first-class authoring surface for humans and agents, not a
 second simulation engine. A request compiles into one reviewable typed proposal:
 
-Display language never enters an event identifier, field name, regime code, or
+Display language never enters a case identifier, field name, regime code, or
 archive comparison. Locale packs and optional communication profiles follow
 [LOCALIZATION.md](LOCALIZATION.md); the complete typed machine surface remains
 usable without any natural-language model.
@@ -186,19 +187,20 @@ The compiler returns:
 
 `--dry-run` is the default whenever wording is ambiguous, hazardous, expensive,
 or would cross a content boundary. Acceptance freezes the typed proposal before
-the occurrence. Later changes create an explicit diff and new scenario identity.
+the admitted operation executes. Later changes create an explicit diff and new
+scenario identity.
 
 The ordinary parser and curated request grammar work fully offline. Optional
 local or remote language-model adapters may propose typed fields, but they are
 never required, never receive solver mutation access, and never bypass schema,
 unit, capability, safety, content, or budget validation. Provider text is
 untrusted input. The accepted typed proposal, not a model transcript, controls
-the event.
+the operation.
 
 MCP exposes the same draft, validate, accept, and explain operations. Agents can
 use natural language for expressive play while exact JSON remains available for
-benchmarking and automation. Same accepted proposal plus same declared event
-inputs produces the same numerical reconstruction regardless of whether it was
+benchmarking and automation. The same accepted proposal plus the same declared
+case inputs produces the same numerical reconstruction regardless of whether it was
 authored through prose, flags, JSONL, MCP, TUI, or native controls.
 
 ### Command grammar
@@ -223,11 +225,11 @@ fart reference realize measured-enclosure.toml
 fart scenario init
 fart scenario validate reference-enclosure.toml
 fart scenario diff first.toml second.toml
-fart event run reference-enclosure.toml -o run.fart
-fart event inspect run.fart
-fart event explain run.fart --why regime.choked
-fart event verify run.fart --refine timestep
-fart event reconstruct run.fart
+fart case run reference-enclosure.toml -o run.fart
+fart case inspect run.fart
+fart case explain run.fart --why regime.choked
+fart case verify run.fart --refine timestep
+fart case reconstruct run.fart
 fart trace replay run.fart
 fart artifact plumeprint run.fart
 fart artifact grow run.fart
@@ -238,20 +240,21 @@ fart play start challenge:dry-c-sharp-01
 ```
 
 The same verbs keep the same meaning across nouns. `inspect` is read-only,
-`validate` checks without mutation, `run` creates an occurrence, `reconstruct`
-creates a new verification operation, `replay` presents retained evidence, and
-`export` creates a representation. There is no second `upgrade` command that
-competes with `update`.
+`validate` checks without mutation, `run` executes one admitted Lab operation
+and commits a case result, `reconstruct` creates a new verification operation,
+`replay` presents retained evidence, and `export` creates a representation. A
+law context may additionally classify supported claims as an occurrence or
+realization. There is no second `upgrade` command that competes with `update`.
 
 The root command never treats an unknown word as a natural-language request or
 catch-all action. A typo prints likely intended commands but does not execute
-one. `-h`, `--help`, `fart help`, `fart help event run`, and
-`fart event run --help` all work.
+one. `-h`, `--help`, `fart help`, `fart help case run`, and
+`fart case run --help` all work.
 
 ### Helpers and progressive disclosure
 
 ```console
-fart help event run
+fart help case run
 fart examples reference
 fart examples --search "vacuum"
 fart doctor
@@ -265,7 +268,7 @@ fart config path
 fart config validate
 fart schema scenario --version 1
 fart completions powershell
-fart man event-run
+fart man case-run
 fart explain-error FART-E-PHYS-0042
 ```
 
@@ -375,21 +378,21 @@ fart scenario validate reference-enclosure.toml
 fart law list
 fart law inspect earth.continuum.si
 fart scenario capabilities reference-enclosure.toml --format json
-fart event run reference-enclosure.toml --output run.fart
-fart event inspect run.fart --at "1.2 s"
-fart event explain run.fart --why regime.choked
-fart event provenance run.fart --to consumers/audio
-fart event branch run.fart --set exterior.pressure="0 Pa" --output vacuum.fart
-fart event sweep reference-enclosure.toml --vary emitter.pressure="105 kPa..800 kPa" --steps 64
-fart event compare small.fart large.fart --nondimensional
-fart event translate source.fart --target-world hush-3.toml --mode strict
-fart event verify run.fart --refine timestep
+fart case run reference-enclosure.toml --output run.fart
+fart case inspect run.fart --at "1.2 s"
+fart case explain run.fart --why regime.choked
+fart case provenance run.fart --to consumers/audio
+fart case branch run.fart --set exterior.pressure="0 Pa" --output vacuum.fart
+fart case sweep reference-enclosure.toml --vary emitter.pressure="105 kPa..800 kPa" --steps 64
+fart case compare small.fart large.fart --nondimensional
+fart case translate source.fart --target-world hush-3.toml --mode strict
+fart case verify run.fart --refine timestep
 fart trace replay run.fart --mode evidence
-fart event reconstruct run.fart --mode numerical
+fart case reconstruct run.fart --mode numerical
 fart audio render run.fart --lane physical -o emission.wav
 fart symphony render run.fart --mode split -o score.wav
 fart radio play drift-93-7 --seed 42
-fart chill --station drift-93-7 --event-density sparse
+fart chill --station drift-93-7 --presentation-density sparse
 fart mcp serve --transport stdio
 fart lab run.fart
 fart schema scenario
@@ -447,14 +450,14 @@ The interface never collapses these identities:
 | Scenario | Normalized laws, scope, measurement interactions, inputs, or seed change | Unit spelling and field order do not change it |
 | Record | A new Lab capture or computation is committed | It does not assert source-law time or recurrence |
 | Context occurrence identity claims | An identity actually defined by a scoped context or an explicit inter-law composite relation changes | They may be absent; session order cannot create an identity |
-| Occurrence result | Laws, measurement interaction, implementation, numerics, or authoritative claims change | Views and presentation cannot change it |
-| View | Knowledge, privacy, accessibility, or selection projection changes | It cannot back-react or change the occurrence account |
+| Case result | Laws, measurement interaction, implementation, numerics, or authoritative claims change | Views and presentation cannot change it |
+| View | Knowledge, privacy, accessibility, or selection projection changes | It cannot back-react or change the Lab account |
 | Narrative | Resolved world, storylets, or narrative streams change | Camera and terminal width cannot change it |
 | Presentation | Language, layout, device, camera, or accessibility changes | No physical claim follows from it |
 | Play session | Rules, initial identity, participants, canonical action journal, or branch changes | Transport and subscriber order cannot change it |
 | Archive bytes | Serialization or container bytes change | Byte equality is never confused with semantic equality |
 
-`fart provenance` traverses the typed occurrence provenance graph. `fart
+`fart provenance` traverses the typed Lab-account graph. `fart
 explain` presents a declared derivation or causal path, plus a runnable
 counterfactual when the law contexts define one. `fart branch` creates a new
 scenario with explicit ancestry and never mutates a certified source.
@@ -482,8 +485,9 @@ scenario with explicit ancestry and never mutates a certified source.
 
 Release candidates publish p50 and p95 measurements on named Windows, macOS,
 and Linux reference systems. Initial budgets are less than 250 ms to `--help`,
-less than 250 ms to the Quick Play title and seed, less than 1 s for an ordinary
-analytical event, less than 100 ms to acknowledge cancellation, and less than
+less than 250 ms to the Quick Play title and case identity, less than 1 s for an
+ordinary analytical Earth-discharge case, less than 100 ms to acknowledge
+cancellation, and less than
 1 s to reach a safe cancellation boundary outside a documented atomic section.
 The benchmark RFC also sets resident-memory and ordinary-archive-size budgets
 after the first measured implementation. Regressions require evidence, not a
@@ -501,9 +505,9 @@ best-effort parent-directory sync. Existing targets require `--force`.
 Cancellation leaves either no final archive or an explicitly requested,
 uncertified `.partial.fart`.
 
-## Event and episode archives
+## Case and episode archives
 
-The event archive is the boundary between computation and presentation. A
+The case archive is the boundary between computation and presentation. A
 documented `.fart` package may contain:
 
 ```text
@@ -541,9 +545,10 @@ Initial third-party content packs are versioned, declarative data only. They
 cannot load native code, access the network, name arbitrary local files, or
 bypass law-capability and resource checks.
 
-A `.fartshow` episode bundle requires law-context set, occurrence scope,
-realization provenance, record identity, and certificate. It may add a resolved
-world, source, culture, narrative streams, presentation beat ordering,
+A `.fartshow` episode bundle requires a law-context set, bounded case scope,
+operation provenance, record identity, and certificate. It may add realization
+provenance, a resolved world, source, culture, narrative streams, presentation
+beat ordering,
 transcript, audio, and other assets only when supported. Presentation ordering
 does not assert source-law time. Seeds alone are not sufficient for archival
 replay because content packs evolve.
@@ -559,7 +564,7 @@ For compatible Earth-acoustic profiles, the normative offline export begins
 with deterministic 48 kHz PCM16 RIFF/WAVE. The pure audio core emits sample
 buffers from applicable source terms, a documented stochastic closure, explicit
 stream keys, exact rational sample clock, enclosure model, limiter,
-quantization, and dither policy. A generic occurrence has no audio requirement.
+quantization, and dither policy. A generic Lab case has no audio requirement.
 
 The TUI may offer optional audio-device playback. Offline WAV must work without
 an audio device. Godot consumes the same synthesized frames in real time. Device
@@ -567,7 +572,8 @@ resampling is presentation behavior and does not redefine the certified WAV.
 
 Diagnostic sonification declares its units, calibration, mapping, clipping,
 quantization, and information loss. Symphony Mode produces a semantic score
-from event features. Radio is an independent station-pack presentation layer.
+from compatible retained features. Radio is an independent station-pack
+presentation layer.
 Their identities, controls, manifests, and scientific boundaries are defined in
 [AUDIO.md](AUDIO.md).
 
@@ -577,9 +583,10 @@ The TUI should feel like htop for an absurd research instrument. It ships in the
 single `fart` binary as `fart lab`, while remaining a separate crate over the
 same services.
 
-Generic views include only supported occurrence, participant, coupling,
-measurement, view, comparison, invariant, uncertainty, provenance, solver, and
-proof concepts. A timeline appears only when a linear ordering exists;
+Generic views include the Lab case, law, scope, retained claims, uncertainty,
+provenance, and proof concepts that apply. Capability-selected views may add
+occurrence, participant, coupling, measurement, comparison, invariant, or
+solver concepts. A timeline appears only when a linear ordering exists;
 otherwise the TUI uses a relation or dependency view. A capability-driven
 registry adds Earth discharge panes for emitter,
 interface, plume, payload, acoustics, and conservation, plus compatible
@@ -618,8 +625,8 @@ Quality requirements:
 The native Godot application ships as a normal Windows, macOS, and Linux app.
 It adds capability-selected real-time projections, spatial and procedural audio,
 haptics, environments, particles, deposition, and consequence systems while
-consuming the same occurrence account and service layer. A 3D view is labeled
-as a projection whenever it is not the occurrence's native structure.
+consuming the same Lab account and service layer. A 3D view is labeled
+as a projection whenever it is not native to the represented context.
 
 Native quality includes keyboard, mouse, controller, remapping, accessibility
 setup before first play, safe saves, crash handling, clean uninstall, native
@@ -639,7 +646,7 @@ Tiled Chamber is an optional authored Earth realization. Before native
 implementation begins, the same scenario must already run, verify, replay,
 translate, render audio, and present in CLI and TUI. The native milestone proves
 that every audiovisual and haptic consumer cites the same archive-compatible
-occurrence provenance.
+Lab-account provenance.
 
 ## Cross-platform release gate
 
@@ -677,8 +684,9 @@ cross-platform QA, and a GDExtension parity test.
 
 ## Product identity
 
-The CLI makes the science and comedy complete. The Terminal Lab makes the event
-legible in motion. The native app makes it visceral. None is a disposable
+The CLI makes the science and comedy complete. The Terminal Lab makes the case
+legible in motion or other supported relations. The native app makes compatible
+projections visceral. None is a disposable
 wrapper around another.
 
 The research sources are listed in [RESEARCH.md](RESEARCH.md).

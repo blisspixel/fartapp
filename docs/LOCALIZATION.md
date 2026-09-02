@@ -12,6 +12,13 @@ This is a design contract. Text in the current Go oracle is an English-only
 presentation. Its stable IDs and JSON fields are locale-invariant engineering
 tokens, which does not make them language-neutral or universally meaningful.
 
+“Universal Flatulence Translator” is the comic product name, not a claim that
+one universal language, meaning graph, humor response, or translation procedure
+exists. Scientifically, the instrument performs loss-aware mappings among
+declared signals, structures, relations, candidate meanings, and presentation
+profiles. It may retain several incompatible hypotheses, produce a structural
+mapping without semantic translation, or refuse the mapping precisely.
+
 ## A locale-invariant reference
 
 The canonical Reference Pfft key is `ref:rp1:v1`. It does not select a country,
@@ -73,9 +80,9 @@ canonical commands in an interactive terminal, but generated scripts and
 machine receipts always show the canonical form too.
 
 ```console
-fart --locale fr help event run
+fart --locale fr help case run
 fart ask --language ja request.txt --dry-run
-fart event inspect run.fart --locale ar
+fart case inspect run.fart --locale ar
 fart config set interface.locale system
 ```
 
@@ -140,7 +147,8 @@ Tests cover:
 - Control characters, terminal escapes, bidi controls, hostile translations,
   and untrusted names.
 - Screen readers, captions, speech ordering, copy and paste, search, and logs.
-- Same canonical action, event, certificate, and score across every locale.
+- Same canonical action, case result, certificate, score, and any applicable
+  event claim across every locale.
 
 Plain-text fallbacks preserve supported meaning. ASCII mode identifies its
 transliteration scheme or fallback locale, preserves canonical machine values,
@@ -161,7 +169,7 @@ include:
 - What can be sensed directly, inferred, rendered, or not represented.
 
 The Universal Flatulence Translator constructs a provenance-bearing
-interpretation representation only when the law contexts and occurrence scope
+interpretation representation only when the law contexts and bounded case scope
 support one. Other profiles may expose continuous relations, opaque states, interaction protocols,
 or structural invariants without propositional decomposition. No meaning graph,
 symbol inventory, segmentation, or compositional grammar is presumed universal.
@@ -173,6 +181,19 @@ comic or artistic presentation. A successful structural mapping is never
 labeled semantic translation. Loss, ambiguity, approximation, taboo, privacy,
 refusal, prohibition, undecidability, and lack of compatibility retain distinct
 locale-invariant result codes.
+
+An interpretation record is staged. It keeps law-supported observations or
+claims, physical or formal classification, structural mapping, semantic
+hypotheses, localized gloss, and optional comic overlay separate. No later stage
+can rewrite an earlier claim.
+
+Translation loss is a typed vector rather than one confidence percentage. Its
+applicable axes include channel, segmentation, structure, ontology, situated
+context, ordering, and locale. An axis may be absent, inapplicable, unknown,
+ambiguous, private, refused, prohibited, or undecidable. Dissent, abstention,
+and multiple candidate mappings remain visible instead of being averaged into a
+false consensus. The fictional [intercontextual council prototype](CONSORTIUM.md)
+demonstrates the intended player-facing humor and record structure.
 
 Fictional language and signal generation starts with authored grammars and
 bounded combinators. It does not create pseudo-language by altering spelling or

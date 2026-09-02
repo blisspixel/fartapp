@@ -1,7 +1,7 @@
 # Audio, Symphony, and player soundtrack profiles
 
 This document defines optional human-audible projections and soundtrack
-systems. A generic occurrence may have no sound, medium, clock, waveform,
+systems. A generic Lab case may have no sound, medium, clock, waveform,
 observer, plume, or audio lane. For a compatible physical-acoustic profile, one
 promise is simple:
 
@@ -100,7 +100,7 @@ collectible demonstrations, not random replacements for the master ident. Every
 master package includes:
 
 ```text
-reference scenario and occurrence-result hash
+reference case and case-result hash
 physical, score, and room stems
 stereo, binaural, and supported surround renders
 haptic envelope
@@ -130,7 +130,7 @@ claim.
 ## Symphony Mode
 
 Symphony Mode turns the snowflake into an inspectable score. It reads normalized
-features from the occurrence provenance graph rather than analyzing the final
+features from the authoritative Lab account rather than analyzing the final
 fart waveform.
 
 Three listening modes keep the claim honest:
@@ -224,7 +224,7 @@ build alternate-context lore between tracks. They become diegetic only when an
 authored profile supports audio broadcasting, stations, hosts, and radio-like
 institutions. Music remains the majority of airtime. A host can misinterpret an
 event only as a clearly labeled opinion; measured claims still come from the
-occurrence account. Host-free and music-only modes are complete experiences.
+Lab account. Host-free and music-only modes are complete experiences.
 
 A station schedule is deterministic from a station-pack revision and a
 presentation seed. Tuning, skipping, volume, lyrics, vocals, or host controls
@@ -362,7 +362,7 @@ audio-only, visual-only, and multimodal divisions.
 - Music-only, host-free, vocals-off, reduced-dynamic-range, and audio-disabled
   play remain complete.
 - Physical audio works with the radio catalog missing.
-- Radio and Symphony changes cannot alter occurrence-result identity.
+- Radio and Symphony changes cannot alter case-result identity.
 - A no-medium path produces no exterior physical sound while clearly labeled
   diagnostic sonification may remain available.
 - Mappings advertised as monotone are property-tested as monotone.

@@ -2,7 +2,7 @@
 
 F.A.R.T. Lab needs a mark credible on a scientific instrument and funny on a
 shirt without becoming novelty-shop clip art. The identity uses one stable
-institutional mark and an unlimited family of occurrence artifacts.
+institutional mark and an unlimited family of Lab-record artifacts.
 
 The current candidate is **The Open Isobar**. It is not a cleared or final
 trademark.
@@ -16,8 +16,10 @@ asymmetric wavefront crosses the opening and continues beyond the boundary. The
 source is not depicted. The boundary never quite closes because the encounter
 has passed.
 
-The mark means pressure, boundary, emission, measurement, and impermanence. It
-does not mean a specific body, species, medium, world, or geometry.
+The mark uses pressure, boundary, emission, measurement, and impermanence as an
+Earth-facing presentation metaphor. It does not claim those concepts exist in
+every supported law context and does not mean a specific body, species, medium,
+world, or geometry.
 
 Prohibited core motifs include:
 
@@ -58,8 +60,9 @@ blindly scaled:
 
 1. **Open Isobar:** the instrument, application, repository, and stable product
    identity.
-2. **Conservation Triad:** circle for mass, directional chevron for momentum,
-   and diamond for energy. It is notation, not the app icon.
+2. **Earth Conservation Triad:** circle for mass, directional chevron for
+   momentum, and diamond for energy. It is optional Earth-continuum notation,
+   not the app icon or universal seal.
 3. **Plumeprint:** a two-dimensional artifact projection belonging to one Lab
    record.
 4. **Fartflake:** a three-dimensional artifact projection belonging to one Lab
@@ -74,16 +77,18 @@ avatar, no matter how beautiful it is.
 ## Lockups
 
 - **Primary:** Open Isobar, `F.A.R.T. LAB`, and the full expansion.
-- **Scientific:** full expansion dominant, with `UNIVERSAL EMISSION INSTRUMENT`
-  as descriptor.
+- **Scientific:** full expansion dominant, with `LAW-CONTEXT RESEARCH
+  INSTRUMENT` as descriptor.
 - **Compact:** Open Isobar plus `F.A.R.T. LAB`, only after name clearance.
 - **Instrument seal:** mark inside a typographic ring with
-  `MASS / MOMENTUM / ENERGY`. It cannot imply public authority or certification.
+  `CLAIM / EVIDENCE / LIMIT`. It cannot imply public authority or
+  certification. Earth-continuum material may use the separate
+  `MASS / MOMENTUM / ENERGY` profile seal.
 - **CLI:** plain text remains more reliable than required Unicode art:
 
 ```text
-F.A.R.T. LAB :: UNIVERSAL EMISSION INSTRUMENT
-MASS / MOMENTUM / ENERGY
+F.A.R.T. LAB :: LAW-CONTEXT RESEARCH INSTRUMENT
+CLAIM / EVIDENCE / LIMIT
 ```
 
 ## Color
@@ -115,10 +120,12 @@ language coverage gaps.
 
 ## Motion
 
-The Pressure Standard is the mark's motion grammar. A reference contour appears,
-one event opens the boundary, mass, momentum, and energy respond, and a wavefront
-crosses. During the vacuum interval, exterior acoustic geometry disappears while
-structural response remains. The event decays. The Open Isobar holds.
+The Pressure Standard is the Earth-continuum motion grammar. A reference contour
+appears, one event opens the boundary, mass, momentum, and energy respond, and a
+wavefront crosses. During the vacuum interval, exterior acoustic geometry
+disappears while structural response remains. Other law contexts substitute an
+applicable relation or provide a static mark with no fabricated event. The Open
+Isobar holds.
 
 Timing landmarks and ledger order stay recognizable. Microturbulence, decay
 texture, and fresh-realization details may vary. Reduced-motion mode uses calm
@@ -135,7 +142,7 @@ The mark does not graduate from candidate status until it works as:
 - A thermal-receipt and grayscale print.
 - A masked macOS, Windows, Linux, and social icon.
 
-Occurrence-derived merchandise is the stronger long-term system: one-of-one
+Record-derived merchandise is the stronger long-term system: one-of-one
 Plumeprint shirts, Fartflake sculptures, trace cards, ledger patches, and radio
 station apparel that remains wearable without explaining the joke.
 
@@ -149,7 +156,7 @@ marks, common-law uses, and relevant software, game, education, media, and
 merchandise classes in intended markets.
 
 Apache License 2.0 covers repository source as declared. It does not grant broad
-trademark rights. Official marks, community templates, occurrence artifacts, music,
+trademark rights. Official marks, community templates, record artifacts, music,
 fonts, and third-party media therefore need explicit, separate policies. The
 project will publish a permissive fan kit only after that boundary receives
 legal review.

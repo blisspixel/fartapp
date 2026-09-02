@@ -41,6 +41,12 @@ func TestAtemporalProbeHasNoAmbientOrEarthRequirements(t *testing.T) {
 	if !report.Valid() {
 		t.Fatalf("Validate: %#v", report.Diagnostics)
 	}
+	if ReportSchema != "fart.scenario-validation/v0alpha2" {
+		t.Fatalf("ReportSchema = %q", ReportSchema)
+	}
+	if report.Schema != ReportSchema {
+		t.Fatalf("report schema = %q", report.Schema)
+	}
 	if report.LawContext.ID != "conformance.relation.atemporal" ||
 		report.LawContext.Version != "v0alpha1" {
 		t.Fatalf("law context = %#v", report.LawContext)
@@ -51,11 +57,9 @@ func TestAtemporalProbeHasNoAmbientOrEarthRequirements(t *testing.T) {
 	if got, want := report.Environment.ConsultedInputs, []string{"document_bytes", "built_in_law_catalog"}; !reflect.DeepEqual(got, want) {
 		t.Fatalf("consulted inputs = %q, want %q", got, want)
 	}
-	if report.Realization != (StageAssessment{Status: "not-performed", ReasonCode: "validation_only"}) {
-		t.Fatalf("realization = %#v", report.Realization)
-	}
-	if report.Admission != (StageAssessment{Status: "not-evaluated", ReasonCode: "admission_policy_unratified"}) {
-		t.Fatalf("admission = %#v", report.Admission)
+	wantOperation := absentCaseOperationDisposition()
+	if report.RequestedCaseOperation != wantOperation {
+		t.Fatalf("requested case operation = %#v, want %#v", report.RequestedCaseOperation, wantOperation)
 	}
 	wantStages := successfulValidationStages()
 	if report.ValidationStages != wantStages {
@@ -67,11 +71,15 @@ func TestAtemporalProbeHasNoAmbientOrEarthRequirements(t *testing.T) {
 	}
 	for _, forbidden := range []string{
 		"emitter", "exterior", "geometry", "locale", "observer", "pressure",
-		"presentation", "sound", "time", "unit", "world",
+		"occurrence", "presentation", "realization", "sound", "time", "unit", "world",
 	} {
 		if bytes.Contains(encoded, []byte(forbidden)) {
 			t.Errorf("report unexpectedly contains %q: %s", forbidden, encoded)
 		}
+	}
+	report.Schema = "fart.scenario-validation/v999"
+	if report.Valid() {
+		t.Fatal("report with an unsupported report schema was valid")
 	}
 }
 
@@ -100,8 +108,8 @@ func TestEarthUnavailableCapabilityPreservesEveryAxis(t *testing.T) {
 		capability.Applicability.Status != "undetermined" {
 		t.Fatalf("capability = %#v", capability)
 	}
-	if report.Realization.Status != "not-performed" {
-		t.Fatalf("realization = %#v", report.Realization)
+	if report.RequestedCaseOperation.Execution.Status != "not-applicable" {
+		t.Fatalf("requested case operation = %#v", report.RequestedCaseOperation)
 	}
 }
 
@@ -211,8 +219,16 @@ func TestValidationFailures(t *testing.T) {
 			if diagnostic.Code != tt.code || diagnostic.Path != tt.path || diagnostic.ReasonCode != tt.reason {
 				t.Fatalf("diagnostic = %#v, want code %s path %s reason %s", diagnostic, tt.code, tt.path, tt.reason)
 			}
-			if report.Realization.Status != "not-performed" {
-				t.Fatalf("realization = %#v", report.Realization)
+			wantOperation := unevaluatedCaseOperationDisposition()
+			if diagnostic.Stage == "law-resolution" || diagnostic.Stage == "capability-resolution" {
+				wantOperation = absentCaseOperationDisposition()
+			}
+			if report.RequestedCaseOperation != wantOperation {
+				t.Fatalf(
+					"requested case operation = %#v, want %#v",
+					report.RequestedCaseOperation,
+					wantOperation,
+				)
 			}
 			wantInputs := []string{"document_bytes"}
 			if diagnostic.Stage == "law-resolution" || diagnostic.Stage == "capability-resolution" {

@@ -9,7 +9,7 @@ The strongest system has three layers:
    and release marks under a reviewed trademark policy.
 2. **Community Kit:** clearly unofficial, openly remixable frames, glyphs,
    captions, and scientific-comedy primitives.
-3. **Occurrence Artifacts:** private or shareable record-specific Plumeprints,
+3. **Record Artifacts:** private or shareable record-specific Plumeprints,
    Fartflakes, capability-selected cards, posters, shirts, patches, and
    sculptures.
 
@@ -63,7 +63,7 @@ Accessibility targets WCAG 2.2 AA, keyboard-complete checkout, meaningful produc
 text size charts, actual garment measurements, sensory details, and no
 color-only distinction.
 
-## Occurrence artifacts
+## Record artifacts
 
 Local print-ready export comes before official fulfillment. A buyer may choose
 to submit one artifact without uploading the source archive, hidden context

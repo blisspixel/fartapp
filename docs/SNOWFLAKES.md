@@ -23,21 +23,21 @@ The Lab uses these words precisely:
 | --- | --- | --- |
 | Record | Creates one immutable Lab capture or computation under a committed scenario and nonce | How the source law contexts treat recurrence |
 | Context occurrence identity claims | Uses only identities defined by applicable contexts and adds a composite relation only through a declared bridge | That every context defines identity or that Lab record identity is context-defined time |
-| Recording | Preserves selected evidence and provenance from the occurrence | That every aspect of experience was captured |
+| Recording | Preserves selected evidence and provenance from the Lab case | That every aspect of experience was captured |
 | Replay | Presents the preserved record again | That the source occurrence recurred |
 | Reconstruction | Recomputes a declared numerical realization for verification | That it is the original encounter |
 | Re-enactment | Runs the same scenario with a fresh record nonce | That matching controls produce an identical outcome or context-occurrence identity claims |
 | Translation | Maps retained claims into a target `LawContextSet` and applicable measurement, view, or presentation context | That equivalence exists where it does not |
 
 Default Quick Play generates a fresh 256-bit record nonce and reveals its
-commitment before realization. A supplied scenario seed can reproduce a scope
+commitment before the admitted operation. A supplied scenario seed can reproduce a scope
 and setup, but it does not reuse the record nonce. Scientific and benchmark modes
 may explicitly pin both values. An archive stores the nonce only when its
 recording policy permits exact reconstruction.
 
 An unrecorded encounter leaves a concise receipt but not a secret path back to
 unretained state or relations. The interface asks about recording before
-realization. It does not offer a fake “save the past” button afterward; that is
+the admitted operation. It does not offer a fake “save the past” button afterward; that is
 product language about the Lab session, not a source-law time claim.
 
 ## Impermanence without cultural costume
@@ -65,23 +65,23 @@ better story.
 
 ## Artifact projection profiles
 
-Plumeprints and Fartflakes are human-spatial projection profiles, not universal
-occurrence geometry. Every `ArtifactProjectionProfile` records the source structure,
-applicable measurement context and view profile, target medium and target
-dimensionality, preserved
+Plumeprints and Fartflakes are human-spatial projection profiles, not native
+geometry. Every `ArtifactProjectionProfile` records the retained input
+structure, applicable measurement context and view profile, target medium and
+target dimensionality, preserved
 relations or features, projection or embedding, distortion, information loss,
 accessibility requirements, and evidence, interpretation, or art status.
 
 A nonspatial, lower-dimensional, higher-dimensional, discrete, or otherwise
-incompatible occurrence may yield a declared lossy projection or a precise
+incompatible case may yield a declared lossy projection or a precise
 unsupported result. It never receives fabricated plume fields merely because a
 renderer expects them. Plain data and text alternatives remain canonical.
 
 ## Plumeprint
 
-When supported, an occurrence can derive a compact, deterministic
+When supported, a retained Lab case can derive a compact, deterministic
 two-dimensional scientific fingerprint called a **Plumeprint**. It is calculated
-from authoritative occurrence features, never selected from a texture library.
+from authoritative retained features, never selected from a texture library.
 
 Candidate Earth-discharge channels include:
 
@@ -108,32 +108,32 @@ transitions.
 ## Fartflake
 
 A **Fartflake** is a deterministic three-dimensional artifact projected from the
-occurrence graph. From the side it can appear as a branching plume, vortex sculpture,
-crystal, coral, cloud, or law-profile-specific structure. From one declared
+Lab account. From the side it can appear as a branching plume, vortex
+sculpture, crystal, coral, cloud, or law-profile-specific structure. From one declared
 orthographic verification view, its occupancy can encode a scannable matrix
 that resolves to a safe record reference.
 
 The idea takes inspiration from QR-Bloom's striking combination of a 3D voxel
 tree and a top-down QR silhouette. F.A.R.T. Lab will implement its own
-occurrence-derived algorithm and assets. It will not copy QR-Bloom code, weights,
+record-derived algorithm and assets. It will not copy QR-Bloom code, weights,
 training shapes, or non-commercial source material.
 
 The Fartflake pipeline is:
 
 ```text
-certified occurrence provenance graph
+certified Lab-account graph
   -> normalized feature field
   -> topology and branch skeleton
   -> QR occupancy constraints in one verification projection
-  -> occurrence-conditioned geometry and material channels
+  -> case-conditioned geometry and material channels
   -> mesh, thumbnail, flat code fallback, and provenance manifest
 ```
 
 The encoded payload defaults to a local, content-addressed identifier such as
-`fart:event:<digest>`. It never embeds a public URL, tracking token, executable
+`fart:record:<digest>`. It never embeds a public URL, tracking token, executable
 command, or private path without explicit player action. A conventional flat
 code is always exported beside the sculpture. Scannability is a presentation
-constraint and never modifies simulation state or certificate claims.
+constraint and never modifies the Lab account or certificate claims.
 
 Planned CLI commands include:
 
@@ -147,11 +147,11 @@ fart artifact compare first.fart second.fart --features
 
 ## Geometry and verification gates
 
-- The artifact generator is versioned and deterministic for a recorded event.
+- The artifact generator is versioned and deterministic for a retained record.
 - Source features and transformations are traversable through provenance.
 - The projection profile names its target medium, preserved features,
   distortion, loss, and accessibility requirements.
-- A nonspatial conformance occurrence either produces a declared lossy
+- A nonspatial conformance case either produces a declared lossy
   projection or a typed unsupported result.
 - Evidence and artifact views cannot be confused in labels or exports.
 - Meshes are finite, manifold where promised, consistently oriented, and free

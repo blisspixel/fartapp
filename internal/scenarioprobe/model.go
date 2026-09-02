@@ -13,7 +13,7 @@ import (
 
 const (
 	DocumentSchema = "fart.scenario-probe/v0alpha1"
-	ReportSchema   = "fart.scenario-validation/v0alpha1"
+	ReportSchema   = "fart.scenario-validation/v0alpha2"
 	MaxInputBytes  = 64 * 1024
 )
 
@@ -83,19 +83,26 @@ type ValidationEnvironment struct {
 	AmbientInputs   []string `json:"ambient_inputs"`
 }
 
+// CaseOperationDisposition reports the represented case operation separately
+// from the Lab operation that produced this validation report.
+type CaseOperationDisposition struct {
+	Selection StageAssessment `json:"selection"`
+	Admission StageAssessment `json:"admission"`
+	Execution StageAssessment `json:"execution"`
+}
+
 type Report struct {
-	Schema           string                      `json:"schema"`
-	DocumentStatus   string                      `json:"document_status"`
-	ValidationStages ValidationStages            `json:"validation_stages"`
-	DocumentSchema   string                      `json:"document_schema,omitempty"`
-	LawContext       *lawcatalog.LawContextRef   `json:"law_context,omitempty"`
-	Scope            *Scope                      `json:"scope,omitempty"`
-	Capabilities     []CapabilityResult          `json:"capabilities,omitempty"`
-	EvidenceRegistry []lawcatalog.EvidenceRecord `json:"evidence_registry,omitempty"`
-	Environment      ValidationEnvironment       `json:"validation_environment"`
-	Admission        StageAssessment             `json:"realization_admission"`
-	Realization      StageAssessment             `json:"realization"`
-	Diagnostics      []Diagnostic                `json:"diagnostics,omitempty"`
+	Schema                 string                      `json:"schema"`
+	DocumentStatus         string                      `json:"document_status"`
+	ValidationStages       ValidationStages            `json:"validation_stages"`
+	DocumentSchema         string                      `json:"document_schema,omitempty"`
+	LawContext             *lawcatalog.LawContextRef   `json:"law_context,omitempty"`
+	Scope                  *Scope                      `json:"scope,omitempty"`
+	Capabilities           []CapabilityResult          `json:"capabilities,omitempty"`
+	EvidenceRegistry       []lawcatalog.EvidenceRecord `json:"evidence_registry,omitempty"`
+	Environment            ValidationEnvironment       `json:"validation_environment"`
+	RequestedCaseOperation CaseOperationDisposition    `json:"requested_case_operation"`
+	Diagnostics            []Diagnostic                `json:"diagnostics,omitempty"`
 }
 
 func baseReport(consultedInputs ...string) Report {
@@ -106,13 +113,32 @@ func baseReport(consultedInputs ...string) Report {
 			ConsultedInputs: slices.Clone(consultedInputs),
 			AmbientInputs:   []string{},
 		},
-		Admission: StageAssessment{
-			Status:     "not-evaluated",
-			ReasonCode: "admission_policy_unratified",
+		RequestedCaseOperation: unevaluatedCaseOperationDisposition(),
+	}
+}
+
+func unevaluatedCaseOperationDisposition() CaseOperationDisposition {
+	priorFailure := StageAssessment{Status: "not-evaluated", ReasonCode: "prior_stage_failed"}
+	return CaseOperationDisposition{
+		Selection: priorFailure,
+		Admission: priorFailure,
+		Execution: priorFailure,
+	}
+}
+
+func absentCaseOperationDisposition() CaseOperationDisposition {
+	return CaseOperationDisposition{
+		Selection: StageAssessment{
+			Status:     "not-declared",
+			ReasonCode: "probe_schema_has_no_operation",
 		},
-		Realization: StageAssessment{
-			Status:     "not-performed",
-			ReasonCode: "validation_only",
+		Admission: StageAssessment{
+			Status:     "not-applicable",
+			ReasonCode: "operation_not_declared",
+		},
+		Execution: StageAssessment{
+			Status:     "not-applicable",
+			ReasonCode: "operation_not_declared",
 		},
 	}
 }
@@ -136,6 +162,7 @@ func InputFailure(diagnostic Diagnostic, consultedInput string) Report {
 
 func catalogFailure(diagnostic Diagnostic) Report {
 	report := baseReport("document_bytes", "built_in_law_catalog")
+	report.RequestedCaseOperation = absentCaseOperationDisposition()
 	report.ValidationStages = failedValidationStages(diagnostic)
 	report.Diagnostics = []Diagnostic{diagnostic}
 	return report
@@ -188,7 +215,8 @@ func failedValidationStages(diagnostic Diagnostic) ValidationStages {
 }
 
 func (report Report) Valid() bool {
-	return report.DocumentStatus == "valid" && len(report.Diagnostics) == 0 &&
+	return report.Schema == ReportSchema && report.DocumentStatus == "valid" &&
+		len(report.Diagnostics) == 0 &&
 		report.ValidationStages.Syntax.Status == "valid" &&
 		report.ValidationStages.Schema.Status == "valid" &&
 		report.ValidationStages.LawResolution.Status == "resolved" &&

@@ -192,15 +192,21 @@ func formatScenarioReport(report scenarioprobe.Report) string {
 	fmt.Fprintf(&output, "Scope: %s\n", report.Scope.ID)
 	fmt.Fprintf(
 		&output,
-		"Realization admission: %s (%s)\n",
-		report.Admission.Status,
-		report.Admission.ReasonCode,
+		"Requested case operation: %s (%s)\n",
+		report.RequestedCaseOperation.Selection.Status,
+		report.RequestedCaseOperation.Selection.ReasonCode,
 	)
 	fmt.Fprintf(
 		&output,
-		"Realization: %s (%s)\n",
-		report.Realization.Status,
-		report.Realization.ReasonCode,
+		"Operation admission: %s (%s)\n",
+		report.RequestedCaseOperation.Admission.Status,
+		report.RequestedCaseOperation.Admission.ReasonCode,
+	)
+	fmt.Fprintf(
+		&output,
+		"Operation execution: %s (%s)\n",
+		report.RequestedCaseOperation.Execution.Status,
+		report.RequestedCaseOperation.Execution.ReasonCode,
 	)
 	output.WriteString("Validation stages:\n")
 	writeScenarioStage(&output, "syntax", report.ValidationStages.Syntax)

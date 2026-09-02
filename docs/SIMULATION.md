@@ -6,13 +6,14 @@ repository.
 
 ## Core invariant
 
-One occurrence produces one authoritative simulation account under declared
-law contexts, numerical policies, and measurement interactions, represented by
-an immutable typed provenance graph. The graph records only the claims and
-relations the selected laws and measurement contexts permit. It does not claim
-observer-independent truth where they do not define one. Every visible,
-audible, haptic, narrative, destructive, or other applicable derived effect must have a
-traversable derivation from that graph.
+Each accepted Lab case has one authoritative account under its declared law
+contexts, accepted operations, numerical policies where applicable, and
+measurement interactions, represented by an immutable typed provenance graph.
+The graph records only the claims and relations the selected laws and
+measurement contexts permit. It does not require that the source contexts
+define an occurrence, realization, observer, simulation, or observer-independent
+truth. Every visible, audible, haptic, narrative, destructive, or other
+applicable derived effect must have a traversable derivation from that graph.
 
 The graph is deliberately not one enormous master-rate array. Applicable solver
 states, interface samples, measured signals, audio blocks, narrative claims,
@@ -23,19 +24,20 @@ or dependency reference, resampling policy when relevant, uncertainty, and
 content hash. Presentation can transform an outcome but cannot substitute an
 unrelated preset or rewrite it.
 
-## Capability-neutral bounded occurrence ontology
+## Minimum-assumption bounded record ontology
 
 The general contract is:
 
-> The Lab identifies a finite record of a realization under one or more
-> versioned law contexts. Those contexts alone declare whether source-law
-> occurrence identity exists and which other concepts exist, including
-> ordering, state, participants, couplings, locality, observables,
-> transformations, invariants, and representations.
+> The Lab identifies a finite record under one or more versioned law contexts.
+> Those contexts alone declare whether occurrence, realization, source-law
+> identity, ordering, state, participants, couplings, locality, observables,
+> transformations, invariants, and representations exist.
 
-An `EmissionAnalogue` is an occurrence that a declared classifier maps to
-release, transfer, relaxation, or boundary crossing. `DischargeEvent` is the
-Earth continuum subtype, not the superclass of existence.
+A declared classifier may map the supported claims in a Lab case to an
+`EmissionAnalogue`, such as a release, transfer, relaxation, or boundary
+crossing. `Occurrence` and `Realization` are context capabilities, not minimum
+record fields. `DischargeEvent` is an Earth continuum specialization, not the
+superclass of existence.
 
 Only four top-level objects are required inside the Lab's bounded formalism:
 
@@ -58,7 +60,9 @@ Only four top-level objects are required inside the Lab's bounded formalism:
   optional categories.
 - `ProvenanceGraph`: typed versioned edges connecting whichever authoritative
   states or relations, observations, claims, transformations, uncertainty,
-  measurement back-action, or derived artifacts are applicable.
+  measurement back-action, or derived artifacts are applicable. These are
+  Lab-evidence relations unless a law context separately licenses a source-law
+  interpretation.
 
 The formal boundary is explicit: a purported reality that cannot be identified,
 finitely encoded, versioned, scoped, or related to anything expressible in this
@@ -72,15 +76,18 @@ equations or transition rules, constants, symmetries, invariants, and conserved
 currents. Any can be inapplicable. Schemas use typed option and capability
 results, never sentinel Earth values or fabricated zeros.
 
-Profiles may add `Participant`, `Coupling`, `StateRegion`,
+Profiles may add `Occurrence`, `Realization`, `Participant`, `Coupling`, `StateRegion`,
 `MeasurementInteractionProfile`, `ViewProfile`, `PresentationProfile`,
 `Numerics`, and `ComparisonSignature` objects. The Earth discharge profile adds
 `WorldProfile`, `Emitter`, `Interface`, `Exterior`, and `Payload` roles. Those
 roles are not universal requirements.
 
-A participant can be an organism, machine, colony, ecosystem, spacecraft, planet,
-star, distributed intelligence, topological structure, or unknown. A bathroom
-is one scenario. A human is one preset. Neither is the engine's ontology.
+A participant, where that concept exists, can be an organism, machine, colony,
+ecosystem, spacecraft, planet, star, distributed intelligence, topological
+structure, or something the Lab cannot classify further. A bathroom is one
+Earth scenario. A human is one Earth preset. Neither is the engine's ontology.
+The full boundary and negative-space conformance matrix are in
+[UNIVERSALITY.md](UNIVERSALITY.md).
 
 ## First validation-target law profile
 
@@ -120,16 +127,35 @@ Boolean. The capability vocabulary can represent continuum, compressible,
 acoustic, multiphase, reacting, radiative, rarefied, plasma, MHD, relativistic,
 and gravitational concepts without claiming an implementation exists.
 Fictional-axiomatic packs declare their own concepts. Document validity remains
-separate from realization readiness. A structurally valid scenario can be
-unavailable, inapplicable, refused, infeasible, or undetermined for realization
-if a requested effect lacks a compatible law, implementation, closure,
-verification grade, trust decision, backend, or resource budget.
+separate from operation selection, admission, and execution. A structurally
+valid case can be unavailable, inapplicable, refused, infeasible, or
+undetermined for a requested operation if it lacks a compatible law,
+implementation, closure, verification grade, trust decision, backend, or
+resource budget. Realization is only one law-selected operation kind.
 
 Initial law packs are compiled in and reviewed. Future third-party packs are
 declarative data with bounded resources. They cannot load native code, perform
 network access, select arbitrary filesystem paths, or claim a capability without
 the required schemas and tests. Executable extensions require a separate threat
 model and are outside the initial public contract.
+
+Authority classes never collapse into one impressive-sounding maturity label:
+
+- An **empirical physical pack** may earn validation claims only inside a
+  measured envelope.
+- A **mathematical or formal pack** may earn proof and conformance claims, not
+  empirical truth by construction.
+- A **fictional axiomatic pack** may earn internal-consistency and
+  implementation-conformance claims while remaining explicitly fictional.
+- A **narrative pack** may shape story and presentation but cannot mint
+  scientific state, evidence, or source-law meaning.
+
+Every pack publishes the applicable subset of formal semantics, admissibility,
+examples and counterexamples, implementation status, invariant obligations,
+observable and measurement definitions, validity envelope, uncertainty, known
+failure modes, unsupported claims, and versioned evidence. Advanced vocabulary
+without a player action, an inspectable claim, or an executable obligation does
+not enter the scientific surface.
 
 ## Measurement, view, and presentation profiles
 
@@ -138,12 +164,12 @@ present, it declares
 support or extent, an ordering or clock when one exists, accessible observables,
 measurement operator, resolution, noise, and whether interaction is passive,
 coupled, or state-altering. Any back-action enters the provenance graph as a
-law-governed coupling and changes occurrence-result identity.
+law-governed coupling and changes case-result identity.
 
 A `ViewProfile` is a read-only knowledge, privacy, accessibility, and selection
 projection over retained claims. A `PresentationProfile` controls locale,
-layout, sonification, camera, and rendering. Neither can alter the occurrence
-account or its identity. Two views may expose different authorized subsets or
+layout, sonification, camera, and rendering. Neither can alter the Lab account
+or its identity. Two views may expose different authorized subsets or
 representations of the same retained context-scoped claims without creating two
 accounts. A law context can declare no observer, no
 localization, no sound, no language, or no proposition-like semantics.
@@ -317,8 +343,8 @@ turbulent waveform detail. The reduced audio model may combine:
 - Versioned random phases from a dedicated deterministic audio stream.
 - Parameterized room propagation or a declared empirical impulse response.
 
-That is procedural audio derived from the Earth occurrence account plus a stochastic closure. It
-is not a prerecorded emission. A resolved compressible solver can later provide
+That is procedural audio derived from the Earth occurrence account plus a
+stochastic closure. It is not a prerecorded emission. A resolved compressible solver can later provide
 sources for an acoustic analogy or a directly resolved acoustic field.
 
 The physical-audio source graph distinguishes interface loading and volume
@@ -446,9 +472,10 @@ Approximate translation minimizes weighted log-ratio errors or exposes a Pareto
 frontier. The preference objective chooses among solutions; it is not physics.
 
 Each translation certificate records source and target `LawContextSet` hashes,
-scope assignments, bridge hashes, mapped context-occurrence identities, mode,
-requested invariants, achieved residuals, discarded quantities, incompatible
-fields, and whether the result is validated, extrapolated, or fictional.
+scope assignments, bridge hashes, applicable mapped context-occurrence
+identities or their explicit absence, mode, requested invariants, achieved
+residuals, discarded quantities, incompatible fields, and whether the result is
+validated, extrapolated, or fictional.
 
 No-mapping results use stable locale-invariant reason codes:
 
@@ -490,18 +517,18 @@ The project keeps ten identities separate:
 
 1. **Scenario identity:** normalized requested contract, law contexts, scope,
    declared measurement interactions, inputs, and any declared scenario seed
-   before realization.
+   before any requested operation is admitted.
 2. **Record identity:** one committed nonce and unique Lab capture or
    computation, independent of source-law time.
 3. **Context-occurrence identity claims:** optional context-defined identities
    plus an optional composite identity supplied only by an inter-law coupling.
-4. **Occurrence-result identity:** authoritative occurrence provenance graph
-   under the declared law contexts, measurement, implementation, numerical, and
-   tolerance contracts.
+4. **Case-result identity:** authoritative Lab claim account under the declared
+   law contexts, measurement, implementation, numerical, and tolerance
+   contracts. It does not imply a source-law occurrence.
 5. **Trace identity:** the observations, relations, fields, samples, and provenance that
-   were actually retained from an occurrence.
+   were actually retained from a case.
 6. **View identity:** knowledge, privacy, accessibility, and selection filters
-   over retained claims. It never changes occurrence-result identity.
+   over retained claims. It never changes case-result identity.
 7. **Narrative identity:** resolved world, situated perspectives, storylets,
    facts, and narrative streams.
 8. **Presentation identity:** language, layout, camera, audio-device path,
@@ -510,7 +537,7 @@ The project keeps ten identities separate:
    action journal, checkpoints, branches, and produced artifacts.
 10. **Archive-byte identity:** exact serialized container bytes.
 
-A view or presentation change must not alter scenario or occurrence-result
+A view or presentation change must not alter scenario or case-result
 identity. A measurement interaction is part of the accepted scenario and may
 change that identity. An
 archive may be migrated or recompressed without pretending that byte identity
@@ -526,8 +553,8 @@ contexts.
 
 ## Earth discharge fidelity ladder
 
-All levels share event vocabulary, hashes, regime policy, and certificate shape.
-They do not pretend to share one universal equation set.
+All levels share Earth-discharge vocabulary, hashes, regime policy, and
+certificate shape. They do not pretend to share one universal equation set.
 
 ### A. Canonical analytical oracle
 
@@ -621,12 +648,14 @@ conservation is necessary but not sufficient.
 ## Determinism, scenario seeds, and record nonces
 
 The public record schema field `event_nonce` has type `RecordNonce`. The comic
-wire name is retained, but its semantics are precise: it changes Lab record and
-realization identity only. Pure scenario validation neither creates nor reads a
-record nonce or reconstruction seed unless a later explicit record contract
-supplies one. `ContextOccurrenceIdentityClaims` change only according to
-identity concepts actually defined by the law contexts and any declared
-inter-law coupling. They are absent when none of those contexts defines one.
+wire name is retained, but its semantics are precise: it changes Lab record
+identity and therefore the committed case-result identity. It affects
+realization identity only when the selected operation defines realization. Pure
+scenario validation neither creates nor reads a record nonce or reconstruction
+seed unless a later explicit record contract supplies one.
+`ContextOccurrenceIdentityClaims` change only according to identity concepts
+actually defined by the law contexts and any declared inter-law coupling. They
+are absent when none of those contexts defines one.
 
 Determinism has explicit levels:
 
@@ -643,7 +672,7 @@ normalization where possible, and counter-based or independently keyed random
 streams. Physics, parcel, physical-audio closure, score, radio, narrative, and
 presentation streams are separate. Scheduling, terminal width, localization,
 camera, station, and subscriber choices cannot alter scenario or
-occurrence-result identity. A default Lab encounter is not reconstructable
+case-result identity. A default Lab encounter is not reconstructable
 after its record nonce is destroyed. This says nothing about recurrence under
 the source laws. Scientific, test, and benchmark modes retain or explicitly
 provide the nonce under their recording policy.
@@ -676,9 +705,10 @@ Every claim independently reports `pass`, `fail`, `inconclusive`, or
 - Empirically validated for a stated physical domain.
 - Fictional-law consistent for a stated axiom pack.
 
-The generic certificate includes occurrence, law, scope, provenance, validity,
-and implementation claims. State, relation, observable, invariant, balance,
-and observation sections appear only when selected capabilities define them.
+The generic certificate includes record, law, scope, provenance, validity, and
+implementation claims. Occurrence, state, relation, observable, invariant,
+balance, and observation sections appear only when selected capabilities define
+them.
 Unknown, unsupported, and unverified concepts remain explicit without numeric
 placeholders. Law-specific extensions may add
 equation, closure, solver, numerics, comparison signature, extrema, positivity,
@@ -690,9 +720,10 @@ artifacts, and score vector.
 
 The progressive suite includes:
 
-- Ontology conformance fixtures for an occurrence with no emitter, interface,
-  exterior, gas, geometry, acoustics, mass, canonical units, or localized
-  observer, with schema, archive, certificate, and inspection round trips.
+- Ontology conformance fixtures for a case with no occurrence, realization,
+  emitter, interface, exterior, gas, geometry, acoustics, mass, canonical units,
+  or localized observer, with schema, archive, certificate, and inspection round
+  trips.
 - A non-biological non-gaseous transfer, a discrete graph or non-Euclidean
   profile, a distributed nonlinguistic observer, and a profile where familiar
   Earth quantities are explicitly `not_applicable`.
@@ -700,10 +731,10 @@ The progressive suite includes:
   transcoding, experience analogy, and every structured no-mapping reason.
 - Measurement-interaction tests for passive, distributed, probabilistic, and
   state-altering measurement, including provenance of back-action and changed
-  occurrence-result identity.
+  case-result identity.
 - View and presentation tests proving that knowledge, privacy, accessibility,
-  locale, layout, sonification, and camera changes do not alter the occurrence
-  account.
+  locale, layout, sonification, and camera changes do not alter the authoritative
+  Lab account.
 - Unit-expression invariance and dimensional homogeneity where units and
   dimensions exist.
 - Exact null-space checks for discovered bases and dimensional checks for every
@@ -733,7 +764,7 @@ The progressive suite includes:
 - Sealed-system center-of-mass conservation and externally vented rocket limits.
 - Deterministic random streams independent of execution order.
 - Traversable provenance from every consumer artifact and lab-claim sentence to
-  authoritative occurrence nodes.
+  authoritative Lab-account nodes.
 - Go-to-Rust oracle parity.
 - Strict similarity scale families and exact translator round trips.
 - Explicit infeasibility for incompatible targets and dimensions.

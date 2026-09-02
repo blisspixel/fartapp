@@ -106,16 +106,22 @@ may add these only through context-owned, capability-checked contracts.
 ## Validation report
 
 For fixed executable and catalog contents, the deterministic report schema is
-`fart.scenario-validation/v0alpha1`. It separates:
+`fart.scenario-validation/v0alpha2`. It separates:
 
 - `document_status`, which answers whether syntax, schema, references, and
   capability names are valid.
 - `validation_stages`, which reports syntax, schema, exact law resolution, and
   exact capability resolution independently. Every later stage remains
   `not-evaluated` after an earlier failure.
-- `realization_admission`, which remains `not-evaluated` with reason
-  `admission_policy_unratified`.
-- `realization`, which remains `not-performed` with reason `validation_only`.
+- `requested_case_operation.selection`, which is `not-declared` because this probe
+  schema has no operation field.
+- `requested_case_operation.admission` and
+  `requested_case_operation.execution`, which
+  are `not-applicable` because no operation was declared. This does not assume
+  that the selected law context defines realization or source-law occurrence.
+  Before the document schema is valid, all three operation assessments remain
+  `not-evaluated` with reason `prior_stage_failed`; the validator never infers
+  absence from unreadable or malformed input.
 - All eight catalog axes for each requested capability, without collapsing
   them into one runnable Boolean.
 - Capability `resolution: resolved`, which means only that the exact requested
