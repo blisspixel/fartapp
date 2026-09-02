@@ -118,6 +118,13 @@ declaration-attribution scope. Neither form is ontological completeness. An
 authority reference is an attribution key and need not identify a person,
 institution, agent, owner, lawgiver, organism, location, or universe.
 
+Exact authority-reference matching is a Lab relation between one opaque
+scope-plus-authority binding and record entries in a retained finite
+snapshot. Zero, one, or multiple matches describe only that artifact. They do
+not require or infer an entity, person, institution, organism, location,
+source-law occurrence, time, network identity, or semantic authority. Record
+order and revision carry no chronology, priority, or fallback meaning.
+
 No current field may be collapsed into or inferred solely from another. A
 fictional axiom can be implemented and formally checked without being
 empirically validated. A real-world model can be defined yet unavailable on a

@@ -591,6 +591,14 @@ comic quality.
   the scheme. The Lab therefore treats opaque references as identity material,
   not proof that anything was accessed, resolved, or trusted. Current candidate
   tokens are not URIs and reserve no URI scheme.
+- The 28 August 2026 Candidate Recommendation Draft of
+  [W3C DID Resolution v1](https://www.w3.org/TR/2026/CRD-did-resolution-1.0-20260828/)
+  remains a work in progress. It keeps invalid DID input, `NOT_FOUND`, the
+  returned DID document, resolution metadata, and document metadata distinct.
+  The Lab adopts only that functional separation as research guidance. It does
+  not adopt DID syntax, controllers, subjects, methods, registries, keys,
+  services, timestamps, HTTP bindings, networks, verification claims, or the
+  draft's outcomes.
 - [SHACL](https://www.w3.org/TR/shacl/) demonstrates that a closed constraint
   names the exact property dimension it closes. F.A.R.T. Lab applies the same
   discipline to catalog membership without adopting RDF or SHACL as a product

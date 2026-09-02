@@ -106,6 +106,13 @@ planned.
   membership, retain the snapshot witness, and interpret `not_registered` only
   as absence from that supplied in-process set. Do not claim external catalog
   completeness, authority resolution, attribution scope, or truth.
+- [x] Add an internal, non-wire exact Declaration Authority Reference Matching
+  experiment over a separate bounded immutable in-process multiset of same-scope
+  records. Preserve repeated records and report target-specific zero, one, or
+  multiple exact matches. Retain the snapshot witness, let multiplicity for one
+  reference coexist with a unique match for another, make no semantic-ambiguity
+  claim, and perform no alias, category, attribution, trust, truth, network,
+  chronology, or latest-revision inference.
 - [ ] Ratify Declaration Authority Resolution, Declaration Attribution Scope,
   and Catalog Lookup Closure separately. Require a query-bound closed-lookup
   witness before product `not_registered`; keep invalid input, unresolved or

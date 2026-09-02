@@ -171,6 +171,47 @@ time, chronology, person, institution, lawgiver, observer, object, quantity,
 language, network, universe, operation, evidence, trust, or maturity. It adds no
 wire form and changes no current output byte.
 
+## Exact declaration-authority reference matching experiment
+
+The internal, non-wire experiment in `internal/authoritymatching` stores a
+bounded immutable copy of a caller-supplied multiset of positive
+`DeclarationAuthorityRecord` values under one exact catalog-scope reference.
+The snapshot preserves record multiplicity but assigns no semantic meaning to
+input order.
+
+For one exact `AuthorityMatchBinding`, the experiment counts records whose
+catalog-scope and declaration-authority references both match exactly. It
+reports `no_match_in_snapshot` for zero matches, `one_match_in_snapshot` for one,
+and `multiple_matches_in_snapshot` for more than one. Only the one-match outcome
+can produce a positive `SnapshotAuthorityMatch`. `AuthorityMatch` retains the
+complete supplied snapshot and exposes the exact match count, and the package
+exposes no detached generic result.
+
+Repeated records do not invalidate the snapshot. Cardinality is query-specific:
+multiple records for reference A do not prevent a one-match result for reference
+B in the same snapshot. Multiple matches are a structural count only. They do
+not establish semantic ambiguity, conflicting identity, invalid authority data,
+mistrust, corruption, malice, or distinct entities in a represented context.
+Unlike the registration snapshot, which rejects a duplicate exact registration,
+this authority snapshot is deliberately a multiset so repeated record entries
+remain observable. Its key is complete only because the current authority record
+contains nothing beyond its self-binding. Any future field must be retained or
+included in record identity.
+
+The experiment performs exact token equality only. It does not normalize text,
+follow aliases or delegation, infer hierarchy or authority category, select a
+latest revision, dereference a URI, contact a network service, or consult ambient
+state. Revision is identity material, not chronology. Neither a one-match nor a
+no-match result establishes external catalog completeness, global uniqueness,
+legitimacy, standing, permission, authorship, ownership, attribution scope,
+trust, source truth, scientific truth, or registration presence. No match never
+becomes registration `not_registered`.
+
+This exact match-cardinality evidence satisfies only a structural precondition.
+The later Declaration Authority Resolution Profile must define whether and how
+it participates in product resolution. Accepting repeated records here does not
+commit a future wire format or authority profile to accepting them.
+
 ## Catalog lookup closure gate
 
 The product meaning requires three later contracts:
@@ -192,10 +233,11 @@ resolved authority record, attribution-scope revision, lookup-contract revision,
 and closed membership domain. Only zero matching records in that domain may
 produce product `not_registered`. A positive result must identify its exact
 matching registration record. Invalid bindings, unresolved or ambiguous
-authority, unresolved attribution scope, open or incomplete content,
-unavailable content, and conflicting duplicates remain typed owner-profile
-outcomes or diagnostics. They are never shared evaluation-disposition kinds and
-never aliases for absence.
+authority, no exact authority match, multiple exact authority matches, any
+separately defined semantic ambiguity, unresolved attribution scope, open or
+incomplete content, unavailable content, and conflicting registration records
+remain typed owner-profile outcomes or diagnostics. They are never shared
+evaluation-disposition kinds and never aliases for absence.
 
 ## Current provisional tagged variants
 
