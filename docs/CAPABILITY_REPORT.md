@@ -208,17 +208,68 @@ trust, source truth, scientific truth, or registration presence. No match never
 becomes registration `not_registered`.
 
 This exact match-cardinality evidence satisfies only a structural precondition.
-The later Declaration Authority Resolution Profile must define whether and how
-it participates in product resolution. Accepting repeated records here does not
-commit a future wire format or authority profile to accepting them.
+The candidate below defines one snapshot-relative rule for how that evidence
+participates in a resolution decision. It does not ratify product resolution.
+Accepting repeated records here does not commit a future wire format or
+authority profile to accepting them.
+
+## Declaration-authority resolution candidate
+
+The internal, non-wire candidate in `internal/authorityresolution` consumes one
+valid retained `AuthorityMatch`. It stores that complete match evidence rather
+than copying a caller-supplied outcome, count, binding, or record. Resolution is
+therefore deterministic for the retained snapshot and exact query, without
+consulting ambient locale, clock, filesystem, network, process order, or
+randomness.
+
+The candidate owns exactly three snapshot-qualified outcomes:
+
+- `not_resolved_no_match_in_snapshot` requires zero exact matching record
+  entries;
+- `resolved_one_match_in_snapshot` requires exactly one; and
+- `not_resolved_multiple_matches_in_snapshot` requires more than one.
+
+Only `resolved_one_match_in_snapshot` can produce a positive
+`SnapshotResolvedAuthority`. That refinement retains the entire resolution and
+upstream snapshot witness. Its record self-binding must equal the requested
+scope-plus-authority binding. The package exposes no detached registration
+presence or generic authority result.
+
+The two negative outcomes remain distinct. No match means only that the exact
+reference has no record entry in the supplied finite artifact. Multiple matches
+means only that this exact profile cannot select one record entry. It does not
+establish semantic ambiguity, conflict, corruption, mistrust, multiple
+identities, or multiple entities. Multiplicity for one binding does not prevent
+another binding in the same snapshot from resolving through its unique entry.
+
+Even the positive refinement is a Lab software relation, not an external or
+ontological claim. It establishes no external existence, external completeness,
+global uniqueness, canonical identity, legitimacy, standing, jurisdiction,
+permission, authorization, ownership, authorship, delegation, hierarchy,
+attribution scope, trust, provenance assurance, source truth, scientific truth,
+maturity, implementation, applicability, or registration presence. It requires
+and infers no person, agent, organism, species, body, anatomy, institution,
+object, observer, event, location, geometry, dimensionality, unit system,
+language, network identity, universe, source-law time, chronology, recency,
+supersession, revocation, or latest revision.
+
+Invalid or cross-scope inputs never become resolution outcomes. The candidate
+performs no aliasing, normalization, dereference, retrieval, registry access,
+network operation, or I/O. Its Go identifiers and corpus labels are bounded Lab
+engineering tokens, not natural language or universally shared meaning. Neither
+negative outcome can become registration `not_registered`; that bridge still
+requires separately ratified attribution scope and lookup closure.
 
 ## Catalog lookup closure gate
 
 The product meaning requires three later contracts:
 
-- **Declaration Authority Resolution:** exactly one matching authority record in
-  the exact catalog-scope revision, with no implied legitimacy, permission,
-  jurisdiction, trust, authorship, ownership, personhood, agency, or source-law
+- **Declaration Authority Resolution:** a profile-owned, witness-retaining
+  decision over exact authority-reference match evidence. The current candidate
+  resolves only an exact one-match snapshot result. Zero and multiple matches
+  remain distinct snapshot-relative non-resolution outcomes. No outcome implies
+  legitimacy, permission, jurisdiction, trust, authorship, ownership,
+  personhood, agency, attribution scope, external completeness, or source-law
   standing.
 - **Declaration Attribution Scope:** an exact revisioned Lab rule defining which
   registration records count as attributed to the resolved authority, with no

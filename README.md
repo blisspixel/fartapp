@@ -67,10 +67,12 @@ exact membership decisions against a bounded immutable in-process set supplied
 by its caller while retaining that snapshot as the result witness. A fourth
 internal experiment counts exact declaration-authority reference matches in a
 separate duplicate-preserving snapshot without treating matching as legitimacy
-or trust. None of these experiments is a new CLI or wire contract. The project
-does not contain a physical solver yet, and it labels that absence explicitly.
-The next goal is not a graphical wrapper. It is a genuinely excellent,
-cross-platform command-line laboratory.
+or trust. A fifth internal experiment turns that retained match evidence into a
+three-way, snapshot-qualified resolution decision, with a positive witness only
+for exactly one matching record entry. None of these experiments is a new CLI or
+wire contract. The project does not contain a physical solver yet, and it labels
+that absence explicitly. The next goal is not a graphical wrapper. It is a
+genuinely excellent, cross-platform command-line laboratory.
 
 Run `fartapp --help` or `fartapp help` to discover every command implemented in
 the current oracle. Topic routes such as `fartapp help law inspect` and

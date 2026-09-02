@@ -125,6 +125,15 @@ not require or infer an entity, person, institution, organism, location,
 source-law occurrence, time, network identity, or semantic authority. Record
 order and revision carry no chronology, priority, or fallback meaning.
 
+Snapshot-relative authority resolution is also a Lab software relation. Its
+zero, one, and multiple-match outcomes describe only whether this candidate rule
+can select exactly one record entry from the retained finite artifact. Even a
+positive witness asserts nothing about the nature, embodiment, agency,
+personhood, species, anatomy, location, geometry, dimensionality, unit system,
+language, universe, network identity, temporal status, legitimacy, trust, or
+external existence of anything named by the opaque reference. Multiple entries
+are not evidence of multiple beings, authorities, identities, or meanings.
+
 No current field may be collapsed into or inferred solely from another. A
 fictional axiom can be implemented and formally checked without being
 empirically validated. A real-world model can be defined yet unavailable on a

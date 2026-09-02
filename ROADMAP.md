@@ -113,6 +113,14 @@ planned.
   reference coexist with a unique match for another, make no semantic-ambiguity
   claim, and perform no alias, category, attribution, trust, truth, network,
   chronology, or latest-revision inference.
+- [x] Add an internal, non-wire Declaration Authority Resolution Profile
+  candidate that consumes one retained exact authority match and maps zero, one,
+  or multiple snapshot matches to three profile-owned, snapshot-qualified
+  outcomes. Only exactly one match can produce a positive resolved-authority
+  witness. Retain the full match evidence; keep zero and multiple matches
+  distinct without claiming external absence or semantic ambiguity; require no
+  source, body, species, localized presentation, dimension, universe, network,
+  or source-law time; and preserve every current wire byte.
 - [ ] Ratify Declaration Authority Resolution, Declaration Attribution Scope,
   and Catalog Lookup Closure separately. Require a query-bound closed-lookup
   witness before product `not_registered`; keep invalid input, unresolved or
