@@ -65,6 +65,7 @@ executable check exists.
 | `CAP-001` | Capability reports keep eight decision axes independent | Exact localized-text and deterministic JSON Go fixtures | Cross-adapter schema and refusal conformance |
 | `SCN-001` | Scenario-probe validity does not imply realization or admission | Exact atemporal and unavailable-Earth text and JSON fixtures | Ratified scenario admission and refusal conformance |
 | `SCN-002` | Atemporal scenario probing consults no ambient or Earth default | Validator over document bytes and the compiled-in catalog, explicit empty ambient-input report, and counterexample fixture | Provider tripwires and broader orthogonal ontology suite |
+| `SCN-003` | The provisional schema rejects a two-entry `contexts` array before parsing either entry or beginning catalog and capability resolution; operation assessments remain unevaluated | Deterministic file and stdin CLI fixture, context-entry-order parity, exact stage and omission assertions | Supersede the probe limit with a ratified schema that represents scoped coupling and true no-bridge conformance |
 | `OBS-001` | Observation capabilities and back-action remain explicit | Design contract | Passive, distributed, and coupled observer tests |
 | `ACC-001` | Every enabled projection cites one authoritative Lab account without inventing causal structure | Design contract | Typed claim and transformation traversal tests |
 | `PHY-002` | Applicable conserved transfers close for the declared boundary | Design contract | Exact and tolerance-based ledger properties |

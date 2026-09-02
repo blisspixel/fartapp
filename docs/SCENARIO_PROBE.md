@@ -93,10 +93,13 @@ contexts before scope assignment and `InterLawCoupling` contracts are ratified
 would imply compatibility the Lab cannot justify. Multi-law input therefore
 returns `multi_law_not_supported`.
 
-`capability_requests` is an unordered set. Validation rejects duplicate IDs and
-sorts resolved results by stable capability ID. Object-member order, whitespace,
-and request order therefore cannot become an accidental law ordering or change
-the typed report.
+`capability_requests` is logically unordered after successful resolution.
+Validation rejects duplicate IDs and sorts a fully resolved result set by stable
+capability ID. For fully valid documents, request order, object-member order,
+and insignificant whitespace do not change the typed report. Failure reports
+retain source position where relevant: JSON Pointer array indices and optional
+byte offsets may change when invalid input is reordered or reformatted. Neither
+behavior creates a law ordering.
 
 The document contains no localized presentation, quantities, units, seed,
 time, source, emitter, interface, exterior, body, observer, geometry,
@@ -124,6 +127,32 @@ IDs, reason codes, and JSON member names are locale-invariant engineering
 tokens; that does not make them natural language, language-neutral notation, or
 universally shared meaning. The fixture proves a narrow software property, not
 that any represented reality is structureless.
+
+## Multi-law probe limit fixture
+
+The executable negative boundary is:
+
+```console
+fartapp scenario validate testdata/scenarios/multi-law-probe-limit.json --format json
+```
+
+It supplies two authored context entries naming version strings under the
+current one-entry probe schema. The validator returns `FART-E-ONTOLOGY-0001`
+with reason `multi_law_not_supported` at `/law_context_set/contexts` before
+parsing either entry or reading the built-in catalog. Its consulted input set is
+exactly `document_bytes`, its ambient-input set is empty, and its report omits
+the root members `document_schema`, `law_context`, `scope`, `capabilities`, and
+`evidence_registry`. Reversing the two context entries produces the same report
+bytes, so the probe cannot silently select the first entry.
+
+This fixture proves only noninterpretation at the provisional schema boundary.
+It does not establish that either context applies, that they are compatible or
+incompatible, that a bridge exists or is missing, or that either one defines
+observers, recurrence, conservation, dimensionality, language, biology, time,
+or spacetime. It is not the planned `inter_law_bridge_missing` counterexample,
+because this schema cannot represent a bridge. Operation selection, admission,
+and execution remain `not-evaluated` with `prior_stage_failed`; the report
+creates no case and invokes no solver.
 
 ## Validation report
 

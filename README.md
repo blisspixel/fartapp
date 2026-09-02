@@ -132,6 +132,16 @@ objects or declared optional structural modules. Its IDs, reason codes, and JSON
 member names are locale-invariant Lab protocol tokens, not a universal language
 or shared meaning. The English text formatter remains a presentation layer.
 
+`testdata/scenarios/multi-law-probe-limit.json` is the corresponding negative
+boundary fixture. The provisional scenario schema rejects its two-entry
+`contexts` array with `multi_law_not_supported` before parsing either entry or
+consulting the catalog. The deterministic report omits the root members
+`document_schema`, `law_context`, `scope`, `capabilities`, and
+`evidence_registry`, so context-entry order cannot silently select a first
+context. All operation assessments remain `not-evaluated`. This is a probe-limit
+rejection, not a finding that the named contexts are incompatible or that an
+inter-law bridge is missing.
+
 The next CLI slice is also executable:
 
 ```console

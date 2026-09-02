@@ -192,6 +192,12 @@ fixture proves only that this exact application-level capability request does
 not require localized presentation or a declared optional structural module. It
 does not claim that the represented reality lacks structure.
 
+The current multi-law probe-limit fixture is earlier than the `No bridge` row.
+It proves only that the one-context provisional schema will not interpret,
+choose among, or merge multiple context entries. Because that schema has no bridge
+representation, `multi_law_not_supported` cannot imply incompatibility or
+`inter_law_bridge_missing`.
+
 Passing one fixture does not establish real-world universality. Together they
 prevent ordinary Earth discharge, human narrative, and three-dimensional UI
 assumptions from hardening into the core by accident.

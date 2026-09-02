@@ -325,6 +325,54 @@ func TestValidationFailures(t *testing.T) {
 	}
 }
 
+func TestCaseOperationAbsenceIsInferredOnlyAfterSchemaValidation(t *testing.T) {
+	tests := []struct {
+		name  string
+		input string
+		want  CaseOperationDisposition
+	}{
+		{name: "malformed", input: "{", want: unevaluatedCaseOperationDisposition()},
+		{
+			name:  "unsupported schema",
+			input: strings.Replace(atemporalProbe, DocumentSchema, "other.schema/v1", 1),
+			want:  unevaluatedCaseOperationDisposition(),
+		},
+		{
+			name:  "multiple law contexts",
+			input: strings.Replace(atemporalProbe, "    }]", "    },{\"id\":\"conformance.opaque.minimal\",\"version\":\"v0alpha1\",\"scope_id\":\"s0\"}]", 1),
+			want:  unevaluatedCaseOperationDisposition(),
+		},
+		{
+			name:  "operation member outside probe schema",
+			input: strings.Replace(atemporalProbe, `"schema":`, `"operation":null,"schema":`, 1),
+			want:  unevaluatedCaseOperationDisposition(),
+		},
+		{
+			name:  "unknown law after valid schema",
+			input: strings.Replace(atemporalProbe, "conformance.relation.atemporal", "unknown.context", 1),
+			want:  absentCaseOperationDisposition(),
+		},
+		{
+			name:  "unknown capability after valid schema",
+			input: strings.Replace(atemporalProbe, "catalog.inspect", "relations.unknown", 1),
+			want:  absentCaseOperationDisposition(),
+		},
+		{name: "valid probe", input: atemporalProbe, want: absentCaseOperationDisposition()},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			report := Validate([]byte(test.input))
+			if report.RequestedCaseOperation != test.want {
+				t.Fatalf(
+					"requested case operation = %#v, want %#v",
+					report.RequestedCaseOperation,
+					test.want,
+				)
+			}
+		})
+	}
+}
+
 func TestUnicodePreflight(t *testing.T) {
 	valid := []string{
 		`{"x":"plain"}`,

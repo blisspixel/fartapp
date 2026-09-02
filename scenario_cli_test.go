@@ -55,6 +55,7 @@ test:law-cli-fixtures [software/go-test]
 const expectedAtemporalScenarioJSONSHA256 = "9b1a6d9ed0923cb11f455545f157c2a2805c1b78b6cc82ee0222aed0087df12b"
 const expectedEarthScenarioJSONSHA256 = "77cecf0ed6413bb83ebd291f6729012f944d6261f5d8fe8fe028ca2113bc634c"
 const expectedMinimalOpaqueScenarioJSONSHA256 = "1fcdb855250eab6c943e0da2d64b7169ec253d4d778c822592774919e1276346"
+const expectedMultiLawProbeLimitJSONSHA256 = "36e4be2178d1ddc755631b0328bf08c4bcf28f9acc10425fa16ccaf20c3074af"
 
 func TestScenarioCLITextAndJSONFixtures(t *testing.T) {
 	input := readScenarioFixture(t, "atemporal-probe.json")
@@ -234,6 +235,130 @@ func TestMinimalOpaqueScenarioJSONFixture(t *testing.T) {
 	} {
 		if bytes.Contains(first, []byte(`"`+forbiddenKey+`"`)) {
 			t.Errorf("minimal opaque scenario JSON unexpectedly contains key %q", forbiddenKey)
+		}
+	}
+}
+
+func TestMultiLawProbeLimitDoesNotInferCompatibility(t *testing.T) {
+	input := readScenarioFixture(t, "multi-law-probe-limit.json")
+	invoke := func(args []string, stdin []byte) []byte {
+		t.Helper()
+		var stdout bytes.Buffer
+		var stderr bytes.Buffer
+		code := runWithInput(args, bytes.NewReader(stdin), &stdout, &stderr)
+		if code != 1 || stderr.Len() != 0 {
+			t.Fatalf("result = (%d, %q)", code, stderr.String())
+		}
+		return bytes.Clone(stdout.Bytes())
+	}
+
+	stdinArgs := []string{"fartapp", "scenario", "validate", "-", "--format", "json"}
+	var textStdout bytes.Buffer
+	var textStderr bytes.Buffer
+	if code := runWithInput(
+		[]string{"fartapp", "scenario", "validate", "-"},
+		bytes.NewReader(input),
+		&textStdout,
+		&textStderr,
+	); code != 1 || textStdout.Len() != 0 ||
+		textStderr.String() != "scenario validation failed: FART-E-ONTOLOGY-0001 multi_law_not_supported at \"/law_context_set/contexts\"\n" {
+		t.Fatalf("text result = (%d, %q, %q)", code, textStdout.String(), textStderr.String())
+	}
+	first := invoke(stdinArgs, input)
+	second := invoke(stdinArgs, input)
+	if !bytes.Equal(first, second) {
+		t.Fatal("multi-law probe-limit report is not byte deterministic")
+	}
+	named := invoke(
+		[]string{
+			"fartapp", "scenario", "validate",
+			filepath.FromSlash("testdata/scenarios/multi-law-probe-limit.json"),
+			"--format", "json",
+		},
+		nil,
+	)
+	if !bytes.Equal(first, named) {
+		t.Fatal("named-file and standard-input rejection reports differ")
+	}
+	compactOriginalOrder := []byte(`{"schema":"fart.scenario-probe/v0alpha1","law_context_set":{"contexts":[{"id":"conformance.opaque.minimal","version":"v0alpha1","scope_id":"q0"},{"id":"conformance.relation.atemporal","version":"v0alpha1","scope_id":"q0"}]},"scope":{"id":"q0"},"capability_requests":[{"id":"catalog.inspect"}]}`)
+	if compactOutput := invoke(stdinArgs, compactOriginalOrder); !bytes.Equal(first, compactOutput) {
+		t.Fatal("JSON whitespace changed the probe-limit rejection")
+	}
+	reversedContexts := []byte(`{"schema":"fart.scenario-probe/v0alpha1","law_context_set":{"contexts":[{"id":"conformance.relation.atemporal","version":"v0alpha1","scope_id":"q0"},{"id":"conformance.opaque.minimal","version":"v0alpha1","scope_id":"q0"}]},"scope":{"id":"q0"},"capability_requests":[{"id":"catalog.inspect"}]}`)
+	if reversedOutput := invoke(stdinArgs, reversedContexts); !bytes.Equal(first, reversedOutput) {
+		t.Fatal("context order changed the probe-limit rejection")
+	}
+	reorderedMembers := []byte(`{"scope":{"id":"q0"},"capability_requests":[{"id":"catalog.inspect"}],"law_context_set":{"contexts":[{"scope_id":"q0","version":"v0alpha1","id":"conformance.opaque.minimal"},{"version":"v0alpha1","id":"conformance.relation.atemporal","scope_id":"q0"}]},"schema":"fart.scenario-probe/v0alpha1"}`)
+	if reorderedOutput := invoke(stdinArgs, reorderedMembers); !bytes.Equal(first, reorderedOutput) {
+		t.Fatal("object-member order changed the probe-limit rejection")
+	}
+	digest := sha256.Sum256(first)
+	if got := hex.EncodeToString(digest[:]); got != expectedMultiLawProbeLimitJSONSHA256 {
+		t.Fatalf(
+			"multi-law probe-limit JSON SHA-256 = %s, want %s",
+			got,
+			expectedMultiLawProbeLimitJSONSHA256,
+		)
+	}
+
+	var report scenarioprobe.Report
+	if err := json.Unmarshal(first, &report); err != nil {
+		t.Fatalf("json.Unmarshal: %v", err)
+	}
+	if report.Valid() || report.DocumentStatus != "invalid" || report.DocumentSchema != "" ||
+		report.LawContext != nil ||
+		report.Scope != nil || len(report.Capabilities) != 0 || len(report.EvidenceRegistry) != 0 ||
+		len(report.Environment.ConsultedInputs) != 1 ||
+		report.Environment.ConsultedInputs[0] != "document_bytes" ||
+		len(report.Environment.AmbientInputs) != 0 || len(report.Diagnostics) != 1 {
+		t.Fatalf("report = %#v", report)
+	}
+	stages := report.ValidationStages
+	if stages.Syntax.Status != "valid" || stages.Syntax.ReasonCode != "" ||
+		stages.Schema.Status != "invalid" || stages.Schema.ReasonCode != "multi_law_not_supported" ||
+		stages.LawResolution.Status != "not-evaluated" ||
+		stages.LawResolution.ReasonCode != "prior_stage_failed" ||
+		stages.CapabilityResolution.Status != "not-evaluated" ||
+		stages.CapabilityResolution.ReasonCode != "prior_stage_failed" {
+		t.Fatalf("validation stages = %#v", stages)
+	}
+	diagnostic := report.Diagnostics[0]
+	if diagnostic.Code != "FART-E-ONTOLOGY-0001" || diagnostic.Stage != "schema" ||
+		diagnostic.Path != "/law_context_set/contexts" ||
+		diagnostic.ReasonCode != "multi_law_not_supported" {
+		t.Fatalf("diagnostic = %#v", diagnostic)
+	}
+	for _, assessment := range []scenarioprobe.StageAssessment{
+		report.RequestedCaseOperation.Selection,
+		report.RequestedCaseOperation.Admission,
+		report.RequestedCaseOperation.Execution,
+	} {
+		if assessment.Status != "not-evaluated" || assessment.ReasonCode != "prior_stage_failed" {
+			t.Fatalf("operation assessment = %#v", assessment)
+		}
+	}
+	var root map[string]json.RawMessage
+	if err := json.Unmarshal(first, &root); err != nil {
+		t.Fatalf("json.Unmarshal object: %v", err)
+	}
+	wantKeys := []string{
+		"schema", "document_status", "validation_stages", "validation_environment",
+		"requested_case_operation", "diagnostics",
+	}
+	if len(root) != len(wantKeys) {
+		t.Fatalf("report keys = %v, want %v", root, wantKeys)
+	}
+	for _, key := range wantKeys {
+		if _, found := root[key]; !found {
+			t.Errorf("report omits key %q", key)
+		}
+	}
+	for _, forbidden := range []string{
+		"conformance.opaque.minimal", "conformance.relation.atemporal", `"law_context"`,
+		`"scope"`, `"capabilities"`, `"evidence_registry"`, `"q0"`,
+	} {
+		if bytes.Contains(first, []byte(forbidden)) {
+			t.Errorf("probe-limit report unexpectedly contains %q", forbidden)
 		}
 	}
 }

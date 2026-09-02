@@ -113,6 +113,11 @@ planned.
   object or optional structural module. Treat the remaining locale-invariant
   engineering tokens as versioned Lab protocol symbols, not universal language
   or shared meaning.
+- [x] Promote the multi-entry probe limit into an exact CLI fixture. The
+  provisional schema rejects a two-entry `contexts` array before either entry is
+  parsed or catalog and capability resolution begin. It emits the same report
+  for either context-entry order, leaves operation assessments unevaluated, and
+  cannot represent coupling, compatibility, or a missing bridge.
 - [ ] Add dimension diagnostics only where selected law contexts define
   dimensional quantities.
 - [ ] Implement ideal-mixture finite-reservoir mass and energy balance.

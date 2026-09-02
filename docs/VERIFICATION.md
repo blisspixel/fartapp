@@ -100,6 +100,13 @@ pre-admission scenario-schema slice of `ONT-001`. It selects no case operation
 and creates no record, archive, or certificate. Those retained-case round trips
 remain planned and the benchmark stays a candidate.
 
+The executable multi-law probe-limit fixture is evidence only for `SCN-003` in
+the quality registry. It rejects a two-entry `contexts` array before parsing
+either entry or beginning catalog resolution. It therefore does not satisfy
+`ONT-003`, test bridge absence, or establish context compatibility. The later
+full scenario contract must supersede this boundary rejection with scoped
+contexts and explicit coupling evidence.
+
 ## Numerical proof protocol
 
 For a field result, the project stores at least three independently selected

@@ -52,6 +52,8 @@ go test ./internal/scenarioprobe -run '^TestAtemporalProbeHasNoAmbientOrEarthReq
 go test . -run '^TestScenarioCLITextAndJSONFixtures$'
 go test ./internal/scenarioprobe -run '^TestMinimalOpaqueProbeRequiresNoLocalizedPresentationOrOptionalStructuralModule$'
 go test . -run '^TestMinimalOpaqueScenarioJSONFixture$'
+go test ./internal/scenarioprobe -run '^TestCaseOperationAbsenceIsInferredOnlyAfterSchemaValidation$'
+go test . -run '^TestMultiLawProbeLimitDoesNotInferCompatibility$'
 go test . -run '^TestHelpRoutes$'
 go vet ./...
 go run honnef.co/go/tools/cmd/staticcheck@v0.8.1 ./...
