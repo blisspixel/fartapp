@@ -30,6 +30,12 @@ The repository policy checker verifies this package's bounded manifest,
 skill, and recipe profile offline, including containment of package paths.
 It is not a general Agent Plugins client-conformance implementation.
 
+The v0.8 alpha package adds an executable refinement recipe with separate
+tolerance and completion assertions. Its retention instructions point to the
+[evidence carrier](WALK_EVIDENCE.md), whose CLI tests exercise actual capture,
+replay, corruption refusal, and reconstruction mismatch. All 12 recipe argument
+arrays still execute the Go CLI; the narrower Rust CLI has its own parity gate.
+
 The [walkthrough](WALKTHROUGH.md) adds an end-to-end investigation: simulate a
 low-pressure case, compare outlet area, retain a witness, and reconstruct
 against that retained expectation. The witness includes the implementation and

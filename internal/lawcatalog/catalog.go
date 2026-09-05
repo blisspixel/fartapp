@@ -235,7 +235,7 @@ func softwareEvidenceRegistry() []EvidenceRecord {
 			ID:        "test:law-cli-fixtures",
 			Scope:     "software",
 			Kind:      "go-test",
-			GoPackage: ".",
+			GoPackage: "./internal/cli",
 			GoTest:    "TestLawCLITextAndJSONFixtures",
 		},
 	}

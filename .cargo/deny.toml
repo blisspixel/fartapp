@@ -1,0 +1,48 @@
+[graph]
+all-features = true
+
+[advisories]
+unmaintained = "all"
+unsound = "all"
+ignore = []
+
+[licenses]
+allow = ["Apache-2.0", "MIT"]
+confidence-threshold = 0.93
+
+[bans]
+multiple-versions = "deny"
+wildcards = "deny"
+allow-wildcard-paths = true
+allow-workspace = true
+allow = [
+    "serde@1.0.229",
+    "serde_core@1.0.229",
+    "serde_json@1.0.151",
+    "itoa@1.0.18",
+    "memchr@2.8.3",
+    "zmij@1.0.23",
+]
+
+[[bans.features]]
+crate = "serde"
+allow = ["std"]
+exact = true
+
+[[bans.features]]
+crate = "serde_core"
+allow = ["std", "result"]
+exact = true
+
+[[bans.features]]
+crate = "serde_json"
+allow = ["std", "float_roundtrip"]
+exact = true
+
+[bans.build]
+allow-build-scripts = ["serde@1.0.229", "serde_core@1.0.229", "serde_json@1.0.151", "zmij@1.0.23"]
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]

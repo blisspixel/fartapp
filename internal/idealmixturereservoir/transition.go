@@ -1,6 +1,9 @@
 package idealmixturereservoir
 
-import "math"
+import (
+	"github.com/blisspixel/fartapp/internal/floatmath"
+	"math"
+)
 
 type Closure uint8
 
@@ -136,7 +139,13 @@ func WithdrawFraction(
 	if closure == RigidAdiabatic {
 		exponent := before.MixtureGasConstant().joulesPerKilogramKelvin /
 			before.MixtureIsochoricHeatCapacity().joulesPerKilogramKelvin
-		afterTemperature *= math.Exp(exponent * logRetained)
+		decay := exponent * logRetained
+		factor := math.Exp(decay)
+		if factor < math.Ldexp(1, -1022) {
+			afterTemperature = math.Exp(math.Log(before.temperature.kelvin) + decay)
+		} else {
+			afterTemperature *= factor
+		}
 	}
 	after := State{
 		components:  afterComponents,
@@ -155,23 +164,24 @@ func WithdrawFraction(
 	if closure == RigidAdiabatic {
 		gamma := before.HeatCapacityRatio()
 		oneMinusEnergyRatio := -math.Expm1(gamma * logRetained)
-		enthalpyOut = before.TotalMass().kilograms *
-			before.MixtureIsobaricHeatCapacity().joulesPerKilogramKelvin *
-			before.temperature.kelvin * oneMinusEnergyRatio / gamma
+		enthalpyOut = floatmath.Product(beforeEnergy, oneMinusEnergyRatio)
 	} else {
 		enthalpyTerms := make([]float64, len(before.components))
 		heatTerms := make([]float64, len(before.components))
 		for index, component := range before.components {
 			cp := component.heatCV.joulesPerKilogramKelvin +
 				component.gasConstant.joulesPerKilogramKelvin
-			enthalpyTerms[index] = massOut[index].kilograms * cp * before.temperature.kelvin
-			heatTerms[index] = massOut[index].kilograms *
-				component.gasConstant.joulesPerKilogramKelvin * before.temperature.kelvin
+			enthalpyTerms[index] = floatmath.Product(massOut[index].kilograms, cp, before.temperature.kelvin)
+			heatTerms[index] = floatmath.Product(massOut[index].kilograms,
+				component.gasConstant.joulesPerKilogramKelvin, before.temperature.kelvin)
 		}
 		enthalpyOut = stableSum(enthalpyTerms)
 		heatIn = stableSum(heatTerms)
 	}
 	values := []float64{totalMassOut, beforeEnergy, afterEnergy, enthalpyOut, heatIn}
+	if enthalpyOut <= 0 || (closure == RigidIsothermal && heatIn <= 0) {
+		return Transition{}, ErrNoRepresentableProgress
+	}
 	for _, value := range values {
 		if !finite(value) || value < 0 {
 			return Transition{}, ErrInvalidState

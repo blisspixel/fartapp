@@ -22,22 +22,24 @@ a scientific, usability, accessibility, security, or quality gate.
 
 ## Current delivery focus
 
-The next useful increment closes evidence gaps in the experimental coupled Go
-oracle. Its low-pressure synthetic [walkthrough](docs/WALKTHROUGH.md) exposes
-inputs, full bounded histories, counterfactuals, and retained witness comparison.
-The [analytical reference](docs/BLOWDOWN_REFERENCE.md) records which time laws
-are independently checked and where numerical error remains significant.
+The v0.8 alpha delivery connects three independently useful foundations:
+the [Rust reservoir core](docs/RUST_CORE.md), an opt-in
+[accurate discharge integrator](docs/BLOWDOWN_REFERENCE.md), and a bounded
+[software evidence carrier](docs/WALK_EVIDENCE.md). The
+[project layout](docs/PROJECT_LAYOUT.md) separates commands, private Go packages,
+Rust crates, fixtures, and development tooling.
 
 The immediate sequence is:
 
-1. Ship the verified restriction, history, and coupled-oracle subset with
-   accurate completion semantics and current stable toolchains.
-2. Control complete-discharge timing error, including choking and compliance
-   transitions, and expose refinement evidence through the CLI.
-3. Review the selected benchmark tolerances and reference provenance, then earn
-   the remaining `RES-002` and ordinary-reference gates.
-4. Complete the required interaction and accessibility review before freezing
-   the Go oracle's scope and the contracts needed by Rust.
+1. Ratify a narrow admitted-record profile with explicit identity, measurement,
+   and journal owners, using the carrier's working replay and hostile-input
+   tests to challenge it.
+2. Extend Rust through the stateless restriction and discharge services under
+   independent analytical references and complete report comparisons.
+3. Complete fixed-time accuracy and the selected benchmark tolerance review,
+   then earn the remaining `RES-002` and ordinary-reference gates.
+4. Implement the first typed `PlayService` action/account boundary and ontology
+   round trips before promoting the candidate carrier to certified `.fart`.
 
 The narrow oracle does not ratify the shared capability report, case identity,
 archive, Reference Pfft, or complete ordinary-pfft play loop by implication.
@@ -302,13 +304,19 @@ labeled as presentation.
 
 ## v0.8: Rust production core and typed CLI
 
+Delivered alpha subset: four safe workspace crates, the permanent toy command,
+a stateless reservoir service and native CLI, analytical references, complete
+Go report comparisons within declared numerical tolerances, and dependency and
+coverage gates. This does not freeze the broader Go capability contract or
+implement `PlayService`. Full milestone checkboxes below remain independent.
+
 - [ ] Replace the human-authored invariant table with one canonical
   machine-readable registry containing stable ID, owner, applicability,
   tolerance profile, lifecycle status, executable checks, evidence references,
   counterexamples, and milestone. Validate referential integrity and status
   claims in CI, and generate reference tables and planned `fart assurance`
   inspection data from it.
-- [ ] Create `fart-domain`, `fart-core`, `fart-services`, and `fart-cli` crates.
+- [x] Create `fart-domain`, `fart-core`, `fart-services`, and `fart-cli` crates.
 - [ ] Freeze `fart-compute`, precision, determinism, device-provenance,
   checkpoint, and backend-conformance contracts before writing GPU kernels.
 - [ ] Enforce the language and dependency policy: safe Rust for pure core,
@@ -378,6 +386,15 @@ ontology fixtures. Measurement interaction changes case-result identity;
 view and presentation changes do not.
 
 ## v0.9: Certified case archive
+
+Experimental groundwork now exists as `.fartevidence` in the Go CLI: exact
+authored bytes, bounded complete reports, member hashes, atomic no-clobber
+publication, integrity-only inspection/replay, and explicit reconstruction.
+Fault injection covers cancellation observed before publication, competing
+writers, short writes, and sync failures. The format has no filenames,
+extraction, or compression. It deliberately retains only the current walk
+witness profile; it does not close any certified `.fart` identity, ontology,
+journal, canonicalization, migration, or trust gate by implication.
 
 - [ ] Implement canonical scenario, manifest, history, and certificate records.
 - [ ] Add play-session identity, ordered action journals, actor roles,

@@ -5,7 +5,7 @@ the experimental Go CLI. It demonstrates a scientific account that can be
 inspected, challenged, and checked against retained evidence.
 
 Use the stable Go version in [go.mod](../go.mod). Run these commands from the
-repository root. `go run .` works without installing a binary.
+repository root. `go run ./cmd/fartapp` works without installing a binary.
 
 ## Read the authored case
 
@@ -20,9 +20,9 @@ biological population, hidden default, or the ratified Reference Pfft. All
 inputs remain visible, including the step budget and a 2 mm2 counterfactual.
 
 ```console
-go run . --help
-go run . help walk
-go run . walk predict testdata/walk/ordinary-low-pressure.json
+go run ./cmd/fartapp --help
+go run ./cmd/fartapp help walk
+go run ./cmd/fartapp walk predict testdata/walk/ordinary-low-pressure.json
 ```
 
 Prediction reports the initial flow regime and the thermodynamic equalization
@@ -34,9 +34,9 @@ profile. The atemporal counterexample is rejected before simulation.
 ## Run and inspect
 
 ```console
-go run . walk simulate testdata/walk/ordinary-low-pressure.json
-go run . walk inspect testdata/walk/ordinary-low-pressure.json --format json
-go run . walk explain testdata/walk/ordinary-low-pressure.json
+go run ./cmd/fartapp walk simulate testdata/walk/ordinary-low-pressure.json
+go run ./cmd/fartapp walk inspect testdata/walk/ordinary-low-pressure.json --format json
+go run ./cmd/fartapp walk explain testdata/walk/ordinary-low-pressure.json
 ```
 
 The case remains subsonic. At its current numerical settings, it emits about
@@ -68,7 +68,7 @@ it does not resolve a plume or prove a vortex structure.
 ## Change one thing
 
 ```console
-go run . walk branch testdata/walk/ordinary-low-pressure.json
+go run ./cmd/fartapp walk branch testdata/walk/ordinary-low-pressure.json
 ```
 
 The authored variant doubles the prescribed area. For this constant-area model
@@ -84,8 +84,8 @@ closure controls the thermodynamic path.
 ## Check arithmetic and retain a witness
 
 ```console
-go run . walk certify testdata/walk/ordinary-low-pressure.json
-go run . walk witness testdata/walk/ordinary-low-pressure.json --format json
+go run ./cmd/fartapp walk certify testdata/walk/ordinary-low-pressure.json
+go run ./cmd/fartapp walk witness testdata/walk/ordinary-low-pressure.json --format json
 ```
 
 The provisional `certify` operation checks numerical balance claims and shows
@@ -105,17 +105,17 @@ answer by running the same calculation twice.
 In PowerShell 7:
 
 ```powershell
-go run . walk witness testdata/walk/ordinary-low-pressure.json --format json > walk-evidence.json
+go run ./cmd/fartapp walk witness testdata/walk/ordinary-low-pressure.json --format json > walk-evidence.json
 $walkEvidence = Get-Content -Raw walk-evidence.json | ConvertFrom-Json
 $walkEvidence.inputs | Add-Member -NotePropertyName expected_witness -NotePropertyValue $walkEvidence.witness
-$walkEvidence.inputs | ConvertTo-Json -Depth 20 | go run . walk reconstruct - --format json
+$walkEvidence.inputs | ConvertTo-Json -Depth 20 | go run ./cmd/fartapp walk reconstruct - --format json
 ```
 
 In a Unix shell with optional `jq`:
 
 ```sh
-go run . walk witness testdata/walk/ordinary-low-pressure.json --format json > walk-evidence.json
-jq '.inputs + {expected_witness: .witness}' walk-evidence.json | go run . walk reconstruct - --format json
+go run ./cmd/fartapp walk witness testdata/walk/ordinary-low-pressure.json --format json > walk-evidence.json
+jq '.inputs + {expected_witness: .witness}' walk-evidence.json | go run ./cmd/fartapp walk reconstruct - --format json
 ```
 
 The digest can also be copied into an `expected_witness` member by hand.
@@ -126,11 +126,25 @@ both digests on mismatch and returns a failing exit status.
 
 ## What the evidence earns next
 
-The [analytical reference](BLOWDOWN_REFERENCE.md) now checks choked and subsonic
-time evolution independently. Complete-discharge time still converges slowly
-near equalization. The next solver increment should control that error and
-expose the numerical evidence to the operator.
+The optional accurate operation uses the same authored case:
 
-The Reference Pfft, complete play loop, physical audio, archives, and trusted
+```console
+go run ./cmd/fartapp walk refine testdata/walk/ordinary-low-pressure.json --relative-tolerance 1e-8 --max-evaluations 100000
+```
+
+It gives about 58.3942 ms for complete discharge, with explicit quadrature
+estimates and work counters. Its independent analytical clock differs from the
+legacy mass-step method's 55.5 ms approximation. The
+[analytical reference](BLOWDOWN_REFERENCE.md) explains the endpoint
+regularization and limits. Tolerance satisfaction does not imply empirical
+validation or a completed discharge when the sample budget truncates a run.
+
+The [evidence carrier](WALK_EVIDENCE.md) automates retention without manually
+copying a digest. Capture retains the legacy method under its declared current
+implementation revision, then inspect, verify, and replay run without time
+integration. Reconstruction explicitly calculates again. Refinement is a
+separate numerical profile.
+
+The Reference Pfft, complete play loop, physical audio, certified archives, and trusted
 `RES-002` benchmark retain their [roadmap gates](../ROADMAP.md). This walkthrough
 provides an inspectable foundation for them.

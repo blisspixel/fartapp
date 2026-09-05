@@ -1,0 +1,22 @@
+{
+  "schema": "fart.reservoir-prediction-request/v0alpha1",
+  "model": {
+    "id": "continuum.rigid-calorically-perfect-ideal-mixture",
+    "version": "v0alpha1"
+  },
+  "quantity_system": "si",
+  "closure": "rigid-adiabatic",
+  "withdrawal_fraction": 0.75,
+  "initial": {
+    "components": [
+      {
+        "id": "a",
+        "mass_kg": 3.054936363499605E-151,
+        "specific_gas_constant_j_per_kg_k": 2.745919064052244E+157,
+        "isochoric_heat_capacity_j_per_kg_k": 2.6815615859885194E+154
+      }
+    ],
+    "volume_m3": 1,
+    "temperature_k": 1.0715086071862673E+301
+  }
+}

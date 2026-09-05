@@ -12,6 +12,10 @@ Read:
 
 - [README.md](README.md) for product identity and current status.
 - [ROADMAP.md](ROADMAP.md) for sequencing and completion gates.
+- [docs/PROJECT_LAYOUT.md](docs/PROJECT_LAYOUT.md) for source organization and
+  dependency direction.
+- [docs/RUST_CORE.md](docs/RUST_CORE.md) for the native core's supported subset,
+  comparison policy, and dependency decisions.
 - [docs/SIMULATION.md](docs/SIMULATION.md) for scientific claims.
 - [docs/MODELS.md](docs/MODELS.md) for model registry, ensemble, and scientific
   machine-learning boundaries.
@@ -42,6 +46,7 @@ verification, and validation status.
 
 Install Go 1.27.1 as declared in `go.mod`. Documentation lint uses Node.js 26.8.1
 from `.node-version` and npm 12.0.2 from `package.json`'s `packageManager` pin.
+The native workspace pins Rust 1.98.1 in `rust-toolchain.toml`.
 These are reviewed stable releases; use the
 [toolchain policy](docs/QUALITY.md) when updating them. Then run:
 
@@ -59,29 +64,29 @@ go test ./internal/cataloglookup -run '^TestLookupCorpus$'
 go test ./internal/catalogregistration -run '^TestRegistrationCorpus$'
 go test ./internal/evaluation -run '^TestDispositionCorpus$'
 go test ./internal/lawcatalog -run '^TestBuiltInCatalog$'
-go test . -run '^TestLawCLITextAndJSONFixtures$'
+go test ./internal/cli -run '^TestLawCLITextAndJSONFixtures$'
 go test ./internal/lawcatalog -run '^TestMinimalOpaqueContextHasNoLocalizedPresentationOrOptionalStructuralModule$'
-go test . -run '^TestMinimalOpaqueLawInspectionJSONFixture$'
+go test ./internal/cli -run '^TestMinimalOpaqueLawInspectionJSONFixture$'
 go test ./internal/scenarioprobe -run '^TestAtemporalProbeHasNoAmbientOrEarthRequirements$'
-go test . -run '^TestScenarioCLITextAndJSONFixtures$'
+go test ./internal/cli -run '^TestScenarioCLITextAndJSONFixtures$'
 go test ./internal/scenarioprobe -run '^TestMinimalOpaqueProbeRequiresNoLocalizedPresentationOrOptionalStructuralModule$'
-go test . -run '^TestMinimalOpaqueScenarioJSONFixture$'
+go test ./internal/cli -run '^TestMinimalOpaqueScenarioJSONFixture$'
 go test ./internal/scenarioprobe -run '^TestCaseOperationAbsenceIsInferredOnlyAfterSchemaValidation$'
-go test . -run '^TestMultiLawProbeLimitDoesNotInferCompatibility$'
+go test ./internal/cli -run '^TestMultiLawProbeLimitDoesNotInferCompatibility$'
 go test ./internal/scenarioprobe -run '^TestMinimalOpaqueUnresolvedCapabilityStopsAtOuterEnvelope$'
-go test . -run '^TestMinimalOpaqueUnresolvedCapabilityCLIContract$'
+go test ./internal/cli -run '^TestMinimalOpaqueUnresolvedCapabilityCLIContract$'
 go test ./internal/idealmixturereservoir -run '^TestSyntheticMixtureClosedForms$'
 go test ./internal/reservoirprediction -run '^TestPredictSyntheticClosedForms$'
-go test . -run '^TestReservoirCLITextAndJSONFixtures$'
+go test ./internal/cli -run '^TestReservoirCLITextAndJSONFixtures$'
 go test ./internal/restrictionflow -run '^TestChokedGammaFifteenClosedForm$'
 go test ./internal/restrictionprediction -run '^TestPredictChokedClosedForm$'
 go test ./internal/restrictionhistory -run '^TestConstantChokedHistoryClosedForm$'
 go test ./internal/restrictionhistoryprediction -run '^TestPredictConstantChokedHistory$'
-go test . -run '^TestRestrictionCLITextAndJSONFixtures$'
+go test ./internal/cli -run '^TestRestrictionCLITextAndJSONFixtures$'
 go test ./internal/coupledblowdown -run '^TestAdiabaticPathMatchesReservoirEndpoint$'
 go test ./internal/walkcase -run '^TestWalkOperationsOnIsothermalFixture$'
-go test . -run '^TestWalkCLISimulateAndFailures$'
-go test . -run '^TestHelpRoutes$'
+go test ./internal/cli -run '^TestWalkCLISimulateAndFailures$'
+go test ./internal/cli -run '^TestHelpRoutes$'
 go vet ./...
 go run honnef.co/go/tools/cmd/staticcheck@v0.8.1 ./...
 go run golang.org/x/vuln/cmd/govulncheck@v1.7.0 ./...
@@ -98,12 +103,37 @@ above 90 percent, and every non-generated package must remain at or above the 80
 percent floor. Domain, solver, archive, replay, and protocol code receive stricter
 changed-line and mutation gates described in [docs/QUALITY.md](docs/QUALITY.md).
 
+For native changes, also run:
+
+```sh
+cargo fmt --all --check
+cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
+cargo doc --locked --workspace --no-deps
+cargo test --locked --workspace --all-features
+cargo build --locked --release --workspace
+cargo deny --locked check
+cargo llvm-cov --locked --workspace --all-features --json --summary-only --output-path artifacts/coverage/rust.json
+go run ./tools/repoquality rust-coverage --profile artifacts/coverage/rust.json --aggregate 90 --package 80
+```
+
+Install `cargo-deny` 0.20.2 and `cargo-llvm-cov` 0.9.0 with
+`cargo install --locked --version <version> <tool>`. Set `RUSTDOCFLAGS=-D warnings`
+for the documentation gate. Set `FARTAPP_GO_ORACLE` to the absolute path of a
+freshly built Go executable when running cross-language tests. CI requires that
+comparison on each supported system. See [QUALITY.md](docs/QUALITY.md) for the
+distinction between current checks and broader production gates.
+
 Repository-policy checks are the Go `repoquality` command documented in
 [docs/QUALITY.md](docs/QUALITY.md). Do not add new policy to the optional
 PowerShell wrappers or introduce another task runner. Wrappers may only forward
 arguments and exit status to the Go command.
 
 ## Repository structure and review discipline
+
+Keep source in `cmd/`, `internal/`, and `crates/` as described in the
+[layout guide](docs/PROJECT_LAYOUT.md). Root files are entry-point documents,
+policies, and conventional tool manifests. Put generated local outputs under
+ignored `artifacts/` or their tool's standard output directory.
 
 For a new package or a meaningful file split, describe the responsibility of
 each file and the permitted dependency direction in the pull request. Prefer

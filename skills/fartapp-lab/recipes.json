@@ -91,6 +91,15 @@
       }
     },
     {
+      "id": "low-pressure-accuracy",
+      "args": ["walk", "refine", "testdata/walk/ordinary-low-pressure.json", "--relative-tolerance", "1e-8", "--max-evaluations", "100000", "--format", "json"],
+      "input_argument": 2,
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.walk-report/v0alpha1", "/status": "predicted", "/operation": "refine", "/accuracy/tolerance_satisfied": true, "/accuracy/discharge_complete": true}
+      }
+    },
+    {
       "id": "incompatible-context-refusal",
       "args": ["walk", "predict", "testdata/walk/atemporal-no-dimension.json", "--format", "json"],
       "input_argument": 2,

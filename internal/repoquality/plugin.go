@@ -4,8 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"math"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"unicode/utf8"
 
@@ -197,7 +199,7 @@ func ReadPluginRecipes(root string) ([]CLIRecipe, error) {
 
 func validateRecipe(root string, recipe CLIRecipe) error {
 	args := recipe.Args
-	if len(args) < 4 || len(args) > 5 || args[len(args)-2] != "--format" || args[len(args)-1] != "json" {
+	if len(args) < 4 || len(args) > 9 || args[len(args)-2] != "--format" || args[len(args)-1] != "json" {
 		return fmt.Errorf("expected literal CLI arguments ending in --format json")
 	}
 	operation := args[0] + " " + args[1]
@@ -206,12 +208,27 @@ func validateRecipe(root string, recipe CLIRecipe) error {
 	case "law list", "law inspect":
 		input = false
 	case "scenario validate", "reservoir predict", "restriction predict", "restriction history",
-		"walk predict", "walk simulate", "walk inspect", "walk explain", "walk branch", "walk certify", "walk witness", "walk reconstruct":
+		"walk predict", "walk simulate", "walk inspect", "walk explain", "walk branch", "walk certify", "walk witness", "walk reconstruct", "walk refine":
 	default:
 		return fmt.Errorf("command is outside the implemented CLI recipe profile")
 	}
-	if operation == "law list" && len(args) != 4 || operation != "law list" && len(args) != 5 {
+	expectedArguments := 5
+	if operation == "law list" {
+		expectedArguments = 4
+	} else if operation == "walk refine" {
+		expectedArguments = 9
+	}
+	if len(args) != expectedArguments {
 		return fmt.Errorf("incorrect command argument count")
+	}
+	if operation == "walk refine" {
+		relative, relativeErr := strconv.ParseFloat(args[4], 64)
+		budget, budgetErr := strconv.Atoi(args[6])
+		if args[3] != "--relative-tolerance" || args[5] != "--max-evaluations" ||
+			relativeErr != nil || math.IsNaN(relative) || relative < 1e-12 || relative > 0.1 ||
+			budgetErr != nil || budget < 15 || budget > 1000000 {
+			return fmt.Errorf("refinement recipe requires bounded literal tolerance and evaluation budget")
+		}
 	}
 	if input {
 		if recipe.InputArgument == nil || *recipe.InputArgument != 2 || !strings.HasPrefix(args[2], "testdata/") || !strings.HasSuffix(args[2], ".json") {

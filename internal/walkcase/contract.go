@@ -8,7 +8,7 @@ const (
 	ReportSchema           = "fart.walk-report/v0alpha1"
 	ModelID                = "continuum.quasi-steady-coupled-blowdown"
 	ModelVersion           = "v0alpha1"
-	ImplementationRevision = "go-oracle.walk/v0alpha2"
+	ImplementationRevision = "go-oracle.walk/v0alpha3"
 	WitnessSchema          = "fart.walk-witness/v0alpha1"
 	InputDigestSchema      = "fart.walk-normalized-input/v0alpha1"
 	QuantitySystem         = "si"
@@ -134,6 +134,7 @@ type Report struct {
 	ImplementationRevision               string                `json:"implementation_revision"`
 	Model                                *ModelReference       `json:"model,omitempty"`
 	NumericalPolicy                      *NumericalPolicy      `json:"numerical_policy,omitempty"`
+	Accuracy                             *RefinementEvidence   `json:"accuracy,omitempty"`
 	Inputs                               *requestDocument      `json:"inputs,omitempty"`
 	QuantitySystem                       string                `json:"quantity_system,omitempty"`
 	LawContext                           string                `json:"law_context,omitempty"`
