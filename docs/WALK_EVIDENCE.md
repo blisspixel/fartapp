@@ -84,10 +84,11 @@ yield one winner. Existing files, directories, and symlinks are preserved.
 Filesystems without hard-link support fail explicitly.
 
 The library checks a cancellation context during staging and before publication.
-Cancellation observed before publication removes its staging file. Cancellation
-racing with the final link can still yield successful publication; a completed
-commit remains valid. Fault tests cover short writes, write and sync failures,
-cancellation, and competing writers.
+Cancellation observed before publication prevents the destination commit and
+attempts to remove its staging file. Failed cleanup can leave that private file.
+Cancellation racing with the final link can still yield successful publication;
+a completed commit remains valid. Fault tests cover short writes, write and sync
+failures, cancellation, and competing writers.
 
 The CLI currently uses a background context. Abrupt termination can leave a
 private staging file. This implementation claims neither directory-sync nor

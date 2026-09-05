@@ -300,9 +300,53 @@ fn adiabatic_decay_preserves_a_finite_temperature_after_intermediate_underflow()
     assert_eq!(result.initial.gamma, 1025.0);
     assert_eq!(result.initial.pressure_pa, 2.0_f64.powi(1023));
     assert_eq!(result.initial.internal_energy_j, 2.0_f64.powi(1013));
-    assert_eq!(result.final_state.temperature_k, 2.0_f64.powi(-1048));
-    assert_eq!(result.final_state.pressure_pa, 2.0_f64.powi(-1027));
-    assert_eq!(result.final_state.internal_energy_j, 2.0_f64.powi(-1037));
+    // Subnormal powers are exact multiples of 2^-1074. Computing these
+    // references with powi can itself underflow on some target libraries.
+    assert_eq!(result.final_state.temperature_k, f64::from_bits(1 << 26)); // 2^-1048
+    assert_eq!(result.final_state.pressure_pa, f64::from_bits(1 << 47)); // 2^-1027
+    assert_eq!(
+        result.final_state.internal_energy_j,
+        f64::from_bits(1 << 37)
+    ); // 2^-1037
+}
+
+#[test]
+fn transferred_mass_matches_exact_binary64_fraction_products_without_cancellation() {
+    // References come from exact rational multiplication of the binary64
+    // inputs, rounded once to nearest-even, not from endpoint subtraction.
+    for (mass, fraction, expected_bits) in [
+        (1e-9, 1e-10, 0x3bfd_83c9_4fb6_d2ad),
+        (1e-10, 1e-9, 0x3bfd_83c9_4fb6_d2ad),
+        (1e9, 1e-10, 0x3fb9_9999_9999_999a),
+        (1e-9, 0.1, 0x3ddb_7cdf_d9d7_bdbc),
+    ] {
+        let input = ReservoirState::new(
+            vec![component("a", mass, 1.0, 1.0)],
+            Volume::new(1.0).unwrap(),
+            Temperature::new(1.0).unwrap(),
+        )
+        .unwrap();
+        for closure in [Closure::RigidAdiabatic, Closure::RigidIsothermal] {
+            let result =
+                withdraw_fraction(&input, WithdrawalFraction::new(fraction).unwrap(), closure)
+                    .unwrap();
+            assert_eq!(
+                result.components[0].mass_out_kg.to_bits(),
+                expected_bits,
+                "mass {mass:e}, fraction {fraction:e}, closure {closure:?}"
+            );
+            assert_eq!(result.total_mass_out_kg.to_bits(), expected_bits);
+            // Endpoint rounding remains visible in the independently formed
+            // account, rather than being hidden by defining outflow as its gap.
+            assert_ne!(result.components[0].residual_kg, 0.0);
+            assert!(
+                result
+                    .claims
+                    .iter()
+                    .all(|claim| claim.residual.abs() <= claim.tolerance)
+            );
+        }
+    }
 }
 
 #[test]

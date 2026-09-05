@@ -24,6 +24,36 @@ func TestFiniteTransferSurvivesSubnormalIntermediateProducts(t *testing.T) {
 	}
 }
 
+func TestSmallWithdrawalPreservesDeclaredComponentTransfer(t *testing.T) {
+	// These decimal anchors expose cancellation in m - m*(1-f). The expected
+	// transfer is 1e-19 kg; two epsilons allow the input literals' rounding.
+	// Exact binary anchors additionally cover subnormal and large transfers.
+	for _, example := range []struct{ mass, fraction, expected float64 }{
+		{1e-9, 1e-10, 1e-19},
+		{1e-10, 1e-9, 1e-19},
+		{math.Ldexp(1, -1000), math.Ldexp(1, -40), math.Ldexp(1, -1040)},
+		{math.Ldexp(1, 1000), math.Ldexp(1, -40), math.Ldexp(1, 960)},
+	} {
+		for _, closure := range []Closure{RigidAdiabatic, RigidIsothermal} {
+			state := oneComponentState(t, example.mass, 1, 1, 1, 1)
+			transition, err := WithdrawFraction(state, mustWithdrawal(t, example.fraction), closure)
+			if err != nil {
+				t.Fatal(err)
+			}
+			for _, actual := range []float64{
+				transition.ComponentMassOut()[0].Kilograms(), transition.TotalMassOut().Kilograms(),
+			} {
+				if math.Abs(actual-example.expected) > 2*math.Ldexp(1, -52)*example.expected {
+					t.Fatalf("%s m=%g f=%g: transfer %.17g, want %.17g", closure, example.mass, example.fraction, actual, example.expected)
+				}
+			}
+			if math.Abs(transition.ComponentMassResiduals()[0].Kilograms()) > 64*math.Ldexp(1, -52)*example.mass {
+				t.Fatal("direct transfer did not retain the component balance allowance")
+			}
+		}
+	}
+}
+
 func TestMixtureScaleAndSplittingInvariance(t *testing.T) {
 	for _, property := range []float64{math.SmallestNonzeroFloat64, math.Ldexp(1, -560), math.Ldexp(1, 900)} {
 		for _, mass := range []float64{math.Ldexp(1, -500), 1, math.Ldexp(1, 900)} {

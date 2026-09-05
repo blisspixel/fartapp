@@ -1,8 +1,9 @@
 package idealmixturereservoir
 
 import (
-	"github.com/blisspixel/fartapp/internal/floatmath"
 	"math"
+
+	"github.com/blisspixel/fartapp/internal/floatmath"
 )
 
 type Closure uint8
@@ -123,7 +124,11 @@ func WithdrawFraction(
 		}
 		afterComponents[index] = component
 		afterComponents[index].mass = Mass{kilograms: afterMass}
-		massOut[index] = Mass{kilograms: component.mass.kilograms - afterMass}
+		// Evaluate the declared transfer directly. Subtracting the nearly equal
+		// endpoints destroys relative accuracy for small withdrawals and can
+		// vary with floating-point contraction. Retain the resulting roundoff
+		// in the independent balance residual instead of forcing it to zero.
+		massOut[index] = Mass{kilograms: component.mass.kilograms * withdrawal.value}
 		if massOut[index].kilograms <= 0 {
 			return Transition{}, ErrNoRepresentableProgress
 		}

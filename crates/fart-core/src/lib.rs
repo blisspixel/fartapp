@@ -157,7 +157,10 @@ pub fn withdraw_fraction(
     for component in before.components() {
         let old_mass = component.mass().get();
         let new_mass = old_mass * retained;
-        let mass_out = old_mass - new_mass;
+        // The requested transfer is m*f. Subtracting the rounded endpoint
+        // magnifies its rounding error for small fractions and can vary when
+        // a target fuses the multiplication and subtraction.
+        let mass_out = product_over(&[old_mass, fraction], 1.0);
         if fraction > 0.0 && (new_mass <= 0.0 || new_mass >= old_mass || mass_out <= 0.0) {
             return Err(ModelError::NoRepresentableProgress);
         }

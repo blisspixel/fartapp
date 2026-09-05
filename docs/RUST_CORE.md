@@ -138,6 +138,14 @@ transfers and the unchanged component properties. Evidence is retained in the
 [Rust core regression](../crates/fart-core/tests/reservoir.rs). Truly
 unrepresentable positive progress is refused rather than replaced by zero.
 
+Small component transfers are calculated directly from mass and the declared
+withdrawal fraction. Subtracting nearly equal endpoint masses loses relative
+precision and can differ when a compiler contracts floating-point operations.
+Independent small-transfer anchors retain the roundoff in the balance residual
+without widening the full-report comparison tolerance. Subnormal reference
+powers in Rust tests use exact bit patterns because integer-power evaluation
+can itself underflow through an intermediate reciprocal.
+
 ## Dependency and build-script scope
 
 [Cargo.toml](../Cargo.toml) pins the two direct registry dependencies exactly,
