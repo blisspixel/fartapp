@@ -20,6 +20,30 @@ delivery estimates. The project is not racing to 1.0. A milestone advances only
 when its exit evidence is complete, and scope moves later rather than weakening
 a scientific, usability, accessibility, security, or quality gate.
 
+## Current delivery focus
+
+The next useful increment closes evidence gaps in the experimental coupled Go
+oracle. Its low-pressure synthetic [walkthrough](docs/WALKTHROUGH.md) exposes
+inputs, full bounded histories, counterfactuals, and retained witness comparison.
+The [analytical reference](docs/BLOWDOWN_REFERENCE.md) records which time laws
+are independently checked and where numerical error remains significant.
+
+The immediate sequence is:
+
+1. Ship the verified restriction, history, and coupled-oracle subset with
+   accurate completion semantics and current stable toolchains.
+2. Control complete-discharge timing error, including choking and compliance
+   transitions, and expose refinement evidence through the CLI.
+3. Review the selected benchmark tolerances and reference provenance, then earn
+   the remaining `RES-002` and ordinary-reference gates.
+4. Complete the required interaction and accessibility review before freezing
+   the Go oracle's scope and the contracts needed by Rust.
+
+The narrow oracle does not ratify the shared capability report, case identity,
+archive, Reference Pfft, or complete ordinary-pfft play loop by implication.
+The portable [agent skill](docs/AGENT_INTEGRATION.md) exposes current CLI
+operations now; MCP and A2A services retain their separate dependency gate.
+
 ## Gate-level dependency graph
 
 Version numbers provide the public narrative. These gates record the important
@@ -222,7 +246,7 @@ planned.
   invents no capability result, evidence record, case, ambient input, or solver
   claim. Case-operation selection is `not-declared`; admission and execution are
   `not-applicable`, not admitted, executed, or refused.
-- [ ] Add dimension diagnostics only where selected law contexts define
+- [x] Add dimension diagnostics only where selected law contexts define
   dimensional quantities.
 - [x] Implement the exact finite-withdrawal endpoint for a rigid, homogeneous,
   nonreacting, calorically perfect ideal-gas mixture with explicit component
@@ -231,17 +255,36 @@ planned.
   energy balance residuals plus reported-state equation-of-state consistency
   residuals. Label it as an endpoint, not an aperture-flow history or full
   `RES-002` blowdown result.
-- [ ] Replace the growing repository-check script collection with one small,
+- [x] Replace the growing repository-check script collection with one small,
   dependency-free Go `repoquality` executable shared by Windows, macOS, Linux,
   local hooks, and CI. Keep policy data declarative, detect case and symlink
   edge cases, and retire each PowerShell implementation only after parity tests.
-- [ ] Implement prescribed area, simple compliance, subsonic flow, and the
+- [x] Implement prescribed area, simple compliance, subsonic flow, and the
   analytical choking boundary with explicit assumptions.
-- [ ] Export source mass, momentum, enthalpy, composition, pressure, and recoil
-  histories.
-- [ ] Compute the active Earth dry-flow signature and conservation ledgers.
-- [ ] Ship a Go walking skeleton for one ordinary pfft: predict, simulate,
-  inspect, explain, branch one counterfactual, certify, witness, and reconstruct.
+- [x] Export bounded quasi-steady source histories with every completed-step
+  endpoint, composition-preserving component masses, total source enthalpy,
+  pressure, thrust, and recoil. Distinguish frozen-source static enthalpy,
+  kinetic energy, and total transported enthalpy.
+- [x] Check coupled time evolution against independent choked and subsonic
+  solutions, including published limiting equations and complete-discharge
+  refinement. Report the slower endpoint-time convergence explicitly.
+- [x] Compute the circular-equivalent `L/D` dry-flow subset and component,
+  total-mass, energy, and action-reaction ledgers for the coupled oracle.
+- [x] Ship an experimental low-pressure synthetic CLI walkthrough with predict,
+  simulate, inspect, explain, an area counterfactual, arithmetic balance checks,
+  an input-and-account witness, and reconstruction against a retained expected
+  digest. Reject incompatible law contexts and disclose truncation.
+- [x] Package the implemented CLI as an Agent Plugins 1.0.0 skill with offline
+  package checks, executable JSON recipes, and a documentation-guided
+  investigation and reconstruction exercise. Keep MCP and A2A service gates
+  explicit.
+- [ ] Control fixed-time and complete-discharge timing errors across choking
+  and compliance-cap transitions, with independently checked refinement and
+  explicit requested tolerance.
+- [ ] Complete the active Earth dry-flow similarity signature beyond `L/D`.
+- [ ] Promote the coupled-oracle walkthrough into the ordinary-pfft walking
+  skeleton with the ratified reference, interaction, identity, and proof
+  contracts. The current `certify` operation supplies arithmetic checks only.
 - [ ] Run compensated disabled-player review of the CLI walking skeleton and
   document remediation and retesting before freezing its interaction contract.
 

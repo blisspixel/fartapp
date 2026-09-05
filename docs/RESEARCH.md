@@ -7,6 +7,11 @@ planned model has already been implemented or validated.
 Sources were reviewed for this roadmap on 2026-09-01. Primary papers, standards,
 government laboratories, and official project documentation are preferred.
 
+The coupled-blowdown reference equations and stable development-toolchain pins
+received an additional review on 2026-09-04. The resulting executable evidence
+and its numerical limits are recorded in
+[BLOWDOWN_REFERENCE.md](BLOWDOWN_REFERENCE.md) and [QUALITY.md](QUALITY.md).
+
 ## Decisions changed by the research
 
 - The minimum-assumption bounded core is Lab-local record identity, law-context
@@ -152,6 +157,10 @@ a bounded design consequence and an open question.
   provides analytical choking and pressurized nitrogen-tank blowdown cases.
 - [Dutton and Coverdill: gaseous vessel discharge experiments](https://experts.illinois.edu/en/publications/experiments-to-study-the-gaseous-discharge-and-filling-of-vessels/)
   compares measured discharge and filling against limiting theories.
+  The [full published paper](https://www.ijee.ie/articles/Vol13-2/ijee924.pdf),
+  printed pages 124-125, gives the ideal choked and `gamma=7/5` subsonic
+  discharge equations now used as independent analytical references. Agreement
+  with those equations does not claim agreement with the experiments.
 - [NASA report on underexpanded jet shock structure](https://ntrs.nasa.gov/api/citations/19820022412/downloads/19820022412.pdf)
   supports the distinction between choking and external shock-cell structure.
 - [Hussein, Capp, and George: high-Reynolds-number round jet](https://turbulence-online.com/Publications/Papers/HCG94.pdf)
@@ -621,14 +630,19 @@ or correctness.
 
 ## Agent environments and interoperability
 
+- [Agent Plugins 1.0.0](https://agent-plugins.org/specification) defines a
+  portable root manifest, immediate skill discovery, and MCP connection
+  configuration with resolved-path containment. It does not define A2A play
+  semantics. The [integration decision](AGENT_INTEGRATION.md) ships a tested
+  CLI skill now and retains explicit service and conformance gates.
 - The [MCP 2026-07-28 release](https://blog.modelcontextprotocol.io/posts/2026-07-28/)
   removes the initialize handshake and protocol session, adds discovery and
   header routing, moves long-running Tasks into an extension, and deprecates
   Roots, Sampling, Logging, and legacy HTTP+SSE. Stateful games should return
-  explicit application handles. Its Tier 1 TypeScript, Python, Go, and C# SDKs
-  support the revision, while the Rust SDK is described as beta. The project
-  requires a maturity and conformance gate rather than selecting by language
-  preference.
+  explicit application handles. The September 2026 review found stable
+  [Rust `rmcp` 3.2.0](https://github.com/modelcontextprotocol/rust-sdk/releases/tag/rmcp-v3.2.0)
+  and Go SDK 1.7.0 support for the revision. The project requires the
+  revision-specific conformance gate even when an SDK is stable.
 - The official [MCP conformance framework](https://github.com/modelcontextprotocol/conformance)
   validates messages and scenarios for declared protocol revisions. Its
   2026-07-28 coverage and open harness issues must be pinned and reported rather

@@ -2,6 +2,9 @@
 cov.out
 coverage
 coverage.out
+/repoquality
+/repoquality-coverage
+walk-evidence.json
 *.coverage.out
 .steward/deliberations.json
 .steward/eventlog.jsonl

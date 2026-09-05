@@ -3,9 +3,11 @@
 This document defines the evidence required before F.A.R.T. Lab calls a result
 trustworthy. It is a plan and benchmark registry. The current toy CLI has not
 implemented or passed the planned field-physics benchmarks. The experimental
-v0.7 reservoir command now supplies a code-verified analytical endpoint slice
-of `RES-002`; it is not empirical validation or the complete time-resolved
-blowdown benchmark.
+v0.7 reservoir command supplies a code-verified analytical endpoint slice of
+`RES-002`. The coupled-oracle walkthrough adds independently checked choked and
+subsonic time histories, endpoint refinement, source transfers, and stopping
+boundaries. Neither is empirical validation or the complete trusted blowdown
+benchmark.
 
 The governing distinction is strict:
 
@@ -152,12 +154,45 @@ Current code-verification evidence includes:
 - Deterministic CLI text and JSON fixtures from path and standard input, plus
   fuzz targets for the numerical transition and complete request adapter.
 
-This evidence verifies the implemented equations and adapter invariants. The
-remaining `RES-002` benchmark adds an independently solved time history,
-aperture and exterior coupling, zero-driving-force behavior, heat-transfer
-closure where selected, and comparison against trusted blowdown references.
-Until then, the benchmark remains a candidate and the command says endpoint
-prediction.
+This evidence verifies the implemented endpoint equations and adapter
+invariants. The separate coupled subset now supplies aperture/back-pressure
+coupling, zero-driving-force behavior, and independent choked and subsonic time
+references. See [the analytical reference](BLOWDOWN_REFERENCE.md) for the
+derivation and exact acceptance tests. The reservoir command still says
+endpoint because it does not execute that coupled history.
+
+## Current coupled-history evidence
+
+The coupled reference suite independently checks both ideal closures during
+choking and subsonic discharge. It combines derived `gamma=3/2` primitives
+with the published `gamma=7/5` limiting equations in
+[Dutton and Coverdill](https://www.ijee.ie/articles/Vol13-2/ijee924.pdf), including
+initially subsonic cases. Independent choked expressions also check pressure
+thrust, impulse, and stroke. Component conservation is checked throughout the
+retained history rather than only at its final endpoint.
+
+Refinement tests demonstrate decreasing fixed-time errors and separately
+measure complete-discharge timing error. At 2048 aligned intervals, the latter
+is about 1.26 percent isothermal and 1.33 percent adiabatic. The first-order
+stepper's terminal singularity prevents a uniform first-order timing claim.
+Current CI requires monotonic improvement and less than 1.5 percent error for
+those two named fixtures. This tolerance is a bounded code-verification gate,
+not a ratified universal `RES-002` acceptance tolerance.
+
+Boundary regressions reject reversed initial pressure, preserve adjacent sonic
+states and one-ulp driving pressure, distinguish unrepresentable progress from
+no flow, retain terminal samples and exact work counts, respect authored time
+budgets, and keep large finite ledger terms from overflowing before
+cancellation. Frozen-source energy tests separate static, kinetic, and total
+enthalpy and cover scale-dependent integration failures.
+
+The remaining trusted benchmark requires controlled numerical error across the
+declared parameter envelope, reviewed tolerances and reference provenance,
+event and compliance-transition treatment, and a heat-transfer closure where
+selected. Empirical validation needs relevant observations and uncertainty.
+The provisional `walk certify` command checks arithmetic balances only; it
+does not promote a conservative result to solution verification or empirical
+validation.
 
 ## Numerical proof protocol
 
@@ -208,7 +243,9 @@ range. Analogy is documented as analogy.
 
 ## Software assurance gates
 
-The active implementation must provide:
+The complete software assurance target requires the following evidence.
+[QUALITY.md](QUALITY.md) identifies which gates the current Go oracle enforces
+and which await the relevant implementation or release tooling:
 
 - Requirements and named invariants traced to tests and evidence.
 - At least 90 percent aggregate statement coverage, at least 80 percent per
@@ -222,6 +259,11 @@ The active implementation must provide:
   affected surface.
 - Independent review before elevating any empirical-validation or high-energy
   safety claim.
+
+An experimental source prerelease records its exact revision, passed CI checks,
+coverage, analytical references, and remaining evidence debt. It does not claim
+mutation scores, signed binaries, SBOM, attestations, reproducible-build
+comparison, or institutional conformance that the repository has not produced.
 
 The assurance structure is informed by
 [NASA-STD-8739.8B](https://standards.nasa.gov/standard/NASA/NASA-STD-87398),

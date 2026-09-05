@@ -1,0 +1,103 @@
+{
+  "schema": "fart.agent-cli-recipes/v0alpha1",
+  "working_directory": "plugin-root",
+  "recipes": [
+    {
+      "id": "law-list",
+      "args": ["law", "list", "--format", "json"],
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.law-context-list/v0alpha1", "/law_contexts/0/id": "earth.continuum.si"}
+      }
+    },
+    {
+      "id": "atemporal-law-inspection",
+      "args": ["law", "inspect", "conformance.relation.atemporal@v0alpha1", "--format", "json"],
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.law-context-inspection/v0alpha1", "/law_context/id": "conformance.relation.atemporal"}
+      }
+    },
+    {
+      "id": "atemporal-probe-validation",
+      "args": ["scenario", "validate", "testdata/scenarios/atemporal-probe.json", "--format", "json"],
+      "input_argument": 2,
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.scenario-validation/v0alpha2", "/document_status": "valid", "/requested_case_operation/execution/status": "not-applicable"}
+      }
+    },
+    {
+      "id": "adiabatic-reservoir",
+      "args": ["reservoir", "predict", "testdata/reservoir/synthetic-mixture-adiabatic.json", "--format", "json"],
+      "input_argument": 2,
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.reservoir-prediction/v0alpha1", "/status": "predicted", "/closure": "rigid-adiabatic"}
+      }
+    },
+    {
+      "id": "choked-restriction",
+      "args": ["restriction", "predict", "testdata/restriction/gamma15-choked.json", "--format", "json"],
+      "input_argument": 2,
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.restriction-prediction/v0alpha1", "/status": "predicted", "/flow/regime": "choked"}
+      }
+    },
+    {
+      "id": "frozen-restriction-history",
+      "args": ["restriction", "history", "testdata/restriction/gamma15-choked-history.json", "--format", "json"],
+      "input_argument": 2,
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.restriction-history/v0alpha1", "/status": "predicted"}
+      }
+    },
+    {
+      "id": "low-pressure-endpoint",
+      "args": ["walk", "predict", "testdata/walk/ordinary-low-pressure.json", "--format", "json"],
+      "input_argument": 2,
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.walk-report/v0alpha1", "/status": "predicted", "/operation": "predict", "/initial_restriction/regime": "subsonic"}
+      }
+    },
+    {
+      "id": "low-pressure-explanation",
+      "args": ["walk", "explain", "testdata/walk/ordinary-low-pressure.json", "--format", "json"],
+      "input_argument": 2,
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.walk-report/v0alpha1", "/status": "predicted", "/operation": "explain", "/closure": "rigid-isothermal"}
+      }
+    },
+    {
+      "id": "low-pressure-area-branch",
+      "args": ["walk", "branch", "testdata/walk/ordinary-low-pressure.json", "--format", "json"],
+      "input_argument": 2,
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.walk-report/v0alpha1", "/status": "predicted", "/operation": "branch", "/branch/both_equalized": true, "/branch/same_mass_endpoint": true}
+      }
+    },
+    {
+      "id": "low-pressure-witness",
+      "args": ["walk", "witness", "testdata/walk/ordinary-low-pressure.json", "--format", "json"],
+      "input_argument": 2,
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.walk-report/v0alpha1", "/status": "predicted", "/operation": "witness", "/witness_schema": "fart.walk-witness/v0alpha1"}
+      }
+    },
+    {
+      "id": "incompatible-context-refusal",
+      "args": ["walk", "predict", "testdata/walk/atemporal-no-dimension.json", "--format", "json"],
+      "input_argument": 2,
+      "expect": {
+        "exit_code": 1,
+        "equals": {"/schema": "fart.walk-report/v0alpha1", "/status": "invalid", "/diagnostics/0/reason_code": "incompatible_law_context"}
+      }
+    }
+  ]
+}

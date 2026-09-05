@@ -1,0 +1,8 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "fartapp",
+  "version": "0.7.0-alpha.1",
+  "description": "Inspect law contexts and run explicit scientific CLI models with typed JSON evidence.",
+  "repository": "https://github.com/blisspixel/fartapp",
+  "license": "Apache-2.0"
+}

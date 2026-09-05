@@ -27,19 +27,24 @@ stable. Every newer command and schema is an explicitly provisional oracle.
 
 | Available now | Not implemented yet |
 | --- | --- |
-| Dependency-free Go CLI on Windows, macOS, and Linux | Pressure-driven aperture flow and choking |
-| Permanent intensity 1 to 5 string oracle | Plume, acoustics, particles, chemistry, damage, or haptics |
-| Read-only law-context inspection | Case commitment, archives, reconstruction, or certificates |
-| Strict scenario-document validation | Natural-language generator, MCP, or A2A play |
-| Exact rigid ideal-mixture reservoir endpoint prediction | htop-style Terminal Lab or native Godot application |
+| Dependency-free Go CLI on Windows, macOS, and Linux | Plume, acoustics, particles, chemistry, damage, or haptics |
+| Permanent intensity 1 to 5 string oracle | Case commitment, archives, or certificate authority |
+| Read-only law-context inspection | Natural-language generator, MCP, or A2A play |
+| Strict scenario-document validation | htop-style Terminal Lab or native Godot application |
+| Exact rigid ideal-mixture reservoir endpoint prediction | Complete trusted `RES-002` blowdown benchmark |
+| Quasi-steady restriction flow, component histories, and coupled blowdown | Selective species transport and wall heat-transfer closures |
+| Portable Agent Plugins skill with tested CLI recipes | Hosted MCP or A2A services and verified agent-host installations |
 
-The new predictor is a standalone SI continuum model. It accepts explicit
+The reservoir predictor is a standalone SI continuum model. It accepts explicit
 component masses and properties, rigid volume, temperature, closure, and
 withdrawal fraction. It predicts exact adiabatic or prescribed-isothermal
-endpoints with component, total-mass, energy, and equation-of-state checks. It
-does not yet calculate an aperture, flow rate, elapsed history, exterior,
-choking, plume, sound, occurrence, or case. The supporting catalog and
-authority experiments are summarized in the
+endpoints with component, total-mass, energy, and equation-of-state checks. The
+restriction predictor adds prescribed or linearly compliant area, subsonic
+flow, and the analytical choking boundary. The walking skeleton couples those
+oracles in time: rate from the restriction, thermodynamic path from the
+reservoir, with mass, energy, and impulse ledgers plus an `L/D` dry-flow
+signature. It is not a field solver, plume, sound, occurrence, or case
+archive. The supporting catalog and authority experiments are summarized in the
 [capability contract](docs/CAPABILITY_REPORT.md) and [roadmap](ROADMAP.md).
 
 ## Quick start
@@ -48,6 +53,8 @@ authority experiments are summarized in the
 go build -o fartapp .
 ./fartapp --help
 ./fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json
+./fartapp restriction predict testdata/restriction/gamma15-choked.json
+./fartapp walk simulate testdata/walk/ordinary-low-pressure.json
 ```
 
 ![Current v0.7 reservoir predictor showing explicit mixture state, transfers, assumptions, nonclaims, and balance claims](docs/media/readme/reservoir-predict-v0.7-current.svg)
@@ -81,12 +88,35 @@ Other current examples:
 ./fartapp law list
 ./fartapp law inspect conformance.relation.atemporal@v0alpha1 --format json
 ./fartapp scenario validate testdata/scenarios/atemporal-probe.json
+./fartapp restriction predict testdata/restriction/ordinary-pressure-subsonic.json
+./fartapp restriction history testdata/restriction/gamma15-choked-history.json
+./fartapp walk explain testdata/walk/ordinary-low-pressure.json
+./fartapp walk branch testdata/walk/ordinary-low-pressure.json
+./fartapp walk witness testdata/walk/ordinary-low-pressure.json --format json
 go test ./...
 ```
 
 Every command is discoverable from root help. File and standard-input forms are
 equivalent. Text is an English presentation; machine tokens are versioned Lab
 protocol symbols, not a claim of shared language or meaning.
+
+The [coupled-oracle walkthrough](docs/WALKTHROUGH.md) follows one explicitly
+synthetic 100 mL reservoir at about 930 Pa above ambient through prediction,
+simulation, explanation, an area counterfactual, arithmetic checks, and retained
+witness comparison. It is a low-energy test case, not the ratified Reference
+Pfft or a biological measurement. JSON includes every retained sample, component
+mass transfers, authored inputs, numerical policy, and evidence limits.
+
+The next scientific gate is controlled error in the complete discharge time.
+Independent closed forms now test the choked and subsonic phases, but the
+current stepper converges more slowly at pressure equalization. The
+[analytical reference](docs/BLOWDOWN_REFERENCE.md) records the measured error
+and the remaining `RES-002` work.
+
+Agents can use the portable [fartapp-lab skill](skills/fartapp-lab/SKILL.md).
+The [integration guide](docs/AGENT_INTEGRATION.md) records its executable
+evidence, current protocol versions, and the gates for future MCP and A2A
+adapters.
 
 ## One calculation, no canned farts
 

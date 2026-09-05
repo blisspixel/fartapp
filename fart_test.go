@@ -162,7 +162,7 @@ func TestExecutable(t *testing.T) {
 func FuzzRun(f *testing.F) {
 	for _, seed := range []string{
 		"", "0", "1", "5", "6", "+1", "01", " 1 ", "nope", "text", "json", "help", "-h", "--help",
-		"law", "list", "inspect", "scenario", "validate",
+		"law", "list", "inspect", "scenario", "validate", "restriction", "predict", "walk", "simulate",
 		"earth.continuum.si", "earth.continuum.si@v0alpha1",
 		"conformance.relation.atemporal",
 		`{"schema":"fart.scenario-probe/v0alpha1","law_context_set":{"contexts":[{"id":"conformance.relation.atemporal","version":"v0alpha1","scope_id":"s0"}]},"scope":{"id":"s0"},"capability_requests":[{"id":"catalog.inspect"}]}`,

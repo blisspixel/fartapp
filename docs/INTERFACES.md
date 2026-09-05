@@ -395,12 +395,18 @@ The current v0.7 commands are:
 ```console
 fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json
 fartapp reservoir predict - --format json
+fartapp restriction predict testdata/restriction/gamma15-choked.json
+fartapp restriction history testdata/restriction/gamma15-choked-history.json
+fartapp walk simulate testdata/walk/ordinary-low-pressure.json
+fartapp walk branch testdata/walk/ordinary-low-pressure.json
+fartapp walk witness testdata/walk/ordinary-low-pressure.json --format json
 fartapp scenario validate testdata/scenarios/atemporal-probe.json
 fartapp scenario validate - --format json
 fartapp --help
 fartapp help law inspect
 fartapp help scenario validate
 fartapp help reservoir predict
+fartapp help walk
 ```
 
 `reservoir predict` accepts one bounded strict JSON request from a path or
@@ -412,6 +418,23 @@ capacities. A withdrawal fraction of zero is an authored operation and is not
 treated as an omitted default. Text is a human presentation. JSON is the full
 typed report with initial and final state, transfers, balance claims,
 assumptions, evidence scope, and nonclaims.
+
+`restriction predict` adds the standalone quasi-steady converging-section
+oracle. `restriction history` integrates an authored area series with frozen
+stagnation. `walk` couples restriction rate to the finite reservoir and exposes
+predict, simulate, inspect, explain, branch, arithmetic certify, witness, and
+retained-expectation reconstruct operations. Its complete bounded report
+contains normalized inputs, every completed-step endpoint, component transfers,
+numerical policy, compiler/platform, and evidence limits. The
+[walkthrough](WALKTHROUGH.md) gives executable examples.
+
+The walk request selects an explicit SI model. An optional law context must
+match that implemented specialization; an atemporal or unsupported context
+cannot decorate a physical run. Witnesses compare complete versioned software
+accounts and bind compiler and platform. Reconstruction requires a retained
+`expected_witness`; it does not fabricate an expectation by running twice.
+Production case identity, archive certification, and cross-platform bit
+equivalence remain separate, unearned contracts.
 
 The scenario command accepts only the provisional strict envelope documented in
 [SCENARIO_PROBE.md](SCENARIO_PROBE.md). Both adapters reject malformed UTF-8,
@@ -773,11 +796,17 @@ Every merge eventually enforces:
 - Official MCP and A2A conformance reports for every advertised protocol and
   binding.
 
-Release archives include executables, licenses, README, completions, manual
-pages, schemas, checksums, SBOM, and provenance. macOS uses Developer ID,
+The full release target includes executables, licenses, README, completions,
+manual pages, schemas, checksums, SBOM, and provenance. macOS uses Developer ID,
 hardened runtime, notarization, and stapling. Windows uses Authenticode with a
 trusted timestamp. Linux support names its glibc baseline and package format
 instead of claiming one build runs everywhere.
+
+The first experimental `v0.7.0-alpha.1` prerelease is a source snapshot of the
+verified Go oracle and portable skill. It names its exact commit and CI
+evidence. It does not distribute signed executables or claim the full packaging,
+platform-signing, SBOM, attestation, or reproducible-build gates. Those gates
+remain open for binary distribution and stable releases.
 
 The native-start gate requires stable public CLI and TUI releases, a certified
 Reference Enclosure archive, optional Tiled Chamber pack, procedural WAV export,

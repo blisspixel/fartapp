@@ -34,6 +34,12 @@ func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) int 
 	if len(args) >= 2 && args[1] == "reservoir" {
 		return runReservoir(args[2:], stdin, stdout, stderr)
 	}
+	if len(args) >= 2 && args[1] == "restriction" {
+		return runRestriction(args[2:], stdin, stdout, stderr)
+	}
+	if len(args) >= 2 && args[1] == "walk" {
+		return runWalk(args[2:], stdin, stdout, stderr)
+	}
 
 	if len(args) != 2 {
 		writeDiagnostic(stderr, "usage: fartapp <intensity>\n")

@@ -1,0 +1,22 @@
+{
+  "schema": "fart.restriction-prediction-request/v0alpha1",
+  "model": {
+    "id": "continuum.quasi-steady-isentropic-converging-restriction",
+    "version": "v0alpha1"
+  },
+  "quantity_system": "si",
+  "stagnation": {
+    "pressure_pa": 125000,
+    "temperature_k": 400,
+    "specific_gas_constant_j_per_kg_k": 200,
+    "heat_capacity_ratio": 1.5
+  },
+  "back_pressure_pa": 50000,
+  "discharge_coefficient": 1,
+  "area": {
+    "law": "linear-compliance",
+    "prescribed_m2": 0.001,
+    "compliance_m2_per_pa": 1e-7,
+    "maximum_m2": 0.01
+  }
+}
