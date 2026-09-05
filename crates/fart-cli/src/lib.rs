@@ -2,6 +2,7 @@
 
 mod help;
 mod play;
+mod restriction;
 
 use std::ffi::{OsStr, OsString};
 use std::fs::File;
@@ -46,6 +47,9 @@ pub fn run(
     }
     if args.first().is_some_and(|arg| arg == "play") {
         return play::run(&args[1..], stdin, stdout, stderr);
+    }
+    if args.first().is_some_and(|arg| arg == "restriction") {
+        return restriction::run(&args[1..], stdin, stdout, stderr);
     }
     if args.first().is_some_and(|arg| arg == "reservoir") {
         if args.len() == 2 && matches!(args[1].to_str(), Some("-h" | "--help")) {

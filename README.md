@@ -23,7 +23,7 @@ not one universal equation. See [Bounded universality](docs/UNIVERSALITY.md).
 ## Status
 
 Current source release:
-[v0.8.0-alpha.2](https://github.com/blisspixel/fartapp/releases/tag/v0.8.0-alpha.2).
+[v0.8.0-alpha.3](https://github.com/blisspixel/fartapp/releases/tag/v0.8.0-alpha.3).
 
 F.A.R.T. Lab is experimental v0.8 alpha software. The permanent v0.6 toy output
 is stable. Newer commands and schemas remain provisional. The Rust core and
@@ -39,9 +39,9 @@ working foundations for the full v0.8 and v0.9 gates.
 | Exact rigid ideal-mixture reservoir endpoint prediction | Complete trusted `RES-002` blowdown benchmark |
 | Quasi-steady restriction flow, component histories, and coupled blowdown | Selective species transport and wall heat-transfer closures |
 | Portable Agent Plugins skill with tested CLI recipes | Hosted MCP or A2A services and verified agent-host installations |
-| Native Rust reservoir predictor and bounded local `PlayService` | General play contracts, full model registry, and complete Go command parity |
+| Native Rust reservoir, restriction, prescribed histories, and bounded local `PlayService` | General play contracts, full model registry, and complete Go command parity |
 | Opt-in adaptive discharge timing with explicit error estimates and work limits | Fixed-time adaptive stepping and rigorous solution-error bounds |
-| Atomic `.fartevidence` capture, integrity verification, replay, and reconstruction | Ratified scientific identities, journals, and archive migration |
+| Atomic `.fartevidence` capture and bounded native journal replay and reconstruction | Ratified scientific identities and certified archive migration |
 | Machine-readable assurance registry and read-only inspection | Automatic scientific ratification or proof that declared checks passed |
 
 The reservoir predictor is a standalone SI continuum model. It accepts explicit
@@ -121,21 +121,28 @@ Every command is discoverable from root help. File and standard-input forms are
 equivalent. Text is an English presentation; machine tokens are versioned Lab
 protocol symbols, not a claim of shared language or meaning.
 
-Native local experiments use the same reservoir service through a bounded
-command stream:
+The native Rust CLI includes the reservoir and restriction services, followed
+by bounded local experiments:
 
 ```sh
 cargo build --locked --release -p fart-cli
+./target/release/fart restriction predict testdata/restriction/gamma15-choked.json
+./target/release/fart restriction history testdata/restriction/gamma15-choked-history.json
 ./target/release/fart play run testdata/play/reservoir-session.jsonl
 mkdir -p artifacts
 ./target/release/fart play run testdata/play/reservoir-session.jsonl --format transcript > artifacts/session.json
 ./target/release/fart play replay artifacts/session.json --format json
+./target/release/fart play reconstruct artifacts/session.json --format json
 ```
 
 The [session walkthrough](docs/PLAY_SESSION.md) covers explicit admission,
 action costs, retries, observations, and retained evidence. Each prediction
 uses the authored baseline. Replay verifies and presents retained data without
-recalculating the solver. An unfinished session remains unfinished at EOF.
+recalculating the solver. Reconstruction freshly admits the baseline and
+recomputes every retained attempt, then compares the full canonical transcript.
+Its [comparison and identity contract](docs/RECORD_IDENTITY.md) keeps retained
+evidence, fresh results, authentication, and scientific identity distinct.
+An unfinished session remains unfinished at EOF, even when reconstruction matches.
 
 The [assurance registry](docs/ASSURANCE.md) exposes declared invariants,
 tolerances, source checks, and counterexamples. Inspection does not execute

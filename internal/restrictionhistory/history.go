@@ -141,6 +141,12 @@ func Integrate(
 		right := instants[index].result
 		leftRate := left.MassFlow().KilogramsPerSecond()
 		rightRate := right.MassFlow().KilogramsPerSecond()
+		if leftRate == 0 && rightRate == 0 {
+			// An authored closed or equal-pressure interval has exactly no
+			// transport. Unneeded heat-capacity products may overflow even
+			// though every requested integral is identically zero.
+			continue
+		}
 		mass := trapezoid(leftRate, rightRate, dt, 1)
 		if mass == 0 && (leftRate > 0 || rightRate > 0) {
 			return History{}, ErrNonFiniteIntegral
@@ -153,14 +159,31 @@ func Integrate(
 			open = right
 		}
 		gasR := stagnation.SpecificGasConstant().JoulesPerKilogramKelvin()
-		cp := gasR + gasR/(stagnation.HeatCapacityRatio().Value()-1)
-		enthalpyOut += floatmath.Product(mass, cp, open.ExitTemperature().Kelvin())
-		kineticEnergyOut += floatmath.Product(mass, 0.5, open.ExitSpeed().MetresPerSecond(), open.ExitSpeed().MetresPerSecond())
-		totalEnthalpyOut += floatmath.Product(mass, cp, stagnation.Temperature().Kelvin())
+		gamma := stagnation.HeatCapacityRatio().Value()
+		cp := gasR + gasR/(gamma-1)
+		enthalpy := floatmath.Product(mass, cp, open.ExitTemperature().Kelvin())
+		kineticEnergy := floatmath.Product(mass, 0.5, open.ExitSpeed().MetresPerSecond(), open.ExitSpeed().MetresPerSecond())
+		totalEnthalpy := floatmath.Product(mass, cp, stagnation.Temperature().Kelvin())
+		if math.IsInf(cp, 0) || math.IsNaN(cp) {
+			// Specific heat itself need not be representable when the
+			// requested transported energy is. Keep its defining factors
+			// separate until the complete mass*cp*T product is evaluated.
+			enthalpy = floatmath.ProductOver(gamma-1, mass, gasR, gamma, open.ExitTemperature().Kelvin())
+			totalEnthalpy = floatmath.ProductOver(gamma-1, mass, gasR, gamma, stagnation.Temperature().Kelvin())
+		}
 		momentumImpulse := floatmath.Product(mass, open.ExitSpeed().MetresPerSecond())
 		pressureImpulse := trapezoid(left.EffectiveArea().SquareMetres(), right.EffectiveArea().SquareMetres(),
 			dt, open.ExitPressure().Pascals()-back.Pascals())
-		impulse += momentumImpulse + pressureImpulse
+		intervalImpulse := momentumImpulse + pressureImpulse
+		for _, value := range []float64{enthalpy, kineticEnergy, totalEnthalpy, intervalImpulse} {
+			if math.IsNaN(value) || math.IsInf(value, 0) || value <= 0 {
+				return History{}, ErrNonFiniteIntegral
+			}
+		}
+		enthalpyOut += enthalpy
+		kineticEnergyOut += kineticEnergy
+		totalEnthalpyOut += totalEnthalpy
+		impulse += intervalImpulse
 		for _, value := range []float64{massOut, enthalpyOut, kineticEnergyOut, totalEnthalpyOut, impulse} {
 			if math.IsNaN(value) || math.IsInf(value, 0) {
 				return History{}, ErrNonFiniteIntegral

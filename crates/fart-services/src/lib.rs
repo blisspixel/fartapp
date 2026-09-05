@@ -1,4 +1,4 @@
-//! Bounded native adapters for the experimental reservoir model.
+//! Bounded native reservoir, restriction, history, and local play adapters.
 //!
 //! The local experiment session is a narrow service candidate, not a general
 //! law capability boundary, ratified case identity, protocol server, or archive.
@@ -8,6 +8,7 @@ mod parse;
 pub mod play;
 pub mod presentation;
 mod report;
+pub mod restriction;
 
 use fart_core::{Transition, withdraw_fraction};
 use fart_domain::{Intensity, ModelError};

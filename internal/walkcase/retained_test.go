@@ -86,6 +86,33 @@ func TestRetainedWitnessRoundTripAndImmutableReconstruction(t *testing.T) {
 	assertReason(t, (RetainedWitness{}).Reconstruct(raw), "invalid_retained_witness")
 }
 
+func TestPreviousImplementationRetainsIntegrityWithoutPretendingReconstructionMatches(t *testing.T) {
+	raw := readFixture(t, "ordinary-low-pressure.json")
+	report := Run(raw, "witness")
+	assertPredicted(t, report)
+	report.ImplementationRevision = "go-oracle.walk/v0alpha3"
+	retainedTestRehash(t, &report)
+	encoded := retainedTestMarshal(t, report)
+	before := bytes.Clone(encoded)
+	retained, err := VerifyRetainedWitnessReport(encoded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fresh := retained.Reconstruct(raw)
+	if fresh.WitnessMatch == nil || *fresh.WitnessMatch || fresh.ExpectedWitness != report.Witness ||
+		fresh.ImplementationRevision != ImplementationRevision {
+		t.Fatalf("previous implementation was silently upgraded: %#v", fresh)
+	}
+	if !bytes.Equal(before, encoded) {
+		t.Fatal("verification changed retained bytes")
+	}
+	report.ImplementationRevision = "go-oracle.walk/v0alpha2"
+	retainedTestRehash(t, &report)
+	if _, err := VerifyRetainedWitnessReport(retainedTestMarshal(t, report)); err == nil {
+		t.Fatal("unreviewed older profile was accepted")
+	}
+}
+
 func TestRetainedVerificationIsSelfConsistencyNotProofOfExecution(t *testing.T) {
 	raw := readFixture(t, "ordinary-low-pressure.json")
 	for _, mutation := range []struct {

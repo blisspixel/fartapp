@@ -23,13 +23,16 @@ a scientific, usability, accessibility, security, or quality gate.
 ## Current delivery focus
 
 The v0.8 alpha delivery connects three independently useful foundations:
-the [Rust reservoir core](docs/RUST_CORE.md), an opt-in
+the [Rust numerical core](docs/RUST_CORE.md), an opt-in
 [accurate discharge integrator](docs/BLOWDOWN_REFERENCE.md), and a bounded
 [software evidence carrier](docs/WALK_EVIDENCE.md). The
 [project layout](docs/PROJECT_LAYOUT.md) separates commands, private Go packages,
-Rust crates, fixtures, and development tooling. The next alpha adds bounded
+Rust crates, fixtures, and development tooling. Delivered alphas add bounded
 [local reservoir sessions](docs/PLAY_SESSION.md), retained action receipts,
-and a validated [assurance registry](docs/ASSURANCE.md). Human command help,
+and a validated [assurance registry](docs/ASSURANCE.md). Native restriction
+flow and prescribed histories now join the reservoir service. Explicit
+session reconstruction checks freshly computed reports under a narrow
+[identity and comparison decision](docs/RECORD_IDENTITY.md). Human command help,
 numeric reports, and recovery follow a shared [design language](docs/DESIGN_LANGUAGE.md).
 
 The immediate sequence is:
@@ -37,8 +40,9 @@ The immediate sequence is:
 1. Ratify a narrow admitted-record profile with explicit identity, measurement,
    and journal owners, using the carrier's working replay and hostile-input
    tests to challenge it.
-2. Extend Rust through the stateless restriction and discharge services under
-   independent analytical references and complete report comparisons.
+2. Extend Rust through coupled discharge services under independent analytical
+   references and complete report comparisons. Stateless restriction flow and
+   prescribed-area histories now have native implementations and parity gates.
 3. Complete fixed-time accuracy and the selected benchmark tolerance review,
    then earn the remaining `RES-002` and ordinary-reference gates.
 4. Extend the narrow local `PlayService` through the reviewed general action,
@@ -309,11 +313,13 @@ labeled as presentation.
 ## v0.8: Rust production core and typed CLI
 
 Delivered alpha subset: four safe workspace crates, the permanent toy command,
-a stateless reservoir service and native CLI, analytical references, complete
+a stateless reservoir service, restriction flow, prescribed-area histories,
+native CLI commands, independent analytical references, complete
 Go report comparisons within declared numerical tolerances, and dependency and
 coverage gates. A bounded local reservoir session now adds immutable-baseline
 attempts, typed admission, read-only views, exact retries, explicit finish,
-and retained integrity-only replay. It does not freeze the broader capability,
+retained integrity-only replay, and explicit fresh reconstruction of every
+costed attempt under an exact canonical comparison profile. It does not freeze the broader capability,
 measurement, identity, or general `PlayService` contracts.
 
 - [x] Replace the human-authored invariant table with one canonical
@@ -327,6 +333,13 @@ measurement, identity, or general `PlayService` contracts.
 - [x] Deliver the experimental `reservoir-experiment/v0alpha1` local session,
   bounded native JSONL adapter, transcript export and integrity-only replay,
   with direct-service/CLI conformance and explicit EOF/transport limits.
+- [x] Add native restriction prediction and prescribed-area histories with
+  independent sonic and integration references, complete Go-report comparisons,
+  and finite extreme-input regressions in both implementations.
+- [x] Reconstruct the bounded reservoir journal only after full integrity
+  validation, including fresh baseline admission and costed model refusals.
+  Preserve retained evidence, every fresh report, and independent completion
+  and comparison status under an explicitly narrow comparison profile.
 - [ ] Freeze `fart-compute`, precision, determinism, device-provenance,
   checkpoint, and backend-conformance contracts before writing GPU kernels.
 - [ ] Enforce the language and dependency policy: safe Rust for pure core,
@@ -409,8 +422,10 @@ journal, canonicalization, migration, or trust gate by implication.
 The local Rust reservoir session additionally retains an ordered, bounded
 action journal with RFC 8785/SHA-256 integrity fingerprints. Its instance
 references are not authenticated or ratified scientific identities. It
-supports neither live restoration nor journal reconstruction, checkpoints,
-branches, general recording policies, or certified archive migration.
+supports explicit fresh reconstruction of every costed journal attempt under
+the [local comparison profile](docs/RECORD_IDENTITY.md). Live restoration,
+checkpoints, branches, general recording policies, and certified archive
+migration remain unimplemented.
 
 - [ ] Implement canonical scenario, manifest, history, and certificate records.
 - [ ] Add play-session identity, ordered action journals, actor roles,

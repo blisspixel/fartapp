@@ -9,6 +9,12 @@ pub(super) fn product_over(values: &[f64], divisor: f64) -> f64 {
     scale(fraction / divisor_fraction, exponent - divisor_exponent)
 }
 
+pub(super) fn product_ratio(values: &[f64], divisors: &[f64]) -> f64 {
+    let (fraction, exponent) = product_parts(values);
+    let (divisor_fraction, divisor_exponent) = product_parts(divisors);
+    scale(fraction / divisor_fraction, exponent - divisor_exponent)
+}
+
 pub(super) fn sum_products_over<const N: usize>(
     values: impl Iterator<Item = [f64; N]>,
     divisor: f64,

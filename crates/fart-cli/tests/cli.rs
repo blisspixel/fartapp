@@ -85,6 +85,14 @@ fn all_help_routes_are_explicit_and_do_not_read_input() {
         vec!["play", "--help"],
         vec!["play", "run", "--help"],
         vec!["play", "replay", "--help"],
+        vec!["play", "reconstruct", "--help"],
+        vec!["help", "play", "reconstruct"],
+        vec!["restriction", "--help"],
+        vec!["restriction", "predict", "--help"],
+        vec!["restriction", "history", "--help"],
+        vec!["help", "restriction"],
+        vec!["help", "restriction", "predict"],
+        vec!["help", "restriction", "history"],
     ] {
         let arguments: Vec<_> = args.iter().map(OsString::from).collect();
         let (mut stdout, mut stderr) = (Vec::new(), Vec::new());
@@ -98,6 +106,9 @@ fn all_help_routes_are_explicit_and_do_not_read_input() {
         if args.contains(&"reservoir") {
             assert!(text.starts_with("RESERVOIR PREDICT\n"));
             assert!(text.contains("65,536"));
+        } else if args.contains(&"restriction") {
+            assert!(text.starts_with("RESTRICTION"));
+            assert!(text.contains("restriction"));
         } else if args.contains(&"play") {
             assert!(text.contains("play"));
             assert!(!text.contains("permanent toy"));
@@ -141,6 +152,14 @@ fn usage_errors_do_not_produce_success_output() {
         vec!["play", "run", "--help", "--help"],
         vec!["play", "run", "-", "--bad"],
         vec!["play", "run", "one", "two"],
+        vec!["play", "reconstruct"],
+        vec!["play", "reconstruct", "-", "--format", "transcript"],
+        vec!["restriction"],
+        vec!["restriction", "unknown"],
+        vec!["restriction", "predict"],
+        vec!["restriction", "history"],
+        vec!["restriction", "history", "-", "--format", "jsonl"],
+        vec!["restriction", "predict", "one", "two"],
     ] {
         let (code, stdout, stderr) = run(&args, FIXTURE);
         assert_eq!(code, 1, "{args:?}");
@@ -413,6 +432,226 @@ fn play_eof_preserves_unfinished_evidence_and_replay_is_read_only() {
     );
 }
 
+#[test]
+fn native_reconstruction_matches_direct_evidence_and_keeps_unfinished_status_separate() {
+    for count in [1, 6, 8] {
+        let script = std::str::from_utf8(PLAY_SCRIPT)
+            .unwrap()
+            .lines()
+            .take(count)
+            .collect::<Vec<_>>()
+            .join("\n");
+        let (_, retained, stderr) = run(
+            &["play", "run", "-", "--format", "transcript"],
+            script.as_bytes(),
+        );
+        assert!(stderr.is_empty());
+        let evidence = fart_services::play::Transcript::from_json(&retained).unwrap();
+        let expected = evidence.reconstruct().unwrap();
+        let (code, stdout, stderr) =
+            run(&["play", "reconstruct", "-", "--format", "json"], &retained);
+        assert_eq!(code, 0);
+        assert!(stderr.is_empty());
+        assert_eq!(stdout, (expected.to_json() + "\n").as_bytes());
+        assert_eq!(expected.is_complete(), count == 8);
+        assert!(stdout.len() < 16 * 1024 * 1024);
+        let (code, text, stderr) = run(&["play", "reconstruct", "-"], &retained);
+        assert_eq!(code, 0);
+        assert!(stderr.is_empty());
+        assert_eq!(text, expected.to_text().as_bytes());
+        let directory = TempDirectory::new();
+        let path = directory.0.join("retained evidence.json");
+        fs::write(&path, &retained).unwrap();
+        let output = Command::new(env!("CARGO_BIN_EXE_fart"))
+            .args(["play", "reconstruct"])
+            .arg(&path)
+            .args(["--format", "json"])
+            .output()
+            .unwrap();
+        assert!(output.status.success());
+        assert!(output.stderr.is_empty());
+        assert_eq!(output.stdout, stdout);
+        assert_eq!(fs::read(path).unwrap(), retained);
+        let args = ["play", "reconstruct", "-", "--format", "json"].map(OsString::from);
+        let mut stderr = Vec::new();
+        assert_eq!(
+            fart_cli::run(&args, &mut &retained[..], &mut FailingWriter, &mut stderr),
+            1
+        );
+        assert!(String::from_utf8(stderr).unwrap().contains("write output"));
+    }
+    for format in ["text", "json"] {
+        let (code, stdout, stderr) = run(&["play", "reconstruct", "-", "--format", format], b"{}");
+        assert_eq!(code, 1);
+        assert_eq!(stdout.is_empty(), format == "text");
+        assert_eq!(stderr.is_empty(), format == "json");
+    }
+    let args = ["play", "reconstruct", "-", "--format", "json"].map(OsString::from);
+    let mut reader = CountedReader { read: 0 };
+    let (mut stdout, mut stderr) = (Vec::new(), Vec::new());
+    assert_eq!(
+        fart_cli::run(&args, &mut reader, &mut stdout, &mut stderr),
+        1
+    );
+    assert_eq!(reader.read, fart_services::play::MAX_TRANSCRIPT_BYTES + 1);
+    let issue: Value = serde_json::from_slice(&stdout).unwrap();
+    assert_eq!(issue["reason_code"], "input_too_large");
+}
+
+#[test]
+fn restriction_commands_are_bounded_portable_and_preserve_full_service_reports() {
+    use fart_services::restriction;
+    for (operation, fixture, report) in [
+        (
+            "predict",
+            include_bytes!("../../../testdata/restriction/gamma15-choked.json").as_slice(),
+            restriction::predict as fn(&[u8]) -> restriction::Report,
+        ),
+        (
+            "history",
+            include_bytes!("../../../testdata/restriction/gamma15-choked-history.json").as_slice(),
+            restriction::history as fn(&[u8]) -> restriction::Report,
+        ),
+    ] {
+        let expected = report(fixture);
+        let (code, stdout, stderr) = run(
+            &["restriction", operation, "-", "--format", "json"],
+            fixture,
+        );
+        assert_eq!(code, 0, "{}", String::from_utf8_lossy(&stdout));
+        assert!(stderr.is_empty());
+        assert_eq!(stdout, (expected.to_json() + "\n").as_bytes());
+        let (code, text, stderr) = run(&["restriction", operation, "-"], fixture);
+        assert_eq!(code, 0);
+        assert!(stderr.is_empty());
+        assert_eq!(text, expected.to_text().as_bytes());
+        let directory = TempDirectory::new();
+        let path = directory.0.join("restriction input.json");
+        fs::write(&path, fixture).unwrap();
+        let result = Command::new(env!("CARGO_BIN_EXE_fart"))
+            .args(["restriction", operation])
+            .arg(&path)
+            .args(["--format", "json"])
+            .output()
+            .unwrap();
+        assert!(result.status.success());
+        assert!(result.stderr.is_empty());
+        assert_eq!(result.stdout, stdout);
+        assert_eq!(fs::read(path).unwrap(), fixture);
+        for format in ["text", "json"] {
+            let (code, stdout, stderr) =
+                run(&["restriction", operation, "-", "--format", format], b"{}");
+            assert_eq!(code, 1);
+            assert_eq!(stdout.is_empty(), format == "text");
+            assert_eq!(stderr.is_empty(), format == "json");
+        }
+        let (code, stdout, stderr) = run(
+            &[
+                "restriction",
+                operation,
+                "missing-restriction.json",
+                "--format",
+                "json",
+            ],
+            b"",
+        );
+        assert_eq!(code, 1);
+        assert!(stderr.is_empty());
+        let issue: Value = serde_json::from_slice(&stdout).unwrap();
+        assert_eq!(issue["diagnostics"][0]["reason_code"], "input_not_found");
+        let args = ["restriction", operation, "-", "--format", "json"].map(OsString::from);
+        let mut reader = CountedReader { read: 0 };
+        let (mut stdout, mut stderr) = (Vec::new(), Vec::new());
+        assert_eq!(
+            fart_cli::run(&args, &mut reader, &mut stdout, &mut stderr),
+            1
+        );
+        assert_eq!(reader.read, MAX_INPUT_BYTES + 1);
+        let issue: Value = serde_json::from_slice(&stdout).unwrap();
+        assert_eq!(issue["diagnostics"][0]["reason_code"], "input_too_large");
+        stdout.clear();
+        assert_eq!(
+            fart_cli::run(&args, &mut FailingReader, &mut stdout, &mut stderr),
+            1
+        );
+        let issue: Value = serde_json::from_slice(&stdout).unwrap();
+        assert_eq!(issue["diagnostics"][0]["reason_code"], "input_unavailable");
+        assert_eq!(
+            fart_cli::run(&args, &mut &fixture[..], &mut FailingWriter, &mut stderr),
+            1
+        );
+        assert!(String::from_utf8(stderr).unwrap().contains("write output"));
+    }
+}
+
+#[test]
+fn native_reconstruction_rejects_rehashed_numerical_drift_with_fresh_evidence() {
+    use serde_json::json;
+    use sha2::{Digest, Sha256};
+    fn digest(domain: &str, value: &Value) -> Value {
+        let envelope = json!({"profile":fart_services::play::FINGERPRINT_PROFILE,"domain":domain,"value":value});
+        let bytes = serde_json_canonicalizer::to_vec(&envelope).unwrap();
+        let hex = Sha256::digest(bytes)
+            .iter()
+            .map(|byte| format!("{byte:02x}"))
+            .collect::<String>();
+        json!(format!("sha256:{hex}"))
+    }
+    let (_, original, _) = run(&["play", "run", "-", "--format", "transcript"], PLAY_SCRIPT);
+    let mut forged: Value = serde_json::from_slice(&original).unwrap();
+    forged["journal"][0]["receipt"]["report"]["final"]["pressure_pa"] = json!(12345.0);
+    let baseline = forged["summary"]["baseline_fingerprint"].clone();
+    let mut previous = forged["genesis"]["receipt"]["journal_fingerprint"].clone();
+    let mut account = forged["genesis"]["receipt"]["account_fingerprint"].clone();
+    for entry in forged["journal"].as_array_mut().unwrap() {
+        if entry["receipt"]["report"]["status"] == "predicted" {
+            account = digest(
+                "account",
+                &json!({"baseline_fingerprint":baseline,"report":entry["receipt"]["report"]}),
+            );
+        }
+        entry["receipt"]["account_fingerprint"] = account.clone();
+        entry["receipt"]["previous_journal_fingerprint"] = previous;
+        entry["receipt"]
+            .as_object_mut()
+            .unwrap()
+            .remove("journal_fingerprint");
+        previous = digest("journal-entry", entry);
+        entry["receipt"]["journal_fingerprint"] = previous.clone();
+    }
+    forged["summary"]["account_fingerprint"] = account;
+    forged["summary"]["journal_fingerprint"] = previous;
+    let bytes = serde_json::to_vec(&forged).unwrap();
+    assert_eq!(
+        run(&["play", "replay", "-", "--format", "json"], &bytes).0,
+        0
+    );
+    for format in ["json", "text"] {
+        let (code, stdout, stderr) = run(&["play", "reconstruct", "-", "--format", format], &bytes);
+        assert_eq!(code, 1);
+        assert!(stderr.is_empty());
+        if format == "json" {
+            let result: Value = serde_json::from_slice(&stdout).unwrap();
+            assert_eq!(result["status"], "mismatched");
+            assert_eq!(result["retained_summary"], forged["summary"]);
+            assert_eq!(
+                result["reconstructed_transcript"],
+                serde_json::from_slice::<Value>(&original).unwrap()
+            );
+            assert_eq!(
+                result["first_difference"],
+                "/journal/0/receipt/report/final/pressure_pa"
+            );
+        } else {
+            assert!(
+                String::from_utf8(stdout)
+                    .unwrap()
+                    .contains("PLAY RECONSTRUCTION MISMATCHED")
+            );
+        }
+    }
+}
+
 struct FragmentedReader<'a> {
     bytes: &'a [u8],
     width: usize,
@@ -533,7 +772,7 @@ fn play_transport_limits_rejections_and_read_failures_stay_visible() {
         assert_eq!(code, 1);
         assert!(std::str::from_utf8(&stderr).unwrap().contains(expected));
     }
-    for command in ["run", "replay"] {
+    for command in ["run", "replay", "reconstruct"] {
         let args = ["play", command, "-"].map(OsString::from);
         let (mut stdout, mut stderr) = (Vec::new(), Vec::new());
         assert_eq!(

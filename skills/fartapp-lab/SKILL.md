@@ -63,7 +63,9 @@ structured JSON on stdout. Usage or output failures can instead write stderr.
 Do not replace a refused input with a default case to make the command succeed.
 
 For a bounded local experiment, the separate native Rust `fart` executable
-provides `play run` and `play replay`. Use a matching native executable or
+provides `play run`, `play replay`, and `play reconstruct`. It also implements
+`reservoir predict`, `restriction predict`, and `restriction history`.
+Use a matching native executable or
 `cargo run --locked -p fart-cli --` with the repository's pinned Rust toolchain.
 The Go recipe arrays do not run this native service.
 
@@ -72,6 +74,7 @@ cargo run --locked -p fart-cli -- play run testdata/play/reservoir-session.jsonl
 mkdir -p artifacts
 cargo run --locked -p fart-cli -- play run testdata/play/reservoir-session.jsonl --format transcript > artifacts/session.json
 cargo run --locked -p fart-cli -- play replay artifacts/session.json --format json
+cargo run --locked -p fart-cli -- play reconstruct artifacts/session.json --format json
 ```
 
 Read the [play session contract](../../docs/PLAY_SESSION.md) before editing the
@@ -83,6 +86,16 @@ checks its integrity without numerical evaluation, and does not restore a live
 session. EOF never creates a finish: an unfinished run returns 1 but can still
 retain a transcript whose integrity replay returns 0. Check completion,
 truncation, and exit status separately.
+
+Native reconstruction first checks the entire retained chain, then freshly
+admits the baseline and recomputes every costed attempt, including model
+refusals. It compares the full canonical transcript under the current
+implementation and preserves the original summary beside the fresh evidence.
+Inspect `status` independently from `retained_summary.complete`. Exact matches
+return 0 even for unfinished sessions; mismatches and refused fresh admission
+return 1. Preserve both sides of a mismatch. Agreement establishes neither
+authentication nor empirical validity, and it promises no cross-platform bit
+identity. Transcript input is bounded to 8 MiB and output to 16 MiB.
 
 Keep the user's law context, closure, units, and input provenance explicit.
 The numerical models require explicit SI inputs. An incompatible law context is

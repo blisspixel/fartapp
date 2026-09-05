@@ -47,26 +47,28 @@ dependencies = [
 
 [[package]]
 name = "fart-cli"
-version = "0.8.0-alpha.2"
+version = "0.8.0-alpha.3"
 dependencies = [
  "fart-services",
  "serde_json",
+ "serde_json_canonicalizer",
+ "sha2",
 ]
 
 [[package]]
 name = "fart-core"
-version = "0.8.0-alpha.2"
+version = "0.8.0-alpha.3"
 dependencies = [
  "fart-domain",
 ]
 
 [[package]]
 name = "fart-domain"
-version = "0.8.0-alpha.2"
+version = "0.8.0-alpha.3"
 
 [[package]]
 name = "fart-services"
-version = "0.8.0-alpha.2"
+version = "0.8.0-alpha.3"
 dependencies = [
  "fart-core",
  "fart-domain",

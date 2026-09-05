@@ -452,6 +452,18 @@ They identify the permanent v0.6 string oracle separately from experimental
 v0.7 probes and label current English text as presentation rather than a shared
 language assumption.
 
+The native Rust CLI currently implements the permanent toy, `reservoir predict`,
+`restriction predict`, `restriction history`, and `play run|replay|reconstruct`.
+Prediction and history JSON reports preserve the Go model and wire contracts
+with distinct implementation revisions. Each stateless request is bounded to
+65,536 bytes. Play replay validates retained evidence without numerical work;
+reconstruction first validates the entire transcript, then freshly admits the
+baseline and recomputes every retained prediction attempt. Its explicit
+canonical-current-implementation comparison does not establish cross-platform
+bit identity or empirical validity. See the
+[session contract](PLAY_SESSION.md) and [identity decision](RECORD_IDENTITY.md).
+The following broader native command family remains planned.
+
 ```console
 fart scenario init -o reference-enclosure.toml
 fart scenario validate reference-enclosure.toml

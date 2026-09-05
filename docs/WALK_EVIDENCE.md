@@ -67,11 +67,17 @@ Duplicate members, unknown or wrong-case keys, nulls, malformed Unicode,
 noncanonical base64, digest mismatches, and request substitution are refused.
 Valid numerical reports above the storage limit cannot be captured.
 
-The retained report uses the current compact Go JSON witness profile,
-`go-oracle.walk/v0alpha3`, with the legacy mass-step method. Revision 3 records
-the corrected scaled reservoir arithmetic. The separate `walk refine` method
-is never silently substituted. Older implementation revisions are refused by
-this narrow reader; future profiles need explicit compatibility handling.
+New captures use the compact Go JSON witness profile
+`go-oracle.walk/v0alpha4`, with the legacy mass-step method. Revision 4 records
+the corrected restriction temperature and small-Mach arithmetic; revision 3
+recorded the corrected scaled reservoir arithmetic. Integrity inspection and
+replay explicitly accept both revisions 3 and 4 under the unchanged report
+structure. They retain the original bytes and implementation-bound witness.
+Reconstruction uses revision 4 and therefore reports a mismatch against a
+revision 3 witness even when the numerical values agree. Preserve that retained
+evidence; use its matching source release to repeat the earlier implementation.
+The separate `walk refine` method is never silently substituted. Other
+implementation revisions remain unsupported.
 This is not canonical scientific identity, RFC 8785, a migration mechanism,
 or the planned certified `.fart` format.
 

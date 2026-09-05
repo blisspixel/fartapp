@@ -2,7 +2,7 @@
 
 The native Rust CLI implements a bounded reservoir experiment session with an
 immutable baseline, explicit prediction attempts, read-only views, retained
-receipts, and integrity replay. This document describes that experimental
+receipts, integrity replay, and fresh reconstruction. This document describes that experimental
 profile and its evidence limits.
 
 The session keeps one authored reservoir baseline and lets an operator compare
@@ -28,6 +28,7 @@ cargo run --locked -p fart-cli -- play run testdata/play/reservoir-session.jsonl
 mkdir -p artifacts
 cargo run --locked -p fart-cli -- play run testdata/play/reservoir-session.jsonl --format transcript > artifacts/session.json
 cargo run --locked -p fart-cli -- play replay artifacts/session.json --format json
+cargo run --locked -p fart-cli -- play reconstruct artifacts/session.json --format json
 ```
 
 The [checked-in session](../testdata/play/reservoir-session.jsonl) starts with a
@@ -57,6 +58,7 @@ the Go carrier's atomic no-clobber file writer.
 | --- | --- | --- |
 | `play run` | Input delivered, no rejected command, and explicit finish accepted | Rejected command, unfinished session, usage, input, transport, or output failure |
 | `play replay` | Retained integrity verified, including an honestly unfinished session | Usage, input, retained-integrity, or output failure |
+| `play reconstruct` | Exact current-implementation match, including an honestly unfinished session | Mismatch, fresh admission refusal, usage, input, retained-integrity, or output failure |
 
 A costed model refusal is retained evidence rather than a rejected command.
 It does not by itself make an explicitly finished run fail. A finish after
@@ -118,6 +120,8 @@ or the certified `.fart` archive. It does not replace the existing Go
 [walk evidence carrier](WALK_EVIDENCE.md). The broader
 [v0.8](../ROADMAP.md#v08-rust-production-core-and-typed-cli) and
 [v0.9](../ROADMAP.md#v09-certified-case-archive) gates remain independent.
+The [local identity decision](RECORD_IDENTITY.md) specifies this profile's
+fingerprints and comparison policy without closing those broader gates.
 
 ## Authoritative state and views
 
@@ -241,10 +245,51 @@ No reservoir evaluation runs during import or replay. The replay report states
 results can pass integrity checks if its digests and retained declarations are
 consistently recomputed. The test corpus preserves that counterexample.
 
-Native play reconstruction and live-session restoration are not implemented.
-Running the commands again starts a separate service instance and performs new
-calculations; it is not an automated comparison against a retained transcript.
-The Go walk carrier's explicitly named reconstruction remains a separate profile.
+## Reconstruct retained attempts
+
+`play reconstruct <transcript.json|-> [--format text|json]` verifies the entire
+retained profile and chain before numerical work. It then freshly admits the
+normalized baseline and recomputes each retained prediction from that baseline,
+including costed model refusals. It compares the complete resulting transcript,
+so an altered earlier result cannot be hidden by an unchanged final account.
+
+The report schema is `fart.reservoir-play-reconstruction/v0alpha1`, with comparison
+profile `fart.play.canonical-current-implementation/v0alpha1`. `status` is
+`matched`, `mismatched`, or `refused`. `retained_summary` preserves the expected
+completion and fingerprint references. When fresh admission succeeds,
+`reconstructed_transcript` retains all newly obtained reports and receipts.
+A mismatch includes a `first_difference` JSON Pointer. Fresh admission failure
+includes its stable `refusal`. Invalid retained structure or an unsupported
+profile is refused before either fresh admission or prediction work.
+
+`prediction_attempts_recomputed` reports the fresh work count. Verification
+separately identifies retained integrity, control consistency, baseline admission,
+prediction work, numerical comparison, and the absence of authentication:
+
+| Condition | `baseline_admission` | `prediction_recomputed` | `numerical_verification` |
+| --- | --- | --- | --- |
+| Fresh baseline refused | `refused` | `false` | `reconstruction-refused` |
+| Admitted baseline, zero prediction attempts | `admitted` | `false` | `no-prediction-attempts` |
+| All retained prediction evidence matches | `admitted` | `true` | `matched-current-implementation` |
+| Retained prediction evidence differs | `admitted` | `true` | `mismatched-current-implementation` |
+
+An incomplete or truncated transcript can match. A finished transcript can
+mismatch. `ReconstructionSummary::is_matched()` and `is_complete()` expose these
+separate decisions; the latter reads the retained session's explicit finish.
+The CLI returns 0 for a match, including a zero-prediction or unfinished session.
+It does not infer completion from successful verification.
+
+This exact comparison is distinct from tolerant Go/Rust numerical parity.
+It does not promise identical floating-point results across platforms, compilers,
+or implementations, and a mismatch alone does not prove a physical error.
+Preserve the expected transcript and inspect the fresh evidence when they differ.
+The [identity decision](RECORD_IDENTITY.md#why-exact-comparison-first) explains
+the selected boundary.
+
+`Transcript::reconstruct()` borrows immutable retained evidence and returns an
+immutable comparison. It creates no live handle, new nonce, recorded occurrence,
+or mutation of the expected transcript. Live-session restoration is not
+implemented. The Go walk carrier's reconstruction remains a separate profile.
 
 ## Resource boundaries
 
@@ -283,6 +328,9 @@ The [public service](../crates/fart-services/src/play/mod.rs),
 [retained replay](../crates/fart-services/src/play/transcript.rs) own the
 experimental contract. The [CLI transport](../crates/fart-cli/src/play.rs)
 only frames input, calls the service, and delivers its projections.
+The [reconstruction implementation and tests](../crates/fart-services/src/play/reconstruction.rs)
+cover fresh numerical comparison, rehashed intermediate-result changes, costed
+refusals, zero-attempt admission, and profile refusal before solver work.
 
 The [service integration tests](../crates/fart-services/tests/play.rs) cover
 baseline reuse, free views, retained retries after progress and finish, costed

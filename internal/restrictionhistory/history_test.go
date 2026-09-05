@@ -49,6 +49,71 @@ func TestNonFiniteIntegralsAreRefused(t *testing.T) {
 	}
 }
 
+func TestZeroFlowDoesNotEvaluateUnneededOverflowingHeatCapacity(t *testing.T) {
+	stagnation := mustThermodynamicState(t, 1, 1e308, math.Nextafter(1, 2))
+	for _, test := range []struct {
+		name string
+		back float64
+		area float64
+	}{
+		{"closed", 50000, 0},
+		{"closed adverse pressure", 200000, 0},
+		{"equal pressure", 125000, 0.01},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			history, err := Integrate(stagnation, mustPressure(t, test.back), mustDischarge(t, 1),
+				chokedSamples(t, 0, test.area, 1, test.area))
+			if err != nil {
+				t.Fatalf("exact zero-flow interval: %v", err)
+			}
+			for _, value := range []float64{
+				history.MassOutKilograms(), history.EnthalpyOutJoules(), history.KineticEnergyOutJoules(),
+				history.TotalEnthalpyOutJoules(), history.ImpulseNewtonSeconds(), history.RecoilImpulseNewtonSeconds(),
+			} {
+				if value != 0 {
+					t.Fatalf("no-flow integral = %g, want exactly zero", value)
+				}
+			}
+			for _, sample := range history.Samples() {
+				if sample.Result().Regime() != restrictionflow.RegimeNoFlow {
+					t.Fatalf("no-flow sample regime = %s", sample.Result().Regime())
+				}
+			}
+		})
+	}
+}
+
+func TestPositiveMassCannotHideUnrepresentableTransportEnergy(t *testing.T) {
+	_, err := Integrate(mustThermodynamicState(t, 1, 1e-20, 1.5),
+		mustPressure(t, 50000), mustDischarge(t, 1),
+		chokedSamples(t, 0, 0.01, math.SmallestNonzeroFloat64, 0.01))
+	if !errors.Is(err, ErrNonFiniteIntegral) {
+		t.Fatalf("positive mass with unrepresentable energy: %v", err)
+	}
+}
+
+func TestFiniteEnthalpyRecoversFromOverflowingSpecificHeat(t *testing.T) {
+	gamma := math.Nextafter(1, 2)
+	history, err := Integrate(mustThermodynamicState(t, 1e-300, 1e308, gamma),
+		mustPressure(t, 50000), mustDischarge(t, 1),
+		chokedSamples(t, 0, 1e-10, 1, 1e-10))
+	if err != nil {
+		t.Fatalf("finite transported enthalpy despite unrepresentable cp: %v", err)
+	}
+	// At gamma=1+epsilon the sonic mass-rate limit differs only at roundoff.
+	// R*T0=1e8, so this independent enthalpy factorization stays finite
+	// without constructing cp or sharing production's exponent arithmetic.
+	wantMass := 1e-10 * 125000 * math.Exp(-0.5) / math.Sqrt(1e8)
+	wantTotal := wantMass * 1e8 * (gamma / (gamma - 1))
+	wantKinetic := wantMass * (0.5 * 1e8)
+	assertNear(t, "mass", history.MassOutKilograms(), wantMass, wantMass*4e-15)
+	assertNear(t, "total enthalpy", history.TotalEnthalpyOutJoules(), wantTotal, wantTotal*4e-15)
+	assertNear(t, "kinetic energy", history.KineticEnergyOutJoules(), wantKinetic, wantKinetic*4e-15)
+	assertNear(t, "static enthalpy", history.EnthalpyOutJoules(), wantTotal-wantKinetic, wantTotal*4e-15)
+	assertNear(t, "transport closure", history.EnthalpyOutJoules()+history.KineticEnergyOutJoules(),
+		history.TotalEnthalpyOutJoules(), wantTotal*4e-15)
+}
+
 func TestClosedOpenClosedPulse(t *testing.T) {
 	history := mustIntegrate(t, chokedSamples(t, 0, 0, 0.01, 0.01, 0.02, 0))
 	if history.Samples()[0].Result().Regime() != restrictionflow.RegimeNoFlow ||
@@ -155,19 +220,24 @@ func mustIntegrate(t *testing.T, samples []Sample) History {
 
 func mustStagnation(t *testing.T) restrictionflow.Stagnation {
 	t.Helper()
+	return mustThermodynamicState(t, 400, 200, 1.5)
+}
+
+func mustThermodynamicState(t *testing.T, temperatureK, gasConstant, heatCapacityRatio float64) restrictionflow.Stagnation {
+	t.Helper()
 	pressure, err := restrictionflow.NewPressure(125000)
 	if err != nil {
 		t.Fatal(err)
 	}
-	temperature, err := restrictionflow.NewTemperature(400)
+	temperature, err := restrictionflow.NewTemperature(temperatureK)
 	if err != nil {
 		t.Fatal(err)
 	}
-	gas, err := restrictionflow.NewSpecificGasConstant(200)
+	gas, err := restrictionflow.NewSpecificGasConstant(gasConstant)
 	if err != nil {
 		t.Fatal(err)
 	}
-	gamma, err := restrictionflow.NewHeatCapacityRatio(1.5)
+	gamma, err := restrictionflow.NewHeatCapacityRatio(heatCapacityRatio)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -17,7 +17,7 @@ import (
 const expectedRestrictionText = `RESTRICTION STATE PREDICTED
 
 Model: continuum.quasi-steady-isentropic-converging-restriction@v0alpha1
-Implementation: go-oracle/v0alpha1
+Implementation: go-oracle.restriction/v0alpha2
 Quantity system: si (explicit)
 Regime: choked
 
@@ -59,7 +59,7 @@ Ambient inputs: none
 Human values: six significant digits; full precision in JSON.
 `
 
-const expectedRestrictionJSONSHA256 = "51d393906ab6eee7e07cbc730a2058cdbad63431dbc7f400d0624119fe3db0e4"
+const expectedRestrictionJSONSHA256 = "5d83b9385a96a7a2bfec72489edb48dc29a2d8407041a06fc88588a499f0a74c"
 
 func TestRestrictionCLITextAndJSONFixtures(t *testing.T) {
 	input := readRestrictionFixture(t, "gamma15-choked.json")

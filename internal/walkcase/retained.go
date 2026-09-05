@@ -58,7 +58,7 @@ func normalizedFingerprint(parsed parsedCase) (string, error) {
 }
 
 // VerifyRetainedWitnessReport accepts only the compact encoding/json bytes of
-// a complete current-profile successful witness report. This narrow storage
+// a complete supported-profile successful witness report. This narrow storage
 // encoding is not RFC 8785, a universal .fart format, or a migration mechanism.
 // It checks required structure, normalized inputs, and the account's own hash
 // without running the solver. Unkeyed hashes are forgeable by anyone who can
@@ -156,7 +156,8 @@ func (retained RetainedWitness) Reconstruct(requestBytes []byte) Report {
 
 func validateRetainedProfile(report Report) error {
 	if !report.Predicted() || report.Operation != "witness" || report.RequestSchema != RequestSchema ||
-		report.ImplementationRevision != ImplementationRevision || report.QuantitySystem != QuantitySystem ||
+		(report.ImplementationRevision != ImplementationRevision && report.ImplementationRevision != "go-oracle.walk/v0alpha3") ||
+		report.QuantitySystem != QuantitySystem ||
 		report.Model == nil || *report.Model != (ModelReference{ID: ModelID, Version: ModelVersion}) ||
 		report.Inputs == nil || report.NumericalPolicy == nil {
 		return retainedFailure("unsupported_witness_profile")

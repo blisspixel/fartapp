@@ -6,7 +6,7 @@ import (
 	"github.com/blisspixel/fartapp/internal/coupledblowdown"
 )
 
-const RefinementRevision = "go-oracle.walk-refine/v0alpha1"
+const RefinementRevision = "go-oracle.walk-refine/v0alpha2"
 
 // RefinementEvidence records the requested policy and estimates separately from
 // thermodynamic balance claims. Failed runs expose work counters, not estimates.

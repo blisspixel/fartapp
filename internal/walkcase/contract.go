@@ -8,7 +8,7 @@ const (
 	ReportSchema           = "fart.walk-report/v0alpha1"
 	ModelID                = "continuum.quasi-steady-coupled-blowdown"
 	ModelVersion           = "v0alpha1"
-	ImplementationRevision = "go-oracle.walk/v0alpha3"
+	ImplementationRevision = "go-oracle.walk/v0alpha4"
 	WitnessSchema          = "fart.walk-witness/v0alpha1"
 	InputDigestSchema      = "fart.walk-normalized-input/v0alpha1"
 	QuantitySystem         = "si"
