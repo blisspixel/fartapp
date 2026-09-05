@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"strconv"
 	"strings"
 
 	"github.com/blisspixel/fartapp/internal/reservoirprediction"
@@ -50,6 +49,9 @@ Limits and effects:
   request explicitly supplies every component, SI quantity, closure, and
   withdrawal fraction. Prediction is read-only and commits no case.
 
+Example:
+  fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json
+
 Exit status:
   0  A prediction was produced.
   1  Usage, input, syntax, schema, model, invariant, or output failure.
@@ -76,7 +78,7 @@ func runReservoir(args []string, stdin io.Reader, stdout, stderr io.Writer) int 
 		return writeText(stdout, stderr, reservoirHelp)
 	}
 	if args[0] != "predict" {
-		writeDiagnostic(stderr, "unknown reservoir command %s\n", quoteInput(args[0]))
+		writeDiagnostic(stderr, "unknown reservoir command %s; run 'fartapp help reservoir'\n", quoteInput(args[0]))
 		return 1
 	}
 	options, err := parseOutputOptions(args[1:])
@@ -141,13 +143,7 @@ func classifyReservoirInputError(err error) string {
 }
 
 func writeReservoirDiagnostic(stderr io.Writer, diagnostic reservoirprediction.Diagnostic) {
-	writeDiagnostic(
-		stderr,
-		"reservoir prediction failed: %s %s at %s\n",
-		diagnostic.Code,
-		diagnostic.ReasonCode,
-		strconv.QuoteToASCII(diagnostic.Path),
-	)
+	writePredictionDiagnostic(stderr, "reservoir predict", diagnostic.Code, diagnostic.ReasonCode, diagnostic.Path)
 }
 
 func formatReservoirPrediction(report reservoirprediction.Report) string {
@@ -186,6 +182,7 @@ func formatReservoirPrediction(report reservoirprediction.Report) string {
 	fmt.Fprintf(&output, "Operation nonclaims: %s\n", strings.Join(report.Nonclaims.Operation, ", "))
 	fmt.Fprintf(&output, "Evidence nonclaims: %s\n", strings.Join(report.Nonclaims.Evidence, ", "))
 	output.WriteString("Ambient inputs: none\n")
+	output.WriteString(numericPresentationNote)
 	return output.String()
 }
 
@@ -214,8 +211,4 @@ func writeReservoirState(
 	fmt.Fprintf(output, "  cv_mix:          %s J/(kg K)\n", formatScientificValue(state.MixtureSpecificIsochoricHeatJoulesPerKilogramKelvin))
 	fmt.Fprintf(output, "  cp_mix:          %s J/(kg K)\n", formatScientificValue(state.MixtureSpecificIsobaricHeatJoulesPerKilogramKelvin))
 	fmt.Fprintf(output, "  gamma:           %s\n", formatScientificValue(state.HeatCapacityRatio))
-}
-
-func formatScientificValue(value float64) string {
-	return strconv.FormatFloat(value, 'g', -1, 64)
 }

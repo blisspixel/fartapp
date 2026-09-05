@@ -22,22 +22,27 @@ not one universal equation. See [Bounded universality](docs/UNIVERSALITY.md).
 
 ## Status
 
+Current source release:
+[v0.8.0-alpha.2](https://github.com/blisspixel/fartapp/releases/tag/v0.8.0-alpha.2).
+
 F.A.R.T. Lab is experimental v0.8 alpha software. The permanent v0.6 toy output
 is stable. Newer commands and schemas remain provisional. The Rust core and
-bounded evidence carrier are working foundations for the full v0.8 and v0.9 gates.
+bounded evidence carrier, local experiment sessions, and assurance registry are
+working foundations for the full v0.8 and v0.9 gates.
 
 | Available now | Not implemented yet |
 | --- | --- |
-| Dependency-free Go CLI on Windows, macOS, and Linux | Plume, acoustics, particles, chemistry, damage, or haptics |
+| Dependency-free Go CLI on Linux, macOS, and Windows | Plume, acoustics, particles, chemistry, damage, or haptics |
 | Permanent intensity 1 to 5 string oracle in Go and Rust | Certified `.fart` archives, case commitment, or certificate authority |
 | Read-only law-context inspection | Natural-language generator, MCP, or A2A play |
 | Strict scenario-document validation | htop-style Terminal Lab or native Godot application |
 | Exact rigid ideal-mixture reservoir endpoint prediction | Complete trusted `RES-002` blowdown benchmark |
 | Quasi-steady restriction flow, component histories, and coupled blowdown | Selective species transport and wall heat-transfer closures |
 | Portable Agent Plugins skill with tested CLI recipes | Hosted MCP or A2A services and verified agent-host installations |
-| Native Rust reservoir predictor with analytical and Go comparison tests | Stateful `PlayService`, full model registry, and complete Go command parity |
+| Native Rust reservoir predictor and bounded local `PlayService` | General play contracts, full model registry, and complete Go command parity |
 | Opt-in adaptive discharge timing with explicit error estimates and work limits | Fixed-time adaptive stepping and rigorous solution-error bounds |
 | Atomic `.fartevidence` capture, integrity verification, replay, and reconstruction | Ratified scientific identities, journals, and archive migration |
+| Machine-readable assurance registry and read-only inspection | Automatic scientific ratification or proof that declared checks passed |
 
 The reservoir predictor is a standalone SI continuum model. It accepts explicit
 component masses and properties, rigid volume, temperature, closure, and
@@ -53,6 +58,10 @@ software account. The supporting catalog and authority experiments are summarize
 [capability contract](docs/CAPABILITY_REPORT.md) and [roadmap](ROADMAP.md).
 
 ## Quick start
+
+The primary examples use Linux and macOS shell conventions. Both languages
+are built and tested on Linux, macOS, and Windows in required CI jobs.
+Repository checks run in Go; PowerShell is not a build or runtime prerequisite.
 
 ```console
 go build -o artifacts/bin/fartapp ./cmd/fartapp
@@ -97,6 +106,7 @@ Other current examples:
 
 ```console
 ./artifacts/bin/fartapp law list
+./artifacts/bin/fartapp assurance inspect PHY-001 --format json
 ./artifacts/bin/fartapp law inspect conformance.relation.atemporal@v0alpha1 --format json
 ./artifacts/bin/fartapp scenario validate testdata/scenarios/atemporal-probe.json
 ./artifacts/bin/fartapp restriction predict testdata/restriction/ordinary-pressure-subsonic.json
@@ -110,6 +120,27 @@ go test ./...
 Every command is discoverable from root help. File and standard-input forms are
 equivalent. Text is an English presentation; machine tokens are versioned Lab
 protocol symbols, not a claim of shared language or meaning.
+
+Native local experiments use the same reservoir service through a bounded
+command stream:
+
+```sh
+cargo build --locked --release -p fart-cli
+./target/release/fart play run testdata/play/reservoir-session.jsonl
+mkdir -p artifacts
+./target/release/fart play run testdata/play/reservoir-session.jsonl --format transcript > artifacts/session.json
+./target/release/fart play replay artifacts/session.json --format json
+```
+
+The [session walkthrough](docs/PLAY_SESSION.md) covers explicit admission,
+action costs, retries, observations, and retained evidence. Each prediction
+uses the authored baseline. Replay verifies and presents retained data without
+recalculating the solver. An unfinished session remains unfinished at EOF.
+
+The [assurance registry](docs/ASSURANCE.md) exposes declared invariants,
+tolerances, source checks, and counterexamples. Inspection does not execute
+those checks or establish applicability. Human numerical reports use the
+shared [design language](docs/DESIGN_LANGUAGE.md); JSON retains full precision.
 
 The [coupled-oracle walkthrough](docs/WALKTHROUGH.md) follows one explicitly
 synthetic 100 mL reservoir at about 930 Pa above ambient through prediction,

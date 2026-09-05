@@ -43,6 +43,9 @@ func Run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	if len(args) >= 2 && args[1] == "evidence" {
 		return runEvidence(args[2:], stdin, stdout, stderr)
 	}
+	if len(args) >= 2 && args[1] == "assurance" {
+		return runAssurance(args[2:], stdout, stderr)
+	}
 
 	if len(args) != 2 {
 		writeDiagnostic(stderr, "usage: fartapp <intensity>\n")

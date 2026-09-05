@@ -1,11 +1,10 @@
-use std::{collections::BTreeSet, fmt};
+use std::collections::BTreeSet;
 
 use fart_domain::{
     Closure, Component, IsochoricHeatCapacity, MAX_COMPONENTS, Mass, ModelError, ReservoirState,
     SpecificGasConstant, Temperature, Volume, WithdrawalFraction, validate_component_id,
 };
-use serde::de::{self, DeserializeSeed, MapAccess, SeqAccess, Visitor};
-use serde_json::{Map, Number, Value};
+use serde_json::{Map, Value};
 
 use crate::{Diagnostic, MODEL_ID, MODEL_VERSION, REQUEST_SCHEMA};
 
@@ -16,22 +15,7 @@ pub(crate) struct Request {
 }
 
 pub(crate) fn request(data: &[u8]) -> Result<Request, Diagnostic> {
-    if data.iter().all(|byte| b" \t\r\n".contains(byte)) {
-        return Err(Diagnostic::new("syntax", "/", "empty_input"));
-    }
-    let mut issue = None;
-    let mut decoder = serde_json::Deserializer::from_slice(data);
-    let parsed = StrictValue {
-        depth: 0,
-        path: String::new(),
-        issue: &mut issue,
-    }
-    .deserialize(&mut decoder);
-    let value = parsed
-        .map_err(|_| issue.unwrap_or_else(|| Diagnostic::new("syntax", "/", "malformed_json")))?;
-    decoder
-        .end()
-        .map_err(|_| Diagnostic::new("syntax", "/", "trailing_json_value"))?;
+    let value = crate::json::document(data, crate::json::Limits::RESERVOIR)?;
     shape(&value, Shape::Request)?;
     let root = object(&value)?;
     let empty = Map::new();
@@ -55,10 +39,18 @@ pub(crate) fn request(data: &[u8]) -> Result<Request, Diagnostic> {
         "rigid-isothermal" => Closure::RigidIsothermal,
         _ => return Err(schema("/closure", "unsupported_closure")),
     };
-    let initial = root
-        .get("initial")
-        .and_then(Value::as_object)
-        .unwrap_or(&empty);
+    let state = initial_state(root.get("initial").unwrap_or(&Value::Null))?;
+    fart_core::summarize(&state).map_err(|error| model_error("/initial", error))?;
+    Ok(Request {
+        state,
+        withdrawal,
+        closure,
+    })
+}
+
+pub(crate) fn initial_state(value: &Value) -> Result<ReservoirState, Diagnostic> {
+    let empty = Map::new();
+    let initial = value.as_object().unwrap_or(&empty);
     // Omission remains a semantic refusal. Explicit null and every wrong type
     // were rejected as document shape errors before inspecting any values.
     let volume_value = number(initial, "volume_m3", "/initial")?;
@@ -119,12 +111,7 @@ pub(crate) fn request(data: &[u8]) -> Result<Request, Diagnostic> {
     }
     let state = ReservoirState::new(parts, volume, temperature)
         .map_err(|error| model_error("/initial", error))?;
-    fart_core::summarize(&state).map_err(|error| model_error("/initial", error))?;
-    Ok(Request {
-        state,
-        withdrawal,
-        closure,
-    })
+    Ok(state)
 }
 
 fn schema(path: &str, reason: &'static str) -> Diagnostic {
@@ -207,93 +194,4 @@ fn number(object: &Map<String, Value>, key: &str, path: &str) -> Result<f64, Dia
 
 fn join(path: &str, key: &str) -> String {
     format!("{path}/{}", key.replace('~', "~0").replace('/', "~1"))
-}
-
-// Serde owns JSON grammar and Unicode. The byte-limited tree preserves evidence
-// long enough to check syntax and duplicates before closed, nonnull shape policy.
-struct StrictValue<'a> {
-    depth: usize,
-    path: String,
-    issue: &'a mut Option<Diagnostic>,
-}
-
-impl StrictValue<'_> {
-    fn refuse<E: de::Error>(&mut self, reason: &'static str) -> E {
-        *self.issue = Some(Diagnostic::new("syntax", &self.path, reason));
-        E::custom(reason)
-    }
-}
-
-impl<'de> DeserializeSeed<'de> for StrictValue<'_> {
-    type Value = Value;
-    fn deserialize<D: de::Deserializer<'de>>(mut self, deserializer: D) -> Result<Value, D::Error> {
-        if self.depth > 32 {
-            return Err(self.refuse("maximum_depth_exceeded"));
-        }
-        deserializer.deserialize_any(self)
-    }
-}
-
-impl<'de> Visitor<'de> for StrictValue<'_> {
-    type Value = Value;
-    fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-        formatter.write_str("bounded JSON without duplicate members")
-    }
-    fn visit_bool<E: de::Error>(self, value: bool) -> Result<Value, E> {
-        Ok(Value::Bool(value))
-    }
-    fn visit_i64<E: de::Error>(self, value: i64) -> Result<Value, E> {
-        Ok(Value::Number(value.into()))
-    }
-    fn visit_u64<E: de::Error>(self, value: u64) -> Result<Value, E> {
-        Ok(Value::Number(value.into()))
-    }
-    fn visit_f64<E: de::Error>(mut self, value: f64) -> Result<Value, E> {
-        Number::from_f64(value)
-            .map(Value::Number)
-            .ok_or_else(|| self.refuse("malformed_json"))
-    }
-    fn visit_str<E: de::Error>(self, value: &str) -> Result<Value, E> {
-        Ok(Value::String(value.to_owned()))
-    }
-    fn visit_string<E: de::Error>(self, value: String) -> Result<Value, E> {
-        Ok(Value::String(value))
-    }
-    fn visit_unit<E: de::Error>(self) -> Result<Value, E> {
-        Ok(Value::Null)
-    }
-    fn visit_seq<A: SeqAccess<'de>>(self, mut sequence: A) -> Result<Value, A::Error> {
-        let mut values = Vec::new();
-        while let Some(value) = sequence.next_element_seed(StrictValue {
-            depth: self.depth + 1,
-            path: format!("{}/{}", self.path, values.len()),
-            issue: &mut *self.issue,
-        })? {
-            values.push(value);
-        }
-        Ok(Value::Array(values))
-    }
-    fn visit_map<A: MapAccess<'de>>(mut self, mut access: A) -> Result<Value, A::Error> {
-        let mut values = Map::new();
-        while let Some(key) = access.next_key::<String>()? {
-            if key.len() > 128 {
-                return Err(self.refuse("member_name_too_long"));
-            }
-            if values.contains_key(&key) {
-                *self.issue = Some(Diagnostic::new(
-                    "syntax",
-                    &join(&self.path, &key),
-                    "duplicate_member",
-                ));
-                return Err(de::Error::custom("duplicate_member"));
-            }
-            let value = access.next_value_seed(StrictValue {
-                depth: self.depth + 1,
-                path: join(&self.path, &key),
-                issue: &mut *self.issue,
-            })?;
-            values.insert(key, value);
-        }
-        Ok(Value::Object(values))
-    }
 }

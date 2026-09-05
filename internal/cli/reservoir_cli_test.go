@@ -29,7 +29,7 @@ INITIAL STATE
   Volume:          1 m^3
   Temperature:     400 K
   Pressure:        560000 Pa
-  Internal energy: 1.12e+06 J
+  Internal energy: 1.12e6 J
   R_mix:           350 J/(kg K)
   cv_mix:          700 J/(kg K)
   cp_mix:          1050 J/(kg K)
@@ -57,16 +57,17 @@ TRANSFERS
   Boundary work:           0 J
 
 BALANCE CLAIMS
-  reservoir.total-mass-balance: satisfied-within-roundoff; residual 0 kg; tolerance 5.684341886080802e-14 kg
-  reservoir.energy-balance: satisfied-within-roundoff; residual 0 J; tolerance 1.5916157281026244e-08 J
-  reservoir.initial-equation-of-state: satisfied-within-roundoff; residual 0 J; tolerance 7.958078640513122e-09 J
-  reservoir.final-equation-of-state: satisfied-within-roundoff; residual 0 J; tolerance 9.947598300641403e-10 J
+  reservoir.total-mass-balance: satisfied-within-roundoff; residual 0 kg; tolerance 5.68434e-14 kg
+  reservoir.energy-balance: satisfied-within-roundoff; residual 0 J; tolerance 1.59162e-8 J
+  reservoir.initial-equation-of-state: satisfied-within-roundoff; residual 0 J; tolerance 7.95808e-9 J
+  reservoir.final-equation-of-state: satisfied-within-roundoff; residual 0 J; tolerance 9.9476e-10 J
 
 Assumptions: calorically-perfect-components, homogeneous-equilibrium-state, nonreacting-mixture, single-gas-phase, perfectly-mixed-nonselective-outflow, rigid-volume, sensible-energy-datum-cv-times-temperature, adiabatic-no-heat-transfer
 Model nonclaims: aperture-and-restriction-flow, elapsed-time-history, exterior-state, momentum-and-recoil, phase-change-and-reaction, plume-and-acoustics
 Operation nonclaims: case-commitment, certificate-issuance
 Evidence nonclaims: empirical-validation
 Ambient inputs: none
+Human values: six significant digits; full precision in JSON.
 `
 
 const expectedReservoirJSONSHA256 = "1f817094c5de9cfe97e3ed5cf0157ce07984a6e6f489ee22034686daa101c50f"
@@ -133,11 +134,11 @@ func TestReservoirCLIFailures(t *testing.T) {
 		want string
 	}{
 		{name: "family usage", args: []string{"fartapp", "reservoir"}, want: "usage: fartapp reservoir predict <request.json|-> [--format text|json]\n"},
-		{name: "unknown command", args: []string{"fartapp", "reservoir", "release"}, want: "unknown reservoir command \"release\"\n"},
+		{name: "unknown command", args: []string{"fartapp", "reservoir", "release"}, want: "unknown reservoir command \"release\"; run 'fartapp help reservoir'\n"},
 		{name: "missing source", args: []string{"fartapp", "reservoir", "predict"}, want: "usage: fartapp reservoir predict <request.json|-> [--format text|json]\n"},
 		{name: "extra source", args: []string{"fartapp", "reservoir", "predict", "a", "b"}, want: "usage: fartapp reservoir predict <request.json|-> [--format text|json]\n"},
 		{name: "bad option", args: []string{"fartapp", "reservoir", "predict", "-", "--loud"}, want: "invalid reservoir predict: unknown option \"--loud\"\n"},
-		{name: "missing file", args: []string{"fartapp", "reservoir", "predict", "missing.json"}, want: "reservoir prediction failed: FART-E-IO-0002 input_not_found at \"/\"\n"},
+		{name: "missing file", args: []string{"fartapp", "reservoir", "predict", "missing.json"}, want: "reservoir prediction failed: FART-E-IO-0002 input_not_found at \"/\"\n  Check the input path, or use '-' to read standard input.\n"},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -180,7 +181,7 @@ func TestReservoirCLIInputAndOutputFailures(t *testing.T) {
 		&stderr,
 	)
 	if code != 1 || stdout.Len() != 0 ||
-		stderr.String() != "reservoir prediction failed: FART-E-IO-0002 input_unavailable at \"/\"\n" {
+		stderr.String() != "reservoir prediction failed: FART-E-IO-0002 input_unavailable at \"/\"\n  Check the input file or stream, then retry with a readable source.\n" {
 		t.Fatalf("read failure = (%d, %q, %q)", code, stdout.String(), stderr.String())
 	}
 

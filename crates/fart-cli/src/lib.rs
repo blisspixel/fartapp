@@ -1,4 +1,7 @@
-//! Thin native command presentation over the stateless service facade.
+//! Thin native command presentation over bounded service facades.
+
+mod help;
+mod play;
 
 use std::ffi::{OsStr, OsString};
 use std::fs::File;
@@ -9,12 +12,12 @@ use fart_services::{
     reservoir_input_failure,
 };
 
-const HELP: &str = "F.A.R.T. Lab experimental native Rust CLI\n\nUsage:\n  fart <intensity>\n  fart reservoir predict <request.json|-> [--format text|json]\n  fart help reservoir predict\n\nIntensity is the permanent toy example, an integer from 1 to 5.\nThe reservoir command is an analytical SI endpoint candidate. It reads at most\n65,536 bytes and requires explicit model, closure, units, and component inputs.\nJSON input rejects duplicate, unknown, and null members.\n\nUse - for standard input. Text is the default; --format json emits one report.\nExit status 0 means completion; 1 means usage, input, model, or output failure.\nA refused JSON request still emits its structured report.\n\nThis build provides no PlayService, case archive, protocol server, empirical\nvalidation, plume, physical audio, or general law-capability contract.\n";
-
 #[derive(Clone, Copy)]
 enum Format {
     Text,
     Json,
+    Jsonl,
+    Transcript,
 }
 
 struct Options<'a> {
@@ -32,21 +35,21 @@ pub fn run(
     stderr: &mut dyn Write,
 ) -> u8 {
     if args.len() == 1 && matches!(args[0].to_str(), Some("-h" | "--help")) {
-        return output(HELP.as_bytes(), stdout, stderr);
+        return output(help::ROOT.as_bytes(), stdout, stderr);
     }
     if args.first().is_some_and(|arg| arg == "help") {
-        let valid = args.len() == 1
-            || args.len() == 2 && args[1] == "reservoir"
-            || args.len() == 3 && args[1] == "reservoir" && args[2] == "predict";
-        return if valid {
-            output(HELP.as_bytes(), stdout, stderr)
+        return if let Some(text) = help::topic(&args[1..]) {
+            output(text.as_bytes(), stdout, stderr)
         } else {
             diagnostic(stderr, "unknown help topic\n")
         };
     }
+    if args.first().is_some_and(|arg| arg == "play") {
+        return play::run(&args[1..], stdin, stdout, stderr);
+    }
     if args.first().is_some_and(|arg| arg == "reservoir") {
         if args.len() == 2 && matches!(args[1].to_str(), Some("-h" | "--help")) {
-            return output(HELP.as_bytes(), stdout, stderr);
+            return output(help::RESERVOIR.as_bytes(), stdout, stderr);
         }
         if args.get(1).is_none_or(|arg| arg != "predict") {
             return diagnostic(
@@ -54,12 +57,12 @@ pub fn run(
                 "usage: fart reservoir predict <request.json|-> [--format text|json]\n",
             );
         }
-        let options = match options(&args[2..]) {
+        let options = match options(&args[2..], false) {
             Ok(options) => options,
             Err(message) => return diagnostic(stderr, message),
         };
         if options.help {
-            return output(HELP.as_bytes(), stdout, stderr);
+            return output(help::RESERVOIR.as_bytes(), stdout, stderr);
         }
         let Some(source) = options.source else {
             return diagnostic(
@@ -71,7 +74,7 @@ pub fn run(
         let success = report.is_predicted();
         let text = match options.format {
             Format::Text => report.to_text(),
-            Format::Json => report.to_json() + "\n",
+            _ => report.to_json() + "\n",
         };
         if !success && matches!(options.format, Format::Text) {
             return diagnostic(stderr, &text);
@@ -95,7 +98,7 @@ pub fn run(
     )
 }
 
-fn options(args: &[OsString]) -> Result<Options<'_>, &'static str> {
+fn options(args: &[OsString], play_run: bool) -> Result<Options<'_>, &'static str> {
     let mut result = Options {
         source: None,
         format: Format::Text,
@@ -121,7 +124,10 @@ fn options(args: &[OsString]) -> Result<Options<'_>, &'static str> {
             index += 1;
             result.format = match args.get(index).and_then(|value| value.to_str()) {
                 Some("text") => Format::Text,
-                Some("json") => Format::Json,
+                Some("json") if !play_run => Format::Json,
+                Some("jsonl") if play_run => Format::Jsonl,
+                Some("transcript") if play_run => Format::Transcript,
+                _ if play_run => return Err("--format requires text, jsonl, or transcript\n"),
                 _ => return Err("--format requires text or json\n"),
             };
         } else if flags
@@ -129,9 +135,9 @@ fn options(args: &[OsString]) -> Result<Options<'_>, &'static str> {
                 .to_str()
                 .is_some_and(|value| value.starts_with('-') && value != "-")
         {
-            return Err("unknown reservoir option; use -- before a filename beginning with -\n");
+            return Err("unknown option; use -- before a filename beginning with -\n");
         } else if result.source.replace(arg).is_some() {
-            return Err("provide exactly one reservoir input source\n");
+            return Err("provide exactly one input source\n");
         }
         index += 1;
     }
@@ -174,7 +180,13 @@ fn output(bytes: &[u8], stdout: &mut dyn Write, stderr: &mut dyn Write) -> u8 {
     if stdout.write_all(bytes).is_err() {
         return diagnostic(stderr, "write output: unavailable\n");
     }
-    0
+    loop {
+        match stdout.flush() {
+            Ok(()) => return 0,
+            Err(error) if error.kind() == io::ErrorKind::Interrupted => continue,
+            Err(_) => return diagnostic(stderr, "write output: unavailable\n"),
+        }
+    }
 }
 
 fn diagnostic(stderr: &mut dyn Write, message: &str) -> u8 {

@@ -195,64 +195,43 @@ The following mutations are release blockers regardless of aggregate score:
 
 ## Invariant registry
 
-Every named product invariant receives a stable identifier, owner, test mapping,
-tolerance profile, applicability rule, evidence references, counterexamples,
-status, and milestone. Planned invariants remain clearly marked until an
-executable check exists. The table below is the current human-authored seed,
-not yet a canonical machine contract.
+The [canonical machine-readable registry](../internal/assurance/registry.json)
+owns every original invariant ID, responsibility owner, applicability scope,
+tolerance profile, candidate lifecycle, declared Go check, evidence reference,
+counterexample, milestone and remaining direction. The
+[complete reference](INVARIANTS.md) is generated from it; the Go CLI embeds the
+same metadata for `fartapp assurance list` and `fartapp assurance inspect <ID>`.
 
-Once the identifiers and lifecycle rules are ratified, one machine-readable
-registry will own these fields. CI will reject duplicate identifiers, missing
-owners, broken evidence links, invalid lifecycle transitions, and a claimed
-executable status without an applicable check. Reference documentation and
-`fart assurance` output will be rendered from that registry instead of copying
-status prose between files. A nonapplicable invariant requires an explicit
-applicability result; it is never reported as passing.
+Repository policy validates the bounded schema, exact Go test declarations,
+source containment, separate verification-benchmark references and generated
+reference drift. It rejects an executable candidate without checks or
+counterexamples and refuses lifecycle promotions beyond this provisional
+metadata schema. Planned rows remain planned. Inspection does not execute
+checks, evaluate case applicability or report a passing invariant.
 
-| ID | Invariant | Current evidence | Release direction |
-| --- | --- | --- | --- |
-| `CLI-001` | Valid toy levels have exact permanent output | Golden table and executable test | Preserve as Go and Rust oracle fixtures |
-| `CLI-002` | Arbitrary input cannot panic or produce unbounded output | Seeded Go fuzz target | Nightly retained-corpus fuzzing |
-| `CLI-003` | Diagnostics never contaminate successful stdout | Exact fixtures and fuzz property | JSONL framing and broken-pipe conformance |
-| `CLI-004` | Root, family, leaf, and topic help expose only implemented command paths without semantic work | Byte-identical route fixtures, tripwire input, executable test, and fuzz property | Generate CLI, manual, and completion help from one typed Rust command model |
-| `ONT-001` | JSON catalog inspection and scenario-schema validation require no Earth discharge role, localized presentation object, or optional structural module | Executable atemporal and minimal-opaque Go catalog and CLI fixtures | Extend the proof to an admitted case, archive, certificate, and every adapter with dedicated counterexamples |
-| `CAP-001` | Capability reports keep current fields distinct and do not present them as one universal algebra | Exact localized-text and deterministic JSON Go fixtures | Ratify each owner profile in [CAPABILITY_REPORT.md](CAPABILITY_REPORT.md), then require cross-adapter conformance without treating missing capability as refusal |
-| `CAP-002` | Evaluated requires one profile-validated outcome; not evaluated exposes no outcome | Private-field, constructor-only Go type, bounded manually authored TSV expectations, unit properties, and fuzz target | Bind the candidate only through separately ratified owner profiles; add no shared outcome vocabulary or wire form |
-| `CAP-003` | Catalog registration is scoped to exact catalog-scope, authority, and subject revisions plus a capability token; only an evaluated registered result yields a positive registration value | Private-field Go types, bounded manually authored TSV expectations, zero and forged-value tests, token properties, and fuzz target | Establish exact authority-reference resolution and attribution scope within a closed Lab catalog before any wire or CLI projection; keep maturity separate |
-| `CAP-004` | A snapshot lookup decides exact same-scope membership against every positive registration in one bounded immutable in-process set and retains that set as its witness | Private-field Go types, three manually authored bounded TSV tables, limit and forged-value tests, order properties, and fuzz target | Add separately ratified authority resolution, attribution scope, and Catalog Lookup Closure over an exact supplied catalog domain before product `not_registered` or any wire projection |
-| `CAP-005` | Exact authority-reference matching reports target-specific zero, one, or multiple exact matches within one retained bounded same-scope multiset; multiplicity for one reference cannot block a unique match for another | Private-field Go types, three manually authored bounded TSV tables, target-specific multiplicity, order, limit, forged-value, and fuzz tests | Ratify product Declaration Authority Resolution separately; then require Attribution Scope and Catalog Lookup Closure before product registration absence or wire projection |
-| `CAP-006` | Snapshot-relative authority resolution maps retained exact-match evidence to distinct zero, one, or multiple outcomes and permits a positive refinement only for exactly one matching record entry | Private-field Go types, three manually authored bounded TSV tables, exact revision and target-local multiplicity cases, zero and forged-value tests, maximum-bound properties, and fuzzing across record order | Ratify snapshot-relative authority resolution plus explicit rule-selection and migration semantics, then require Attribution Scope and Catalog Lookup Closure before product registration absence or wire projection |
-| `CAP-007` | One closed versioned rule compares the exact authority reference in a retained positive resolution witness with the exact authority reference in a retained positive structural registration, after exact catalog-scope equality | Private-field Go types, four manually authored bounded TSV tables, scope and revision mismatch cases, subject and capability independence, invalid and forged-value tests, maximum upstream snapshot retention, and equality fuzzing | Ratify collection-level rule selection and Declaration Attribution Scope separately; then require Catalog Lookup Closure before product registration absence or wire projection |
-| `CAP-008` | A positive finite-snapshot lookup and positive exact authority-binding witness compose only when both retain the same complete structural registration, and the composition retains both full upstream witnesses | Private-field Go type, manually authored bounded TSV cases, exact subject, revision, and capability mismatch cases, negative lookup, invalid and forged-value tests, maximum snapshot retention, and fuzzing | Design neutral enumerable registration-domain ownership before collection selection; separately ratify Declaration Attribution Scope and Catalog Lookup Closure before product registration status or wire projection |
-| `SCN-001` | Scenario-probe validity does not imply realization or admission | Exact atemporal and unavailable-Earth text and JSON fixtures | Ratified scenario admission and refusal conformance |
-| `SCN-002` | Atemporal scenario probing consults no ambient or Earth default | Validator over document bytes and the compiled-in catalog, explicit empty ambient-input report, and counterexample fixture | Provider tripwires and broader orthogonal ontology suite |
-| `SCN-003` | The provisional schema rejects a two-entry `contexts` array before parsing either entry or beginning catalog and capability resolution; operation assessments remain unevaluated | Deterministic file and stdin CLI fixture, context-entry-order parity, exact stage and omission assertions | Supersede the probe limit with a ratified schema that represents scoped coupling and true no-bridge conformance |
-| `SCN-004` | An unresolved capability reference against the resolved minimal opaque catalog entry ends at the outer envelope without a fabricated capability, evidence record, case, ambient default, solver claim, or admitted, executed, or refused case operation | Exact typed report, file and stdin parity, deterministic JSON digest, stream separation, omission allowlist, operation-disposition assertions, and defensive-independence test | Ratified scenario reference-resolution and separate operation-refusal contracts |
-| `JSON-001` | Strict JSON adapters reject ambiguous, malformed, or over-budget documents before typed decoding | Shared standard-library scanner tests for invalid UTF-8, unpaired surrogates, non-JSON whitespace, trailing values, duplicate members, escaped pointer paths, nesting and member-name limits, plus deterministic fuzzing | Ratified per-contract size and collection limits, independent adversarial corpus, and cross-language parser parity |
-| `PHY-001` | Finite composition-preserving withdrawal from the declared rigid calorically perfect ideal mixture closes its component, total-mass, energy, and endpoint equation-of-state accounts | Independent synthetic adiabatic and isothermal closed forms, zero identity, composition and semigroup properties, component permutation, forged-state and representability rejection, fuzzing, adapter fixtures, and coverage above the per-package floor | Complete `RES-002` with a separately formulated time history, aperture and exterior coupling, heat-transfer closure, and trusted-reference comparison |
-| `OBS-001` | Observation capabilities and back-action remain explicit | Design contract | Passive, distributed, and coupled observer tests |
-| `ACC-001` | Every enabled projection cites one authoritative Lab account without inventing causal structure | Design contract | Typed claim and transformation traversal tests |
-| `PHY-002` | Applicable conserved transfers close for the declared boundary | Coupled-oracle component, total-mass and energy history checks; separately checked static, kinetic and total source enthalpy; recoil sign and independent choked impulse references | Extend these bounded checks to the ratified control-volume and exterior contracts |
-| `PHY-003` | Earth-profile exterior sound is absent in vacuum | Design contract | Analytical and field-solver fixtures |
-| `PHY-004` | Coupled time evolution agrees with independent reference equations under the declared numerical policy | `internal/coupledblowdown/reference_test.go`: choked and subsonic reference states, published limiting equations, decreasing fixed-time error, and complete-discharge error below 1.5 percent on two named 2048-interval fixtures | Control event-time error across the supported envelope before ratifying full `RES-002` |
-| `PHY-005` | Numerical budgets and representability cannot masquerade as physical completion | Coupled and restriction boundary tests for final samples, exact step counts, authored time limits, adverse pressure, adjacent choking, tiny positive flow, finite ledgers, and asymptotic compliance | Carry explicit termination and numerical-policy evidence into the production core |
-| `CLI-005` | The coupled walkthrough binds its selected model and retained witness to the actual inputs and account | Walk package and CLI tests for incompatible contexts, strict shapes, history/claim/input mutations, retained expectation mismatch, and the low-pressure counterfactual | Ratify production identity, archive, and canonical action contracts separately |
-| `ID-001` | Replay presents a record and never claims recurrence | Design contract | Archive and UI language conformance |
-| `ID-002` | Re-enactment receives a fresh record nonce without inventing a source-law identity change | Design contract | Deterministic identity property tests |
-| `DET-001` | Presentation streams cannot change physical identity | Design contract | Same-trace differential tests |
-| `SURF-001` | CLI, TUI, native, MCP, and A2A lower to canonical actions | Design contract | Adapter golden and differential fuzz tests |
-| `ART-001` | Spatial artifacts declare projection, distortion, and loss | Design contract | Feature and artifact manifest verification |
-| `LOC-001` | Localization cannot change case results, applicable identity sets, or score | Design contract | Cross-locale same-trace tests |
-| `CMP-001` | Backend choice cannot silently change laws, rules, equations, or precision class | Design contract | Capability refusal and scenario-digest tests |
-| `CMP-002` | Accelerated results preserve certified observables within tolerance | Design contract | CPU, Kokkos, CUDA, HIP, and SYCL differential suite |
+Read [assurance semantics and maintenance](ASSURANCE.md) for limits, lifecycle
+rules, source validation and regeneration. These invariant IDs remain separate
+from the broader benchmark namespace in [VERIFICATION.md](VERIFICATION.md);
+matching text does not establish equivalent scope or promote a benchmark.
 
 ## Rust production gates
 
-The v0.8 alpha subset currently enforces formatting, warnings-denied Clippy and
-rustdoc, locked debug/release builds, tests on Windows/macOS/Linux, full-report
-Go reservoir comparisons, and complete-source line coverage. The dependency
-gate is `cargo deny --locked check` with the reviewed
-[configuration](../.cargo/deny.toml). Coverage is collected with:
+The v0.8 alpha2 subset includes the stateless reservoir predictor and a bounded
+local `PlayService`. It enforces formatting, warnings-denied Clippy and rustdoc,
+locked debug/release builds, tests on Linux/macOS/Windows, full-report Go
+reservoir comparisons, and complete-source line coverage. Session evidence
+includes immutable-baseline experiments, exact accepted retries, revision and
+actor checks, charged model refusals, bounded journals, exhaustion followed by
+finish, and transcript integrity without numerical reevaluation. Read the
+[session contract](PLAY_SESSION.md) for its exact limits and nonclaims.
+
+The dependency gate is `cargo deny --locked check` with the reviewed
+[configuration](../.cargo/deny.toml). Four direct registry pins select 17 active
+external packages across supported targets, including target-conditioned
+ARM64 `libc`; five dependency build scripts are permitted. The exact versions,
+resolved features, inactive lockfile nodes, and reviewed script behavior are
+recorded in [RUST_CORE.md](RUST_CORE.md#dependency-and-build-script-scope).
+Coverage is collected with:
 
 ```console
 cargo llvm-cov --locked --workspace --all-features --json --summary-only --output-path artifacts/coverage/rust.json
@@ -261,9 +240,11 @@ go run ./tools/repoquality rust-coverage --profile artifacts/coverage/rust.json 
 
 CI sets `FARTAPP_GO_ORACLE` to a freshly built Go executable so the cross-language
 test cannot silently skip. Optional local Rust-only tests may omit that path.
-The following broader production requirements apply as their features arrive;
-mutation analysis, Miri, Loom, and full ontology comparison are not claimed by
-this alpha release.
+The comparison scope remains the reservoir endpoint and permanent toy output;
+full Go command parity, general `PlayService` admission, and `CapabilityService`
+remain open. The following broader production requirements apply as their
+features arrive; mutation analysis, Miri, Loom, and full ontology comparison
+are not claimed by this alpha release.
 
 The crate graph enforces `domain <- core <- services <- adapters`. Pure domain
 and core crates cannot depend on terminal, Godot, network, protocol, or ambient

@@ -15,12 +15,14 @@ import (
 
 func Run(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		writeDiagnostic(stderr, "usage: repoquality <repository|coverage|rust-coverage|fuzz>\n")
+		writeDiagnostic(stderr, "usage: repoquality <repository|assurance|coverage|rust-coverage|fuzz>\n")
 		return 1
 	}
 	switch args[0] {
 	case "repository":
 		return runRepository(args[1:], stdout, stderr)
+	case "assurance":
+		return runAssurance(args[1:], stdout, stderr)
 	case "coverage":
 		return runCoverage(args[1:], stdout, stderr)
 	case "rust-coverage":
@@ -40,12 +42,14 @@ const commandHelp = `F.A.R.T. Lab repository policy checker
 
 Usage:
   repoquality repository
+  repoquality assurance [--write]
   repoquality coverage [--profile coverage.out] [--aggregate 90] [--package 80]
   repoquality rust-coverage --profile <llvm-summary.json> [--aggregate 90] [--package 80]
   repoquality fuzz [--time 5s]
 
 Commands:
-  repository  Check npm and Go dependency policy, local Markdown links, and media.
+  repository  Check dependencies, links, media, portable plugin, and assurance metadata.
+  assurance   Check invariant metadata; --write refreshes its generated reference.
   coverage    Enforce aggregate and per-package Go statement coverage.
   rust-coverage Enforce complete-source aggregate and per-crate Rust line coverage.
   fuzz        Run the declared Go fuzz targets for a bounded duration.

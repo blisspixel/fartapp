@@ -15,6 +15,10 @@ const refineHelp = `Integrate a walk case with estimated numerical accuracy.
 Usage:
   fartapp walk refine <case.json|-> --relative-tolerance <value> --max-evaluations <count> [--absolute-time-tolerance <seconds>] [--format text|json]
 
+Arguments:
+  case.json  Strict JSON using fart.walk-case/v0alpha1, at most 65,536 bytes.
+  -          Read the case from standard input.
+
 Required:
   --relative-tolerance  Finite relative quadrature tolerance in [1e-12, 0.1].
   --max-evaluations     Integer function-evaluation budget in [15, 1000000].
@@ -39,6 +43,11 @@ and retained evidence continue to use their existing numerical profile.
 
 Example:
   fartapp walk refine testdata/walk/ordinary-low-pressure.json --relative-tolerance 1e-8 --max-evaluations 100000
+
+Exit status:
+  0  An account was produced; inspect tolerance satisfaction and completion.
+  1  Usage, input, model, accuracy, invariant, or output failure.
+     A native Unix SIGPIPE retains the operating system's pipeline status.
 `
 
 func runRefine(args []string, stdin io.Reader, stdout, stderr io.Writer) int {

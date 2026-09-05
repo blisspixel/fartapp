@@ -4,7 +4,7 @@ F.A.R.T. Lab grows in three complete products:
 
 1. **1.0 CLI Lab:** the complete simulation, play, story, translation, and proof
    set declared by the ratified 1.0 capability and content manifest works
-   headlessly on Windows, macOS, and Linux. It does not imply every later model.
+   headlessly on Linux, macOS, and Windows. It does not imply every later model.
 2. **2.0 Terminal Lab:** an htop-style interface makes the same instrument live
    and legible without adding hidden capability.
 3. **3.0 Native Lab:** a polished Godot application makes compatible retained
@@ -27,7 +27,10 @@ the [Rust reservoir core](docs/RUST_CORE.md), an opt-in
 [accurate discharge integrator](docs/BLOWDOWN_REFERENCE.md), and a bounded
 [software evidence carrier](docs/WALK_EVIDENCE.md). The
 [project layout](docs/PROJECT_LAYOUT.md) separates commands, private Go packages,
-Rust crates, fixtures, and development tooling.
+Rust crates, fixtures, and development tooling. The next alpha adds bounded
+[local reservoir sessions](docs/PLAY_SESSION.md), retained action receipts,
+and a validated [assurance registry](docs/ASSURANCE.md). Human command help,
+numeric reports, and recovery follow a shared [design language](docs/DESIGN_LANGUAGE.md).
 
 The immediate sequence is:
 
@@ -38,8 +41,9 @@ The immediate sequence is:
    independent analytical references and complete report comparisons.
 3. Complete fixed-time accuracy and the selected benchmark tolerance review,
    then earn the remaining `RES-002` and ordinary-reference gates.
-4. Implement the first typed `PlayService` action/account boundary and ontology
-   round trips before promoting the candidate carrier to certified `.fart`.
+4. Extend the narrow local `PlayService` through the reviewed general action,
+   measurement, and knowledge contracts, then exercise ontology round trips
+   before promoting the candidate carrier to certified `.fart`.
 
 The narrow oracle does not ratify the shared capability report, case identity,
 archive, Reference Pfft, or complete ordinary-pfft play loop by implication.
@@ -307,16 +311,22 @@ labeled as presentation.
 Delivered alpha subset: four safe workspace crates, the permanent toy command,
 a stateless reservoir service and native CLI, analytical references, complete
 Go report comparisons within declared numerical tolerances, and dependency and
-coverage gates. This does not freeze the broader Go capability contract or
-implement `PlayService`. Full milestone checkboxes below remain independent.
+coverage gates. A bounded local reservoir session now adds immutable-baseline
+attempts, typed admission, read-only views, exact retries, explicit finish,
+and retained integrity-only replay. It does not freeze the broader capability,
+measurement, identity, or general `PlayService` contracts.
 
-- [ ] Replace the human-authored invariant table with one canonical
+- [x] Replace the human-authored invariant table with one canonical
   machine-readable registry containing stable ID, owner, applicability,
   tolerance profile, lifecycle status, executable checks, evidence references,
   counterexamples, and milestone. Validate referential integrity and status
-  claims in CI, and generate reference tables and planned `fart assurance`
-  inspection data from it.
+  claims in CI, and generate reference tables and `fartapp assurance`
+  inspection data from it. The delivered registry declares candidate metadata;
+  inspections report checks not executed and applicability not evaluated.
 - [x] Create `fart-domain`, `fart-core`, `fart-services`, and `fart-cli` crates.
+- [x] Deliver the experimental `reservoir-experiment/v0alpha1` local session,
+  bounded native JSONL adapter, transcript export and integrity-only replay,
+  with direct-service/CLI conformance and explicit EOF/transport limits.
 - [ ] Freeze `fart-compute`, precision, determinism, device-provenance,
   checkpoint, and backend-conformance contracts before writing GPU kernels.
 - [ ] Enforce the language and dependency policy: safe Rust for pure core,
@@ -395,6 +405,12 @@ writers, short writes, and sync failures. The format has no filenames,
 extraction, or compression. It deliberately retains only the current walk
 witness profile; it does not close any certified `.fart` identity, ontology,
 journal, canonicalization, migration, or trust gate by implication.
+
+The local Rust reservoir session additionally retains an ordered, bounded
+action journal with RFC 8785/SHA-256 integrity fingerprints. Its instance
+references are not authenticated or ratified scientific identities. It
+supports neither live restoration nor journal reconstruction, checkpoints,
+branches, general recording policies, or certified archive migration.
 
 - [ ] Implement canonical scenario, manifest, history, and certificate records.
 - [ ] Add play-session identity, ordered action journals, actor roles,

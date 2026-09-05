@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"strconv"
 	"strings"
 
 	"github.com/blisspixel/fartapp/internal/walkcase"
@@ -14,8 +13,8 @@ import (
 const walkHelp = `F.A.R.T. Lab experimental walking skeleton
 
 Usage:
-  fartapp walk <predict|simulate|inspect|explain|branch|certify|witness|reconstruct> <case.json|-> [--format text|json]
-  fartapp walk refine <case.json|-> --relative-tolerance <value> --max-evaluations <count>
+  fartapp walk <operation> <case.json|-> [options]
+  fartapp help walk <operation>
 
 Commands:
   predict      Reachable endpoint or asymptotic limit and initial restriction.
@@ -42,44 +41,6 @@ Example:
   fartapp walk branch testdata/walk/ordinary-low-pressure.json
 `
 
-const walkOperationHelp = `Run one walking-skeleton operation on an explicit SI case.
-
-Usage:
-  fartapp walk <predict|simulate|inspect|explain|branch|certify|witness|reconstruct> <case.json|-> [--format text|json]
-
-Arguments:
-  case.json  Strict JSON using fart.walk-case/v0alpha1.
-  -          Read the case from standard input.
-
-Options:
-  --format text  Write a concise scientific report. This is the default.
-  --format json  Write the complete typed walk report.
-  -h, --help     Show this help.
-
-Branching:
-  Set branch.prescribed_area_m2 in the case to the counterfactual outlet area
-  in square metres. The report retains both complete runs and their stopping
-  conditions. The ordinary-low-pressure fixture compares 1e-6 with 2e-6 m^2.
-
-Reconstruction:
-  Run witness on your case and retain its witness value. Add that exact
-  lowercase SHA-256 value as expected_witness in the same input document,
-  then run reconstruct. A mismatch returns status 1 and preserves both digests
-  in the JSON report. It never compares two newly generated runs to each other.
-
-Evidence:
-  JSON includes normalized inputs, initial and final history samples, component
-  masses, numerical policy, and balance residuals. The witness format is
-  versioned Go JSON, not canonical scientific identity or a signature. Matching
-  evidence requires the same model, implementation, runtime profile, and inputs.
-  The first-order method requires step refinement to assess numerical accuracy.
-
-Exit status:
-  0  The operation completed.
-  1  Usage, input, syntax, schema, model, invariant, or output failure.
-     A native Unix SIGPIPE retains the operating system's pipeline status.
-`
-
 var walkOperations = map[string]struct{}{
 	"predict": {}, "simulate": {}, "inspect": {}, "explain": {},
 	"branch": {}, "certify": {}, "witness": {}, "reconstruct": {},
@@ -87,7 +48,7 @@ var walkOperations = map[string]struct{}{
 
 func runWalk(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		writeDiagnostic(stderr, "usage: fartapp walk <predict|simulate|inspect|explain|branch|certify|witness|reconstruct> <case.json|-> [--format text|json]\n")
+		writeDiagnostic(stderr, "usage: fartapp walk <operation> <case.json|-> [options]; run 'fartapp help walk'\n")
 		return 1
 	}
 	if repeatedHelpRequest(args) {
@@ -108,7 +69,7 @@ func runWalk(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		return runRefine(args[1:], stdin, stdout, stderr)
 	}
 	if _, ok := walkOperations[args[0]]; !ok {
-		writeDiagnostic(stderr, "unknown walk command %s\n", quoteInput(args[0]))
+		writeDiagnostic(stderr, "unknown walk command %s; run 'fartapp help walk'\n", quoteInput(args[0]))
 		return 1
 	}
 	operation := args[0]
@@ -122,7 +83,7 @@ func runWalk(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		return 1
 	}
 	if options.help {
-		return writeText(stdout, stderr, walkOperationHelp)
+		return writeText(stdout, stderr, walkHelpForOperation(operation))
 	}
 	report := readWalk(options.positional[0], operation, stdin)
 	return writeWalkReport(report, operation, options.format, stdout, stderr)
@@ -138,14 +99,8 @@ func writeWalkReport(report walkcase.Report, operation string, format outputForm
 		}
 		return 1
 	}
-	writeDiagnostic(
-		stderr,
-		"walk %s failed: %s %s at %s\n",
-		operation,
-		report.Diagnostics[0].Code,
-		report.Diagnostics[0].ReasonCode,
-		strconv.QuoteToASCII(report.Diagnostics[0].Path),
-	)
+	diagnostic := report.Diagnostics[0]
+	writePredictionDiagnostic(stderr, "walk "+operation, diagnostic.Code, diagnostic.ReasonCode, diagnostic.Path)
 	return 1
 }
 
@@ -288,5 +243,6 @@ func formatWalk(report walkcase.Report) string {
 		fmt.Fprintf(&output, "Evidence nonclaims: %s\n", strings.Join(report.Nonclaims.Evidence, ", "))
 	}
 	output.WriteString("Ambient inputs: none\n")
+	output.WriteString(numericPresentationNote)
 	return output.String()
 }

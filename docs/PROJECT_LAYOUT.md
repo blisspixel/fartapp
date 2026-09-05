@@ -14,7 +14,7 @@ Neither ecosystem prescribes a maximum number of root files.
 | `internal/` | Private Go domains, numerical oracles, document adapters, evidence, and repository checks |
 | `crates/fart-domain/` | Validated Rust quantities and inputs |
 | `crates/fart-core/` | Pure Rust numerical calculations |
-| `crates/fart-services/` | Stateless application service, bounded decoding, and typed reports |
+| `crates/fart-services/` | Bounded prediction and local play services, decoding, reports, and retained replay |
 | `crates/fart-cli/` | Native Rust command presentation and process tests |
 | `testdata/` | Shared authored cases, conformance corpora, and fixed expected outputs |
 | `docs/` | Contracts, decisions, scientific references, walkthroughs, and release evidence |
@@ -40,8 +40,10 @@ which call validated domain and numerical packages. Numerical packages do not
 import CLI or filesystem presentation code.
 
 Rust uses `fart-cli -> fart-services -> fart-core -> fart-domain`.
-The stateless reservoir service is an implemented subset; stateful play,
-capability composition, and a model registry remain separate roadmap work.
+The reservoir predictor and bounded local reservoir session are implemented
+subsets. General play contracts, capability composition, and a model registry
+remain separate roadmap work. The assurance registry lives in
+`internal/assurance/`; its generated reference belongs in `docs/INVARIANTS.md`.
 
 Keep one coherent responsibility per file. Split parsing, calculation, and
 presentation when they have different invariants or reasons to change. Avoid

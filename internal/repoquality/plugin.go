@@ -205,7 +205,7 @@ func validateRecipe(root string, recipe CLIRecipe) error {
 	operation := args[0] + " " + args[1]
 	input := true
 	switch operation {
-	case "law list", "law inspect":
+	case "law list", "law inspect", "assurance inspect":
 		input = false
 	case "scenario validate", "reservoir predict", "restriction predict", "restriction history",
 		"walk predict", "walk simulate", "walk inspect", "walk explain", "walk branch", "walk certify", "walk witness", "walk reconstruct", "walk refine":

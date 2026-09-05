@@ -33,6 +33,11 @@ Read:
 - [docs/SNOWFLAKES.md](docs/SNOWFLAKES.md) for record identity, optional
   context-occurrence identity, and artifacts.
 - [docs/QUALITY.md](docs/QUALITY.md) for progressive engineering gates.
+- [docs/ASSURANCE.md](docs/ASSURANCE.md) for candidate invariant metadata and
+  the generated reference, and [docs/DESIGN_LANGUAGE.md](docs/DESIGN_LANGUAGE.md)
+  for consistent human presentation.
+- [docs/PLAY_SESSION.md](docs/PLAY_SESSION.md) for the bounded native experiment
+  profile, command framing, retry semantics, and retained evidence.
 - [docs/CAPABILITY_REPORT.md](docs/CAPABILITY_REPORT.md) for evaluation
   disposition, owner-profile decomposition, unresolved semantics, and the
   report ratification gate.
@@ -55,6 +60,7 @@ npm ci --ignore-scripts
 npm run lint:markdown
 go mod verify
 go run ./tools/repoquality repository
+go run ./tools/repoquality assurance
 go build ./...
 go test ./internal/registrationauthoritybinding -run '^TestRegistrationAuthorityBindingCorpus$'
 go test ./internal/snapshotregistrationbinding -run '^TestSnapshotRegistrationBindingCorpus$'
@@ -103,6 +109,11 @@ Run `gofmt` on every changed Go file. Total statement coverage must remain at or
 above 90 percent, and every non-generated package must remain at or above the 80
 percent floor. Domain, solver, archive, replay, and protocol code receive stricter
 changed-line and mutation gates described in [docs/QUALITY.md](docs/QUALITY.md).
+
+After editing assurance metadata, run `go run ./tools/repoquality assurance --write`
+to validate its references and regenerate the fixed documentation target.
+Normal repository checks are read-only. Linux and macOS shell examples are the
+default; maintain shared Go/Rust tooling without requiring PowerShell.
 
 For native changes, also run:
 
