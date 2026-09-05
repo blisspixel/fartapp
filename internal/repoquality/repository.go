@@ -45,6 +45,7 @@ func CheckRepository(root string) (CheckResult, error) {
 		{"links", CheckLinks},
 		{"media", CheckMedia},
 		{"plugin", CheckPlugin},
+		{"assurance", CheckAssurance},
 	}
 	for _, check := range checks {
 		result, err := check.run(root)

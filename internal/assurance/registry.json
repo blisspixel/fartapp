@@ -1,0 +1,1664 @@
+{
+  "schema": "fart.assurance-registry/v0alpha1",
+  "invariants": [
+    {
+      "id": "CLI-001",
+      "statement": "Valid toy levels have exact permanent output",
+      "owner": "go-cli-oracle",
+      "applicability": "The permanent Go toy-level command for its declared intensity domain and exact stdout bytes.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cli-001-check-01",
+          "package": "./internal/cli",
+          "file": "internal/cli/fart_test.go",
+          "name": "TestCLIFixtures"
+        },
+        {
+          "id": "cli-001-check-02",
+          "package": "./internal/cli",
+          "file": "internal/cli/fart_test.go",
+          "name": "TestIntensityDomain"
+        },
+        {
+          "id": "cli-001-check-03",
+          "package": "./internal/cli",
+          "file": "internal/cli/fart_test.go",
+          "name": "TestExecutable"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/cli/fart_test.go",
+          "description": "Golden table and executable test"
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/cli/fart_test.go",
+          "description": "Out-of-domain levels and malformed argument forms must preserve exact diagnostic and exit contracts."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Preserve as Go and Rust oracle fixtures",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CLI-002",
+      "statement": "Arbitrary input cannot panic or produce unbounded output",
+      "owner": "go-cli-oracle",
+      "applicability": "The bounded Go Run argument adapter and its seeded fuzz domain; finite fuzz evidence is not proof for all possible executions.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cli-002-check-01",
+          "package": "./internal/cli",
+          "file": "internal/cli/fart_test.go",
+          "name": "FuzzRun"
+        },
+        {
+          "id": "cli-002-check-02",
+          "package": "./internal/cli",
+          "file": "internal/cli/fart_test.go",
+          "name": "TestCLIFixtures"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/cli/fart_test.go",
+          "description": "Seeded Go fuzz target"
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/cli/fart_test.go",
+          "description": "Seeded hostile strings, arbitrary byte inputs and argument combinations must not panic or exceed the declared output bound."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Nightly retained-corpus fuzzing",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CLI-003",
+      "statement": "Diagnostics never contaminate successful stdout",
+      "owner": "go-cli-oracle",
+      "applicability": "Successful and failed Go CLI output, diagnostics and downstream pipe closure for the named routes.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cli-003-check-01",
+          "package": "./internal/cli",
+          "file": "internal/cli/fart_test.go",
+          "name": "TestCLIFixtures"
+        },
+        {
+          "id": "cli-003-check-02",
+          "package": "./internal/cli",
+          "file": "internal/cli/fart_test.go",
+          "name": "FuzzRun"
+        },
+        {
+          "id": "cli-003-check-03",
+          "package": "./internal/cli",
+          "file": "internal/cli/cli_output_test.go",
+          "name": "TestBrokenPipeIsQuiet"
+        },
+        {
+          "id": "cli-003-check-04",
+          "package": "./internal/cli",
+          "file": "internal/cli/cli_output_test.go",
+          "name": "TestRealBrokenPipeIsQuiet"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/cli/fart_test.go",
+          "description": "Exact fixtures and fuzz property"
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/cli/cli_output_test.go",
+          "description": "Invalid arguments and closed output pipes must not leak diagnostics into successful stdout."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "JSONL framing and broken-pipe conformance",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CLI-004",
+      "statement": "Root, family, leaf, and topic help expose only implemented command paths without semantic work",
+      "owner": "go-cli-oracle",
+      "applicability": "Currently implemented Go help routes, including root, family, leaf and topic routing; this does not certify the future Rust command model.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cli-004-check-01",
+          "package": "./internal/cli",
+          "file": "internal/cli/help_cli_test.go",
+          "name": "TestHelpRoutes"
+        },
+        {
+          "id": "cli-004-check-02",
+          "package": "./internal/cli",
+          "file": "internal/cli/help_cli_test.go",
+          "name": "TestRootHelpAdvertisesOnlyCurrentSurface"
+        },
+        {
+          "id": "cli-004-check-03",
+          "package": "./internal/cli",
+          "file": "internal/cli/help_cli_test.go",
+          "name": "TestHelpRouteErrors"
+        },
+        {
+          "id": "cli-004-check-04",
+          "package": "./internal/cli",
+          "file": "internal/cli/fart_test.go",
+          "name": "TestExecutable"
+        },
+        {
+          "id": "cli-004-check-05",
+          "package": "./internal/cli",
+          "file": "internal/cli/fart_test.go",
+          "name": "FuzzRun"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/cli/help_cli_test.go",
+          "description": "Byte-identical route fixtures, tripwire input, executable test, and fuzz property"
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/cli/help_cli_test.go",
+          "description": "Tripwire inputs and unsupported help routes detect semantic reads or advertisement of nonexistent operations."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Generate CLI, manual, and completion help from one typed Rust command model",
+      "related_benchmarks": []
+    },
+    {
+      "id": "ONT-001",
+      "statement": "JSON catalog inspection and scenario-schema validation require no Earth discharge role, localized presentation object, or optional structural module",
+      "owner": "go-catalog-oracle",
+      "applicability": "Go catalog JSON inspection and provisional scenario-schema probing of atemporal and minimal opaque contexts only. No admitted case, certificate, archive or every-adapter conformance is asserted.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "ont-001-check-01",
+          "package": "./internal/lawcatalog",
+          "file": "internal/lawcatalog/catalog_test.go",
+          "name": "TestMinimalOpaqueContextHasNoLocalizedPresentationOrOptionalStructuralModule"
+        },
+        {
+          "id": "ont-001-check-02",
+          "package": "./internal/lawcatalog",
+          "file": "internal/lawcatalog/catalog_test.go",
+          "name": "TestAtemporalRelationContextNeedsNoEarthOrPresentationFields"
+        },
+        {
+          "id": "ont-001-check-03",
+          "package": "./internal/scenarioprobe",
+          "file": "internal/scenarioprobe/probe_test.go",
+          "name": "TestMinimalOpaqueProbeRequiresNoLocalizedPresentationOrOptionalStructuralModule"
+        },
+        {
+          "id": "ont-001-check-04",
+          "package": "./internal/cli",
+          "file": "internal/cli/scenario_cli_test.go",
+          "name": "TestMinimalOpaqueScenarioJSONFixture"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/lawcatalog/catalog_test.go",
+          "description": "Executable atemporal and minimal-opaque Go catalog and CLI fixtures"
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/cli/scenario_cli_test.go",
+          "description": "Minimal opaque and atemporal contexts omit Earth roles, localized presentation and optional structural modules without fabricating defaults."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Extend the proof to an admitted case, archive, certificate, and every adapter with dedicated counterexamples",
+      "related_benchmarks": [
+        {
+          "namespace": "verification-benchmark",
+          "id": "ONT-001",
+          "relationship": "partial-support",
+          "scope": "Only inspection and provisional schema probing support part of the separately scoped minimum bounded admitted-case benchmark."
+        }
+      ]
+    },
+    {
+      "id": "CAP-001",
+      "statement": "Capability reports keep current fields distinct and do not present them as one universal algebra",
+      "owner": "go-capability-oracles",
+      "applicability": "The current Go law catalog capability report preserves its existing axes. No universal outcome algebra, owner-profile ratification or cross-adapter parity is asserted.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cap-001-check-01",
+          "package": "./internal/cli",
+          "file": "internal/cli/law_cli_test.go",
+          "name": "TestLawCLITextAndJSONFixtures"
+        },
+        {
+          "id": "cap-001-check-02",
+          "package": "./internal/cli",
+          "file": "internal/cli/law_cli_test.go",
+          "name": "TestLawInspectionJSONFixture"
+        },
+        {
+          "id": "cap-001-check-03",
+          "package": "./internal/lawcatalog",
+          "file": "internal/lawcatalog/catalog_test.go",
+          "name": "TestAssessmentVocabulary"
+        },
+        {
+          "id": "cap-001-check-04",
+          "package": "./internal/lawcatalog",
+          "file": "internal/lawcatalog/catalog_test.go",
+          "name": "TestValidateInspectionRejectsMalformedValues"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/cli/law_cli_test.go",
+          "description": "Exact localized-text and deterministic JSON Go fixtures"
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/lawcatalog/catalog_test.go",
+          "description": "Invalid assessment vocabularies and malformed capability values cannot collapse distinct report axes."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Ratify each owner profile in CAPABILITY_REPORT.md, then require cross-adapter conformance without treating missing capability as refusal",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CAP-002",
+      "statement": "Evaluated requires one profile-validated outcome; not evaluated exposes no outcome",
+      "owner": "go-capability-oracles",
+      "applicability": "The private-field in-process evaluation disposition candidate, with profile-owned validation; no shared wire form or outcome vocabulary.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cap-002-check-01",
+          "package": "./internal/evaluation",
+          "file": "internal/evaluation/disposition_test.go",
+          "name": "TestDispositionCorpus"
+        },
+        {
+          "id": "cap-002-check-02",
+          "package": "./internal/evaluation",
+          "file": "internal/evaluation/disposition_test.go",
+          "name": "TestEvaluatedRejectsInvalidProfileOutcome"
+        },
+        {
+          "id": "cap-002-check-03",
+          "package": "./internal/evaluation",
+          "file": "internal/evaluation/disposition_test.go",
+          "name": "TestNotEvaluatedHasNoOutcome"
+        },
+        {
+          "id": "cap-002-check-04",
+          "package": "./internal/evaluation",
+          "file": "internal/evaluation/disposition_test.go",
+          "name": "TestZeroAndForgedDispositionsAreInvalid"
+        },
+        {
+          "id": "cap-002-check-05",
+          "package": "./internal/evaluation",
+          "file": "internal/evaluation/disposition_test.go",
+          "name": "FuzzDispositionConstructors"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/evaluation/disposition_test.go",
+          "description": "Private-field, constructor-only Go type, bounded manually authored TSV expectations, unit properties, and fuzz target"
+        },
+        {
+          "path": "testdata/conformance/evaluation-disposition-v0alpha1/cases.tsv",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/evaluation/disposition_test.go",
+          "description": "Invalid profile outcomes and zero or forged dispositions cannot gain evaluated status or an invented outcome."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Bind the candidate only through separately ratified owner profiles; add no shared outcome vocabulary or wire form",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CAP-003",
+      "statement": "Catalog registration is scoped to exact catalog-scope, authority, and subject revisions plus a capability token; only an evaluated registered result yields a positive registration value",
+      "owner": "go-capability-oracles",
+      "applicability": "The Go in-process structural registration candidate binds exact catalog scope, authority, subject revisions and capability token; positive registration does not imply maturity or product lookup closure.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cap-003-check-01",
+          "package": "./internal/catalogregistration",
+          "file": "internal/catalogregistration/registration_test.go",
+          "name": "TestRegistrationCorpus"
+        },
+        {
+          "id": "cap-003-check-02",
+          "package": "./internal/catalogregistration",
+          "file": "internal/catalogregistration/registration_test.go",
+          "name": "TestExactBindingAccessorsAndDistinctTypes"
+        },
+        {
+          "id": "cap-003-check-03",
+          "package": "./internal/catalogregistration",
+          "file": "internal/catalogregistration/registration_test.go",
+          "name": "TestZeroAndInvalidValuesRemainInvalid"
+        },
+        {
+          "id": "cap-003-check-04",
+          "package": "./internal/catalogregistration",
+          "file": "internal/catalogregistration/registration_test.go",
+          "name": "FuzzRegistrationConstructors"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/catalogregistration/registration_test.go",
+          "description": "Private-field Go types, bounded manually authored TSV expectations, zero and forged-value tests, token properties, and fuzz target"
+        },
+        {
+          "path": "testdata/conformance/catalog-registration-v0alpha1/cases.tsv",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/catalogregistration/registration_test.go",
+          "description": "Zero, invalid, foreign-outcome and mismatched reference values cannot produce a positive registration."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Establish exact authority-reference resolution and attribution scope within a closed Lab catalog before any wire or CLI projection; keep maturity separate",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CAP-004",
+      "statement": "A snapshot lookup decides exact same-scope membership against every positive registration in one bounded immutable in-process set and retains that set as its witness",
+      "owner": "go-capability-oracles",
+      "applicability": "One bounded immutable Go in-process snapshot of positive registrations; negative membership is relative to that supplied same-scope set, not a product-wide absence claim.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cap-004-check-01",
+          "package": "./internal/cataloglookup",
+          "file": "internal/cataloglookup/lookup_test.go",
+          "name": "TestLookupCorpus"
+        },
+        {
+          "id": "cap-004-check-02",
+          "package": "./internal/cataloglookup",
+          "file": "internal/cataloglookup/lookup_test.go",
+          "name": "TestFiniteSnapshotBoundsAndInvalidInputs"
+        },
+        {
+          "id": "cap-004-check-03",
+          "package": "./internal/cataloglookup",
+          "file": "internal/cataloglookup/lookup_test.go",
+          "name": "TestExactNegativeAndScopeMismatch"
+        },
+        {
+          "id": "cap-004-check-04",
+          "package": "./internal/cataloglookup",
+          "file": "internal/cataloglookup/lookup_test.go",
+          "name": "TestFiniteSnapshotDefensivelyCopiesInput"
+        },
+        {
+          "id": "cap-004-check-05",
+          "package": "./internal/cataloglookup",
+          "file": "internal/cataloglookup/lookup_test.go",
+          "name": "FuzzFiniteSnapshotAndLookup"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/cataloglookup/lookup_test.go",
+          "description": "Private-field Go types, three manually authored bounded TSV tables, limit and forged-value tests, order properties, and fuzz target"
+        },
+        {
+          "path": "testdata/conformance/catalog-lookup-v0alpha1/cases.tsv",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/cataloglookup/lookup_test.go",
+          "description": "Out-of-scope or absent registrations, forged witnesses and oversized snapshots cannot gain membership."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Add separately ratified authority resolution, attribution scope, and Catalog Lookup Closure over an exact supplied catalog domain before product not_registered or any wire projection",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CAP-005",
+      "statement": "Exact authority-reference matching reports target-specific zero, one, or multiple exact matches within one retained bounded same-scope multiset; multiplicity for one reference cannot block a unique match for another",
+      "owner": "go-capability-oracles",
+      "applicability": "Exact target-specific authority reference matching in one bounded same-scope Go multiset; this is not ratified product declaration authority resolution.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cap-005-check-01",
+          "package": "./internal/authoritymatching",
+          "file": "internal/authoritymatching/matching_test.go",
+          "name": "TestAuthorityMatchingCorpus"
+        },
+        {
+          "id": "cap-005-check-02",
+          "package": "./internal/authoritymatching",
+          "file": "internal/authoritymatching/matching_test.go",
+          "name": "TestSnapshotDefensiveCopyOrderAndTargetLocalDuplicates"
+        },
+        {
+          "id": "cap-005-check-03",
+          "package": "./internal/authoritymatching",
+          "file": "internal/authoritymatching/matching_test.go",
+          "name": "TestExactRevisionAndCrossScopeBehavior"
+        },
+        {
+          "id": "cap-005-check-04",
+          "package": "./internal/authoritymatching",
+          "file": "internal/authoritymatching/matching_test.go",
+          "name": "TestWitnessAndForgedValues"
+        },
+        {
+          "id": "cap-005-check-05",
+          "package": "./internal/authoritymatching",
+          "file": "internal/authoritymatching/matching_test.go",
+          "name": "FuzzFiniteAuthorityMatching"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/authoritymatching/matching_test.go",
+          "description": "Private-field Go types, three manually authored bounded TSV tables, target-specific multiplicity, order, limit, forged-value, and fuzz tests"
+        },
+        {
+          "path": "testdata/conformance/authority-matching-v0alpha1/cases.tsv",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/authoritymatching/matching_test.go",
+          "description": "Multiplicity of unrelated references cannot block a unique target, and exact revision or scope mismatches cannot count as matches."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Ratify product Declaration Authority Resolution separately; then require Attribution Scope and Catalog Lookup Closure before product registration absence or wire projection",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CAP-006",
+      "statement": "Snapshot-relative authority resolution maps retained exact-match evidence to distinct zero, one, or multiple outcomes and permits a positive refinement only for exactly one matching record entry",
+      "owner": "go-capability-oracles",
+      "applicability": "Snapshot-relative Go authority resolution maps exact retained record matches to zero, one or multiple outcomes. Product authority, attribution and catalog closure remain unratified.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cap-006-check-01",
+          "package": "./internal/authorityresolution",
+          "file": "internal/authorityresolution/resolution_test.go",
+          "name": "TestAuthorityResolutionCorpus"
+        },
+        {
+          "id": "cap-006-check-02",
+          "package": "./internal/authorityresolution",
+          "file": "internal/authorityresolution/resolution_test.go",
+          "name": "TestInvalidAndForgedResolutionValues"
+        },
+        {
+          "id": "cap-006-check-03",
+          "package": "./internal/authorityresolution",
+          "file": "internal/authorityresolution/resolution_test.go",
+          "name": "TestMaximumSnapshotAndTargetLocalMultiplicity"
+        },
+        {
+          "id": "cap-006-check-04",
+          "package": "./internal/authorityresolution",
+          "file": "internal/authorityresolution/resolution_test.go",
+          "name": "FuzzResolveInSnapshot"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/authorityresolution/resolution_test.go",
+          "description": "Private-field Go types, three manually authored bounded TSV tables, exact revision and target-local multiplicity cases, zero and forged-value tests, maximum-bound properties, and fuzzing across record order"
+        },
+        {
+          "path": "testdata/conformance/authority-resolution-v0alpha1/cases.tsv",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/authorityresolution/resolution_test.go",
+          "description": "Zero, multiple, forged or revision-mismatched match evidence cannot become a positive unique authority resolution."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Ratify snapshot-relative authority resolution plus explicit rule-selection and migration semantics, then require Attribution Scope and Catalog Lookup Closure before product registration absence or wire projection",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CAP-007",
+      "statement": "One closed versioned rule compares the exact authority reference in a retained positive resolution witness with the exact authority reference in a retained positive structural registration, after exact catalog-scope equality",
+      "owner": "go-capability-oracles",
+      "applicability": "One closed versioned Go comparison rule over positive authority resolution and positive structural registration with exact catalog-scope equality; no collection-level attribution decision.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cap-007-check-01",
+          "package": "./internal/registrationauthoritybinding",
+          "file": "internal/registrationauthoritybinding/matching_test.go",
+          "name": "TestRegistrationAuthorityBindingCorpus"
+        },
+        {
+          "id": "cap-007-check-02",
+          "package": "./internal/registrationauthoritybinding",
+          "file": "internal/registrationauthoritybinding/matching_test.go",
+          "name": "TestRuleInvalidAndForgedValues"
+        },
+        {
+          "id": "cap-007-check-03",
+          "package": "./internal/registrationauthoritybinding",
+          "file": "internal/registrationauthoritybinding/matching_test.go",
+          "name": "TestExactComparisonAndForgedWitnesses"
+        },
+        {
+          "id": "cap-007-check-04",
+          "package": "./internal/registrationauthoritybinding",
+          "file": "internal/registrationauthoritybinding/matching_test.go",
+          "name": "TestMaximumAuthoritySnapshotAndPayloadIndependence"
+        },
+        {
+          "id": "cap-007-check-05",
+          "package": "./internal/registrationauthoritybinding",
+          "file": "internal/registrationauthoritybinding/matching_test.go",
+          "name": "FuzzCompareExactAuthorityBinding"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/registrationauthoritybinding/matching_test.go",
+          "description": "Private-field Go types, four manually authored bounded TSV tables, scope and revision mismatch cases, subject and capability independence, invalid and forged-value tests, maximum upstream snapshot retention, and equality fuzzing"
+        },
+        {
+          "path": "testdata/conformance/registration-authority-binding-v0alpha1/cases.tsv",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/registrationauthoritybinding/matching_test.go",
+          "description": "Scope, authority or revision mismatch and forged upstream witnesses cannot gain a positive authority binding."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Ratify collection-level rule selection and Declaration Attribution Scope separately; then require Catalog Lookup Closure before product registration absence or wire projection",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CAP-008",
+      "statement": "A positive finite-snapshot lookup and positive exact authority-binding witness compose only when both retain the same complete structural registration, and the composition retains both full upstream witnesses",
+      "owner": "go-capability-oracles",
+      "applicability": "The Go in-process composition of a positive snapshot lookup and positive exact authority-binding witness for the same complete structural registration.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cap-008-check-01",
+          "package": "./internal/snapshotregistrationbinding",
+          "file": "internal/snapshotregistrationbinding/binding_test.go",
+          "name": "TestSnapshotRegistrationBindingCorpus"
+        },
+        {
+          "id": "cap-008-check-02",
+          "package": "./internal/snapshotregistrationbinding",
+          "file": "internal/snapshotregistrationbinding/binding_test.go",
+          "name": "TestInvalidAndForgedCompositionValues"
+        },
+        {
+          "id": "cap-008-check-03",
+          "package": "./internal/snapshotregistrationbinding",
+          "file": "internal/snapshotregistrationbinding/binding_test.go",
+          "name": "TestMaximumSnapshotWitnessRetention"
+        },
+        {
+          "id": "cap-008-check-04",
+          "package": "./internal/snapshotregistrationbinding",
+          "file": "internal/snapshotregistrationbinding/binding_test.go",
+          "name": "FuzzComposePositive"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/snapshotregistrationbinding/binding_test.go",
+          "description": "Private-field Go type, manually authored bounded TSV cases, exact subject, revision, and capability mismatch cases, negative lookup, invalid and forged-value tests, maximum snapshot retention, and fuzzing"
+        },
+        {
+          "path": "testdata/conformance/snapshot-registration-binding-v0alpha1/cases.tsv",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/snapshotregistrationbinding/binding_test.go",
+          "description": "Negative lookup and subject, revision or capability mismatches cannot compose; forged upstream evidence remains invalid."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Design neutral enumerable registration-domain ownership before collection selection; separately ratify Declaration Attribution Scope and Catalog Lookup Closure before product registration status or wire projection",
+      "related_benchmarks": []
+    },
+    {
+      "id": "SCN-001",
+      "statement": "Scenario-probe validity does not imply realization or admission",
+      "owner": "go-scenario-oracle",
+      "applicability": "The provisional Go scenario probe validates document and references without realizing or admitting a case; report axes remain operation-specific.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "scn-001-check-01",
+          "package": "./internal/cli",
+          "file": "internal/cli/scenario_cli_test.go",
+          "name": "TestScenarioCLITextAndJSONFixtures"
+        },
+        {
+          "id": "scn-001-check-02",
+          "package": "./internal/cli",
+          "file": "internal/cli/scenario_cli_test.go",
+          "name": "TestScenarioCLIUnavailableCapabilityIsAValidProbe"
+        },
+        {
+          "id": "scn-001-check-03",
+          "package": "./internal/scenarioprobe",
+          "file": "internal/scenarioprobe/probe_test.go",
+          "name": "TestEarthUnavailableCapabilityPreservesEveryAxis"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/cli/scenario_cli_test.go",
+          "description": "Exact atemporal and unavailable-Earth text and JSON fixtures"
+        },
+        {
+          "path": "testdata/scenarios/earth-subsonic-probe.json",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/scenarioprobe/probe_test.go",
+          "description": "An unavailable Earth capability can leave a probe valid without fabricating case admission or execution."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Ratified scenario admission and refusal conformance",
+      "related_benchmarks": []
+    },
+    {
+      "id": "SCN-002",
+      "statement": "Atemporal scenario probing consults no ambient or Earth default",
+      "owner": "go-scenario-oracle",
+      "applicability": "Atemporal Go probing uses authored document bytes and the compiled-in catalog. It does not exercise a provider interface or certify all future ontology paths.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "scn-002-check-01",
+          "package": "./internal/scenarioprobe",
+          "file": "internal/scenarioprobe/probe_test.go",
+          "name": "TestAtemporalProbeHasNoAmbientOrEarthRequirements"
+        },
+        {
+          "id": "scn-002-check-02",
+          "package": "./internal/scenarioprobe",
+          "file": "internal/scenarioprobe/probe_test.go",
+          "name": "TestDomainDefaultsAreRejectedStructurally"
+        },
+        {
+          "id": "scn-002-check-03",
+          "package": "./internal/cli",
+          "file": "internal/cli/scenario_cli_test.go",
+          "name": "TestScenarioCLITextAndJSONFixtures"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/scenarioprobe/probe_test.go",
+          "description": "Validator over document bytes and the compiled-in catalog, explicit empty ambient-input report, and counterexample fixture"
+        },
+        {
+          "path": "testdata/scenarios/atemporal-probe.json",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/scenarioprobe/probe_test.go",
+          "description": "Forbidden ambient and domain-default fields are rejected rather than silently consulted or fabricated."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Provider tripwires and broader orthogonal ontology suite",
+      "related_benchmarks": []
+    },
+    {
+      "id": "SCN-003",
+      "statement": "The provisional schema rejects a two-entry contexts array before parsing either entry or beginning catalog and capability resolution; operation assessments remain unevaluated",
+      "owner": "go-scenario-oracle",
+      "applicability": "The provisional two-context input limit is a schema guard, not evidence of semantic incompatibility, coupling refusal or no-bridge conformance.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "scn-003-check-01",
+          "package": "./internal/cli",
+          "file": "internal/cli/scenario_cli_test.go",
+          "name": "TestMultiLawProbeLimitDoesNotInferCompatibility"
+        },
+        {
+          "id": "scn-003-check-02",
+          "package": "./internal/scenarioprobe",
+          "file": "internal/scenarioprobe/probe_test.go",
+          "name": "TestInputFailureStages"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/cli/scenario_cli_test.go",
+          "description": "Deterministic file and stdin CLI fixture, context-entry-order parity, exact stage and omission assertions"
+        },
+        {
+          "path": "testdata/scenarios/multi-law-probe-limit.json",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/cli/scenario_cli_test.go",
+          "description": "Both context-entry orders must stop at the schema limit before reference resolution or operation evaluation."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Supersede the probe limit with a ratified schema that represents scoped coupling and true no-bridge conformance",
+      "related_benchmarks": [
+        {
+          "namespace": "verification-benchmark",
+          "id": "ONT-003",
+          "relationship": "planned-conformance",
+          "scope": "The current two-context schema limit provides no semantic no-bridge evidence; a ratified coupling schema remains open."
+        }
+      ]
+    },
+    {
+      "id": "SCN-004",
+      "statement": "An unresolved capability reference against the resolved minimal opaque catalog entry ends at the outer envelope without a fabricated capability, evidence record, case, ambient default, solver claim, or admitted, executed, or refused case operation",
+      "owner": "go-scenario-oracle",
+      "applicability": "An unresolved capability against the resolved minimal opaque Go catalog context stops at the scenario probe outer envelope without a case-operation result.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "scn-004-check-01",
+          "package": "./internal/scenarioprobe",
+          "file": "internal/scenarioprobe/probe_test.go",
+          "name": "TestMinimalOpaqueUnresolvedCapabilityStopsAtOuterEnvelope"
+        },
+        {
+          "id": "scn-004-check-02",
+          "package": "./internal/scenarioprobe",
+          "file": "internal/scenarioprobe/probe_test.go",
+          "name": "TestReportIsDefensivelyIndependent"
+        },
+        {
+          "id": "scn-004-check-03",
+          "package": "./internal/cli",
+          "file": "internal/cli/scenario_cli_test.go",
+          "name": "TestMinimalOpaqueUnresolvedCapabilityCLIContract"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/scenarioprobe/probe_test.go",
+          "description": "Exact typed report, file and stdin parity, deterministic JSON digest, stream separation, omission allowlist, operation-disposition assertions, and defensive-independence test"
+        },
+        {
+          "path": "testdata/scenarios/minimal-opaque-unresolved-capability.json",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/cli/scenario_cli_test.go",
+          "description": "An unresolved capability must preserve omissions, unevaluated operations and immutable reports rather than invent evidence, defaults or solver claims."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Ratified scenario reference-resolution and separate operation-refusal contracts",
+      "related_benchmarks": []
+    },
+    {
+      "id": "JSON-001",
+      "statement": "Strict JSON adapters reject ambiguous, malformed, or over-budget documents before typed decoding",
+      "owner": "strict-json-adapters",
+      "applicability": "Shared Go strict JSON syntax and closed-shape preflight under caller-supplied byte, depth and member-name budgets. Each consuming contract still owns required fields and semantic constraints.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "json-001-check-01",
+          "package": "./internal/strictjson",
+          "file": "internal/strictjson/scan_test.go",
+          "name": "TestInspectClassifiesFailures"
+        },
+        {
+          "id": "json-001-check-02",
+          "package": "./internal/strictjson",
+          "file": "internal/strictjson/scan_test.go",
+          "name": "TestLimitsAreCallerOwned"
+        },
+        {
+          "id": "json-001-check-03",
+          "package": "./internal/strictjson",
+          "file": "internal/strictjson/scan_test.go",
+          "name": "FuzzInspect"
+        },
+        {
+          "id": "json-001-check-04",
+          "package": "./internal/strictjson",
+          "file": "internal/strictjson/shape_test.go",
+          "name": "TestInspectShapeReportsExactPathsAndScalarCategories"
+        },
+        {
+          "id": "json-001-check-05",
+          "package": "./internal/strictjson",
+          "file": "internal/strictjson/shape_test.go",
+          "name": "TestShapeUsesExistingSyntaxAndNestingGate"
+        },
+        {
+          "id": "json-001-check-06",
+          "package": "./internal/strictjson",
+          "file": "internal/strictjson/shape_test.go",
+          "name": "FuzzInspectShape"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/strictjson/scan_test.go",
+          "description": "Shared standard-library scanner tests for invalid UTF-8, unpaired surrogates, non-JSON whitespace, trailing values, duplicate members, escaped pointer paths, nesting and member-name limits, plus deterministic fuzzing"
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/strictjson/shape_test.go",
+          "description": "Duplicate keys, malformed Unicode, trailing values, non-JSON whitespace, unknown fields, nulls and limit overflows must fail before typed defaults can acquire meaning."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Ratified per-contract size and collection limits, independent adversarial corpus, and cross-language parser parity",
+      "related_benchmarks": []
+    },
+    {
+      "id": "PHY-001",
+      "statement": "Finite composition-preserving withdrawal from the declared rigid calorically perfect ideal mixture closes its component, total-mass, energy, and endpoint equation-of-state accounts",
+      "owner": "go-continuum-oracles",
+      "applicability": "Representable finite withdrawal from a rigid, homogeneous, calorically perfect ideal mixture, under the declared adiabatic or prescribed-isothermal closure. No real-gas, tissue, exterior or empirical validation.",
+      "tolerance": {
+        "id": "reservoir-account-v0alpha1",
+        "description": "Named synthetic endpoint tests use absolute tolerances of 1e-13 K, 1e-10 Pa, 1e-10 J internal energy, 1e-9 J transferred energy and 1e-15 kg mass residual. Named composition and fuzz properties retain their source-declared scaled tolerances; these fixture bounds are not an envelope-wide error guarantee."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "phy-001-check-01",
+          "package": "./internal/idealmixturereservoir",
+          "file": "internal/idealmixturereservoir/reservoir_test.go",
+          "name": "TestSyntheticMixtureClosedForms"
+        },
+        {
+          "id": "phy-001-check-02",
+          "package": "./internal/idealmixturereservoir",
+          "file": "internal/idealmixturereservoir/reservoir_test.go",
+          "name": "TestZeroWithdrawalIsExactIdentity"
+        },
+        {
+          "id": "phy-001-check-03",
+          "package": "./internal/idealmixturereservoir",
+          "file": "internal/idealmixturereservoir/reservoir_test.go",
+          "name": "TestTransitionCompositionAndSemigroup"
+        },
+        {
+          "id": "phy-001-check-04",
+          "package": "./internal/idealmixturereservoir",
+          "file": "internal/idealmixturereservoir/reservoir_test.go",
+          "name": "TestComponentPermutationDoesNotChangeAggregates"
+        },
+        {
+          "id": "phy-001-check-05",
+          "package": "./internal/idealmixturereservoir",
+          "file": "internal/idealmixturereservoir/reservoir_test.go",
+          "name": "TestRepresentabilityFailureIsRejectedWithoutClamping"
+        },
+        {
+          "id": "phy-001-check-06",
+          "package": "./internal/idealmixturereservoir",
+          "file": "internal/idealmixturereservoir/reservoir_test.go",
+          "name": "FuzzWithdrawFraction"
+        },
+        {
+          "id": "phy-001-check-07",
+          "package": "./internal/idealmixturereservoir",
+          "file": "internal/idealmixturereservoir/scale_test.go",
+          "name": "TestFiniteTransferSurvivesSubnormalIntermediateProducts"
+        },
+        {
+          "id": "phy-001-check-08",
+          "package": "./internal/idealmixturereservoir",
+          "file": "internal/idealmixturereservoir/scale_test.go",
+          "name": "TestPositiveUnrepresentableHeatIsRefused"
+        },
+        {
+          "id": "phy-001-check-09",
+          "package": "./internal/idealmixturereservoir",
+          "file": "internal/idealmixturereservoir/scale_test.go",
+          "name": "TestAdiabaticCoolingRetainsRepresentableFinalTemperature"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/idealmixturereservoir/reservoir_test.go",
+          "description": "Independent synthetic adiabatic and isothermal closed forms, zero identity, composition and semigroup properties, component permutation, forged-state and representability rejection, fuzzing, adapter fixtures, and coverage above the per-package floor"
+        },
+        {
+          "path": "testdata/reservoir/synthetic-mixture-adiabatic.json",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/idealmixturereservoir/scale_test.go",
+          "description": "Forged states and unrepresentable positive transfers are refused; extreme finite inputs must preserve component transfers and representable temperature without clamping."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Complete RES-002 with a separately formulated time history, aperture and exterior coupling, heat-transfer closure, and trusted-reference comparison",
+      "related_benchmarks": [
+        {
+          "namespace": "verification-benchmark",
+          "id": "RES-002",
+          "relationship": "partial-support",
+          "scope": "Finite endpoint mass, energy and equation-of-state accounts only; full time history and physical heat-transfer closure remain separately scoped."
+        }
+      ]
+    },
+    {
+      "id": "OBS-001",
+      "statement": "Observation capabilities and back-action remain explicit",
+      "owner": "observation-contract",
+      "applicability": "Planned observation capabilities, passive or active back-action and observer interactions across the product.",
+      "tolerance": {
+        "id": "planned-v0alpha1",
+        "description": "No executable acceptance tolerance is ratified for this planned invariant. A future fixture must name its observable, applicability and exact or numerical comparison before promotion."
+      },
+      "lifecycle": "design-candidate",
+      "checks": [],
+      "evidence": [
+        {
+          "path": "docs/UNIVERSALITY.md",
+          "description": "Owning design reference only. Executable evidence and counterexamples remain open."
+        }
+      ],
+      "counterexamples": [],
+      "milestone": "v0.8",
+      "direction": "Passive, distributed, and coupled observer tests",
+      "related_benchmarks": [
+        {
+          "namespace": "verification-benchmark",
+          "id": "OBS-001",
+          "relationship": "planned-conformance",
+          "scope": "Planned observation invariants and the verification benchmark remain unimplemented under this registry scope."
+        }
+      ]
+    },
+    {
+      "id": "ACC-001",
+      "statement": "Every enabled projection cites one authoritative Lab account without inventing causal structure",
+      "owner": "account-contract",
+      "applicability": "Planned authoritative Lab account and projection provenance across enabled presentations.",
+      "tolerance": {
+        "id": "planned-v0alpha1",
+        "description": "No executable acceptance tolerance is ratified for this planned invariant. A future fixture must name its observable, applicability and exact or numerical comparison before promotion."
+      },
+      "lifecycle": "design-candidate",
+      "checks": [],
+      "evidence": [
+        {
+          "path": "docs/INTERFACES.md",
+          "description": "Owning design reference only. Executable evidence and counterexamples remain open."
+        }
+      ],
+      "counterexamples": [],
+      "milestone": "v0.8",
+      "direction": "Typed claim and transformation traversal tests",
+      "related_benchmarks": []
+    },
+    {
+      "id": "PHY-002",
+      "statement": "Applicable conserved transfers close for the declared boundary",
+      "owner": "go-continuum-oracles",
+      "applicability": "Declared rigid source reservoir and quasi-steady restriction boundaries in the Go oracle, with component mass, source stagnation enthalpy, exit static plus kinetic energy and recoil accounting. No exterior-control-volume certification.",
+      "tolerance": {
+        "id": "source-transfer-v0alpha1",
+        "description": "Named choked source history uses 1e-12 kg mass, 1e-12 N s impulse and 1e-9 J energy tolerances; component history uses 1e-14 kg, and exponent-scale reference integrals use 1e-14 relative error. Each other named check retains its explicit source-declared observable tolerance."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "phy-002-check-01",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/stepper_test.go",
+          "name": "TestMixtureHistoryClosesEveryComponent"
+        },
+        {
+          "id": "phy-002-check-02",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/reference_test.go",
+          "name": "TestCoupledImpulseRetainsRepresentableIntegratedMomentum"
+        },
+        {
+          "id": "phy-002-check-03",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/reference_test.go",
+          "name": "TestFrozenSourceConstantRateIntegratesAcrossScale"
+        },
+        {
+          "id": "phy-002-check-04",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/accurate_test.go",
+          "name": "TestAccurateTruncationMatchesChokedTimeImpulseAndStroke"
+        },
+        {
+          "id": "phy-002-check-05",
+          "package": "./internal/restrictionhistory",
+          "file": "internal/restrictionhistory/history_test.go",
+          "name": "TestConstantChokedHistoryClosedForm"
+        },
+        {
+          "id": "phy-002-check-06",
+          "package": "./internal/restrictionhistory",
+          "file": "internal/restrictionhistory/history_test.go",
+          "name": "TestNonFiniteIntegralsAreRefused"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/coupledblowdown/stepper_test.go",
+          "description": "Coupled-oracle component, total-mass and energy history checks; separately checked static, kinetic and total source enthalpy; recoil sign and independent choked impulse references"
+        },
+        {
+          "path": "testdata/restriction/gamma15-choked-history.json",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/restrictionhistory/history_test.go",
+          "description": "Nonfinite accumulated accounts must fail, and tiny representable source momentum and energy must not disappear through intermediate underflow."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Extend these bounded checks to the ratified control-volume and exterior contracts",
+      "related_benchmarks": [
+        {
+          "namespace": "verification-benchmark",
+          "id": "RES-002",
+          "relationship": "partial-support",
+          "scope": "Declared source-boundary accounting and independent impulse references support only the implemented ideal-mixture and restriction closures."
+        }
+      ]
+    },
+    {
+      "id": "PHY-003",
+      "statement": "Earth-profile exterior sound is absent in vacuum",
+      "owner": "exterior-physics-contract",
+      "applicability": "Planned Earth-profile exterior acoustic propagation in a declared medium, including the vacuum boundary.",
+      "tolerance": {
+        "id": "planned-v0alpha1",
+        "description": "No executable acceptance tolerance is ratified for this planned invariant. A future fixture must name its observable, applicability and exact or numerical comparison before promotion."
+      },
+      "lifecycle": "design-candidate",
+      "checks": [],
+      "evidence": [
+        {
+          "path": "docs/SIMULATION.md",
+          "description": "Owning design reference only. Executable evidence and counterexamples remain open."
+        }
+      ],
+      "counterexamples": [],
+      "milestone": "v0.10",
+      "direction": "Analytical and field-solver fixtures",
+      "related_benchmarks": [
+        {
+          "namespace": "verification-benchmark",
+          "id": "ACO-004",
+          "relationship": "planned-conformance",
+          "scope": "Vacuum absence of exterior sound needs a dedicated analytical and field-solver fixture."
+        }
+      ]
+    },
+    {
+      "id": "PHY-004",
+      "statement": "Coupled time evolution agrees with independent reference equations under the declared numerical policy",
+      "owner": "go-continuum-oracles",
+      "applicability": "Legacy first-order Go stepping and opt-in regularized adaptive quadrature under their separate policies. Accurate completed discharge requires positive rest area and rejects unsupported maximum-time and zero-rest compliance scopes.",
+      "tolerance": {
+        "id": "coupled-reference-v0alpha1",
+        "description": "Legacy complete-discharge time error decreases under refinement and is below 0.015 relative error on two named 2048-interval gamma 1.5 fixtures. Accurate solver tests use independent gamma 1.4/1.5 references and source-declared observable tolerances; caller relative tolerance 1e-12 to 0.1 and nonnegative absolute time tolerance bound an estimated quadrature error only, excluding path roundoff and physical-model error."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "phy-004-check-01",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/reference_test.go",
+          "name": "TestChokedHistoryConvergesToIndependentTimeSolution"
+        },
+        {
+          "id": "phy-004-check-02",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/reference_test.go",
+          "name": "TestSubsonicHistoryConvergesToIndependentTimeSolution"
+        },
+        {
+          "id": "phy-004-check-03",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/reference_test.go",
+          "name": "TestEqualizationTimeConvergesToIndependentCompleteSolution"
+        },
+        {
+          "id": "phy-004-check-04",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/reference_test.go",
+          "name": "TestGamma14HistoryMatchesPublishedDischargeRelations"
+        },
+        {
+          "id": "phy-004-check-05",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/accurate_test.go",
+          "name": "TestAccurateEqualizationMatchesIndependentReferences"
+        },
+        {
+          "id": "phy-004-check-06",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/accurate_test.go",
+          "name": "TestAccurateToleranceRefinementAgainstPublishedTime"
+        },
+        {
+          "id": "phy-004-check-07",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/accurate_test.go",
+          "name": "TestAccurateComplianceCapsMatchIndependentPrimitive"
+        },
+        {
+          "id": "phy-004-check-08",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/accurate_test.go",
+          "name": "TestAccurateOptionsAndWorkBudgetRefusals"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/coupledblowdown/reference_test.go",
+          "description": "internal/coupledblowdown/reference_test.go: choked and subsonic reference states, published limiting equations, decreasing fixed-time error, and complete-discharge error below 1.5 percent on two named 2048-interval fixtures"
+        },
+        {
+          "path": "docs/BLOWDOWN_REFERENCE.md",
+          "description": "Reference equations, supported envelopes, numerical policies and remaining limitations."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/coupledblowdown/accurate_test.go",
+          "description": "Tighter requested estimates cannot turn exhausted work or unsupported endpoint scope into a converged complete discharge."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Control event-time error across the supported envelope before ratifying full RES-002",
+      "related_benchmarks": [
+        {
+          "namespace": "verification-benchmark",
+          "id": "RES-002",
+          "relationship": "partial-support",
+          "scope": "Independent gamma 1.4 and 1.5 limiting cases and bounded refinement support the implemented closures only; estimated quadrature error is not a universal certified error bound."
+        }
+      ]
+    },
+    {
+      "id": "PHY-005",
+      "statement": "Numerical budgets and representability cannot masquerade as physical completion",
+      "owner": "go-continuum-oracles",
+      "applicability": "Go coupled history and restriction arithmetic distinguish authored no flow, physical endpoint, numerical tolerance, bounded work and representability refusal under the declared closure.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "phy-005-check-01",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/stepper_test.go",
+          "name": "TestTruncatedHistoryRetainsEveryCompletedStep"
+        },
+        {
+          "id": "phy-005-check-02",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/stepper_test.go",
+          "name": "TestTimeBudgetHasPriorityOverStepTruncation"
+        },
+        {
+          "id": "phy-005-check-03",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/stepper_test.go",
+          "name": "TestSimulationRevalidatesConfigAndRefusesReverseFlow"
+        },
+        {
+          "id": "phy-005-check-04",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/stepper_test.go",
+          "name": "TestPositiveUnrepresentableWithdrawalNeverClaimsEqualization"
+        },
+        {
+          "id": "phy-005-check-05",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/reference_test.go",
+          "name": "TestZeroRestAreaComplianceDoesNotEqualizeInFiniteTime"
+        },
+        {
+          "id": "phy-005-check-06",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/reference_test.go",
+          "name": "TestAuthoredTimeBoundaryNeverRoundsPastBudget"
+        },
+        {
+          "id": "phy-005-check-07",
+          "package": "./internal/coupledblowdown",
+          "file": "internal/coupledblowdown/reference_test.go",
+          "name": "TestChokingBoundaryAdmitsAdjacentPressureValues"
+        },
+        {
+          "id": "phy-005-check-08",
+          "package": "./internal/restrictionflow",
+          "file": "internal/restrictionflow/boundary_test.go",
+          "name": "TestUnderflowCannotMasqueradeAsNoFlow"
+        },
+        {
+          "id": "phy-005-check-09",
+          "package": "./internal/restrictionflow",
+          "file": "internal/restrictionflow/boundary_test.go",
+          "name": "TestComplianceUnderflowIsNotAnAuthoredClosedArea"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/coupledblowdown/stepper_test.go",
+          "description": "Coupled and restriction boundary tests for final samples, exact step counts, authored time limits, adverse pressure, adjacent choking, tiny positive flow, finite ledgers, and asymptotic compliance"
+        },
+        {
+          "path": "docs/BLOWDOWN_REFERENCE.md",
+          "description": "Reference equations, supported envelopes, numerical policies and remaining limitations."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/restrictionflow/boundary_test.go",
+          "description": "Step and time truncation, adverse pressure, adjacent choking values and asymptotic zero-rest compliance cannot be mislabeled ordinary physical equalization."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Carry explicit termination and numerical-policy evidence into the production core",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CLI-005",
+      "statement": "The coupled walkthrough binds its selected model and retained witness to the actual inputs and account",
+      "owner": "go-walk-oracle",
+      "applicability": "Current Go walk model selection, complete numerical account and versioned retained witness semantics. Self-consistency is not proof of execution, production identity or archive ratification.",
+      "tolerance": {
+        "id": "exact-v0alpha1",
+        "description": "Exact byte, token, structural equality or rejection predicates as declared by each named check; no numerical tolerance or statistical completeness claim."
+      },
+      "lifecycle": "executable-candidate",
+      "checks": [
+        {
+          "id": "cli-005-check-01",
+          "package": "./internal/walkcase",
+          "file": "internal/walkcase/walk_test.go",
+          "name": "TestOrdinarySyntheticWalkSupportsAnHonestAreaCounterfactual"
+        },
+        {
+          "id": "cli-005-check-02",
+          "package": "./internal/walkcase",
+          "file": "internal/walkcase/walk_test.go",
+          "name": "TestWitnessRequiresRetainedExpectationAndDetectsChangedInputs"
+        },
+        {
+          "id": "cli-005-check-03",
+          "package": "./internal/walkcase",
+          "file": "internal/walkcase/walk_test.go",
+          "name": "TestWitnessBindsCompleteNumericalAccountAndRejectsNonfiniteEncoding"
+        },
+        {
+          "id": "cli-005-check-04",
+          "package": "./internal/walkcase",
+          "file": "internal/walkcase/walk_test.go",
+          "name": "TestIncompatibleLawCannotRunSICalculation"
+        },
+        {
+          "id": "cli-005-check-05",
+          "package": "./internal/walkcase",
+          "file": "internal/walkcase/retained_test.go",
+          "name": "TestRetainedVerificationIsSelfConsistencyNotProofOfExecution"
+        },
+        {
+          "id": "cli-005-check-06",
+          "package": "./internal/walkcase",
+          "file": "internal/walkcase/retained_test.go",
+          "name": "TestRetainedReportRequiresCompleteCurrentAccountEvenAfterRehash"
+        },
+        {
+          "id": "cli-005-check-07",
+          "package": "./internal/cli",
+          "file": "internal/cli/walk_cli_test.go",
+          "name": "TestWalkCLIAllOperationsAndRetainedReconstruction"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "internal/walkcase/walk_test.go",
+          "description": "Walk package and CLI tests for incompatible contexts, strict shapes, history/claim/input mutations, retained expectation mismatch, and the low-pressure counterfactual"
+        },
+        {
+          "path": "testdata/walk/ordinary-low-pressure.json",
+          "description": "Retained input or manually authored conformance expectations for the declared checks."
+        }
+      ],
+      "counterexamples": [
+        {
+          "path": "internal/cli/walk_cli_test.go",
+          "description": "Changed inputs, incompatible law contexts, mutated history or claims and different retained expectations must fail the relevant witness checks."
+        }
+      ],
+      "milestone": "v0.8",
+      "direction": "Ratify production identity, archive, and canonical action contracts separately",
+      "related_benchmarks": []
+    },
+    {
+      "id": "ID-001",
+      "statement": "Replay presents a record and never claims recurrence",
+      "owner": "identity-contract",
+      "applicability": "Planned production replay semantics across archives and user interfaces. Existing candidate retained reports do not ratify this product-wide invariant.",
+      "tolerance": {
+        "id": "planned-v0alpha1",
+        "description": "No executable acceptance tolerance is ratified for this planned invariant. A future fixture must name its observable, applicability and exact or numerical comparison before promotion."
+      },
+      "lifecycle": "design-candidate",
+      "checks": [],
+      "evidence": [
+        {
+          "path": "docs/SNOWFLAKES.md",
+          "description": "Owning design reference only. Executable evidence and counterexamples remain open."
+        }
+      ],
+      "counterexamples": [],
+      "milestone": "v0.9",
+      "direction": "Archive and UI language conformance",
+      "related_benchmarks": []
+    },
+    {
+      "id": "ID-002",
+      "statement": "Re-enactment receives a fresh record nonce without inventing a source-law identity change",
+      "owner": "identity-contract",
+      "applicability": "Planned production re-enactment and record nonce semantics independent of source-law identity.",
+      "tolerance": {
+        "id": "planned-v0alpha1",
+        "description": "No executable acceptance tolerance is ratified for this planned invariant. A future fixture must name its observable, applicability and exact or numerical comparison before promotion."
+      },
+      "lifecycle": "design-candidate",
+      "checks": [],
+      "evidence": [
+        {
+          "path": "docs/SNOWFLAKES.md",
+          "description": "Owning design reference only. Executable evidence and counterexamples remain open."
+        }
+      ],
+      "counterexamples": [],
+      "milestone": "v0.9",
+      "direction": "Deterministic identity property tests",
+      "related_benchmarks": []
+    },
+    {
+      "id": "DET-001",
+      "statement": "Presentation streams cannot change physical identity",
+      "owner": "identity-contract",
+      "applicability": "Planned separation of presentation randomness and physical identity across production streams.",
+      "tolerance": {
+        "id": "planned-v0alpha1",
+        "description": "No executable acceptance tolerance is ratified for this planned invariant. A future fixture must name its observable, applicability and exact or numerical comparison before promotion."
+      },
+      "lifecycle": "design-candidate",
+      "checks": [],
+      "evidence": [
+        {
+          "path": "docs/GAMEPLAY.md",
+          "description": "Owning design reference only. Executable evidence and counterexamples remain open."
+        }
+      ],
+      "counterexamples": [],
+      "milestone": "v0.8",
+      "direction": "Same-trace differential tests",
+      "related_benchmarks": []
+    },
+    {
+      "id": "SURF-001",
+      "statement": "CLI, TUI, native, MCP, and A2A lower to canonical actions",
+      "owner": "surface-contract",
+      "applicability": "Planned lowering of every production surface to canonical actions and one service boundary.",
+      "tolerance": {
+        "id": "planned-v0alpha1",
+        "description": "No executable acceptance tolerance is ratified for this planned invariant. A future fixture must name its observable, applicability and exact or numerical comparison before promotion."
+      },
+      "lifecycle": "design-candidate",
+      "checks": [],
+      "evidence": [
+        {
+          "path": "docs/INTERFACES.md",
+          "description": "Owning design reference only. Executable evidence and counterexamples remain open."
+        }
+      ],
+      "counterexamples": [],
+      "milestone": "v0.8",
+      "direction": "Adapter golden and differential fuzz tests",
+      "related_benchmarks": []
+    },
+    {
+      "id": "ART-001",
+      "statement": "Spatial artifacts declare projection, distortion, and loss",
+      "owner": "artifact-contract",
+      "applicability": "Planned spatial artifacts and manifests that declare projection, distortion and information loss.",
+      "tolerance": {
+        "id": "planned-v0alpha1",
+        "description": "No executable acceptance tolerance is ratified for this planned invariant. A future fixture must name its observable, applicability and exact or numerical comparison before promotion."
+      },
+      "lifecycle": "design-candidate",
+      "checks": [],
+      "evidence": [
+        {
+          "path": "docs/SNOWFLAKES.md",
+          "description": "Owning design reference only. Executable evidence and counterexamples remain open."
+        }
+      ],
+      "counterexamples": [],
+      "milestone": "v0.15",
+      "direction": "Feature and artifact manifest verification",
+      "related_benchmarks": []
+    },
+    {
+      "id": "LOC-001",
+      "statement": "Localization cannot change case results, applicable identity sets, or score",
+      "owner": "localization-contract",
+      "applicability": "Planned cross-locale identity, case result and score invariance on one authoritative trace.",
+      "tolerance": {
+        "id": "planned-v0alpha1",
+        "description": "No executable acceptance tolerance is ratified for this planned invariant. A future fixture must name its observable, applicability and exact or numerical comparison before promotion."
+      },
+      "lifecycle": "design-candidate",
+      "checks": [],
+      "evidence": [
+        {
+          "path": "docs/LOCALIZATION.md",
+          "description": "Owning design reference only. Executable evidence and counterexamples remain open."
+        }
+      ],
+      "counterexamples": [],
+      "milestone": "v0.8",
+      "direction": "Cross-locale same-trace tests",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CMP-001",
+      "statement": "Backend choice cannot silently change laws, rules, equations, or precision class",
+      "owner": "compute-contract",
+      "applicability": "Planned backend selection preserving declared laws, rules, equation identity and precision class.",
+      "tolerance": {
+        "id": "planned-v0alpha1",
+        "description": "No executable acceptance tolerance is ratified for this planned invariant. A future fixture must name its observable, applicability and exact or numerical comparison before promotion."
+      },
+      "lifecycle": "design-candidate",
+      "checks": [],
+      "evidence": [
+        {
+          "path": "docs/COMPUTE.md",
+          "description": "Owning design reference only. Executable evidence and counterexamples remain open."
+        }
+      ],
+      "counterexamples": [],
+      "milestone": "v0.8",
+      "direction": "Capability refusal and scenario-digest tests",
+      "related_benchmarks": []
+    },
+    {
+      "id": "CMP-002",
+      "statement": "Accelerated results preserve certified observables within tolerance",
+      "owner": "compute-contract",
+      "applicability": "Planned differential certification of accelerated results for specific observables and approved backend tolerances.",
+      "tolerance": {
+        "id": "planned-v0alpha1",
+        "description": "No executable acceptance tolerance is ratified for this planned invariant. A future fixture must name its observable, applicability and exact or numerical comparison before promotion."
+      },
+      "lifecycle": "design-candidate",
+      "checks": [],
+      "evidence": [
+        {
+          "path": "docs/COMPUTE.md",
+          "description": "Owning design reference only. Executable evidence and counterexamples remain open."
+        }
+      ],
+      "counterexamples": [],
+      "milestone": "v0.17",
+      "direction": "CPU, Kokkos, CUDA, HIP, and SYCL differential suite",
+      "related_benchmarks": []
+    }
+  ]
+}

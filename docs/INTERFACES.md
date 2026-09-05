@@ -21,6 +21,12 @@ a CLI archive, it is not ready to ship.
 
 The planned Rust workspace has strict dependency direction:
 
+The delivered four-crate subset is described in [RUST_CORE.md](RUST_CORE.md).
+Its local reservoir [session profile](PLAY_SESSION.md) supplies native command
+streaming, read-only observations, and retained integrity replay. The general
+architecture below remains the broader target; it does not imply delivered
+checkpoints, remote protocols, or certified archives.
+
 ```text
 fart-domain      quantities, laws, schemas, regimes, scenario types
 fart-core        deterministic solvers and proof ledgers
@@ -802,9 +808,9 @@ hardened runtime, notarization, and stapling. Windows uses Authenticode with a
 trusted timestamp. Linux support names its glibc baseline and package format
 instead of claiming one build runs everywhere.
 
-The first experimental `v0.7.0-alpha.1` prerelease is a source snapshot of the
-verified Go oracle and portable skill. It names its exact commit and CI
-evidence. It does not distribute signed executables or claim the full packaging,
+The current experimental releases are source snapshots of the verified Go
+oracle, native Rust subset, and portable skill. Each names its exact commit
+and CI evidence. They do not distribute signed executables or claim the full packaging,
 platform-signing, SBOM, attestation, or reproducible-build gates. Those gates
 remain open for binary distribution and stable releases.
 

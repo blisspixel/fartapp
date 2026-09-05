@@ -22,11 +22,22 @@ allow = [
     "itoa@1.0.18",
     "memchr@2.8.3",
     "zmij@1.0.23",
+    "serde_json_canonicalizer@0.3.2",
+    "ryu-js@1.0.3",
+    "sha2@0.11.0",
+    "cfg-if@1.0.4",
+    "cpufeatures@0.3.1",
+    "digest@0.11.3",
+    "block-buffer@0.12.1",
+    "crypto-common@0.2.2",
+    "hybrid-array@0.4.14",
+    "typenum@1.20.1",
+    "libc@0.2.189",
 ]
 
 [[bans.features]]
 crate = "serde"
-allow = ["std"]
+allow = ["default", "std"]
 exact = true
 
 [[bans.features]]
@@ -36,11 +47,66 @@ exact = true
 
 [[bans.features]]
 crate = "serde_json"
-allow = ["std", "float_roundtrip"]
+allow = ["default", "std", "float_roundtrip"]
+exact = true
+
+[[bans.features]]
+crate = "sha2"
+allow = []
+exact = true
+
+[[bans.features]]
+crate = "serde_json_canonicalizer"
+allow = []
+exact = true
+
+[[bans.features]]
+crate = "ryu-js"
+allow = []
+exact = true
+
+[[bans.features]]
+crate = "digest"
+allow = ["default", "block-api"]
+exact = true
+
+[[bans.features]]
+crate = "crypto-common"
+allow = []
+exact = true
+
+[[bans.features]]
+crate = "block-buffer"
+allow = []
+exact = true
+
+[[bans.features]]
+crate = "hybrid-array"
+allow = []
+exact = true
+
+[[bans.features]]
+crate = "typenum"
+allow = ["const-generics"]
+exact = true
+
+[[bans.features]]
+crate = "cpufeatures"
+allow = []
+exact = true
+
+[[bans.features]]
+crate = "cfg-if"
+allow = []
+exact = true
+
+[[bans.features]]
+crate = "libc"
+allow = []
 exact = true
 
 [bans.build]
-allow-build-scripts = ["serde@1.0.229", "serde_core@1.0.229", "serde_json@1.0.151", "zmij@1.0.23"]
+allow-build-scripts = ["serde@1.0.229", "serde_core@1.0.229", "serde_json@1.0.151", "zmij@1.0.23", "libc@0.2.189"]
 
 [sources]
 unknown-registry = "deny"

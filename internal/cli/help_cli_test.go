@@ -37,8 +37,8 @@ func TestHelpRoutes(t *testing.T) {
 		{name: "restriction history leaf", args: []string{"fartapp", "restriction", "history", "unopened.json", "--help"}, want: restrictionHistoryHelp},
 		{name: "walk topic", args: []string{"fartapp", "help", "walk"}, want: walkHelp},
 		{name: "walk family", args: []string{"fartapp", "walk", "help"}, want: walkHelp},
-		{name: "walk simulate topic", args: []string{"fartapp", "help", "walk", "simulate"}, want: walkOperationHelp},
-		{name: "walk simulate leaf", args: []string{"fartapp", "walk", "simulate", "unopened.json", "--help"}, want: walkOperationHelp},
+		{name: "walk simulate topic", args: []string{"fartapp", "help", "walk", "simulate"}, want: walkHelpForOperation("simulate")},
+		{name: "walk simulate leaf", args: []string{"fartapp", "walk", "simulate", "unopened.json", "--help"}, want: walkHelpForOperation("simulate")},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -55,22 +55,21 @@ func TestHelpRoutes(t *testing.T) {
 func TestRootHelpAdvertisesOnlyCurrentSurface(t *testing.T) {
 	normalized := strings.Join(strings.Fields(rootHelp), " ")
 	for _, required := range []string{
-		"permanent v0.6 legacy string oracle",
-		"law list",
-		"law inspect",
-		"scenario validate",
-		"reservoir predict",
-		"restriction predict",
-		"restriction history",
-		"walk",
-		"no implicit Earth or other world",
-		"current probe resolves declared law contexts and capability references only",
-		"currently English presentations",
-		"does not assert shared language or meaning",
+		"permanent v0.6 toy output, levels 1 to 5",
+		"law List contexts", "scenario Validate", "reservoir Predict",
+		"restriction Predict", "walk Explore", "evidence Capture",
+		"assurance Inspect declared", "help Show contextual",
+		"fartapp help [command [operation]]",
+		"Predictors require explicit SI inputs and a named model",
+		"executes no mapping or realization",
+		"Help and reports use English",
 	} {
 		if !strings.Contains(normalized, required) {
 			t.Errorf("root help omits %q", required)
 		}
+	}
+	if strings.Count(rootHelp, "\n") > 40 || strings.Contains(rootHelp, "<predict|") {
+		t.Fatal("root help expanded beyond its compact command index")
 	}
 	for _, planned := range []string{
 		"fartapp quick",
@@ -152,5 +151,59 @@ func TestHelpHelpersAndOutputFailure(t *testing.T) {
 	if code := run([]string{"fartapp", "--help"}, failingWriter{}, &stderr); code != 1 ||
 		!strings.HasPrefix(stderr.String(), "write output: ") {
 		t.Fatalf("output failure = (%d, %q)", code, stderr.String())
+	}
+}
+
+func TestWalkLeafHelpIsSpecificAndDoesNotReadInput(t *testing.T) {
+	for _, operation := range []string{"predict", "simulate", "inspect", "explain", "branch", "certify", "witness", "reconstruct"} {
+		t.Run(operation, func(t *testing.T) {
+			var topic, leaf, stderr bytes.Buffer
+			if code := Run([]string{"fartapp", "help", "walk", operation}, tripwireReader{}, &topic, &stderr); code != 0 {
+				t.Fatalf("topic help status = %d", code)
+			}
+			if code := Run([]string{"fartapp", "walk", operation, "unopened.json", "--help"}, tripwireReader{}, &leaf, &stderr); code != 0 || stderr.Len() != 0 {
+				t.Fatalf("leaf help = %d, %q", code, stderr.String())
+			}
+			if !bytes.Equal(topic.Bytes(), leaf.Bytes()) {
+				t.Fatal("topic and leaf help differ")
+			}
+			for _, required := range []string{
+				"fartapp walk " + operation + " <case.json|->", "65,536 bytes",
+				"standard input", "--format json", "without reading input",
+				"testdata/walk/ordinary-low-pressure.json", "Exit status:",
+			} {
+				if !strings.Contains(leaf.String(), required) {
+					t.Errorf("help omits %q", required)
+				}
+			}
+			if strings.Contains(leaf.String(), "<predict|") || strings.Count(leaf.String(), "\n") > 45 {
+				t.Fatal("leaf help repeated the command index or unrelated operation guidance")
+			}
+		})
+	}
+	if !strings.Contains(walkHelpForOperation("branch"), "1e-6 with 2e-6 m^2") ||
+		!strings.Contains(walkHelpForOperation("reconstruct"), "set expected_witness") ||
+		!strings.Contains(walkHelpForOperation("simulate"), "budgets may truncate") ||
+		strings.Contains(walkHelpForOperation("inspect"), "Set branch.prescribed_area_m2") {
+		t.Fatal("operation guidance lost an evidence boundary or leaked unrelated setup")
+	}
+	if walkHelpForOperation("untrusted\noperation") != "" {
+		t.Fatal("unknown operation produced help")
+	}
+}
+
+func TestScientificLeafHelpProvidesCompleteStartingContract(t *testing.T) {
+	for _, args := range [][]string{
+		{"reservoir", "predict"}, {"restriction", "predict"}, {"restriction", "history"}, {"walk", "refine"},
+	} {
+		var stdout, stderr bytes.Buffer
+		if code := Run(append([]string{"fartapp", "help"}, args...), tripwireReader{}, &stdout, &stderr); code != 0 || stderr.Len() != 0 {
+			t.Fatalf("help %q = %d, %q", args, code, stderr.String())
+		}
+		for _, required := range []string{"Usage:", "Arguments:", "standard input", "65,536 bytes", "--format", "Example:", "testdata/", "Exit status:"} {
+			if !strings.Contains(stdout.String(), required) {
+				t.Errorf("help %q omits %q", args, required)
+			}
+		}
 	}
 }

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"strconv"
 	"strings"
 
 	"github.com/blisspixel/fartapp/internal/restrictionhistoryprediction"
@@ -55,6 +54,9 @@ Limits and effects:
   prescribed or a bounded linear compliance of pressure difference. Prediction
   is read-only and commits no case.
 
+Example:
+  fartapp restriction predict testdata/restriction/gamma15-choked.json
+
 Exit status:
   0  A prediction was produced.
   1  Usage, input, syntax, schema, model, invariant, or output failure.
@@ -78,6 +80,9 @@ Options:
 Limits and effects:
   Input is limited to 65,536 bytes and 256 samples. Times must be nonnegative
   and strictly increasing. Stagnation is frozen; this is not a blowdown.
+
+Example:
+  fartapp restriction history testdata/restriction/gamma15-choked-history.json
 
 Exit status:
   0  A history was produced.
@@ -105,7 +110,7 @@ func runRestriction(args []string, stdin io.Reader, stdout, stderr io.Writer) in
 		return writeText(stdout, stderr, restrictionHelp)
 	}
 	if args[0] != "predict" && args[0] != "history" {
-		writeDiagnostic(stderr, "unknown restriction command %s\n", quoteInput(args[0]))
+		writeDiagnostic(stderr, "unknown restriction command %s; run 'fartapp help restriction'\n", quoteInput(args[0]))
 		return 1
 	}
 	command := args[0]
@@ -177,13 +182,7 @@ func classifyRestrictionInputError(err error) string {
 }
 
 func writeRestrictionDiagnostic(stderr io.Writer, diagnostic restrictionprediction.Diagnostic) {
-	writeDiagnostic(
-		stderr,
-		"restriction prediction failed: %s %s at %s\n",
-		diagnostic.Code,
-		diagnostic.ReasonCode,
-		strconv.QuoteToASCII(diagnostic.Path),
-	)
+	writePredictionDiagnostic(stderr, "restriction predict", diagnostic.Code, diagnostic.ReasonCode, diagnostic.Path)
 }
 
 func formatRestrictionPrediction(report restrictionprediction.Report) string {
@@ -239,6 +238,7 @@ func formatRestrictionPrediction(report restrictionprediction.Report) string {
 	fmt.Fprintf(&output, "Operation nonclaims: %s\n", strings.Join(report.Nonclaims.Operation, ", "))
 	fmt.Fprintf(&output, "Evidence nonclaims: %s\n", strings.Join(report.Nonclaims.Evidence, ", "))
 	output.WriteString("Ambient inputs: none\n")
+	output.WriteString(numericPresentationNote)
 	return output.String()
 }
 
@@ -258,13 +258,8 @@ func writeRestrictionHistory(
 		}
 		return 1
 	}
-	writeDiagnostic(
-		stderr,
-		"restriction history failed: %s %s at %s\n",
-		report.Diagnostics[0].Code,
-		report.Diagnostics[0].ReasonCode,
-		strconv.QuoteToASCII(report.Diagnostics[0].Path),
-	)
+	diagnostic := report.Diagnostics[0]
+	writePredictionDiagnostic(stderr, "restriction history", diagnostic.Code, diagnostic.ReasonCode, diagnostic.Path)
 	return 1
 }
 
@@ -333,5 +328,6 @@ func formatRestrictionHistory(report restrictionhistoryprediction.Report) string
 	fmt.Fprintf(&output, "\nAssumptions: %s\n", strings.Join(report.Assumptions, ", "))
 	fmt.Fprintf(&output, "Model nonclaims: %s\n", strings.Join(report.Nonclaims.Model, ", "))
 	output.WriteString("Ambient inputs: none\n")
+	output.WriteString(numericPresentationNote)
 	return output.String()
 }

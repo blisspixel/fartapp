@@ -30,6 +30,13 @@ server. Protocol adapters are optional edges over the same service.
 
 ## Canonical environment contract
 
+The implemented [local reservoir profile](PLAY_SESSION.md) is a bounded subset:
+one explicit operator, immutable baseline predictions, no measurement
+interaction, full-reservoir knowledge, costed attempts, exact retries, and
+retained integrity replay. The generalized contract below remains a design
+target. Local session references are instance correlation data, not the
+expiring authenticated play handles described for future remote operation.
+
 The internal contract is intentionally close to a reset and step environment.
 Its revisions and transitions belong to the PlayService control plane. They do
 not imply discrete source-law time, Markov state, or familiar causality:

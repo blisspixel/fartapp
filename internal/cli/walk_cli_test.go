@@ -43,10 +43,10 @@ func TestWalkCLISimulateAndFailures(t *testing.T) {
 		args []string
 		want string
 	}{
-		{args: []string{"fartapp", "walk"}, want: "usage: fartapp walk <predict|simulate|inspect|explain|branch|certify|witness|reconstruct> <case.json|-> [--format text|json]\n"},
-		{args: []string{"fartapp", "walk", "dance"}, want: "unknown walk command \"dance\"\n"},
+		{args: []string{"fartapp", "walk"}, want: "usage: fartapp walk <operation> <case.json|-> [options]; run 'fartapp help walk'\n"},
+		{args: []string{"fartapp", "walk", "dance"}, want: "unknown walk command \"dance\"; run 'fartapp help walk'\n"},
 		{args: []string{"fartapp", "walk", "simulate"}, want: "usage: fartapp walk simulate <case.json|-> [--format text|json]\n"},
-		{args: []string{"fartapp", "walk", "simulate", "missing.json"}, want: "walk simulate failed: FART-E-IO-0005 input_not_found at \"/\"\n"},
+		{args: []string{"fartapp", "walk", "simulate", "missing.json"}, want: "walk simulate failed: FART-E-IO-0005 input_not_found at \"/\"\n  Check the input path, or use '-' to read standard input.\n"},
 	}
 	for _, test := range tests {
 		stdout.Reset()

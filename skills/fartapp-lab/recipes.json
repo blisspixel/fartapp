@@ -3,6 +3,14 @@
   "working_directory": "plugin-root",
   "recipes": [
     {
+      "id": "reservoir-assurance-metadata",
+      "args": ["assurance", "inspect", "PHY-001", "--format", "json"],
+      "expect": {
+        "exit_code": 0,
+        "equals": {"/schema": "fart.assurance-inspection/v0alpha1", "/invariant/id": "PHY-001", "/invariant/lifecycle": "executable-candidate", "/evidence_status": "not-executed", "/applicability_status": "not-evaluated"}
+      }
+    },
+    {
       "id": "law-list",
       "args": ["law", "list", "--format", "json"],
       "expect": {

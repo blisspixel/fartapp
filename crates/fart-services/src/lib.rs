@@ -1,9 +1,12 @@
-//! Stateless, bounded native adapters for the experimental reservoir model.
+//! Bounded native adapters for the experimental reservoir model.
 //!
-//! This is an executable service candidate, not the planned PlayService, law
-//! capability boundary, case identity, protocol server, or archive contract.
+//! The local experiment session is a narrow service candidate, not a general
+//! law capability boundary, ratified case identity, protocol server, or archive.
 
+mod json;
 mod parse;
+pub mod play;
+pub mod presentation;
 mod report;
 
 use fart_core::{Transition, withdraw_fraction};

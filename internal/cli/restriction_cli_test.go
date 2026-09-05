@@ -40,22 +40,23 @@ CONTROL SECTION
   Throat Mach:    1
   Exit pressure:  64000 Pa
   Exit temperature: 320 K
-  Exit speed:     309.83866769659335 m/s
-  Mass flow:      3.0983866769659336 kg/s
-  Sonic mass flow: 3.0983866769659336 kg/s
+  Exit speed:     309.839 m/s
+  Mass flow:      3.09839 kg/s
+  Sonic mass flow: 3.09839 kg/s
   Thrust:         1100 N
   Recoil:         -1100 N
 
 BALANCE CLAIMS
-  restriction.mass-flow-definition: satisfied-within-roundoff; residual 0 kg/s; tolerance 4.4030722917880405e-14 kg/s
-  restriction.thrust-control-surface: satisfied-within-roundoff; residual 0 N; tolerance 1.5631940186722204e-11 N
-  restriction.recoil-action-reaction: satisfied-within-roundoff; residual 0 N; tolerance 1.5631940186722204e-11 N
+  restriction.mass-flow-definition: satisfied-within-roundoff; residual 0 kg/s; tolerance 4.40307e-14 kg/s
+  restriction.thrust-control-surface: satisfied-within-roundoff; residual 0 N; tolerance 1.56319e-11 N
+  restriction.recoil-action-reaction: satisfied-within-roundoff; residual 0 N; tolerance 1.56319e-11 N
 
 Assumptions: calorically-perfect-gas, quasi-steady-flow, isentropic-control-section, converging-restriction-only, discharge-coefficient-scales-mass-flow-only, no-reverse-flow, no-shock-inside-restriction, prescribed-or-linear-quasi-static-area
 Model nonclaims: elapsed-time-history, reservoir-mass-energy-coupling, shock-containing-or-underexpanded-plume, viscous-resolved-vena-contracta, phase-change-and-reaction, acoustics
 Operation nonclaims: case-commitment, certificate-issuance
 Evidence nonclaims: empirical-validation
 Ambient inputs: none
+Human values: six significant digits; full precision in JSON.
 `
 
 const expectedRestrictionJSONSHA256 = "51d393906ab6eee7e07cbc730a2058cdbad63431dbc7f400d0624119fe3db0e4"
@@ -122,11 +123,11 @@ func TestRestrictionCLIFailures(t *testing.T) {
 		want string
 	}{
 		{name: "family usage", args: []string{"fartapp", "restriction"}, want: "usage: fartapp restriction <predict|history> <request.json|-> [--format text|json]\n"},
-		{name: "unknown command", args: []string{"fartapp", "restriction", "release"}, want: "unknown restriction command \"release\"\n"},
+		{name: "unknown command", args: []string{"fartapp", "restriction", "release"}, want: "unknown restriction command \"release\"; run 'fartapp help restriction'\n"},
 		{name: "missing source", args: []string{"fartapp", "restriction", "predict"}, want: "usage: fartapp restriction predict <request.json|-> [--format text|json]\n"},
 		{name: "extra source", args: []string{"fartapp", "restriction", "predict", "a", "b"}, want: "usage: fartapp restriction predict <request.json|-> [--format text|json]\n"},
 		{name: "bad option", args: []string{"fartapp", "restriction", "predict", "-", "--loud"}, want: "invalid restriction predict: unknown option \"--loud\"\n"},
-		{name: "missing file", args: []string{"fartapp", "restriction", "predict", "missing.json"}, want: "restriction prediction failed: FART-E-IO-0003 input_not_found at \"/\"\n"},
+		{name: "missing file", args: []string{"fartapp", "restriction", "predict", "missing.json"}, want: "restriction prediction failed: FART-E-IO-0003 input_not_found at \"/\"\n  Check the input path, or use '-' to read standard input.\n"},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -169,7 +170,7 @@ func TestRestrictionCLIInputAndOutputFailures(t *testing.T) {
 		&stderr,
 	)
 	if code != 1 || stdout.Len() != 0 ||
-		stderr.String() != "restriction prediction failed: FART-E-IO-0003 input_unavailable at \"/\"\n" {
+		stderr.String() != "restriction prediction failed: FART-E-IO-0003 input_unavailable at \"/\"\n  Check the input file or stream, then retry with a readable source.\n" {
 		t.Fatalf("read failure = (%d, %q, %q)", code, stdout.String(), stderr.String())
 	}
 

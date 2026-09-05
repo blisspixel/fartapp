@@ -16,6 +16,7 @@ type fuzzTarget struct {
 
 var fuzzTargets = []fuzzTarget{
 	{"./internal/cli", "FuzzRun"},
+	{"./internal/assurance", "FuzzParse"},
 	{"./internal/registrationauthoritybinding", "FuzzCompareExactAuthorityBinding"},
 	{"./internal/snapshotregistrationbinding", "FuzzComposePositive"},
 	{"./internal/authoritymatching", "FuzzFiniteAuthorityMatching"},

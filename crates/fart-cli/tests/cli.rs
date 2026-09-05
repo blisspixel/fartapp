@@ -12,6 +12,7 @@ use serde_json::Value;
 
 const FIXTURE: &[u8] =
     include_bytes!("../../../testdata/reservoir/synthetic-mixture-adiabatic.json");
+const PLAY_SCRIPT: &[u8] = include_bytes!("../../../testdata/play/reservoir-session.jsonl");
 
 fn run(args: &[&str], data: &[u8]) -> (u8, Vec<u8>, Vec<u8>) {
     let args: Vec<_> = args.iter().map(OsString::from).collect();
@@ -78,6 +79,12 @@ fn all_help_routes_are_explicit_and_do_not_read_input() {
         vec!["help", "reservoir", "predict"],
         vec!["reservoir", "--help"],
         vec!["reservoir", "predict", "--help"],
+        vec!["help", "play"],
+        vec!["help", "play", "run"],
+        vec!["help", "play", "replay"],
+        vec!["play", "--help"],
+        vec!["play", "run", "--help"],
+        vec!["play", "replay", "--help"],
     ] {
         let arguments: Vec<_> = args.iter().map(OsString::from).collect();
         let (mut stdout, mut stderr) = (Vec::new(), Vec::new());
@@ -87,8 +94,16 @@ fn all_help_routes_are_explicit_and_do_not_read_input() {
             0
         );
         let text = String::from_utf8(stdout).unwrap();
-        assert!(text.contains("experimental native Rust CLI"));
-        assert!(text.contains("no PlayService"));
+        assert!(text.contains("Usage:"));
+        if args.contains(&"reservoir") {
+            assert!(text.starts_with("RESERVOIR PREDICT\n"));
+            assert!(text.contains("65,536"));
+        } else if args.contains(&"play") {
+            assert!(text.contains("play"));
+            assert!(!text.contains("permanent toy"));
+        } else {
+            assert!(text.contains("experimental native Rust CLI"));
+        }
         assert!(stderr.is_empty());
     }
 }
@@ -98,7 +113,7 @@ fn usage_errors_do_not_produce_success_output() {
     for args in [
         vec![],
         vec!["1", "2"],
-        vec!["help", "play"],
+        vec!["help", "unknown"],
         vec!["reservoir"],
         vec!["reservoir", "simulate"],
         vec!["reservoir", "predict"],
@@ -116,6 +131,16 @@ fn usage_errors_do_not_produce_success_output() {
         vec!["reservoir", "predict", "-", "--help", "--help"],
         vec!["reservoir", "predict", "-", "--unknown"],
         vec!["reservoir", "predict", "one.json", "two.json"],
+        vec!["play"],
+        vec!["play", "unknown"],
+        vec!["play", "run"],
+        vec!["play", "replay"],
+        vec!["play", "run", "-", "--format", "json"],
+        vec!["play", "replay", "-", "--format", "jsonl"],
+        vec!["play", "run", "-", "--format", "text", "--format", "text"],
+        vec!["play", "run", "--help", "--help"],
+        vec!["play", "run", "-", "--bad"],
+        vec!["play", "run", "one", "two"],
     ] {
         let (code, stdout, stderr) = run(&args, FIXTURE);
         assert_eq!(code, 1, "{args:?}");
@@ -271,4 +296,365 @@ fn read_budget_and_io_failures_are_observable() {
         ),
         1
     );
+}
+
+#[test]
+fn play_cli_and_direct_service_return_the_same_literal_trace_and_evidence() {
+    use fart_services::play::PlayService;
+    let mut service = PlayService::new();
+    let mut expected = String::new();
+    for command in std::str::from_utf8(PLAY_SCRIPT).unwrap().lines() {
+        expected.push_str(&service.process_json(command.as_bytes()).to_json());
+        expected.push('\n');
+    }
+    let summary = service.end_of_input();
+    expected.push_str(&summary.to_json());
+    expected.push('\n');
+    let args = ["play", "run", "-", "--format", "jsonl"];
+    let (code, stdout, stderr) = run(&args, PLAY_SCRIPT);
+    assert_eq!(code, 0);
+    assert_eq!(stdout, expected.as_bytes());
+    assert!(stderr.is_empty());
+    let rows: Vec<Value> = expected
+        .lines()
+        .map(|line| serde_json::from_str(line).unwrap())
+        .collect();
+    assert_eq!(rows.len(), 9);
+    assert_eq!(rows[1], rows[3]);
+    assert_eq!(rows[1], rows[7]);
+    assert_eq!(rows[8]["complete"], true);
+    assert_eq!(rows[8]["revision"], 3);
+    assert_eq!(rows[8]["attempts_remaining"], 2);
+
+    let directory = TempDirectory::new();
+    let path = directory.0.join("play commands.jsonl");
+    fs::write(&path, PLAY_SCRIPT).unwrap();
+    let result = Command::new(env!("CARGO_BIN_EXE_fart"))
+        .args(["play", "run"])
+        .arg(&path)
+        .args(["--format", "jsonl"])
+        .output()
+        .unwrap();
+    assert!(result.status.success());
+    assert_eq!(result.stdout, stdout);
+    assert!(result.stderr.is_empty());
+    assert_eq!(fs::read(path).unwrap(), PLAY_SCRIPT);
+    let (code, transcript, stderr) =
+        run(&["play", "run", "-", "--format", "transcript"], PLAY_SCRIPT);
+    assert_eq!(code, 0);
+    assert!(stderr.is_empty());
+    assert_eq!(
+        std::str::from_utf8(&transcript).unwrap().trim_end(),
+        summary.transcript().unwrap().to_json()
+    );
+    for format in ["text", "json"] {
+        let (code, replayed, stderr) =
+            run(&["play", "replay", "-", "--format", format], &transcript);
+        assert_eq!(code, 0);
+        assert!(!replayed.is_empty());
+        assert!(stderr.is_empty());
+    }
+    let (code, text, stderr) = run(&["play", "run", "-"], PLAY_SCRIPT);
+    assert_eq!(code, 0);
+    assert!(stderr.is_empty());
+    assert!(
+        std::str::from_utf8(&text)
+            .unwrap()
+            .contains("PLAY RUN FINISHED")
+    );
+}
+
+#[test]
+fn play_eof_preserves_unfinished_evidence_and_replay_is_read_only() {
+    let unfinished = std::str::from_utf8(PLAY_SCRIPT)
+        .unwrap()
+        .lines()
+        .take(6)
+        .collect::<Vec<_>>()
+        .join("\n");
+    let (code, retained, stderr) = run(
+        &["play", "run", "-", "--format", "transcript"],
+        unfinished.as_bytes(),
+    );
+    assert_eq!(code, 1);
+    assert!(stderr.is_empty());
+    let value: Value = serde_json::from_slice(&retained).unwrap();
+    assert_eq!(value["summary"]["complete"], false);
+    assert_eq!(value["summary"]["revision"], 2);
+    let before = retained.clone();
+    let (code, projected, stderr) = run(&["play", "replay", "-", "--format", "json"], &retained);
+    assert_eq!(code, 0);
+    assert!(stderr.is_empty());
+    let projected: Value = serde_json::from_slice(&projected).unwrap();
+    assert_eq!(projected["complete"], false);
+    assert_eq!(retained, before);
+    let (code, stdout, stderr) = run(&["play", "run", "-", "--format", "transcript"], b"");
+    assert_eq!(code, 1);
+    assert!(stdout.is_empty());
+    assert!(
+        std::str::from_utf8(&stderr)
+            .unwrap()
+            .contains("never started")
+    );
+
+    for format in ["text", "json"] {
+        let (code, stdout, stderr) = run(&["play", "replay", "-", "--format", format], b"{}");
+        assert_eq!(code, 1);
+        assert_eq!(stdout.is_empty(), format == "text");
+        assert_eq!(stderr.is_empty(), format == "json");
+    }
+    let (code, stdout, stderr) = run(&["play", "replay", "missing-play-evidence.json"], b"");
+    assert_eq!(code, 1);
+    assert!(stdout.is_empty());
+    assert!(
+        std::str::from_utf8(&stderr)
+            .unwrap()
+            .contains("check the path")
+    );
+}
+
+struct FragmentedReader<'a> {
+    bytes: &'a [u8],
+    width: usize,
+}
+impl Read for FragmentedReader<'_> {
+    fn read(&mut self, output: &mut [u8]) -> io::Result<usize> {
+        let count = self.width.min(output.len()).min(self.bytes.len());
+        output[..count].copy_from_slice(&self.bytes[..count]);
+        self.bytes = &self.bytes[count..];
+        Ok(count)
+    }
+}
+
+struct ShortWriter {
+    bytes: Vec<u8>,
+    flushes: usize,
+    fail_flush: bool,
+}
+impl Write for ShortWriter {
+    fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
+        let count = bytes.len().min(7);
+        self.bytes.extend_from_slice(&bytes[..count]);
+        Ok(count)
+    }
+    fn flush(&mut self) -> io::Result<()> {
+        self.flushes += 1;
+        if self.fail_flush {
+            Err(io::Error::other("flush failed"))
+        } else {
+            Ok(())
+        }
+    }
+}
+
+#[test]
+fn play_framing_is_portable_and_short_writes_flush_each_receipt() {
+    let args = ["play", "run", "-", "--format", "jsonl"].map(OsString::from);
+    let (_, expected, _) = run(&["play", "run", "-", "--format", "jsonl"], PLAY_SCRIPT);
+    for separator in ["\n", "\r\n"] {
+        let script = std::str::from_utf8(PLAY_SCRIPT)
+            .unwrap()
+            .lines()
+            .collect::<Vec<_>>()
+            .join(separator);
+        for width in [1, 7, 4096] {
+            let mut reader = FragmentedReader {
+                bytes: script.as_bytes(),
+                width,
+            };
+            let mut writer = ShortWriter {
+                bytes: Vec::new(),
+                flushes: 0,
+                fail_flush: false,
+            };
+            let mut stderr = Vec::new();
+            assert_eq!(
+                fart_cli::run(&args, &mut reader, &mut writer, &mut stderr),
+                0
+            );
+            assert_eq!(writer.bytes, expected);
+            assert_eq!(writer.flushes, 9);
+            assert!(stderr.is_empty());
+        }
+    }
+    let mut reader = FragmentedReader {
+        bytes: PLAY_SCRIPT,
+        width: 1,
+    };
+    let mut writer = ShortWriter {
+        bytes: Vec::new(),
+        flushes: 0,
+        fail_flush: true,
+    };
+    let mut stderr = Vec::new();
+    assert_eq!(
+        fart_cli::run(&args, &mut reader, &mut writer, &mut stderr),
+        1
+    );
+    assert_eq!(writer.flushes, 1);
+    assert!(
+        !reader.bytes.is_empty(),
+        "output failure consumed later commands"
+    );
+    assert_eq!(
+        writer.bytes.iter().filter(|byte| **byte == b'\n').count(),
+        1
+    );
+    assert!(
+        std::str::from_utf8(&stderr)
+            .unwrap()
+            .contains("write output")
+    );
+}
+
+#[test]
+fn play_transport_limits_rejections_and_read_failures_stay_visible() {
+    let mut padded = vec![b'\n'];
+    padded.extend_from_slice(PLAY_SCRIPT);
+    let (code, output, stderr) = run(&["play", "run", "-", "--format", "jsonl"], &padded);
+    assert_eq!(code, 1);
+    assert!(stderr.is_empty());
+    let rows: Vec<Value> = std::str::from_utf8(&output)
+        .unwrap()
+        .lines()
+        .map(|line| serde_json::from_str(line).unwrap())
+        .collect();
+    assert_eq!(rows[0]["status"], "rejected");
+    assert_eq!(rows.last().unwrap()["complete"], true);
+    for (data, expected) in [
+        (vec![b' '; 65_537], "64 KiB"),
+        (b"{}\n".repeat(129), "128"),
+        (
+            [vec![b' '; 60_000], b"{}\n".to_vec()].concat().repeat(18),
+            "1 MiB",
+        ),
+    ] {
+        let (code, _, stderr) = run(&["play", "run", "-", "--format", "jsonl"], &data);
+        assert_eq!(code, 1);
+        assert!(std::str::from_utf8(&stderr).unwrap().contains(expected));
+    }
+    for command in ["run", "replay"] {
+        let args = ["play", command, "-"].map(OsString::from);
+        let (mut stdout, mut stderr) = (Vec::new(), Vec::new());
+        assert_eq!(
+            fart_cli::run(&args, &mut FailingReader, &mut stdout, &mut stderr),
+            1
+        );
+        assert!(stdout.is_empty());
+        assert!(!stderr.is_empty());
+    }
+    let (code, stdout, _) = run(
+        &["play", "replay", "-", "--format", "json"],
+        &vec![b' '; 8 * 1024 * 1024 + 1],
+    );
+    assert_eq!(code, 1);
+    let value: Value = serde_json::from_slice(&stdout).unwrap();
+    assert_eq!(value["reason_code"], "input_too_large");
+    // A Unicode separator is not a JSONL frame boundary.
+    let (code, stdout, stderr) = run(
+        &["play", "run", "-", "--format", "jsonl"],
+        "{}\u{2028}{}\n".as_bytes(),
+    );
+    assert_eq!(code, 1);
+    assert!(stderr.is_empty());
+    assert_eq!(stdout.iter().filter(|byte| **byte == b'\n').count(), 2);
+}
+
+struct InterruptedReader<'a> {
+    bytes: &'a [u8],
+    interrupt_next: bool,
+}
+impl Read for InterruptedReader<'_> {
+    fn read(&mut self, output: &mut [u8]) -> io::Result<usize> {
+        if self.interrupt_next {
+            self.interrupt_next = false;
+            return Err(io::ErrorKind::Interrupted.into());
+        }
+        let count = output.len().min(127).min(self.bytes.len());
+        output[..count].copy_from_slice(&self.bytes[..count]);
+        self.bytes = &self.bytes[count..];
+        self.interrupt_next = true;
+        Ok(count)
+    }
+}
+
+#[test]
+fn play_transient_read_interruptions_preserve_the_complete_literal_trace() {
+    let args = ["play", "run", "-", "--format", "jsonl"].map(OsString::from);
+    let (_, expected, _) = run(&["play", "run", "-", "--format", "jsonl"], PLAY_SCRIPT);
+    let mut reader = InterruptedReader {
+        bytes: PLAY_SCRIPT,
+        interrupt_next: true,
+    };
+    let (mut stdout, mut stderr) = (Vec::new(), Vec::new());
+    assert_eq!(
+        fart_cli::run(&args, &mut reader, &mut stdout, &mut stderr),
+        0
+    );
+    assert_eq!(stdout, expected);
+    assert!(stderr.is_empty());
+}
+
+struct InterruptedFlushWriter {
+    bytes: Vec<u8>,
+    flushes: usize,
+}
+impl Write for InterruptedFlushWriter {
+    fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
+        self.bytes.extend_from_slice(bytes);
+        Ok(bytes.len())
+    }
+    fn flush(&mut self) -> io::Result<()> {
+        self.flushes += 1;
+        if self.flushes == 1 {
+            Err(io::ErrorKind::Interrupted.into())
+        } else {
+            Ok(())
+        }
+    }
+}
+
+#[test]
+fn transient_flush_interruptions_retry_only_the_flush_without_duplicate_output() {
+    for (args, input) in [
+        (vec!["3"], b"".as_slice()),
+        (vec!["play", "run", "-", "--format", "jsonl"], PLAY_SCRIPT),
+    ] {
+        let (_, expected, _) = run(&args, input);
+        let arguments: Vec<_> = args.iter().map(OsString::from).collect();
+        let mut writer = InterruptedFlushWriter {
+            bytes: Vec::new(),
+            flushes: 0,
+        };
+        let mut stderr = Vec::new();
+        assert_eq!(
+            fart_cli::run(&arguments, &mut &input[..], &mut writer, &mut stderr),
+            0
+        );
+        assert_eq!(writer.bytes, expected);
+        assert!(writer.flushes >= 2);
+        assert!(stderr.is_empty());
+    }
+}
+
+#[test]
+fn play_command_limit_excludes_cr_only_when_it_is_part_of_crlf_framing() {
+    let mut command = PLAY_SCRIPT
+        .split(|byte| *byte == b'\n')
+        .next()
+        .unwrap()
+        .to_vec();
+    command.resize(fart_services::play::MAX_COMMAND_BYTES, b' ');
+    let mut crlf = command.clone();
+    crlf.extend_from_slice(b"\r\n");
+    let (_, stdout, stderr) = run(&["play", "run", "-", "--format", "jsonl"], &crlf);
+    assert!(stderr.is_empty());
+    let first: Value =
+        serde_json::from_slice(stdout.split(|byte| *byte == b'\n').next().unwrap()).unwrap();
+    assert_eq!(first["status"], "accepted");
+    command.push(b'\r');
+    let (code, stdout, stderr) = run(&["play", "run", "-", "--format", "jsonl"], &command);
+    assert_eq!(code, 1);
+    assert!(stdout.is_empty(), "oversized EOF payload was admitted");
+    assert!(std::str::from_utf8(&stderr).unwrap().contains("64 KiB"));
 }

@@ -78,19 +78,23 @@ fn state_value(state: &ReservoirState, summary: StateSummary) -> Value {
 }
 
 pub(crate) fn text(report: &PredictionReport) -> String {
+    use crate::presentation::human_number;
     let transition = match &report.outcome {
         Ok(transition) => transition,
         Err(error) => {
             return format!(
-                "reservoir prediction failed: {} {} at {:?}\n",
-                error.code, error.reason_code, error.path
+                "reservoir prediction failed: {} {} at {:?}\nRecovery: {}\n",
+                error.code,
+                error.reason_code,
+                error.path.chars().take(256).collect::<String>(),
+                recovery(error.reason_code)
             );
         }
     };
     let mut output = format!(
         "RESERVOIR ENDPOINT PREDICTED\n\nModel: {MODEL_ID}@{MODEL_VERSION}\nImplementation: {IMPLEMENTATION_REVISION}\nQuantity system: si (explicit)\nClosure: {}\nWithdrawal fraction: {}\n",
         transition.closure.name(),
-        transition.withdrawal.get()
+        human_number(transition.withdrawal.get())
     );
     for (label, state) in [
         ("INITIAL", transition.initial),
@@ -99,25 +103,47 @@ pub(crate) fn text(report: &PredictionReport) -> String {
         let _ = writeln!(
             output,
             "\n{label}\n  Mass: {} kg\n  Volume: {} m^3\n  Temperature: {} K\n  Pressure: {} Pa\n  Internal energy: {} J",
-            state.total_mass_kg,
-            state.volume_m3,
-            state.temperature_k,
-            state.pressure_pa,
-            state.internal_energy_j
+            human_number(state.total_mass_kg),
+            human_number(state.volume_m3),
+            human_number(state.temperature_k),
+            human_number(state.pressure_pa),
+            human_number(state.internal_energy_j)
         );
     }
     let _ = writeln!(
         output,
         "\nTRANSFERS\n  Mass out: {} kg\n  Enthalpy out: {} J\n  Heat into reservoir: {} J\n  Boundary work: 0 J\n\nBALANCE CLAIMS",
-        transition.total_mass_out_kg, transition.enthalpy_out_j, transition.heat_in_j
+        human_number(transition.total_mass_out_kg),
+        human_number(transition.enthalpy_out_j),
+        human_number(transition.heat_in_j)
     );
     for claim in transition.claims {
         let _ = writeln!(
             output,
             "  {}: satisfied-within-roundoff; residual {} {}; tolerance {} {}",
-            claim.id, claim.residual, claim.unit, claim.tolerance, claim.unit
+            claim.id,
+            human_number(claim.residual),
+            claim.unit,
+            human_number(claim.tolerance),
+            claim.unit
         );
     }
     output.push_str("\nExperimental analytical endpoint only. No restriction flow, elapsed time, plume,\nphysical audio, case commitment, certificate issuance, or empirical validation.\n");
+    output.push_str("Human values: six significant digits; full precision in JSON.\n");
     output
+}
+
+fn recovery(reason: &str) -> &'static str {
+    match reason {
+        "input_not_found" | "input_permission_denied" | "input_unavailable" => {
+            "Check the file path and read access, or use - for standard input."
+        }
+        "input_too_large" => "Provide a request of at most 65,536 bytes.",
+        "unsupported_schema" => "Use schema fart.reservoir-prediction-request/v0alpha1.",
+        "unsupported_model" => "Use continuum.rigid-calorically-perfect-ideal-mixture@v0alpha1.",
+        "unsupported_closure" => "Choose rigid-adiabatic or rigid-isothermal explicitly.",
+        _ => {
+            "Correct the indicated field; use 'fart help reservoir predict' for the input contract."
+        }
+    }
 }
