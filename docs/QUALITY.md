@@ -79,7 +79,7 @@ only forwards arguments and exit status:
 
 ```text
 go run ./tools/repoquality repository
-go run ./tools/repoquality coverage --profile coverage.out --aggregate 90 --package 80
+go run ./tools/repoquality coverage --profile artifacts/coverage/go.out --aggregate 90 --package 80
 go run ./tools/repoquality rust-coverage --profile artifacts/coverage/rust.json --aggregate 90 --package 80
 go run ./tools/repoquality fuzz --time 5s
 ```

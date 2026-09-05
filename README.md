@@ -55,13 +55,17 @@ software account. The supporting catalog and authority experiments are summarize
 ## Quick start
 
 ```console
-go build -o fartapp ./cmd/fartapp
-./fartapp --help
-./fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json
-./fartapp restriction predict testdata/restriction/gamma15-choked.json
-./fartapp walk simulate testdata/walk/ordinary-low-pressure.json
-./fartapp walk refine testdata/walk/ordinary-low-pressure.json --relative-tolerance 1e-8 --max-evaluations 100000
+go build -o artifacts/bin/fartapp ./cmd/fartapp
+./artifacts/bin/fartapp --help
+./artifacts/bin/fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json
+./artifacts/bin/fartapp restriction predict testdata/restriction/gamma15-choked.json
+./artifacts/bin/fartapp walk simulate testdata/walk/ordinary-low-pressure.json
+./artifacts/bin/fartapp walk refine testdata/walk/ordinary-low-pressure.json --relative-tolerance 1e-8 --max-evaluations 100000
 ```
+
+On Windows, build with `go build -o artifacts/bin/fartapp.exe ./cmd/fartapp`
+and use `./artifacts/bin/fartapp.exe` in the examples. The build creates the
+output directory; `artifacts/` is ignored by Git.
 
 ![v0.7 reservoir report snapshot showing mixture state, transfers, assumptions, nonclaims, and balance claims](docs/media/readme/reservoir-predict-v0.7-current.svg)
 
@@ -75,7 +79,7 @@ and limits.
 The project still preserves the tiny command where it began:
 
 ```console
-./fartapp 3
+./artifacts/bin/fartapp 3
 braaap (respectable)
 ```
 
@@ -92,14 +96,14 @@ braaap (respectable)
 Other current examples:
 
 ```console
-./fartapp law list
-./fartapp law inspect conformance.relation.atemporal@v0alpha1 --format json
-./fartapp scenario validate testdata/scenarios/atemporal-probe.json
-./fartapp restriction predict testdata/restriction/ordinary-pressure-subsonic.json
-./fartapp restriction history testdata/restriction/gamma15-choked-history.json
-./fartapp walk explain testdata/walk/ordinary-low-pressure.json
-./fartapp walk branch testdata/walk/ordinary-low-pressure.json
-./fartapp walk witness testdata/walk/ordinary-low-pressure.json --format json
+./artifacts/bin/fartapp law list
+./artifacts/bin/fartapp law inspect conformance.relation.atemporal@v0alpha1 --format json
+./artifacts/bin/fartapp scenario validate testdata/scenarios/atemporal-probe.json
+./artifacts/bin/fartapp restriction predict testdata/restriction/ordinary-pressure-subsonic.json
+./artifacts/bin/fartapp restriction history testdata/restriction/gamma15-choked-history.json
+./artifacts/bin/fartapp walk explain testdata/walk/ordinary-low-pressure.json
+./artifacts/bin/fartapp walk branch testdata/walk/ordinary-low-pressure.json
+./artifacts/bin/fartapp walk witness testdata/walk/ordinary-low-pressure.json --format json
 go test ./...
 ```
 
@@ -123,10 +127,10 @@ records independent checks, supported scope, and the remaining `RES-002` work.
 Retain an account without copying witness values by hand:
 
 ```console
-./fartapp evidence capture testdata/walk/ordinary-low-pressure.json --output ordinary.fartevidence
-./fartapp evidence verify ordinary.fartevidence
-./fartapp evidence replay ordinary.fartevidence
-./fartapp evidence reconstruct ordinary.fartevidence --format json
+./artifacts/bin/fartapp evidence capture testdata/walk/ordinary-low-pressure.json --output artifacts/ordinary.fartevidence
+./artifacts/bin/fartapp evidence verify artifacts/ordinary.fartevidence
+./artifacts/bin/fartapp evidence replay artifacts/ordinary.fartevidence
+./artifacts/bin/fartapp evidence reconstruct artifacts/ordinary.fartevidence --format json
 ```
 
 The [Rust foundation](docs/RUST_CORE.md) uses the same authored reservoir

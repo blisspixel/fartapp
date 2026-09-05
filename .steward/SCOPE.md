@@ -2,8 +2,12 @@
 
 ## Current implementation
 
-The repository implements the original Go intensity CLI. It remains the seed and
-eventually becomes a tiny analytical oracle and fixture generator.
+The repository preserves the original intensity CLI in Go and Rust. Go also
+implements strict scenario and law inspection, bounded analytical reservoir and
+restriction calculations, coupled blowdown and refinement, and provisional
+retained-evidence operations. Rust implements the stateless reservoir subset.
+The [README](../README.md) records available commands and their limits; the
+full production service and certified archive milestones remain open.
 
 ## Product scope
 
