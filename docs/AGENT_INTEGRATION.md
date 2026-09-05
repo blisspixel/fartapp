@@ -36,13 +36,17 @@ and completion assertions, plus a metadata-only assurance recipe. Its retention
 instructions point to the
 [evidence carrier](WALK_EVIDENCE.md), whose CLI tests exercise actual capture,
 replay, corruption refusal, and reconstruction mismatch. All 13 recipe argument
-arrays execute the Go CLI. The Rust CLI has a separate reservoir parity gate
+arrays execute the Go CLI. The Rust CLI has separate complete-report parity
+gates for reservoir, restriction, and prescribed-area history services
 and an [eight-command play trace](../testdata/play/reservoir-session.jsonl)
 checked through both the direct service and native CLI.
 
 The native [play session](PLAY_SESSION.md) now supplies a bounded local profile
 for explicit reservoir experiments. Its JSONL transport, retained transcript,
-and integrity replay require no agent host. The skill distinguishes this Rust
+integrity replay, and explicit fresh reconstruction require no agent host.
+Reconstruction reports exact current-implementation agreement independently
+of retained session completion, with all fresh reports available on mismatch.
+The skill distinguishes this Rust
 command surface from its Go recipe corpus. A local session reference is a
 reproducible fingerprint, not an authenticated or globally fresh authority token.
 

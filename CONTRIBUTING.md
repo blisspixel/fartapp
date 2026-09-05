@@ -32,6 +32,8 @@ Read:
 - [docs/METROLOGY.md](docs/METROLOGY.md) for the Reference Pfft and traceability.
 - [docs/SNOWFLAKES.md](docs/SNOWFLAKES.md) for record identity, optional
   context-occurrence identity, and artifacts.
+- [docs/RECORD_IDENTITY.md](docs/RECORD_IDENTITY.md) for the implemented local
+  fingerprint and reconstruction comparison boundary.
 - [docs/QUALITY.md](docs/QUALITY.md) for progressive engineering gates.
 - [docs/ASSURANCE.md](docs/ASSURANCE.md) for candidate invariant metadata and
   the generated reference, and [docs/DESIGN_LANGUAGE.md](docs/DESIGN_LANGUAGE.md)

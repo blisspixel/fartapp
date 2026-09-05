@@ -1,12 +1,13 @@
-# Rust reservoir and local session foundation
+# Native Rust core and local verification
 
-The v0.8 alpha2 Rust increment supplies the permanent five-level toy, a
-stateless analytical ideal-mixture reservoir predictor, and a bounded local
-`PlayService` for reservoir experiments. Sessions retain an authored baseline,
-costed decisions, model accounts, and an integrity-checked transcript. This is
-a concrete part of the v0.8 work with its own tests and implementation identity.
-General `PlayService` admission, `CapabilityService`, full Go command parity,
-restriction-flow histories, walk witnesses, and certified archives remain open.
+The Rust core supplies the permanent five-level toy, analytical ideal-mixture
+reservoir prediction, quasi-steady restriction prediction, prescribed-area
+histories, and a bounded local `PlayService` for reservoir experiments. Sessions
+retain an authored baseline, costed decisions, model accounts, and a transcript
+with separate integrity replay and fresh exact reconstruction. Each operation
+has its own tests and implementation identity. General `PlayService` admission,
+`CapabilityService`, full Go command parity, coupled reservoir blowdown, walk
+witnesses, and certified archives remain open.
 The broader Go CLI remains available through
 [the project entry points](PROJECT_LAYOUT.md).
 
@@ -28,6 +29,8 @@ cargo run --locked -p fart-cli -- 3
 cargo run --locked -p fart-cli -- --help
 cargo run --locked -p fart-cli -- reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json --format json
 cargo run --locked -p fart-cli -- reservoir predict testdata/reservoir/synthetic-mixture-isothermal.json
+cargo run --locked -p fart-cli -- restriction predict testdata/restriction/gamma15-choked.json --format json
+cargo run --locked -p fart-cli -- restriction history testdata/restriction/gamma15-choked-history.json --format json
 cargo run --locked -p fart-cli -- play run testdata/play/reservoir-session.jsonl
 ```
 
@@ -37,7 +40,8 @@ build uses `cargo build --locked --release -p fart-cli` and the corresponding
 `release` directory. The executable requires neither Node nor Python. Go is a
 development dependency for comparison tests, not a Rust runtime dependency.
 
-`reservoir predict` accepts a file path or `-` for standard input. Text is the
+`reservoir predict`, `restriction predict`, and `restriction history` accept a
+file path or `-` for standard input. Text is the
 default; `--format json` emits one structured report followed by a newline.
 Exit status 0 means the operation completed, and 1 means a usage, input, model,
 or output failure. A refused JSON request still produces a refusal report.
@@ -48,14 +52,14 @@ their response strings retain the permanent legacy behavior.
 
 | Crate | Present responsibility | Dependencies |
 | --- | --- | --- |
-| [fart-domain](../crates/fart-domain/src/lib.rs) | Validated SI quantities, component IDs, immutable reservoir inputs, closures, withdrawal fractions, and toy intensity | Standard library |
-| [fart-core](../crates/fart-core/src/lib.rs) | Pure endpoint equations, mixture summaries, component transfers, and arithmetic balances | Domain and standard library |
-| [fart-services](../crates/fart-services/src/lib.rs) | Bounded parsing, stateless prediction, local experiment sessions, transcript integrity, refusals, and report views | Domain, core, Serde, JSON, canonicalization, and SHA-256 |
-| [fart-cli](../crates/fart-cli/src/lib.rs) | Arguments, bounded streams, files, output, and process-facing diagnostics | Services; JSON is also used by its tests |
+| [fart-domain](../crates/fart-domain/src/lib.rs) | Validated SI quantities, component IDs, immutable reservoir and restriction inputs, closures, area laws, withdrawal fractions, and toy intensity | Standard library |
+| [fart-core](../crates/fart-core/src/lib.rs) | Pure endpoint and restriction equations, mixture summaries, component transfers, prescribed histories, and arithmetic balances | Domain and standard library |
+| [fart-services](../crates/fart-services/src/lib.rs) | Bounded parsing, stateless predictions, local reservoir sessions, transcript integrity and reconstruction, refusals, and report views | Domain, core, Serde, JSON, canonicalization, and SHA-256 |
+| [fart-cli](../crates/fart-cli/src/lib.rs) | Arguments, bounded streams, files, output, and process-facing diagnostics | Services; tests also use existing JSON, canonicalization, and SHA-256 dependencies |
 
 All four crates inherit `publish = false` from the workspace manifest.
 
-The accepted request schema is `fart.reservoir-prediction-request/v0alpha1`.
+The reservoir request schema is `fart.reservoir-prediction-request/v0alpha1`.
 It requires the explicit model
 `continuum.rigid-calorically-perfect-ideal-mixture@v0alpha1`, SI quantities,
 component properties, a withdrawal fraction, and either `rigid-adiabatic` or
@@ -74,6 +78,43 @@ It does not calculate a wall heat-transfer law, elapsed time, aperture flow,
 momentum, a plume, physical sound, or a biological default. Arithmetic balance
 claims do not establish empirical validity or Reference Pfft ratification.
 
+## Restriction and prescribed-area history
+
+The [native restriction adapter](../crates/fart-services/src/restriction/mod.rs)
+provides immutable `Report` values through `predict` and `history`. Typed
+accessors expose the successful result or exact diagnostic; rendering does not
+rerun either operation. Both select
+`continuum.quasi-steady-isentropic-converging-restriction@v0alpha1` and require
+explicit SI stagnation pressure, temperature, gas constant, heat-capacity ratio,
+back pressure, area, and discharge coefficient.
+
+`restriction predict` resolves no-flow, subsonic, or choked flow through one
+converging section. It supports prescribed area and the declared capped linear
+compliance law. `restriction history` integrates 1 through 256 explicitly timed
+prescribed-area samples while holding stagnation and back pressure fixed. Its
+trapezoidal mass and impulse integration does not deplete a reservoir or solve
+a coupled time-dependent discharge. Static exit enthalpy, exit kinetic energy,
+and total stagnation enthalpy remain separate report quantities.
+
+Both request adapters cap input at 65,536 bytes, JSON depth at 32, and member
+names at 128 bytes. They check the closed shape before model semantics and
+refuse duplicate, unknown, wrong-case, null, and incorrectly typed members.
+History preserves sample order and requires finite, nonnegative, strictly
+increasing times. A single sample has zero integrated duration. Instantaneous
+reports retain three roundoff claims; history retains the recoil-impulse claim.
+Neither operation creates a case, a play session, a witness, or empirical
+validation.
+
+The schemas stay separate from implementation identity:
+
+| Operation | Request schema | Report schema | Native implementation |
+| --- | --- | --- | --- |
+| Restriction prediction | `fart.restriction-prediction-request/v0alpha1` | `fart.restriction-prediction/v0alpha1` | `rust-restriction/v0alpha1` |
+| Prescribed history | `fart.restriction-history-request/v0alpha1` | `fart.restriction-history/v0alpha1` | `rust-restriction-history/v0alpha1` |
+
+These services use the existing dependencies and features. They do not widen the
+reservoir session profile to include restriction actions.
+
 ## Bounded local sessions
 
 The [local service](../crates/fart-services/src/play/mod.rs) accepts explicit
@@ -82,7 +123,7 @@ The [local service](../crates/fart-services/src/play/mod.rs) accepts explicit
 reservoir baseline. Every prediction starts from that baseline; service
 revision and journal order do not describe elapsed physical time. The command,
 baseline, transcript, and fingerprint profiles retain their own `v0alpha1`
-revisions independently of the alpha2 release number.
+revisions independently of the application release number.
 
 Mutations require the declared actor, session reference, expected revision, and
 idempotency key. An exact accepted retry returns its retained receipt without
@@ -104,15 +145,15 @@ finite JSON values through RFC 8785 canonicalization and SHA-256. Transcript
 import verifies the schema, control chain, bindings, and digests. Replay
 projects retained evidence without rerunning the numerical model and cannot
 restore live writer authority. An unkeyed digest does not authenticate the
-record or verify its physical claims. Scientific reconstruction and the
-certified `.fart` archive remain separate work.
+record or verify its physical claims.
 
-On Linux or macOS, retain and replay a complete fixture session with:
+On Linux or macOS, retain, replay, and reconstruct a complete fixture session:
 
 ```sh
 mkdir -p artifacts
 cargo run --locked -p fart-cli -- play run testdata/play/reservoir-session.jsonl --format transcript > artifacts/session.json
 cargo run --locked -p fart-cli -- play replay artifacts/session.json --format json
+cargo run --locked -p fart-cli -- play reconstruct artifacts/session.json --format json
 ```
 
 The shell owns this output file and can replace it or leave partial output.
@@ -123,15 +164,33 @@ while the retained JSON values remain unchanged. The
 idempotency, stale and unauthorized requests, charged model refusals, budget
 exhaustion, terminal states, bounded parsing, and transcript tampering.
 
+Reconstruction validates all retained evidence before freshly admitting the
+baseline and recomputing each recorded prediction attempt. Its
+`fart.play.canonical-current-implementation/v0alpha1` comparison covers the whole
+canonical transcript, including costed refusals and earlier accounts. Matching
+is independent of retained completion or truncation. A zero-attempt transcript
+can match with `numerical_verification: no-prediction-attempts`; baseline admission
+is still checked and separately disclosed. No live writer is restored and the
+expected transcript is never modified. See the
+[local identity decision](RECORD_IDENTITY.md) for the exact comparison and trust
+boundaries. The certified `.fart` archive remains separate work.
+
 ## Comparison and independent evidence
 
 The [native executable parity test](../crates/fart-cli/tests/parity.rs) compares
 complete parsed JSON reports, including keys, types, array order, strings,
 diagnostic paths and reasons, component identities, assumptions, and claim
-metadata. Its one identity exception is `implementation_revision`: the native
-report must declare `rust-reservoir/v0alpha1`, and the corrected Go reservoir
-must declare `go-oracle.reservoir/v0alpha2`. Other revisions fail. The exception
-does not remove the implementation field from either report.
+metadata. Its one identity exception is `implementation_revision`, with these
+explicitly paired values:
+
+| Report family | Rust | Go oracle |
+| --- | --- | --- |
+| Reservoir endpoint | `rust-reservoir/v0alpha1` | `go-oracle.reservoir/v0alpha2` |
+| Restriction prediction | `rust-restriction/v0alpha1` | `go-oracle.restriction/v0alpha2` |
+| Prescribed restriction history | `rust-restriction-history/v0alpha1` | `go-oracle.restriction-history/v0alpha2` |
+
+Other revisions fail. The exception does not remove the implementation field
+from either report or relax exact native transcript reconstruction.
 
 For ordinary numeric fields, the permitted difference is
 `64 * eps * max(abs(left), abs(right)) + tiny`, where `eps = 2^-52` and
@@ -145,9 +204,9 @@ revisions, and erasing a representable `1e-100` quantity.
 
 These are software comparison rules, not physical uncertainty estimates,
 byte-for-byte JSON identity, or universal floating-point reproducibility. The
-suite discovers the shared reservoir JSON fixtures and also exercises a
-parameter grid, an exact underflow regression, hostile requests, and all five
-toy intensities. A supplied `FARTAPP_GO_ORACLE` path selects the separately
+suite checks shared reservoir and restriction JSON fixtures, parameter grids,
+scale and sonic-boundary regressions, hostile requests, and all five toy
+intensities. A supplied `FARTAPP_GO_ORACLE` path selects the separately
 built Go executable; an invalid explicit path fails the comparison. Without
 that variable, ordinary Rust tests can run without Go, so that run alone does
 not establish cross-language parity. CI supplies it explicitly.
@@ -191,6 +250,43 @@ Independent small-transfer anchors retain the roundoff in the balance residual
 without widening the full-report comparison tolerance. Subnormal reference
 powers in Rust tests use exact bit patterns because integer-power evaluation
 can itself underflow through an intermediate reciprocal.
+
+The [native restriction references](../crates/fart-core/tests/restriction.rs)
+independently anchor the choked and subsonic equations at `gamma = 1.5`, area
+compliance, zero flow, pressure boundaries, scaled transport, and prescribed
+histories. The flow factorization follows the separate continuity and ideal-gas
+relations in [NASA's mass-flow derivation](https://www.grc.nasa.gov/www/k-12/airplane/mflchk.html).
+The [adapter tests](../crates/fart-services/tests/restriction.rs) cover wire
+profiles, exact refusals, bounded histories, and immutable report views.
+
+That port exposed Go defects beyond ordinary-fixture parity. At `T0 = 2^1023`
+and `R = 2^-1020`, the finite sonic temperature was lost by multiplying `T0 * 2`
+before division. At very large finite `gamma`, squaring a representable Mach
+number could underflow or discard significant digits. Subnormal density and
+other unreported intermediate products could similarly distort a finite final
+flux. The corrected paths preserve ordinary arithmetic and use factored,
+exponent-scaled calculations when those intermediates lose representation.
+The [Go boundary regressions](../internal/restrictionflow/boundary_test.go)
+retain independent quantities and force balances at these scales.
+
+One sonic-boundary counterexample also had identical rounded pressure ratios
+while the back pressure was one representable value above the sonic exit
+pressure. Selecting choking from those ratios invented a negative pressure
+force. Comparing the dimensional pressures selects the proper subsonic branch
+and preserves the small forward momentum force.
+
+Exactly closed or equal-pressure history intervals skip unnecessary energy
+products, so an overflowing unused heat capacity cannot contaminate zero
+transport. When specific heat overflows but its complete transported-energy
+product is finite, a separate scaled factorization retains that product.
+The near-unit-gamma regression checks mass and energy through an independent
+finite `R*T0` factorization. Positive-mass intervals refuse unrepresentable positive integrated
+energies or impulse. Instantaneous force may round to zero at a tiny scale while
+integration over a large duration still has a finite result; the
+[Go history tests](../internal/restrictionhistory/history_test.go) and
+[coupled scale references](../internal/coupledblowdown/reference_test.go)
+preserve these different cases. The corrected Go restriction families use their
+new implementation revisions without changing their request or report schemas.
 
 ## Dependency and build-script scope
 

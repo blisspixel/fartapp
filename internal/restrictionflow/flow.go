@@ -250,15 +250,22 @@ func Evaluate(request Request) (Result, error) {
 	mach := 0.0
 	exitPressure := pb
 	exitTemperature := t0
-	if backRatio <= criticalRatio {
+	// Compare the dimensional pressures so ratio rounding cannot classify
+	// a back pressure above the reported sonic exit as choked. That would
+	// invent adverse pressure thrust, which dominates at very small Cd.
+	if pb <= p0*criticalRatio {
 		regime = RegimeChoked
 		mach = 1
 		exitPressure = p0 * criticalRatio
-		exitTemperature = t0 * 2 / (gamma + 1)
+		exitTemperature = throatTemperature(t0, gamma)
 	} else {
 		logPressureRatio := math.Log1p((p0 - pb) / pb)
-		machSquared := 2 / (gamma - 1) * math.Expm1((gamma-1)/gamma*logPressureRatio)
+		pressureTerm := math.Expm1((gamma - 1) / gamma * logPressureRatio)
+		machSquared := 2 / (gamma - 1) * pressureTerm
 		mach = math.Sqrt(machSquared)
+		if (!finite(machSquared) || machSquared < smallestNormal) && pressureTerm > 0 {
+			mach = math.Sqrt(2/(gamma-1)) * math.Sqrt(pressureTerm)
+		}
 		if mach >= 1 {
 			if mach > 1+8*(math.Nextafter(1, 2)-1) {
 				return Result{}, ErrNoRepresentableFlow
@@ -277,14 +284,23 @@ func Evaluate(request Request) (Result, error) {
 		return Result{}, ErrNoRepresentableFlow
 	}
 
-	exitSpeed := mach * math.Sqrt(gamma*gasR*exitTemperature)
-	density := exitPressure / (gasR * exitTemperature)
+	exitSpeed := flowSpeed(mach, gamma, gasR, exitTemperature)
+	thermalProduct := gasR * exitTemperature
+	density := exitPressure / thermalProduct
 	kinematicMassFlow := density * area * exitSpeed
 	massFlow := cd * kinematicMassFlow
+	ordinaryTransport := normalPositive(thermalProduct, density, kinematicMassFlow) && finite(massFlow) && massFlow > 0
+	if !ordinaryTransport {
+		massFlow = scaledMassFlow(cd, area, mach, exitPressure, gamma, gasR, exitTemperature)
+	}
+	kinematicReference := cd * kinematicMassFlow
+	if !ordinaryTransport {
+		kinematicReference = scaledContinuity(cd, area, exitPressure, exitSpeed, gasR, exitTemperature)
+	}
 	pressureThrust := (exitPressure - pb) * area
 	thrust := massFlow*exitSpeed + pressureThrust
 	recoil := -thrust
-	values := []float64{exitSpeed, density, kinematicMassFlow, massFlow, pressureThrust, thrust, recoil, sonicMassFlow}
+	values := []float64{exitSpeed, massFlow, pressureThrust, thrust, recoil, sonicMassFlow, kinematicReference}
 	for _, value := range values {
 		if !finite(value) {
 			return Result{}, ErrNoRepresentableFlow
@@ -309,7 +325,7 @@ func Evaluate(request Request) (Result, error) {
 		thrust:                Force{newtons: thrust},
 		recoil:                Force{newtons: recoil},
 		massFlowResidual: MassFlowResidual{
-			kilogramsPerSecond: stableSignedSum([]float64{massFlow, -cd * kinematicMassFlow}),
+			kilogramsPerSecond: stableSignedSum([]float64{massFlow, -kinematicReference}),
 		},
 		thrustResidual: ForceResidual{
 			newtons: stableSignedSum([]float64{thrust, -massFlow * exitSpeed, -pressureThrust}),
@@ -321,7 +337,7 @@ func Evaluate(request Request) (Result, error) {
 }
 
 func sonicMassFlowRate(cd, area, p0, t0, gasR, gamma, criticalRatio float64) (float64, error) {
-	throatTemperature := t0 * 2 / (gamma + 1)
+	throatTemperature := throatTemperature(t0, gamma)
 	throatPressure := p0 * criticalRatio
 	if err := positiveFinite(throatTemperature); err != nil {
 		return 0, ErrNoRepresentableFlow
@@ -329,10 +345,15 @@ func sonicMassFlowRate(cd, area, p0, t0, gasR, gamma, criticalRatio float64) (fl
 	if err := positiveFinite(throatPressure); err != nil {
 		return 0, ErrNoRepresentableFlow
 	}
-	density := throatPressure / (gasR * throatTemperature)
-	speed := math.Sqrt(gamma * gasR * throatTemperature)
+	thermalProduct := gasR * throatTemperature
+	density := throatPressure / thermalProduct
+	speed := flowSpeed(1, gamma, gasR, throatTemperature)
 	massFlow := cd * density * area * speed
-	if !finite(density) || !finite(speed) || !finite(massFlow) || massFlow < 0 {
+	if !normalPositive(thermalProduct, density, density*area*speed, cd*density, cd*density*area) ||
+		!finite(massFlow) || massFlow == 0 {
+		massFlow = scaledMassFlow(cd, area, 1, throatPressure, gamma, gasR, throatTemperature)
+	}
+	if !finite(speed) || !finite(massFlow) || massFlow < 0 {
 		return 0, ErrNoRepresentableFlow
 	}
 	return massFlow, nil

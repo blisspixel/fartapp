@@ -46,6 +46,8 @@ impl PlayService {
             if command.revision() != 0 {
                 return Err(Rejection::new("stale_revision", "/expected_revision"));
             }
+            #[cfg(test)]
+            ADMISSIONS.with(|count| count.set(count.get() + 1));
             fart_core::summarize(state)
                 .map_err(|error| Rejection::new(error.reason(), "/baseline/initial"))?;
             let (session, reply) = Session::start(&command, state.clone(), *budget);
@@ -261,7 +263,10 @@ fn evaluate(baseline: &ReservoirState, fraction: f64, closure: &str) -> Value {
 }
 
 #[cfg(test)]
-thread_local! { pub(super) static EVALUATIONS: std::cell::Cell<u32> = const { std::cell::Cell::new(0) }; }
+thread_local! {
+    pub(super) static EVALUATIONS: std::cell::Cell<u32> = const { std::cell::Cell::new(0) };
+    pub(super) static ADMISSIONS: std::cell::Cell<u32> = const { std::cell::Cell::new(0) };
+}
 
 #[cfg(test)]
 mod tests {

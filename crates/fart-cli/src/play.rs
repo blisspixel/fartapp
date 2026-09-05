@@ -19,10 +19,12 @@ pub(super) fn run(
     if args.len() == 1 && matches!(args[0].to_str(), Some("help" | "-h" | "--help")) {
         return output(help::PLAY.as_bytes(), stdout, stderr);
     }
-    let Some(operation @ ("run" | "replay")) = args.first().and_then(|arg| arg.to_str()) else {
+    let Some(operation @ ("run" | "replay" | "reconstruct")) =
+        args.first().and_then(|arg| arg.to_str())
+    else {
         return diagnostic(
             stderr,
-            "usage: fart play <run|replay>; use 'fart help play'\n",
+            "usage: fart play <run|replay|reconstruct>; use 'fart help play'\n",
         );
     };
     let options = match options(&args[1..], operation == "run") {
@@ -33,8 +35,10 @@ pub(super) fn run(
         return output(
             if operation == "run" {
                 help::PLAY_RUN
-            } else {
+            } else if operation == "replay" {
                 help::PLAY_REPLAY
+            } else {
+                help::PLAY_RECONSTRUCT
             }
             .as_bytes(),
             stdout,
@@ -48,7 +52,13 @@ pub(super) fn run(
         if operation == "run" {
             stream(reader, options.format, stdout, stderr)
         } else {
-            replay(reader, options.format, stdout, stderr)
+            retained(
+                reader,
+                options.format,
+                operation == "reconstruct",
+                stdout,
+                stderr,
+            )
         }
     };
     if source == "-" {
@@ -168,9 +178,10 @@ fn emit(text: &str, total: &mut usize, stdout: &mut dyn Write, stderr: &mut dyn 
     output(text.as_bytes(), stdout, stderr)
 }
 
-fn replay(
+fn retained(
     reader: &mut dyn Read,
     format: Format,
+    reconstruct: bool,
     stdout: &mut dyn Write,
     stderr: &mut dyn Write,
 ) -> u8 {
@@ -182,20 +193,33 @@ fn replay(
     {
         return diagnostic(
             stderr,
-            "play replay input unavailable; provide a complete transcript file or stream\n",
+            "play transcript input unavailable; provide a complete transcript file or stream\n",
         );
     }
-    match Transcript::from_json(&data).and_then(|transcript| transcript.replay()) {
-        Ok(summary) => output(
-            if matches!(format, Format::Text) {
+    let result = Transcript::from_json(&data).and_then(|transcript| {
+        if reconstruct {
+            let summary = transcript.reconstruct()?;
+            let text = if matches!(format, Format::Text) {
                 summary.to_text()
             } else {
                 summary.to_json() + "\n"
-            }
-            .as_bytes(),
-            stdout,
-            stderr,
-        ),
+            };
+            Ok((text, summary.is_matched()))
+        } else {
+            let summary = transcript.replay()?;
+            let text = if matches!(format, Format::Text) {
+                summary.to_text()
+            } else {
+                summary.to_json() + "\n"
+            };
+            Ok((text, true))
+        }
+    });
+    match result {
+        Ok((text, matched)) => {
+            let status = emit(&text, &mut 0, stdout, stderr);
+            if status == 0 && matched { 0 } else { 1 }
+        }
         Err(issue) => {
             if matches!(format, Format::Json) {
                 let _ = output((issue.to_json() + "\n").as_bytes(), stdout, stderr);
@@ -204,7 +228,7 @@ fn replay(
                 diagnostic(
                     stderr,
                     &format!(
-                        "PLAY REPLAY REFUSED\n\nReason: {}\nPath: {:?}\nRecovery: provide the exact retained transcript from play run --format transcript.\n",
+                        "PLAY TRANSCRIPT REFUSED\n\nReason: {}\nPath: {:?}\nRecovery: provide the exact retained transcript from play run --format transcript.\n",
                         issue.reason(),
                         issue.path().chars().take(256).collect::<String>()
                     ),

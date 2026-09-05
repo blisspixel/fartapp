@@ -8,7 +8,7 @@ const (
 	ReportSchema           = "fart.restriction-history/v0alpha1"
 	ModelID                = "continuum.quasi-steady-isentropic-converging-restriction"
 	ModelVersion           = "v0alpha1"
-	ImplementationRevision = "go-oracle/v0alpha1"
+	ImplementationRevision = "go-oracle.restriction-history/v0alpha2"
 	QuantitySystem         = "si"
 	MaxInputBytes          = 65_536
 	maximumJSONDepth       = 32

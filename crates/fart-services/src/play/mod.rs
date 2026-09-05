@@ -7,12 +7,14 @@
 
 mod engine;
 mod fingerprint;
+mod reconstruction;
 mod transcript;
 mod view;
 mod wire;
 
 use serde_json::{Value, json};
 
+pub use reconstruction::{COMPARISON_PROFILE, ReconstructionSummary};
 pub use transcript::{ReplaySummary, Transcript};
 
 /// Strict command schema for this experimental local protocol.

@@ -1,8 +1,9 @@
-//! Pure rigid-reservoir endpoint equations over validated SI inputs.
+//! Pure reservoir and restriction equations over validated SI inputs.
 //!
 //! The model assumes a homogeneous nonreacting calorically perfect ideal mixture,
-//! rigid volume, and composition-preserving withdrawal. It supplies no aperture,
-//! elapsed time, momentum, plume, acoustic, case-admission, or empirical claim.
+//! rigid volume, and composition-preserving withdrawal. The separate restriction
+//! module supplies quasi-steady flow and frozen-source area histories. Neither
+//! model admits a case or supplies a plume, acoustic, or empirical claim.
 
 use fart_domain::{
     Closure, Component, Mass, ModelError, ReservoirState, Temperature, WithdrawalFraction,
@@ -10,6 +11,8 @@ use fart_domain::{
 
 mod numeric;
 use numeric::{product_over, sum_products_over};
+
+pub mod restriction;
 
 /// Derived SI state quantities, checked for finite positive representability.
 #[derive(Clone, Copy, Debug, PartialEq)]

@@ -1,10 +1,12 @@
-//! Validated inputs for an experimental rigid ideal-mixture reservoir.
+//! Validated reservoir and converging-restriction inputs for explicit SI models.
 //!
 //! These types declare SI quantities, not a general law or case contract.
 //! Construction rejects nonfinite values and invalid domains. No public mutable
 //! fields or unchecked constructors can bypass those requirements.
 
 use std::fmt;
+
+pub mod restriction;
 
 /// Maximum number of components in one bounded reservoir state.
 pub const MAX_COMPONENTS: usize = 64;

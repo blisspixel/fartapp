@@ -178,7 +178,8 @@ it cannot claim a finite exact equalization event.
 ## Opt-in accurate integration
 
 `walk refine` uses `SimulateAccurate` and a separate implementation revision,
-`go-oracle.walk-refine/v0alpha1`. It reports estimated numerical errors and work
+`go-oracle.walk-refine/v0alpha2`. Revision 2 includes the corrected restriction
+temperature and small-Mach arithmetic. It reports estimated numerical errors and work
 alongside the thermodynamic evidence. Supply the relative tolerance and
 evaluation budget explicitly:
 

@@ -27,9 +27,24 @@ fn execute(binary: &Path, arguments: &[&str], input: &[u8]) -> Output {
 }
 
 fn compare_report(go: &Path, label: &str, input: &[u8], expected_success: bool) {
-    let arguments = ["reservoir", "predict", "-", "--format", "json"];
-    let native = execute(Path::new(env!("CARGO_BIN_EXE_fart")), &arguments, input);
-    let oracle = execute(go, &arguments, input);
+    compare_operation(
+        go,
+        &["reservoir", "predict", "-", "--format", "json"],
+        label,
+        input,
+        expected_success,
+    );
+}
+
+fn compare_operation(
+    go: &Path,
+    arguments: &[&str],
+    label: &str,
+    input: &[u8],
+    expected_success: bool,
+) {
+    let native = execute(Path::new(env!("CARGO_BIN_EXE_fart")), arguments, input);
+    let oracle = execute(go, arguments, input);
     for (name, output) in [("Rust", &native), ("Go", &oracle)] {
         assert_eq!(
             output.status.code(),
@@ -60,7 +75,18 @@ fn compare_at(
     path: &str,
 ) -> Result<(), String> {
     if path == "/implementation_revision" {
-        return if left == RUST_REVISION && right == GO_REVISION {
+        let (rust_revision, go_revision) = match native["schema"].as_str() {
+            Some("fart.restriction-prediction/v0alpha1") => (
+                "rust-restriction/v0alpha1",
+                "go-oracle.restriction/v0alpha2",
+            ),
+            Some("fart.restriction-history/v0alpha1") => (
+                "rust-restriction-history/v0alpha1",
+                "go-oracle.restriction-history/v0alpha2",
+            ),
+            _ => (RUST_REVISION, GO_REVISION),
+        };
+        return if left == rust_revision && right == go_revision {
             Ok(())
         } else {
             Err(format!(
@@ -130,6 +156,10 @@ fn residual_bounds(path: &str, native: &Value, oracle: &Value) -> Option<(f64, f
         "/balances/energy_residual_j" => Some(1),
         "/balances/initial_eos_residual_j" => Some(2),
         "/balances/final_eos_residual_j" => Some(3),
+        "/balances/mass_flow_residual_kg_per_s" => Some(0),
+        "/balances/thrust_residual_n" => Some(1),
+        "/balances/recoil_residual_n" => Some(2),
+        "/totals/recoil_residual_n_s" => Some(0),
         _ => path
             .strip_prefix("/claims/")
             .and_then(|rest| rest.strip_suffix("/residual"))
@@ -270,6 +300,259 @@ fn go_oracle_parity_when_explicitly_enabled() {
         fixtures.len(),
         hostile.len()
     );
+}
+
+#[test]
+fn restriction_and_history_full_go_reports_when_explicitly_enabled() {
+    let Some(go) = env::var_os("FARTAPP_GO_ORACLE") else {
+        eprintln!("Go comparison skipped: FARTAPP_GO_ORACLE is not set");
+        return;
+    };
+    let go = Path::new(&go);
+    assert!(go.is_file(), "explicit Go oracle must exist");
+    let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../testdata/restriction");
+    let mut count = 0;
+    let mut check = |operation: &str, label: &str, value: &[u8], success: bool| {
+        compare_operation(
+            go,
+            &["restriction", operation, "-", "--format", "json"],
+            label,
+            value,
+            success,
+        );
+        count += 1;
+    };
+    for name in [
+        "gamma15-choked",
+        "gamma15-subsonic",
+        "linear-compliance-choked",
+        "ordinary-pressure-subsonic",
+        "gamma15-choked-history",
+    ] {
+        let operation = if name.ends_with("history") {
+            "history"
+        } else {
+            "predict"
+        };
+        check(
+            operation,
+            name,
+            &fs::read(root.join(format!("{name}.json"))).unwrap(),
+            true,
+        );
+    }
+    let prediction: Value =
+        serde_json::from_slice(&fs::read(root.join("gamma15-choked.json")).unwrap()).unwrap();
+    let history: Value =
+        serde_json::from_slice(&fs::read(root.join("gamma15-choked-history.json")).unwrap())
+            .unwrap();
+    for gamma in [1.01, 1.4, 1.5, 5.0 / 3.0, 3.0] {
+        for ratio in [1e-9, 0.3, 0.512, 0.7, 0.99, 1.0] {
+            for area in [0.0, 1e-12, 0.01] {
+                let mut input = prediction.clone();
+                input["stagnation"]["heat_capacity_ratio"] = json!(gamma);
+                input["back_pressure_pa"] = json!(125000.0 * ratio);
+                input["area"]["prescribed_m2"] = json!(area);
+                check(
+                    "predict",
+                    &format!("flow grid gamma={gamma} ratio={ratio} area={area}"),
+                    &serde_json::to_vec(&input).unwrap(),
+                    true,
+                );
+            }
+        }
+    }
+    for size in [1, 2, 3, 64, 65, 256] {
+        for ratio in [1e-9, 0.7, 1.0] {
+            let mut input = history.clone();
+            input["back_pressure_pa"] = json!(125000.0 * ratio);
+            input["samples"] = json!((0..size).map(|index| json!({"time_s":f64::from(index) * 0.01,"prescribed_m2":if index % 3 == 0 { 0.0 } else { 0.001 * f64::from(index) }})).collect::<Vec<_>>());
+            check(
+                "history",
+                &format!("history grid samples={size} ratio={ratio}"),
+                &serde_json::to_vec(&input).unwrap(),
+                true,
+            );
+        }
+    }
+    let mut high_temperature = prediction.clone();
+    high_temperature["stagnation"]["temperature_k"] = json!(2.0_f64.powi(1023));
+    high_temperature["stagnation"]["specific_gas_constant_j_per_kg_k"] = json!(2.0_f64.powi(-1020));
+    check(
+        "predict",
+        "finite sonic temperature despite intermediate overflow",
+        &serde_json::to_vec(&high_temperature).unwrap(),
+        true,
+    );
+    let mut tiny_mach = prediction.clone();
+    tiny_mach["stagnation"]["heat_capacity_ratio"] = json!(1e308);
+    tiny_mach["back_pressure_pa"] = json!(125000.0_f64.next_down());
+    check(
+        "predict",
+        "finite subnormal Mach despite squared underflow",
+        &serde_json::to_vec(&tiny_mach).unwrap(),
+        true,
+    );
+    for back in [64000.0_f64.next_down(), 64000.0, 64000.0_f64.next_up()] {
+        let mut sonic_boundary = prediction.clone();
+        sonic_boundary["back_pressure_pa"] = json!(back);
+        sonic_boundary["discharge_coefficient"] = json!(1e-30);
+        sonic_boundary["area"]["prescribed_m2"] = json!(1.0);
+        check(
+            "predict",
+            &format!("sonic pressure boundary {back:?}"),
+            &serde_json::to_vec(&sonic_boundary).unwrap(),
+            true,
+        );
+    }
+    let mut finite_enthalpy = history.clone();
+    finite_enthalpy["stagnation"]["temperature_k"] = json!(1e-300);
+    finite_enthalpy["stagnation"]["specific_gas_constant_j_per_kg_k"] = json!(1e308);
+    finite_enthalpy["stagnation"]["heat_capacity_ratio"] = json!(1.0_f64.next_up());
+    finite_enthalpy["samples"] =
+        json!([{"time_s":0,"prescribed_m2":1e-10},{"time_s":1,"prescribed_m2":1e-10}]);
+    check(
+        "history",
+        "finite integrated enthalpy despite overflowing cp",
+        &serde_json::to_vec(&finite_enthalpy).unwrap(),
+        true,
+    );
+    for (operation, fixture) in [("predict", prediction), ("history", history)] {
+        for (index, input) in restriction_hostile_requests(&fixture, operation == "history")
+            .iter()
+            .enumerate()
+        {
+            check(
+                operation,
+                &format!(
+                    "{operation} hostile {index}: {}",
+                    String::from_utf8_lossy(input)
+                        .chars()
+                        .take(200)
+                        .collect::<String>()
+                ),
+                input,
+                false,
+            );
+        }
+    }
+    eprintln!(
+        "Compared {count} complete restriction/history reports, including fixtures, grids, boundary regressions, and hostile requests"
+    );
+}
+
+fn restriction_hostile_requests(fixture: &Value, history: bool) -> Vec<Vec<u8>> {
+    let mut requests: Vec<Vec<u8>> = [
+        "",
+        " ",
+        "{",
+        "{}",
+        "{} {}",
+        "null",
+        "[]",
+        "true",
+        r#"{"schema":1,"sch\u0065ma":2}"#,
+        r#"{"x":"\ud800"}"#,
+        r#"{"x":01e999}"#,
+    ]
+    .into_iter()
+    .map(|text| text.as_bytes().to_vec())
+    .collect();
+    requests.extend([
+        vec![0xff],
+        vec![b' '; 65_537],
+        format!("{}0{}", "[".repeat(34), "]".repeat(34)).into_bytes(),
+        format!("{{\"{}\":0}}", "x".repeat(129)).into_bytes(),
+    ]);
+    let mut paths = vec![
+        "/schema",
+        "/model",
+        "/model/id",
+        "/model/version",
+        "/quantity_system",
+        "/stagnation",
+        "/stagnation/pressure_pa",
+        "/stagnation/temperature_k",
+        "/stagnation/specific_gas_constant_j_per_kg_k",
+        "/stagnation/heat_capacity_ratio",
+        "/back_pressure_pa",
+        "/discharge_coefficient",
+    ];
+    paths.extend(if history {
+        vec![
+            "/samples",
+            "/samples/0",
+            "/samples/0/time_s",
+            "/samples/0/prescribed_m2",
+        ]
+    } else {
+        vec!["/area", "/area/law", "/area/prescribed_m2"]
+    });
+    for path in paths {
+        for value in [Value::Null, json!([])] {
+            let mut input = fixture.clone();
+            *input.pointer_mut(path).unwrap() = value;
+            requests.push(serde_json::to_vec(&input).unwrap());
+        }
+        let (parent, key) = path.rsplit_once('/').unwrap();
+        if let Some(object) = fixture.pointer(parent).and_then(Value::as_object) {
+            assert!(object.contains_key(key));
+            let mut input = fixture.clone();
+            input
+                .pointer_mut(parent)
+                .unwrap()
+                .as_object_mut()
+                .unwrap()
+                .remove(key);
+            requests.push(serde_json::to_vec(&input).unwrap());
+        }
+    }
+    for parent in if history {
+        vec!["", "/model", "/stagnation", "/samples/0"]
+    } else {
+        vec!["", "/model", "/stagnation", "/area"]
+    } {
+        let mut input = fixture.clone();
+        input
+            .pointer_mut(parent)
+            .unwrap()
+            .as_object_mut()
+            .unwrap()
+            .insert("unknown/~".into(), json!(1));
+        requests.push(serde_json::to_vec(&input).unwrap());
+    }
+    for (path, value) in [
+        ("/schema", json!("unknown")),
+        ("/model/id", json!("unknown")),
+        ("/model/version", json!("v999")),
+        ("/quantity_system", json!("cgs")),
+        ("/stagnation/pressure_pa", json!(0)),
+        ("/stagnation/temperature_k", json!(-1)),
+        ("/stagnation/heat_capacity_ratio", json!(1)),
+        ("/back_pressure_pa", json!(-1)),
+        ("/discharge_coefficient", json!(1.1)),
+        ("/discharge_coefficient", json!(0)),
+    ] {
+        let mut input = fixture.clone();
+        *input.pointer_mut(path).unwrap() = value;
+        requests.push(serde_json::to_vec(&input).unwrap());
+    }
+    let mut alias = fixture.clone();
+    alias["Schema"] = alias.as_object_mut().unwrap().remove("schema").unwrap();
+    requests.push(serde_json::to_vec(&alias).unwrap());
+    let input = serde_json::to_string(fixture).unwrap();
+    requests.push(input.replace("125000", "1e999").into_bytes());
+    let mut invalid = fixture.clone();
+    if history {
+        invalid["samples"] = json!(vec![fixture["samples"][0].clone(); 257]);
+        requests.push(serde_json::to_vec(&invalid).unwrap());
+        invalid["samples"] = json!([]);
+        requests.push(serde_json::to_vec(&invalid).unwrap());
+    } else {
+        invalid["area"]["law"] = json!("unknown");
+        requests.push(serde_json::to_vec(&invalid).unwrap());
+    }
+    requests
 }
 
 fn hostile_requests(fixture: &Value) -> Vec<Vec<u8>> {
