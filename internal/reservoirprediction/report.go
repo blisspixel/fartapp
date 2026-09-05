@@ -3,6 +3,7 @@ package reservoirprediction
 import (
 	"math"
 
+	"github.com/blisspixel/fartapp/internal/floatmath"
 	"github.com/blisspixel/fartapp/internal/idealmixturereservoir"
 )
 
@@ -112,16 +113,16 @@ func stateReport(ids []string, state idealmixturereservoir.State) ReservoirState
 
 func equationOfStateResidual(state ReservoirState) float64 {
 	return state.PressurePascals*state.VolumeCubicMetres -
-		state.TotalMassKilograms*state.MixtureGasConstantJoulesPerKilogramKelvin*state.TemperatureKelvin
+		floatmath.Product(state.TotalMassKilograms, state.MixtureGasConstantJoulesPerKilogramKelvin, state.TemperatureKelvin)
 }
 
 func buildClaims(initial, final ReservoirState, transfers Transfers, balances Balances) []Claim {
 	initialPressureVolume := initial.PressurePascals * initial.VolumeCubicMetres
-	initialMassGasTemperature := initial.TotalMassKilograms *
-		initial.MixtureGasConstantJoulesPerKilogramKelvin * initial.TemperatureKelvin
+	initialMassGasTemperature := floatmath.Product(initial.TotalMassKilograms,
+		initial.MixtureGasConstantJoulesPerKilogramKelvin, initial.TemperatureKelvin)
 	finalPressureVolume := final.PressurePascals * final.VolumeCubicMetres
-	finalMassGasTemperature := final.TotalMassKilograms *
-		final.MixtureGasConstantJoulesPerKilogramKelvin * final.TemperatureKelvin
+	finalMassGasTemperature := floatmath.Product(final.TotalMassKilograms,
+		final.MixtureGasConstantJoulesPerKilogramKelvin, final.TemperatureKelvin)
 	return []Claim{
 		newClaim("reservoir.total-mass-balance", "double-entry-balance", "kg", balances.TotalMassResidualKilograms, roundoffTolerance(
 			initial.TotalMassKilograms, final.TotalMassKilograms, transfers.TotalMassOutKilograms,

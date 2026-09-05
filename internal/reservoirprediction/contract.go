@@ -8,7 +8,7 @@ const (
 	ReportSchema           = "fart.reservoir-prediction/v0alpha1"
 	ModelID                = "continuum.rigid-calorically-perfect-ideal-mixture"
 	ModelVersion           = "v0alpha1"
-	ImplementationRevision = "go-oracle/v0alpha1"
+	ImplementationRevision = "go-oracle.reservoir/v0alpha2"
 	QuantitySystem         = "si"
 	MaxInputBytes          = 65_536
 	maximumJSONDepth       = 32

@@ -215,3 +215,34 @@ func TestPluginRecipeValidation(t *testing.T) {
 		})
 	}
 }
+
+func TestRefinementRecipeBudgetsAndLiteralOptions(t *testing.T) {
+	root := writePluginFixture(t)
+	recipes, err := ReadPluginRecipes(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	recipe := recipes[0]
+	valid := []string{"walk", "refine", "testdata/case.json", "--relative-tolerance", "1e-8", "--max-evaluations", "100000", "--format", "json"}
+	recipe.Args = valid
+	if err := validateRecipe(root, recipe); err != nil {
+		t.Fatal(err)
+	}
+	for _, change := range []struct {
+		index int
+		value string
+	}{
+		{3, "--output"}, {4, "NaN"}, {4, "Inf"}, {4, "0"}, {4, "1"}, {4, "bad"},
+		{5, "--help"}, {6, "14"}, {6, "1000001"}, {6, "1e3"},
+	} {
+		recipe.Args = append([]string(nil), valid...)
+		recipe.Args[change.index] = change.value
+		if err := validateRecipe(root, recipe); err == nil {
+			t.Fatalf("accepted %q", recipe.Args)
+		}
+	}
+	recipe.Args = valid[:7]
+	if err := validateRecipe(root, recipe); err == nil {
+		t.Fatal("missing output contract accepted")
+	}
+}

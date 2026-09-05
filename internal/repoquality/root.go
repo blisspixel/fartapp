@@ -107,7 +107,7 @@ func repositoryPath(root, relative string) (string, error) {
 
 func skipWalkDir(relative string) bool {
 	relative = filepath.ToSlash(relative)
-	for _, prefix := range []string{"node_modules/", "vendor/", ".git/", ".steward/DECISIONS/"} {
+	for _, prefix := range []string{"node_modules/", "vendor/", "target/", "artifacts/", ".git/", ".steward/DECISIONS/"} {
 		if relative == strings.TrimSuffix(prefix, "/") || strings.HasPrefix(relative, prefix) {
 			return true
 		}

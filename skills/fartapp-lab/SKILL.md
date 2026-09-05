@@ -7,7 +7,7 @@ description: "Use F.A.R.T. Lab to inspect law contexts, validate scenario probes
 
 Run from the package root containing `plugin.json`, `go.mod`, and `testdata/`,
 two directories above this skill. Use a matching `fartapp` executable, or
-`go run .` with Go 1.27.1 or later from that root. If neither is available,
+`go run ./cmd/fartapp` with Go 1.27.1 or later from that root. If neither is available,
 report the missing prerequisite. Package installation does not supply a shell
 or an executable, and the skill body has no automatic path-variable expansion.
 Calculations need no account, network service, or model API.
@@ -21,10 +21,10 @@ JSON bytes on standard input. Keep user inputs within the 65,536-byte limit.
 For example, using the source package:
 
 ```console
-go run . law list --format json
-go run . scenario validate testdata/scenarios/atemporal-probe.json --format json
-go run . restriction predict testdata/restriction/gamma15-choked.json --format json
-go run . walk explain testdata/walk/ordinary-low-pressure.json --format json
+go run ./cmd/fartapp law list --format json
+go run ./cmd/fartapp scenario validate testdata/scenarios/atemporal-probe.json --format json
+go run ./cmd/fartapp restriction predict testdata/restriction/gamma15-choked.json --format json
+go run ./cmd/fartapp walk explain testdata/walk/ordinary-low-pressure.json --format json
 ```
 
 Choose the operation that answers the request:
@@ -43,6 +43,15 @@ Choose the operation that answers the request:
   software account. To reconstruct, retain that digest, supply it as
   `expected_witness` in the same case, and run `walk reconstruct`. A mismatch is
   a failed comparison. These operations create no archive or certificate authority.
+- `walk refine` accepts explicit `--relative-tolerance` and `--max-evaluations`
+  and reports numerical quadrature estimates. Inspect `tolerance_satisfied` and
+  `discharge_complete` separately. It has a separate implementation profile.
+- `evidence capture` preserves a request and legacy-method report in a new
+  `.fartevidence` carrier. Use it when the user requests retention, with an
+  explicit destination. It refuses existing destinations. `inspect`, `verify`,
+  and `replay` do not integrate the solver; `reconstruct` calculates again.
+  Carrier inputs allow 24 MiB, distinct from the 64 KiB request limit.
+  A committed carrier can survive a stdout failure; inspect it before retrying.
 
 Use `--format json` and inspect both exit status and the report. Completed
 operations return 0. Failures return 1; input/model failures can still produce
@@ -57,8 +66,9 @@ Report relevant assumptions, regime, stopping condition, and evidence limits wit
 the numerical result. These commands implement no plume, physical audio, canonical
 case identity, PlayService, MCP server, or A2A agent.
 
-Use `fartapp help <group> <operation>` or `go run . help <group> <operation>`
+Use `fartapp help <group> <operation>` or `go run ./cmd/fartapp help <group> <operation>`
 for the current command contract. Consult the
 [walkthrough](../../docs/WALKTHROUGH.md) for the coupled model and the
+[carrier contract](../../docs/WALK_EVIDENCE.md) for retained evidence. Consult the
 [interface plan](../../docs/INTERFACES.md) when distinguishing current CLI behavior
 from planned adapters.

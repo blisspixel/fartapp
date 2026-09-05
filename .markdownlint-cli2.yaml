@@ -7,4 +7,6 @@ globs:
   - "!LICENSE"
   - "!node_modules/**"
   - "!vendor/**"
+  - "!target/**"
+  - "!artifacts/**"
   - "!.steward/DECISIONS/**"

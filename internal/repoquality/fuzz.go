@@ -15,7 +15,7 @@ type fuzzTarget struct {
 }
 
 var fuzzTargets = []fuzzTarget{
-	{".", "FuzzRun"},
+	{"./internal/cli", "FuzzRun"},
 	{"./internal/registrationauthoritybinding", "FuzzCompareExactAuthorityBinding"},
 	{"./internal/snapshotregistrationbinding", "FuzzComposePositive"},
 	{"./internal/authoritymatching", "FuzzFiniteAuthorityMatching"},
@@ -32,6 +32,8 @@ var fuzzTargets = []fuzzTarget{
 	{"./internal/restrictionhistoryprediction", "FuzzPredict"},
 	{"./internal/coupledblowdown", "FuzzSimulate"},
 	{"./internal/walkcase", "FuzzRun"},
+	{"./internal/walkcase", "FuzzVerifyRetainedWitnessReport"},
+	{"./internal/walkevidence", "FuzzDecode"},
 	{"./internal/strictjson", "FuzzInspect"},
 	{"./internal/strictjson", "FuzzInspectShape"},
 }

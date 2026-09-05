@@ -6,6 +6,10 @@ coverage.out
 /repoquality-coverage
 walk-evidence.json
 *.coverage.out
+target/
+artifacts/
+*.profraw
+*.fartevidence
 .steward/deliberations.json
 .steward/eventlog.jsonl
 .steward/receipts.jsonl

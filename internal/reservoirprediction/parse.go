@@ -37,7 +37,7 @@ type requestComponent struct {
 	MassKilograms                           *float64 `json:"mass_kg"`
 	SpecificGasConstantJoulesPerKilogramK   *float64 `json:"specific_gas_constant_j_per_kg_k"`
 	IsochoricHeatCapacityJoulesPerKilogramK *float64 `json:"isochoric_heat_capacity_j_per_kg_k"`
-	sourceIndex                             int
+	sourceIndex                             int      `json:"-"`
 }
 
 type parsedRequest struct {
@@ -55,6 +55,9 @@ func parseRequest(data []byte) (parsedRequest, *Diagnostic) {
 	decoder.DisallowUnknownFields()
 	var document requestDocument
 	if err := decoder.Decode(&document); err != nil {
+		return parsedRequest{}, schemaDiagnostic("/", "document_shape_invalid")
+	}
+	if issue := strictjson.InspectShape[requestDocument](data); issue != nil {
 		return parsedRequest{}, schemaDiagnostic("/", "document_shape_invalid")
 	}
 	if document.Schema != RequestSchema {

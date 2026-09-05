@@ -1,13 +1,19 @@
 # CONVENTIONS
 
-## Current Go seed
+## Current implementation
 
 - Module: `github.com/blisspixel/fartapp` on the Go version declared in `go.mod`.
-- `main.go` owns CLI parsing and process behavior.
-- `fart.go` owns current reference emission behavior.
-- `fart_test.go` owns focused behavior and CLI tests.
-- Go changes are formatted, pass vet and tests, and maintain at least 80 percent
-  statement coverage.
+- `cmd/fartapp/main.go` adapts process arguments, streams, and exit status.
+- `internal/cli/` owns Go command routing, presentation, and CLI tests.
+- Private Go domains, numerical oracles, and evidence adapters live under
+  `internal/`; shared authored fixtures live under `testdata/`.
+- Four `crates/fart-*` workspace members implement the experimental Rust
+  domain, core, stateless reservoir service, and native CLI.
+- Generated local outputs belong under ignored `artifacts/`, `target/`, or
+  the tool's configured cache. Conventional manifests remain at the root.
+- Go and Rust changes pass the checks in [the quality contract](../docs/QUALITY.md):
+  at least 90 percent aggregate coverage and 80 percent in each Go package and
+  Rust crate, alongside formatting, analysis, and platform tests.
 
 ## Planned system boundaries
 
@@ -30,9 +36,8 @@
 
 A change is implemented, documented, test-backed, accessible through the CLI,
 reproducible from a clean checkout, and included in the appropriate proof path.
-Formatting and lint are clean, tests and CI pass, core statement coverage is at
-least 80 percent, and new presentation or narrative cannot invent an independent
-event.
+Formatting and lint are clean, tests and CI pass, the enforced coverage floors
+hold, and new presentation or narrative cannot invent an independent event.
 
 ## Evidence
 

@@ -66,29 +66,29 @@ jobs:
           go test ./internal/catalogregistration -run '^TestRegistrationCorpus$'
           go test ./internal/evaluation -run '^TestDispositionCorpus$'
           go test ./internal/lawcatalog -run '^TestBuiltInCatalog$'
-          go test . -run '^TestLawCLITextAndJSONFixtures$'
+          go test ./internal/cli -run '^TestLawCLITextAndJSONFixtures$'
           go test ./internal/lawcatalog -run '^TestMinimalOpaqueContextHasNoLocalizedPresentationOrOptionalStructuralModule$'
-          go test . -run '^TestMinimalOpaqueLawInspectionJSONFixture$'
+          go test ./internal/cli -run '^TestMinimalOpaqueLawInspectionJSONFixture$'
           go test ./internal/scenarioprobe -run '^TestAtemporalProbeHasNoAmbientOrEarthRequirements$'
-          go test . -run '^TestScenarioCLITextAndJSONFixtures$'
+          go test ./internal/cli -run '^TestScenarioCLITextAndJSONFixtures$'
           go test ./internal/scenarioprobe -run '^TestMinimalOpaqueProbeRequiresNoLocalizedPresentationOrOptionalStructuralModule$'
-          go test . -run '^TestMinimalOpaqueScenarioJSONFixture$'
+          go test ./internal/cli -run '^TestMinimalOpaqueScenarioJSONFixture$'
           go test ./internal/scenarioprobe -run '^TestCaseOperationAbsenceIsInferredOnlyAfterSchemaValidation$'
-          go test . -run '^TestMultiLawProbeLimitDoesNotInferCompatibility$'
+          go test ./internal/cli -run '^TestMultiLawProbeLimitDoesNotInferCompatibility$'
           go test ./internal/scenarioprobe -run '^TestMinimalOpaqueUnresolvedCapabilityStopsAtOuterEnvelope$'
-          go test . -run '^TestMinimalOpaqueUnresolvedCapabilityCLIContract$'
+          go test ./internal/cli -run '^TestMinimalOpaqueUnresolvedCapabilityCLIContract$'
           go test ./internal/idealmixturereservoir -run '^TestSyntheticMixtureClosedForms$'
           go test ./internal/reservoirprediction -run '^TestPredictSyntheticClosedForms$'
-          go test . -run '^TestReservoirCLITextAndJSONFixtures$'
+          go test ./internal/cli -run '^TestReservoirCLITextAndJSONFixtures$'
           go test ./internal/restrictionflow -run '^TestChokedGammaFifteenClosedForm$'
           go test ./internal/restrictionprediction -run '^TestPredictChokedClosedForm$'
           go test ./internal/restrictionhistory -run '^TestConstantChokedHistoryClosedForm$'
           go test ./internal/restrictionhistoryprediction -run '^TestPredictConstantChokedHistory$'
-          go test . -run '^TestRestrictionCLITextAndJSONFixtures$'
+          go test ./internal/cli -run '^TestRestrictionCLITextAndJSONFixtures$'
           go test ./internal/coupledblowdown -run '^TestAdiabaticPathMatchesReservoirEndpoint$'
           go test ./internal/walkcase -run '^TestWalkOperationsOnIsothermalFixture$'
-          go test . -run '^TestWalkCLISimulateAndFailures$'
-          go test . -run '^TestHelpRoutes$'
+          go test ./internal/cli -run '^TestWalkCLISimulateAndFailures$'
+          go test ./internal/cli -run '^TestHelpRoutes$'
 
       - name: Check formatting
         shell: bash
@@ -162,3 +162,100 @@ jobs:
 
       - name: Test
         run: go test ./...
+
+  rust-quality:
+    name: Rust lint, dependencies, parity, and coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Select declared Rust toolchain
+        run: rustup show active-toolchain
+
+      - name: Check formatting
+        run: cargo fmt --all --check
+
+      - name: Clippy
+        run: cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
+
+      - name: Documentation
+        env:
+          RUSTDOCFLAGS: -D warnings
+        run: cargo doc --locked --workspace --no-deps
+
+      - name: Build release executable
+        run: cargo build --locked --release --workspace
+
+      - name: Install pinned Rust quality tools
+        run: |
+          cargo install --locked --version 0.20.2 cargo-deny
+          cargo install --locked --version 0.9.0 cargo-llvm-cov
+
+      - name: Audit Rust dependencies
+        run: cargo deny --locked check
+
+      - name: Set up Go for independent comparison
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: false
+
+      - name: Build Go oracle
+        run: go build -o artifacts/bin/fartapp ./cmd/fartapp
+
+      - name: Test, compare full reports, and collect coverage
+        env:
+          FARTAPP_GO_ORACLE: ${{ github.workspace }}/artifacts/bin/fartapp
+        run: |
+          mkdir -p artifacts/coverage
+          cargo llvm-cov --locked --workspace --all-features --json --summary-only --output-path artifacts/coverage/rust.json
+
+      - name: Enforce complete-source Rust coverage
+        run: >-
+          go run ./tools/repoquality rust-coverage
+          --profile artifacts/coverage/rust.json
+          --aggregate 90 --package 80
+
+  rust-test:
+    name: Rust test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Select declared Rust toolchain
+        run: rustup show active-toolchain
+
+      - name: Set up Go for independent comparison
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: false
+
+      - name: Build Go oracle
+        run: go build -o artifacts/bin/fartapp${{ runner.os == 'Windows' && '.exe' || '' }} ./cmd/fartapp
+
+      - name: Build Rust executable
+        run: cargo build --locked --workspace
+
+      - name: Test all features and full Go reports
+        env:
+          FARTAPP_GO_ORACLE: ${{ github.workspace }}/artifacts/bin/fartapp${{ runner.os == 'Windows' && '.exe' || '' }}
+        run: cargo test --locked --workspace --all-features
+
+      - name: Test minimal workspace features
+        run: cargo test --locked --workspace --no-default-features

@@ -51,6 +51,9 @@ implicit production requirement. These pins were reviewed on 2026-09-04:
 | Staticcheck | 2026.2.1 / module v0.8.1 | Pinned static analysis |
 | Govulncheck | v1.7.0 | Pinned vulnerability analysis |
 | Actionlint | v1.7.12 | Pinned workflow lint |
+| Rust | 1.98.1, edition 2024 | Native workspace; [toolchain pin](../rust-toolchain.toml) and [official release](https://blog.rust-lang.org/2026/09/03/Rust-1.98.1/) |
+| cargo-deny | 0.20.2 | Pinned Rust advisory, license, source, version, feature, and build-script policy |
+| cargo-llvm-cov | 0.9.0 | Pinned source-coverage collection with the matching compiler's LLVM tools |
 
 The application and repository checker retain zero external Go dependencies.
 Node is used only for development documentation tooling. CI reads language and
@@ -64,6 +67,9 @@ floor to macOS 13, as recorded in its
 Go, npm, and Actions dependency updates are reviewed on the existing weekly
 schedule. Language patch pins and standalone Go analysis-tool pins receive the
 same explicit review, including their version support and full CI result.
+Cargo dependency updates use that schedule too. Rust and its two quality tools
+were reviewed on 2026-09-05. The active Rust dependency and build-script decisions
+are recorded in [RUST_CORE.md](RUST_CORE.md).
 
 ## Cross-platform repository automation
 
@@ -73,14 +79,19 @@ only forwards arguments and exit status:
 
 ```text
 go run ./tools/repoquality repository
-go run ./tools/repoquality coverage --profile coverage.out --aggregate 90 --package 80
+go run ./tools/repoquality coverage --profile artifacts/coverage/go.out --aggregate 90 --package 80
+go run ./tools/repoquality rust-coverage --profile artifacts/coverage/rust.json --aggregate 90 --package 80
 go run ./tools/repoquality fuzz --time 5s
 ```
 
 `repository` checks npm and Go dependency policy, local Markdown links,
 media manifests, and the portable agent package. `coverage` enforces the
-aggregate and per-package statement
-floors. `fuzz` runs the declared Go fuzz targets. CI runs the repository check
+aggregate and per-package statement floors. `rust-coverage` recomputes line
+coverage from bounded LLVM summary JSON, requires every Rust `src/*.rs` file
+including nested modules, and enforces 90 percent aggregate and 80 percent in
+each of the four crates. Tests and dependency sources do not increase those
+totals. Missing, duplicate, escaping, and malformed source evidence fails.
+`fuzz` runs the declared Go fuzz targets. CI runs the repository check
 on Ubuntu, macOS, and Windows, and runs coverage and fuzz in the Linux quality
 job. Optional PowerShell scripts under `scripts/` are wrappers only; they
 contain no validation policy.
@@ -236,6 +247,23 @@ applicability result; it is never reported as passing.
 | `CMP-002` | Accelerated results preserve certified observables within tolerance | Design contract | CPU, Kokkos, CUDA, HIP, and SYCL differential suite |
 
 ## Rust production gates
+
+The v0.8 alpha subset currently enforces formatting, warnings-denied Clippy and
+rustdoc, locked debug/release builds, tests on Windows/macOS/Linux, full-report
+Go reservoir comparisons, and complete-source line coverage. The dependency
+gate is `cargo deny --locked check` with the reviewed
+[configuration](../.cargo/deny.toml). Coverage is collected with:
+
+```console
+cargo llvm-cov --locked --workspace --all-features --json --summary-only --output-path artifacts/coverage/rust.json
+go run ./tools/repoquality rust-coverage --profile artifacts/coverage/rust.json --aggregate 90 --package 80
+```
+
+CI sets `FARTAPP_GO_ORACLE` to a freshly built Go executable so the cross-language
+test cannot silently skip. Optional local Rust-only tests may omit that path.
+The following broader production requirements apply as their features arrive;
+mutation analysis, Miri, Loom, and full ontology comparison are not claimed by
+this alpha release.
 
 The crate graph enforces `domain <- core <- services <- adapters`. Pure domain
 and core crates cannot depend on terminal, Godot, network, protocol, or ambient

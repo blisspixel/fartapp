@@ -495,6 +495,11 @@ func referenceGamma14PublishedTime(x float64, closure idealmixturereservoir.Clos
 		startTime = referenceChokedTime(xCritical, n, gamma)
 	}
 	primitive := func(massFraction float64) float64 {
+		// The analytical primitive vanishes at equality. Re-exponentiating
+		// its rounded mass coordinate can invent a sqrt(epsilon) tail.
+		if massFraction <= math.Pow(backRatio, 1/n) {
+			return 0
+		}
 		pressureRatio := math.Pow(massFraction, n) / backRatio
 		chi := math.Sqrt(math.Max(0, math.Pow(pressureRatio, 2.0/7.0)-1))
 		tchar := referenceVolume / (referenceArea * math.Sqrt(gamma*referenceGasConstant*referenceTemperature))

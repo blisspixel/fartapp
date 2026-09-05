@@ -1,5 +1,7 @@
 package idealmixturereservoir
 
+import "github.com/blisspixel/fartapp/internal/floatmath"
+
 type Component struct {
 	mass        Mass
 	gasConstant SpecificGasConstant
@@ -59,21 +61,13 @@ func (state State) TotalMass() Mass {
 }
 
 func (state State) MixtureGasConstant() SpecificGasConstant {
-	total := state.TotalMass().kilograms
-	terms := make([]float64, len(state.components))
-	for index, component := range state.components {
-		terms[index] = component.mass.kilograms * component.gasConstant.joulesPerKilogramKelvin
-	}
-	return SpecificGasConstant{joulesPerKilogramKelvin: stableSum(terms) / total}
+	return SpecificGasConstant{joulesPerKilogramKelvin: weightedProperty(state.components, state.TotalMass().kilograms,
+		func(component Component) float64 { return component.gasConstant.joulesPerKilogramKelvin })}
 }
 
 func (state State) MixtureIsochoricHeatCapacity() IsochoricHeatCapacity {
-	total := state.TotalMass().kilograms
-	terms := make([]float64, len(state.components))
-	for index, component := range state.components {
-		terms[index] = component.mass.kilograms * component.heatCV.joulesPerKilogramKelvin
-	}
-	return IsochoricHeatCapacity{joulesPerKilogramKelvin: stableSum(terms) / total}
+	return IsochoricHeatCapacity{joulesPerKilogramKelvin: weightedProperty(state.components, state.TotalMass().kilograms,
+		func(component Component) float64 { return component.heatCV.joulesPerKilogramKelvin })}
 }
 
 func (state State) MixtureIsobaricHeatCapacity() IsobaricHeatCapacity {
@@ -87,16 +81,15 @@ func (state State) HeatCapacityRatio() float64 {
 }
 
 func (state State) Pressure() Pressure {
-	return Pressure{pascals: state.TotalMass().kilograms *
-		state.MixtureGasConstant().joulesPerKilogramKelvin *
-		state.temperature.kelvin / state.volume.cubicMetres}
+	return Pressure{pascals: floatmath.ProductOver(state.volume.cubicMetres, state.TotalMass().kilograms,
+		state.MixtureGasConstant().joulesPerKilogramKelvin, state.temperature.kelvin)}
 }
 
 func (state State) InternalEnergy() Energy {
 	terms := make([]float64, len(state.components))
 	for index, component := range state.components {
-		terms[index] = component.mass.kilograms *
-			component.heatCV.joulesPerKilogramKelvin * state.temperature.kelvin
+		terms[index] = floatmath.Product(component.mass.kilograms,
+			component.heatCV.joulesPerKilogramKelvin, state.temperature.kelvin)
 	}
 	return Energy{joules: stableSum(terms)}
 }

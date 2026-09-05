@@ -22,18 +22,22 @@ not one universal equation. See [Bounded universality](docs/UNIVERSALITY.md).
 
 ## Status
 
-F.A.R.T. Lab is experimental v0.7 software. The permanent v0.6 toy output is
-stable. Every newer command and schema is an explicitly provisional oracle.
+F.A.R.T. Lab is experimental v0.8 alpha software. The permanent v0.6 toy output
+is stable. Newer commands and schemas remain provisional. The Rust core and
+bounded evidence carrier are working foundations for the full v0.8 and v0.9 gates.
 
 | Available now | Not implemented yet |
 | --- | --- |
 | Dependency-free Go CLI on Windows, macOS, and Linux | Plume, acoustics, particles, chemistry, damage, or haptics |
-| Permanent intensity 1 to 5 string oracle | Case commitment, archives, or certificate authority |
+| Permanent intensity 1 to 5 string oracle in Go and Rust | Certified `.fart` archives, case commitment, or certificate authority |
 | Read-only law-context inspection | Natural-language generator, MCP, or A2A play |
 | Strict scenario-document validation | htop-style Terminal Lab or native Godot application |
 | Exact rigid ideal-mixture reservoir endpoint prediction | Complete trusted `RES-002` blowdown benchmark |
 | Quasi-steady restriction flow, component histories, and coupled blowdown | Selective species transport and wall heat-transfer closures |
 | Portable Agent Plugins skill with tested CLI recipes | Hosted MCP or A2A services and verified agent-host installations |
+| Native Rust reservoir predictor with analytical and Go comparison tests | Stateful `PlayService`, full model registry, and complete Go command parity |
+| Opt-in adaptive discharge timing with explicit error estimates and work limits | Fixed-time adaptive stepping and rigorous solution-error bounds |
+| Atomic `.fartevidence` capture, integrity verification, replay, and reconstruction | Ratified scientific identities, journals, and archive migration |
 
 The reservoir predictor is a standalone SI continuum model. It accepts explicit
 component masses and properties, rigid volume, temperature, closure, and
@@ -44,22 +48,29 @@ flow, and the analytical choking boundary. The walking skeleton couples those
 oracles in time: rate from the restriction, thermodynamic path from the
 reservoir, with mass, energy, and impulse ledgers plus an `L/D` dry-flow
 signature. It is not a field solver, plume, sound, occurrence, or case
-archive. The supporting catalog and authority experiments are summarized in the
+identity. The [evidence carrier](docs/WALK_EVIDENCE.md) retains the versioned
+software account. The supporting catalog and authority experiments are summarized in the
 [capability contract](docs/CAPABILITY_REPORT.md) and [roadmap](ROADMAP.md).
 
 ## Quick start
 
 ```console
-go build -o fartapp .
-./fartapp --help
-./fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json
-./fartapp restriction predict testdata/restriction/gamma15-choked.json
-./fartapp walk simulate testdata/walk/ordinary-low-pressure.json
+go build -o artifacts/bin/fartapp ./cmd/fartapp
+./artifacts/bin/fartapp --help
+./artifacts/bin/fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json
+./artifacts/bin/fartapp restriction predict testdata/restriction/gamma15-choked.json
+./artifacts/bin/fartapp walk simulate testdata/walk/ordinary-low-pressure.json
+./artifacts/bin/fartapp walk refine testdata/walk/ordinary-low-pressure.json --relative-tolerance 1e-8 --max-evaluations 100000
 ```
 
-![Current v0.7 reservoir predictor showing explicit mixture state, transfers, assumptions, nonclaims, and balance claims](docs/media/readme/reservoir-predict-v0.7-current.svg)
+On Windows, build with `go build -o artifacts/bin/fartapp.exe ./cmd/fartapp`
+and use `./artifacts/bin/fartapp.exe` in the examples. The build creates the
+output directory; `artifacts/` is ignored by Git.
 
-This is a current, executable synthetic verification case. Its large values are
+![v0.7 reservoir report snapshot showing mixture state, transfers, assumptions, nonclaims, and balance claims](docs/media/readme/reservoir-predict-v0.7-current.svg)
+
+The image records the v0.7 presentation of a still-executable synthetic
+verification case. Its large values are
 chosen for clean analytical checking. They are not a biological default, an
 ordinary pfft, or empirical validation. Use `--format json` for the complete
 typed report. The [simulation contract](docs/SIMULATION.md) gives the equations
@@ -68,7 +79,7 @@ and limits.
 The project still preserves the tiny command where it began:
 
 ```console
-./fartapp 3
+./artifacts/bin/fartapp 3
 braaap (respectable)
 ```
 
@@ -85,14 +96,14 @@ braaap (respectable)
 Other current examples:
 
 ```console
-./fartapp law list
-./fartapp law inspect conformance.relation.atemporal@v0alpha1 --format json
-./fartapp scenario validate testdata/scenarios/atemporal-probe.json
-./fartapp restriction predict testdata/restriction/ordinary-pressure-subsonic.json
-./fartapp restriction history testdata/restriction/gamma15-choked-history.json
-./fartapp walk explain testdata/walk/ordinary-low-pressure.json
-./fartapp walk branch testdata/walk/ordinary-low-pressure.json
-./fartapp walk witness testdata/walk/ordinary-low-pressure.json --format json
+./artifacts/bin/fartapp law list
+./artifacts/bin/fartapp law inspect conformance.relation.atemporal@v0alpha1 --format json
+./artifacts/bin/fartapp scenario validate testdata/scenarios/atemporal-probe.json
+./artifacts/bin/fartapp restriction predict testdata/restriction/ordinary-pressure-subsonic.json
+./artifacts/bin/fartapp restriction history testdata/restriction/gamma15-choked-history.json
+./artifacts/bin/fartapp walk explain testdata/walk/ordinary-low-pressure.json
+./artifacts/bin/fartapp walk branch testdata/walk/ordinary-low-pressure.json
+./artifacts/bin/fartapp walk witness testdata/walk/ordinary-low-pressure.json --format json
 go test ./...
 ```
 
@@ -107,11 +118,31 @@ witness comparison. It is a low-energy test case, not the ratified Reference
 Pfft or a biological measurement. JSON includes every retained sample, component
 mass transfers, authored inputs, numerical policy, and evidence limits.
 
-The next scientific gate is controlled error in the complete discharge time.
-Independent closed forms now test the choked and subsonic phases, but the
-current stepper converges more slowly at pressure equalization. The
-[analytical reference](docs/BLOWDOWN_REFERENCE.md) records the measured error
-and the remaining `RES-002` work.
+The separate `walk refine` operation regularizes the equalization endpoint,
+integrates choking and compliance transitions, and reports estimated time,
+impulse, and stroke error. Tolerance satisfaction and completed discharge are
+separate outcomes. The [analytical reference](docs/BLOWDOWN_REFERENCE.md)
+records independent checks, supported scope, and the remaining `RES-002` work.
+
+Retain an account without copying witness values by hand:
+
+```console
+./artifacts/bin/fartapp evidence capture testdata/walk/ordinary-low-pressure.json --output artifacts/ordinary.fartevidence
+./artifacts/bin/fartapp evidence verify artifacts/ordinary.fartevidence
+./artifacts/bin/fartapp evidence replay artifacts/ordinary.fartevidence
+./artifacts/bin/fartapp evidence reconstruct artifacts/ordinary.fartevidence --format json
+```
+
+The [Rust foundation](docs/RUST_CORE.md) uses the same authored reservoir
+requests through a separate native implementation:
+
+```console
+cargo run --locked -p fart-cli -- 3
+cargo run --locked -p fart-cli -- reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json --format json
+```
+
+The [project layout](docs/PROJECT_LAYOUT.md) explains package responsibilities,
+dependency direction, and why conventional manifests stay at the root.
 
 Agents can use the portable [fartapp-lab skill](skills/fartapp-lab/SKILL.md).
 The [integration guide](docs/AGENT_INTEGRATION.md) records its executable
