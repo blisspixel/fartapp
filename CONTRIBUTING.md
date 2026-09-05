@@ -20,6 +20,8 @@ Read:
 - [docs/AUDIO.md](docs/AUDIO.md) for acoustics, Symphony, radio, and music assets.
 - [docs/AGENT_PLAY.md](docs/AGENT_PLAY.md) for actions, observations, protocol
   adapters, fairness, and benchmark rules.
+- [docs/AGENT_INTEGRATION.md](docs/AGENT_INTEGRATION.md) for the portable skill,
+  executable recipes, and reviewed protocol baseline.
 - [docs/CULTURE.md](docs/CULTURE.md) for cultural and public-interest safeguards.
 - [docs/LOCALIZATION.md](docs/LOCALIZATION.md) for semantic, language, script,
   and optional communication-profile contracts.
@@ -38,17 +40,16 @@ verification, and validation status.
 
 ## Current development setup
 
-Install the Go version declared in `go.mod`. Documentation lint uses Node.js 24
-and the locked npm toolchain. PowerShell 7 is temporarily required for four
-repository-policy checks. Then run:
+Install Go 1.27.1 as declared in `go.mod`. Documentation lint uses Node.js 26.8.1
+from `.node-version` and npm 12.0.2 from `package.json`'s `packageManager` pin.
+These are reviewed stable releases; use the
+[toolchain policy](docs/QUALITY.md) when updating them. Then run:
 
 ```sh
 npm ci --ignore-scripts
 npm run lint:markdown
-pwsh ./scripts/check-dependencies.ps1
-pwsh ./scripts/check-links.ps1
-pwsh ./scripts/check-media.ps1
 go mod verify
+go run ./tools/repoquality repository
 go build ./...
 go test ./internal/registrationauthoritybinding -run '^TestRegistrationAuthorityBindingCorpus$'
 go test ./internal/snapshotregistrationbinding -run '^TestSnapshotRegistrationBindingCorpus$'
@@ -72,6 +73,14 @@ go test . -run '^TestMinimalOpaqueUnresolvedCapabilityCLIContract$'
 go test ./internal/idealmixturereservoir -run '^TestSyntheticMixtureClosedForms$'
 go test ./internal/reservoirprediction -run '^TestPredictSyntheticClosedForms$'
 go test . -run '^TestReservoirCLITextAndJSONFixtures$'
+go test ./internal/restrictionflow -run '^TestChokedGammaFifteenClosedForm$'
+go test ./internal/restrictionprediction -run '^TestPredictChokedClosedForm$'
+go test ./internal/restrictionhistory -run '^TestConstantChokedHistoryClosedForm$'
+go test ./internal/restrictionhistoryprediction -run '^TestPredictConstantChokedHistory$'
+go test . -run '^TestRestrictionCLITextAndJSONFixtures$'
+go test ./internal/coupledblowdown -run '^TestAdiabaticPathMatchesReservoirEndpoint$'
+go test ./internal/walkcase -run '^TestWalkOperationsOnIsothermalFixture$'
+go test . -run '^TestWalkCLISimulateAndFailures$'
 go test . -run '^TestHelpRoutes$'
 go vet ./...
 go run honnef.co/go/tools/cmd/staticcheck@v0.8.1 ./...
@@ -79,20 +88,9 @@ go run golang.org/x/vuln/cmd/govulncheck@v1.7.0 ./...
 go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
 go test ./...
 go test -shuffle=on -count=20 ./...
-go test -run=^$ -fuzz=FuzzRun -fuzztime=5s .
-go test -run=^$ -fuzz=FuzzCompareExactAuthorityBinding -fuzztime=5s ./internal/registrationauthoritybinding
-go test -run=^$ -fuzz=FuzzComposePositive -fuzztime=5s ./internal/snapshotregistrationbinding
-go test -run=^$ -fuzz=FuzzFiniteAuthorityMatching -fuzztime=5s ./internal/authoritymatching
-go test -run=^$ -fuzz=FuzzResolveInSnapshot -fuzztime=5s ./internal/authorityresolution
-go test -run=^$ -fuzz=FuzzFiniteSnapshotAndLookup -fuzztime=5s ./internal/cataloglookup
-go test -run=^$ -fuzz=FuzzRegistrationConstructors -fuzztime=5s ./internal/catalogregistration
-go test -run=^$ -fuzz=FuzzDispositionConstructors -fuzztime=5s ./internal/evaluation
-go test -run=^$ -fuzz=FuzzValidate -fuzztime=5s ./internal/scenarioprobe
-go test -run=^$ -fuzz=FuzzWithdrawFraction -fuzztime=5s ./internal/idealmixturereservoir
-go test -run=^$ -fuzz=FuzzPredict -fuzztime=5s ./internal/reservoirprediction
-go test -run=^$ -fuzz=FuzzInspect -fuzztime=5s ./internal/strictjson
+go run ./tools/repoquality fuzz --time 5s
 go test '-coverprofile=coverage.out' ./...
-pwsh ./scripts/check-go-coverage.ps1 -ProfilePath coverage.out -AggregateMinimum 90 -PackageMinimum 80
+go run ./tools/repoquality coverage --profile coverage.out --aggregate 90 --package 80
 ```
 
 Run `gofmt` on every changed Go file. Total statement coverage must remain at or
@@ -100,13 +98,10 @@ above 90 percent, and every non-generated package must remain at or above the 80
 percent floor. Domain, solver, archive, replay, and protocol code receive stricter
 changed-line and mutation gates described in [docs/QUALITY.md](docs/QUALITY.md).
 
-The PowerShell dependency, link, media, and coverage gates are active but
-transitional. The approved migration is a dependency-free Go checker with
-tested path behavior on Linux, macOS, and Windows. Its planned commands are
-documented in [docs/QUALITY.md](docs/QUALITY.md) and must not be presented as
-available until they ship. Do not add new policy to the PowerShell scripts or
-introduce another task runner for this migration. Thin platform wrappers are
-acceptable only when they forward arguments and exit status to the Go command.
+Repository-policy checks are the Go `repoquality` command documented in
+[docs/QUALITY.md](docs/QUALITY.md). Do not add new policy to the optional
+PowerShell wrappers or introduce another task runner. Wrappers may only forward
+arguments and exit status to the Go command.
 
 ## Repository structure and review discipline
 

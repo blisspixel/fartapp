@@ -14,7 +14,10 @@ Usage:
   fartapp law <list|inspect>
   fartapp scenario validate <scenario.json|->
   fartapp reservoir predict <request.json|->
-  fartapp help [law [list|inspect]|scenario [validate]|reservoir [predict]]
+  fartapp restriction predict <request.json|->
+  fartapp restriction history <request.json|->
+  fartapp walk <predict|simulate|inspect|explain|branch|certify|witness|reconstruct> <case.json|->
+  fartapp help [law [list|inspect]|scenario [validate]|reservoir [predict]|restriction [predict|history]|walk]
 
 Available now:
   <intensity>         Run the permanent v0.6 legacy string oracle from 1 to 5.
@@ -22,12 +25,16 @@ Available now:
   law inspect        Inspect one law-context revision and its capability axes.
   scenario validate  Validate a bounded document of law-scoped capability requests.
   reservoir predict Predict one rigid ideal-mixture reservoir endpoint.
+  restriction predict Predict one quasi-steady isentropic converging-restriction state.
+  restriction history Integrate prescribed-area restriction samples.
+  walk               Explore an experimental coupled-blowdown model and evidence.
   help               Show root or command help.
 
 This build supplies no implicit Earth or other world, source, body, species,
-geometry, time, observer, identity, mapping, or admission policy. Its one
-analytical predictor runs only the explicit SI ideal-mixture model named in a
-bounded request. It has no realization engine, aperture-flow solver, TUI,
+geometry, time, observer, identity, mapping, or admission policy. Its
+analytical predictors run only the explicit SI models named in a bounded
+request. Coupled blowdown is a quasi-steady walking skeleton, not a field
+solver, TUI,
 native application, updater, or natural-language generator. "Fart" is the comic
 umbrella, not the scientific ontology.
 The current probe resolves declared law contexts and capability references only;
@@ -43,6 +50,9 @@ Examples:
   fartapp law inspect conformance.relation.atemporal@v0alpha1
   fartapp scenario validate testdata/scenarios/atemporal-probe.json
   fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json
+  fartapp restriction predict testdata/restriction/gamma15-choked.json
+  fartapp restriction history testdata/restriction/gamma15-choked-history.json
+  fartapp walk explain testdata/walk/ordinary-low-pressure.json
   fartapp help scenario validate
 
 Exit status:
@@ -81,6 +91,19 @@ func helpOutput(args []string) (string, bool) {
 		return reservoirHelp, true
 	case len(args) == 2 && args[0] == "reservoir" && args[1] == "predict":
 		return reservoirPredictHelp, true
+	case len(args) == 1 && args[0] == "restriction":
+		return restrictionHelp, true
+	case len(args) == 2 && args[0] == "restriction" && args[1] == "predict":
+		return restrictionPredictHelp, true
+	case len(args) == 2 && args[0] == "restriction" && args[1] == "history":
+		return restrictionHistoryHelp, true
+	case len(args) == 1 && args[0] == "walk":
+		return walkHelp, true
+	case len(args) == 2 && args[0] == "walk":
+		if _, ok := walkOperations[args[1]]; ok {
+			return walkOperationHelp, true
+		}
+		return "", false
 	default:
 		return "", false
 	}

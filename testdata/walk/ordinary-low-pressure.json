@@ -1,0 +1,41 @@
+{
+  "schema": "fart.walk-case/v0alpha1",
+  "model": {
+    "id": "continuum.quasi-steady-coupled-blowdown",
+    "version": "v0alpha1"
+  },
+  "quantity_system": "si",
+  "law_context": {
+    "id": "earth.continuum.si",
+    "version": "v0alpha1"
+  },
+  "closure": "rigid-isothermal",
+  "reservoir": {
+    "components": [
+      {
+        "id": "synthetic.air-like",
+        "mass_kg": 0.000121538188165196,
+        "specific_gas_constant_j_per_kg_k": 287,
+        "isochoric_heat_capacity_j_per_kg_k": 717.5
+      }
+    ],
+    "volume_m3": 0.0001,
+    "temperature_k": 293.15
+  },
+  "restriction": {
+    "back_pressure_pa": 101325,
+    "discharge_coefficient": 0.8,
+    "area": {
+      "law": "prescribed",
+      "prescribed_m2": 0.000001
+    }
+  },
+  "step": {
+    "max_withdrawal_fraction_per_step": 0.00005,
+    "max_steps": 4096,
+    "max_time_s": 0
+  },
+  "branch": {
+    "prescribed_area_m2": 0.000002
+  }
+}

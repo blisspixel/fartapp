@@ -436,8 +436,10 @@ Every request carries the required protocol and client metadata for that
 revision. A later HTTP transport supplies `Mcp-Method` and `Mcp-Name` for routing
 and authorization. Remote authorization validates issuers and uses Client ID
 Metadata Documents rather than adding new Dynamic Client Registration work.
-The Rust SDK is currently beta for this revision, so implementation begins only
-after an SDK-maturity review and retains a direct conformance fallback.
+The September 2026 review found a stable Rust SDK, `rmcp` 3.2.0, with Tier 1
+support for this revision. Stability does not substitute for the adapter's
+revision-specific conformance gate. The implementation decision and current
+portable skill are recorded in [AGENT_INTEGRATION.md](AGENT_INTEGRATION.md).
 
 Local use starts explicitly:
 

@@ -25,8 +25,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version-file: .node-version
           cache: npm
+
+      - name: Select pinned npm
+        run: npm install --global --ignore-scripts "$(node -p "require('./package.json').packageManager")"
 
       - name: Install documentation tooling
         run: npm ci --ignore-scripts
@@ -34,20 +37,8 @@ jobs:
       - name: Audit documentation tooling
         run: npm audit --audit-level=high
 
-      - name: Verify dependency and license policy
-        shell: pwsh
-        run: ./scripts/check-dependencies.ps1
-
       - name: Lint Markdown
         run: npm run lint:markdown
-
-      - name: Verify local documentation links
-        shell: pwsh
-        run: ./scripts/check-links.ps1
-
-      - name: Verify documentation media
-        shell: pwsh
-        run: ./scripts/check-media.ps1
 
       - name: Set up Go
         uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
@@ -57,6 +48,9 @@ jobs:
 
       - name: Verify modules
         run: go mod verify
+
+      - name: Verify repository policy
+        run: go run ./tools/repoquality repository
 
       - name: Build executable
         run: go build ./...
@@ -86,6 +80,14 @@ jobs:
           go test ./internal/idealmixturereservoir -run '^TestSyntheticMixtureClosedForms$'
           go test ./internal/reservoirprediction -run '^TestPredictSyntheticClosedForms$'
           go test . -run '^TestReservoirCLITextAndJSONFixtures$'
+          go test ./internal/restrictionflow -run '^TestChokedGammaFifteenClosedForm$'
+          go test ./internal/restrictionprediction -run '^TestPredictChokedClosedForm$'
+          go test ./internal/restrictionhistory -run '^TestConstantChokedHistoryClosedForm$'
+          go test ./internal/restrictionhistoryprediction -run '^TestPredictConstantChokedHistory$'
+          go test . -run '^TestRestrictionCLITextAndJSONFixtures$'
+          go test ./internal/coupledblowdown -run '^TestAdiabaticPathMatchesReservoirEndpoint$'
+          go test ./internal/walkcase -run '^TestWalkOperationsOnIsothermalFixture$'
+          go test . -run '^TestWalkCLISimulateAndFailures$'
           go test . -run '^TestHelpRoutes$'
 
       - name: Check formatting
@@ -114,20 +116,7 @@ jobs:
         run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
 
       - name: Fuzz command input
-        shell: bash
-        run: |
-          go test -run=^$ -fuzz=FuzzRun -fuzztime=5s .
-          go test -run=^$ -fuzz=FuzzCompareExactAuthorityBinding -fuzztime=5s ./internal/registrationauthoritybinding
-          go test -run=^$ -fuzz=FuzzComposePositive -fuzztime=5s ./internal/snapshotregistrationbinding
-          go test -run=^$ -fuzz=FuzzFiniteAuthorityMatching -fuzztime=5s ./internal/authoritymatching
-          go test -run=^$ -fuzz=FuzzResolveInSnapshot -fuzztime=5s ./internal/authorityresolution
-          go test -run=^$ -fuzz=FuzzFiniteSnapshotAndLookup -fuzztime=5s ./internal/cataloglookup
-          go test -run=^$ -fuzz=FuzzRegistrationConstructors -fuzztime=5s ./internal/catalogregistration
-          go test -run=^$ -fuzz=FuzzDispositionConstructors -fuzztime=5s ./internal/evaluation
-          go test -run=^$ -fuzz=FuzzValidate -fuzztime=5s ./internal/scenarioprobe
-          go test -run=^$ -fuzz=FuzzWithdrawFraction -fuzztime=5s ./internal/idealmixturereservoir
-          go test -run=^$ -fuzz=FuzzPredict -fuzztime=5s ./internal/reservoirprediction
-          go test -run=^$ -fuzz=FuzzInspect -fuzztime=5s ./internal/strictjson
+        run: go run ./tools/repoquality fuzz --time 5s
 
       - name: Repeat tests in shuffled order
         run: go test -shuffle=on -count=20 ./...
@@ -136,12 +125,11 @@ jobs:
         run: go test -race -covermode=atomic -coverprofile=coverage.out ./...
 
       - name: Enforce aggregate and per-package coverage
-        shell: pwsh
         run: >-
-          ./scripts/check-go-coverage.ps1
-          -ProfilePath coverage.out
-          -AggregateMinimum 90
-          -PackageMinimum 80
+          go run ./tools/repoquality coverage
+          --profile coverage.out
+          --aggregate 90
+          --package 80
 
   test:
     name: Test on ${{ matrix.os }}
@@ -168,6 +156,9 @@ jobs:
 
       - name: Build executable
         run: go build ./...
+
+      - name: Verify repository policy
+        run: go run ./tools/repoquality repository
 
       - name: Test
         run: go test ./...

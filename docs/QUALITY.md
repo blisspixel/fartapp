@@ -35,18 +35,41 @@ Core domain, solver, archive, replay, and protocol code targets at least 95
 percent changed-line coverage and 90 percent mutation score. No critical mutant
 may survive merely because an aggregate score passes.
 
+## Current stable toolchain policy
+
+Language and tool upgrades use published stable releases, explicit patch
+versions, and the same numerical and cross-platform checks as a feature change.
+Preview compilers, release candidates, and draft protocols do not become an
+implicit production requirement. These pins were reviewed on 2026-09-04:
+
+| Component | Reviewed version | Role and source |
+| --- | --- | --- |
+| Go | 1.27.1 | Runtime and checker compiler, selected by [go.mod](../go.mod); [official release history](https://go.dev/doc/devel/release) |
+| Node.js | 26.8.1 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [official release index](https://nodejs.org/dist/index.json) |
+| npm | 12.0.2 | Documentation package manager, selected by [package.json](../package.json); [official release](https://github.com/npm/cli/releases/tag/v12.0.2) |
+| Markdownlint CLI2 | 0.23.2 | Exact npm development dependency in the committed lockfile |
+| Staticcheck | 2026.2.1 / module v0.8.1 | Pinned static analysis |
+| Govulncheck | v1.7.0 | Pinned vulnerability analysis |
+| Actionlint | v1.7.12 | Pinned workflow lint |
+
+The application and repository checker retain zero external Go dependencies.
+Node is used only for development documentation tooling. CI reads language and
+package-manager pins from their source files. GitHub Actions retain immutable
+commit pins.
+The latest stable Node Current release is deliberate for this development-only
+toolchain; its release status is distinct from LTS. Go 1.27 raises the macOS
+floor to macOS 13, as recorded in its
+[platform release notes](https://go.dev/doc/go1.27).
+
+Go, npm, and Actions dependency updates are reviewed on the existing weekly
+schedule. Language patch pins and standalone Go analysis-tool pins receive the
+same explicit review, including their version support and full CI result.
+
 ## Cross-platform repository automation
 
-Four active repository-policy checks are currently implemented in PowerShell:
-dependency policy, local documentation links, media manifests, and Go coverage.
-The main quality job runs them on Ubuntu, while the Linux, macOS, and Windows
-matrix currently proves only that the Go tree builds and its package tests pass.
-This is a transitional state, not evidence of cross-platform parity for the
-repository-policy checks.
-
-The planned replacement is a standard-library-only Go implementation with
-domain logic in `internal/repoquality` and a thin command in
-`tools/repoquality`. Its intended command surface is:
+Repository policy is enforced by a standard-library-only Go checker. Domain
+logic lives in `internal/repoquality`. The thin command in `tools/repoquality`
+only forwards arguments and exit status:
 
 ```text
 go run ./tools/repoquality repository
@@ -54,19 +77,26 @@ go run ./tools/repoquality coverage --profile coverage.out --aggregate 90 --pack
 go run ./tools/repoquality fuzz --time 5s
 ```
 
-These commands are a migration specification and do not exist yet. Each checker
-must receive focused unit tests with temporary directory trees, malformed input,
-path-separator variation, duplicate declarations, and boundary cases. The
-combined repository check must then pass on Linux, macOS, and Windows before the
-PowerShell policy implementations are removed in the same change. Until that
-parity gate passes, the existing scripts remain authoritative.
+`repository` checks npm and Go dependency policy, local Markdown links,
+media manifests, and the portable agent package. `coverage` enforces the
+aggregate and per-package statement
+floors. `fuzz` runs the declared Go fuzz targets. CI runs the repository check
+on Ubuntu, macOS, and Windows, and runs coverage and fuzz in the Linux quality
+job. Optional PowerShell scripts under `scripts/` are wrappers only; they
+contain no validation policy.
 
-New repository-policy logic belongs in the planned Go checker, not in another
-shell-specific implementation. A platform wrapper may forward arguments and
-exit status, but it must contain no validation policy. GitHub Actions YAML,
-locked npm installation, `npm audit`, and Markdown lint remain direct tools.
-The project does not add Make, Task, Just, or another runner merely to rename
-these commands.
+The checker bounds policy JSON, Markdown, covered Go source, and SVG inputs to
+4 MiB; coverage profiles and media assets to 32 MiB. Policy JSON allows at most
+64 levels and 4096-byte member names. It rejects malformed or ambiguous policy
+documents, source traversal, symlink escapes, nonfinite coverage thresholds,
+overflowing counters, empty evidence, and undeclared fuzz-target drift. Media
+header validation is format-specific; WebP container validation is not a claim
+to have decoded its image pixels.
+
+New repository-policy logic belongs in this Go checker, not in another
+shell-specific implementation. GitHub Actions YAML, locked npm installation,
+`npm audit`, and Markdown lint remain direct tools. The project does not add
+Make, Task, Just, or another runner merely to rename these commands.
 
 ## Structural and assisted-code controls
 
@@ -191,8 +221,11 @@ applicability result; it is never reported as passing.
 | `PHY-001` | Finite composition-preserving withdrawal from the declared rigid calorically perfect ideal mixture closes its component, total-mass, energy, and endpoint equation-of-state accounts | Independent synthetic adiabatic and isothermal closed forms, zero identity, composition and semigroup properties, component permutation, forged-state and representability rejection, fuzzing, adapter fixtures, and coverage above the per-package floor | Complete `RES-002` with a separately formulated time history, aperture and exterior coupling, heat-transfer closure, and trusted-reference comparison |
 | `OBS-001` | Observation capabilities and back-action remain explicit | Design contract | Passive, distributed, and coupled observer tests |
 | `ACC-001` | Every enabled projection cites one authoritative Lab account without inventing causal structure | Design contract | Typed claim and transformation traversal tests |
-| `PHY-002` | Applicable conserved transfers close for the declared boundary | Design contract | Exact and tolerance-based ledger properties |
+| `PHY-002` | Applicable conserved transfers close for the declared boundary | Coupled-oracle component, total-mass and energy history checks; separately checked static, kinetic and total source enthalpy; recoil sign and independent choked impulse references | Extend these bounded checks to the ratified control-volume and exterior contracts |
 | `PHY-003` | Earth-profile exterior sound is absent in vacuum | Design contract | Analytical and field-solver fixtures |
+| `PHY-004` | Coupled time evolution agrees with independent reference equations under the declared numerical policy | `internal/coupledblowdown/reference_test.go`: choked and subsonic reference states, published limiting equations, decreasing fixed-time error, and complete-discharge error below 1.5 percent on two named 2048-interval fixtures | Control event-time error across the supported envelope before ratifying full `RES-002` |
+| `PHY-005` | Numerical budgets and representability cannot masquerade as physical completion | Coupled and restriction boundary tests for final samples, exact step counts, authored time limits, adverse pressure, adjacent choking, tiny positive flow, finite ledgers, and asymptotic compliance | Carry explicit termination and numerical-policy evidence into the production core |
+| `CLI-005` | The coupled walkthrough binds its selected model and retained witness to the actual inputs and account | Walk package and CLI tests for incompatible contexts, strict shapes, history/claim/input mutations, retained expectation mismatch, and the low-pressure counterfactual | Ratify production identity, archive, and canonical action contracts separately |
 | `ID-001` | Replay presents a record and never claims recurrence | Design contract | Archive and UI language conformance |
 | `ID-002` | Re-enactment receives a fresh record nonce without inventing a source-law identity change | Design contract | Deterministic identity property tests |
 | `DET-001` | Presentation streams cannot change physical identity | Design contract | Same-trace differential tests |

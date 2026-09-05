@@ -320,6 +320,89 @@ reaction, phase change, recoil, plume, or acoustics. Its tests are code
 verification against closed forms and properties. They are not empirical
 validation. The complete `RES-002` benchmark remains open.
 
+#### Implemented v0.7 restriction-flow subset
+
+The Go oracle also implements
+`continuum.quasi-steady-isentropic-converging-restriction@v0alpha1`. It
+predicts one quasi-steady state for a calorically perfect gas through a
+converging restriction. Inputs are explicit SI stagnation pressure and
+temperature, specific gas constant, heat-capacity ratio, back pressure,
+discharge coefficient, and either a prescribed area or a bounded linear
+quasi-static area compliance of pressure difference. No body, reservoir
+history, exterior plume, or occurrence is supplied.
+
+Choking begins when:
+
+```text
+p_back / p_stagnation <= (2 / (gamma + 1))^(gamma / (gamma - 1))
+```
+
+Subsonic exit pressure equals back pressure. Choked exit pressure is the
+critical stagnation pressure. The discharge coefficient scales mass flow only;
+isentropic exit kinematics are otherwise unchanged. Thrust uses both momentum
+and pressure contributions. Recoil is the equal-and-opposite force. Zero area
+and equal pressures are exact no-flow identities. Reverse flow is refused.
+
+This is not a time-resolved aperture history, a coupled blowdown, a diverging
+or shock-containing nozzle, a plume, or acoustics. Its tests are code
+verification against closed forms, including a gamma-1.4 comparison that an
+ordinary 0.93 kPa gauge excursion at 101325 Pa ambient cannot choke. They are
+not empirical validation.
+
+The numerical restriction implementation uses `log1p` and `expm1` near equal
+pressure and unit heat-capacity ratio. A pressure-selected subsonic Mach value
+that rounds to unity within eight binary64 epsilons is represented by the
+closest value below one. Larger inconsistencies are refused. Positive mass
+flow or a compliant opening that underflows to zero is a representability
+failure, not an authored no-flow identity.
+
+A separate history operation samples that same restriction at prescribed times
+and areas with frozen stagnation. It trapezoid-integrates mass, static exit
+enthalpy, exit kinetic energy, total source enthalpy, thrust impulse, and recoil
+impulse, and it exports exit pressure and recoil time series. Total transported
+enthalpy uses the stagnation temperature; static exit enthalpy uses the exit
+temperature. Their difference is kinetic energy. Scale-aware products preserve
+representable integrated transfers, and nonfinite totals are refused.
+Composition is the single calorically perfect gas of the restriction model;
+species-resolved mixture history remains unsupported in this frozen-source
+operation.
+
+#### Implemented v0.7 coupled-blowdown subset
+
+The walking skeleton couples the two oracles. Restriction flow sets the mass
+rate from the current reservoir stagnation state. Reservoir closure sets the
+thermodynamic path through exact finite-withdrawal steps. Tests prove the
+adiabatic path matches the reservoir endpoint for the withdrawn mass. Separate
+references verify choked and subsonic time histories for both closures,
+including independently derived and published limiting solutions. Component
+and total-mass transfers, thermodynamic energy, and action-reaction accounts
+close under their reported tolerance. The dry-flow signature is
+
+```text
+D = sqrt(4 A_prescribed / pi)
+L = integral(exit_speed dt)
+L / D = formation number when D is defined
+```
+
+`D` is a circular-equivalent reference from prescribed area, not a measured
+orifice. Zero area leaves `L/D` undefined rather than a fake zero. Dimension
+diagnostics appear only when the selected law context declares a dimension
+module. The explicitly selected model is SI continuum physics, so an optional
+incompatible law context is rejected before simulation.
+
+The bounded history retains one initial sample and one sample per completed
+withdrawal, including its terminal state. Work and time truncation, numerical
+no-progress, and pressure equalization are distinct stops. A zero-rest-area
+compliant opening approaches exact equalization only asymptotically and can
+report a numerical pressure-tolerance stop with positive overpressure.
+
+The left-endpoint stepper is first-order away from equalization. Complete
+discharge time converges only as the square root of the withdrawal-fraction
+step limit near the terminal singularity. The
+[analytical reference](BLOWDOWN_REFERENCE.md) gives equations, executable
+acceptance tests, and measured error. This is not a heat-transfer closure, a
+field solver, or the complete trusted `RES-002` benchmark.
+
 ### Composition, chemistry, phase, and exposure layers
 
 Composition is not one universal odor or danger slider. The Earth profile keeps

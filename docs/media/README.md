@@ -26,8 +26,8 @@ Rules:
 
 Run the media check from the repository root:
 
-```powershell
-pwsh ./scripts/check-media.ps1
+```console
+go run ./tools/repoquality repository
 ```
 
 The check rejects missing files, digest drift, byte-budget overruns, unreferenced

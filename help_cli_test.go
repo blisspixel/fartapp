@@ -29,6 +29,16 @@ func TestHelpRoutes(t *testing.T) {
 		{name: "reservoir family", args: []string{"fartapp", "reservoir", "help"}, want: reservoirHelp},
 		{name: "reservoir predict topic", args: []string{"fartapp", "help", "reservoir", "predict"}, want: reservoirPredictHelp},
 		{name: "reservoir predict leaf", args: []string{"fartapp", "reservoir", "predict", "unopened.json", "--format", "json", "--help"}, want: reservoirPredictHelp},
+		{name: "restriction topic", args: []string{"fartapp", "help", "restriction"}, want: restrictionHelp},
+		{name: "restriction family", args: []string{"fartapp", "restriction", "help"}, want: restrictionHelp},
+		{name: "restriction predict topic", args: []string{"fartapp", "help", "restriction", "predict"}, want: restrictionPredictHelp},
+		{name: "restriction predict leaf", args: []string{"fartapp", "restriction", "predict", "unopened.json", "--format", "json", "--help"}, want: restrictionPredictHelp},
+		{name: "restriction history topic", args: []string{"fartapp", "help", "restriction", "history"}, want: restrictionHistoryHelp},
+		{name: "restriction history leaf", args: []string{"fartapp", "restriction", "history", "unopened.json", "--help"}, want: restrictionHistoryHelp},
+		{name: "walk topic", args: []string{"fartapp", "help", "walk"}, want: walkHelp},
+		{name: "walk family", args: []string{"fartapp", "walk", "help"}, want: walkHelp},
+		{name: "walk simulate topic", args: []string{"fartapp", "help", "walk", "simulate"}, want: walkOperationHelp},
+		{name: "walk simulate leaf", args: []string{"fartapp", "walk", "simulate", "unopened.json", "--help"}, want: walkOperationHelp},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -50,6 +60,9 @@ func TestRootHelpAdvertisesOnlyCurrentSurface(t *testing.T) {
 		"law inspect",
 		"scenario validate",
 		"reservoir predict",
+		"restriction predict",
+		"restriction history",
+		"walk",
 		"no implicit Earth or other world",
 		"current probe resolves declared law contexts and capability references only",
 		"currently English presentations",
@@ -83,10 +96,14 @@ func TestHelpRouteErrors(t *testing.T) {
 		{args: []string{"fartapp", "law", "help", "unknown"}, want: "usage: fartapp law help\n"},
 		{args: []string{"fartapp", "scenario", "help", "validate", "extra"}, want: "usage: fartapp scenario help\n"},
 		{args: []string{"fartapp", "reservoir", "help", "predict", "extra"}, want: "usage: fartapp reservoir help\n"},
+		{args: []string{"fartapp", "restriction", "help", "predict", "extra"}, want: "usage: fartapp restriction help\n"},
+		{args: []string{"fartapp", "walk", "help", "simulate"}, want: "usage: fartapp walk help\n"},
+		{args: []string{"fartapp", "walk", "-h", "--help"}, want: "invalid walk help: --help may be specified only once\n"},
 		{args: []string{"fartapp", "--help", "-h"}, want: "invalid help: --help may be specified only once\n"},
 		{args: []string{"fartapp", "law", "--help", "-h"}, want: "invalid law help: --help may be specified only once\n"},
 		{args: []string{"fartapp", "scenario", "-h", "--help"}, want: "invalid scenario help: --help may be specified only once\n"},
 		{args: []string{"fartapp", "reservoir", "-h", "--help"}, want: "invalid reservoir help: --help may be specified only once\n"},
+		{args: []string{"fartapp", "restriction", "-h", "--help"}, want: "invalid restriction help: --help may be specified only once\n"},
 	}
 	for _, test := range tests {
 		var stdout bytes.Buffer
