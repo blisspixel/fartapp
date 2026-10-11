@@ -7,7 +7,7 @@ description: "Use F.A.R.T. Lab to inspect declared metadata, calculate explicit 
 
 Run from the package root containing `plugin.json`, `go.mod`, and `testdata/`,
 two directories above this skill. Use a matching `fartapp` executable, or
-`go run ./cmd/fartapp` with Go 1.27.1 or later from that root. If neither is available,
+`go run ./cmd/fartapp` with Go 1.27.2 or later from that root. If neither is available,
 report the missing prerequisite. Package installation does not supply a shell
 or an executable, and the skill body has no automatic path-variable expansion.
 Calculations need no account, network service, or model API.

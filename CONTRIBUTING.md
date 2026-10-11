@@ -51,7 +51,7 @@ verification, and validation status.
 
 ## Current development setup
 
-Install Go 1.27.1 as declared in `go.mod`. Documentation lint uses Node.js 26.8.1
+Install Go 1.27.2 as declared in `go.mod`. Documentation lint uses Node.js 26.8.1
 from `.node-version` and npm 12.0.2 from `package.json`'s `packageManager` pin.
 The native workspace pins Rust 1.98.1 in `rust-toolchain.toml`.
 These are reviewed stable releases; use the
@@ -96,7 +96,7 @@ go test ./internal/walkcase -run '^TestWalkOperationsOnIsothermalFixture$'
 go test ./internal/cli -run '^TestWalkCLISimulateAndFailures$'
 go test ./internal/cli -run '^TestHelpRoutes$'
 go vet ./...
-go run honnef.co/go/tools/cmd/staticcheck@v0.8.1 ./...
+go run honnef.co/go/tools/cmd/staticcheck@f1838cc308e5cfbb38d91cfc973355611845997e ./...
 go run golang.org/x/vuln/cmd/govulncheck@v1.7.0 ./...
 go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
 go test ./...

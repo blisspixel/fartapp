@@ -40,6 +40,7 @@ func TestCheckDependenciesRejectsPolicyViolations(t *testing.T) {
 			"": {},
 			"node_modules/evil": {
 				"license": "UNLICENSED",
+				"hasInstallScript": true,
 				"integrity": "sha1-nope",
 				"resolved": "https://example.invalid/evil"
 			}
@@ -54,11 +55,50 @@ func TestCheckDependenciesRejectsPolicyViolations(t *testing.T) {
 		"unsupported npm lockfile version",
 		"unreviewed npm license",
 		"not development-only",
+		"install script is not permitted",
 		"invalid npm integrity",
 		"unexpected npm source",
 	} {
 		if !strings.Contains(joined, want) {
 			t.Fatalf("missing %q in %s", want, joined)
+		}
+	}
+}
+
+func TestCheckDependenciesReviewedDocumentationLicenses(t *testing.T) {
+	root := t.TempDir()
+	writeFile(t, filepath.Join(root, "go.mod"), "module example.com/lab\n")
+	for _, tc := range []struct {
+		license string
+		allowed bool
+	}{
+		{"BlueOak-1.0.0", true},
+		{"(BSD-2-Clause OR MIT OR Apache-2.0)", true},
+		{"BlueOak-1.0.0-unreviewed", false},
+		{"(BSD-2-Clause OR UNLICENSED)", false},
+	} {
+		writeFile(t, filepath.Join(root, "package-lock.json"), `{
+			"lockfileVersion": 3,
+			"packages": {
+				"": {},
+				"node_modules/example": {
+					"dev": true,
+					"license": "`+tc.license+`",
+					"integrity": "sha512-vpLQEs+VLCr1nU0BXS07maYoFwlDAH0gngQuuttxIwutDFEMHq2blX+8vpgxDdK3J1PwjCJiep77OitTZ4Ll1A==",
+					"resolved": "https://registry.npmjs.org/example/-/example-1.0.0.tgz"
+				}
+			}
+		}`)
+		result, err := CheckDependencies(root)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if tc.allowed {
+			if len(result.Failures) != 0 || !strings.Contains(result.Report, tc.license+"=1") {
+				t.Fatalf("reviewed license %q rejected: %#v", tc.license, result)
+			}
+		} else if len(result.Failures) != 1 || !strings.Contains(result.Failures[0], "unreviewed npm license "+tc.license) {
+			t.Fatalf("unreviewed license %q: %#v", tc.license, result)
 		}
 	}
 }
