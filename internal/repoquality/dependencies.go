@@ -10,12 +10,14 @@ import (
 )
 
 var allowedLicenses = map[string]struct{}{
-	"Apache-2.0":   {},
-	"BSD-2-Clause": {},
-	"BSD-3-Clause": {},
-	"ISC":          {},
-	"MIT":          {},
-	"Python-2.0":   {},
+	"(BSD-2-Clause OR MIT OR Apache-2.0)": {},
+	"Apache-2.0":                          {},
+	"BlueOak-1.0.0":                       {},
+	"BSD-2-Clause":                        {},
+	"BSD-3-Clause":                        {},
+	"ISC":                                 {},
+	"MIT":                                 {},
+	"Python-2.0":                          {},
 }
 
 type npmLockfile struct {

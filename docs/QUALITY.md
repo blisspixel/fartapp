@@ -44,11 +44,11 @@ implicit production requirement. These pins were reviewed on 2026-09-04:
 
 | Component | Reviewed version | Role and source |
 | --- | --- | --- |
-| Go | 1.27.1 | Runtime and checker compiler, selected by [go.mod](../go.mod); [official release history](https://go.dev/doc/devel/release) |
+| Go | 1.27.2 | Runtime and checker compiler, selected by [go.mod](../go.mod); security update reviewed 2026-10-11; [official release history](https://go.dev/doc/devel/release) |
 | Node.js | 26.8.1 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [official release index](https://nodejs.org/dist/index.json) |
 | npm | 12.0.2 | Documentation package manager, selected by [package.json](../package.json); [official release](https://github.com/npm/cli/releases/tag/v12.0.2) |
-| Markdownlint CLI2 | 0.23.2 | Exact npm development dependency in the committed lockfile |
-| Staticcheck | 2026.2.1 / module v0.8.1 | Pinned static analysis |
+| Markdownlint CLI | 0.49.1 | Exact npm development dependency; security update reviewed 2026-10-11 |
+| Staticcheck | Upstream commit f1838cc308e5cfbb38d91cfc973355611845997e | Temporary Go 1.27.2 compatibility pin; reviewed 2026-10-11 |
 | Govulncheck | v1.7.0 | Pinned vulnerability analysis |
 | Actionlint | v1.7.12 | Pinned workflow lint |
 | Rust | 1.98.1, edition 2024 | Native workspace; [toolchain pin](../rust-toolchain.toml) and [official release](https://blog.rust-lang.org/2026/09/03/Rust-1.98.1/) |
@@ -70,6 +70,40 @@ same explicit review, including their version support and full CI result.
 Cargo dependency updates use that schedule too. Rust and its two quality tools
 were reviewed on 2026-09-05. The active Rust dependency and build-script decisions
 are recorded in [RUST_CORE.md](RUST_CORE.md).
+
+Go 1.27.2 includes the Windows root-directory security correction in
+[GO-2026-6604](https://pkg.go.dev/vuln/GO-2026-6604). The evidence writer reaches
+listed `os.Root` symbols, but uses file creation and hard-link publication,
+not the advisory's directory-creation operation. No application escape was
+demonstrated. CI selects the patched compiler from `go.mod` on every platform.
+
+Staticcheck's latest stable release, 2026.2.1, cannot read Go 1.27.2's export
+format. A temporary development-tool exception pins the complete immutable
+[upstream compatibility fix](https://github.com/dominikh/go-tools/commit/f1838cc308e5cfbb38d91cfc973355611845997e),
+including its preceding loader compatibility changes. This is an upstream
+snapshot, not a stable release. Replace it with the next compatible stable
+release after the same checks pass. The runtime compiler remains a stable
+security release and the static-analysis gate remains blocking.
+
+The 2026-10-11 documentation-tooling update replaces CLI2's unpatched `braces`
+dependency chain with the maintained Markdownlint CLI, retaining markdownlint
+0.41.1 and the same Markdown corpus. `.markdownlint.yaml` preserves MD013 and
+MD036 settings; `.markdownlintignore` preserves root-scoped exclusions. The
+command explicitly includes hidden directories and fails on invalid config.
+Run `npm run test:markdown` to check that command's rules and file selection.
+Ignored trees may still be traversed during file discovery; explicit YAML does
+not isolate ambient Markdownlint configuration. CI runs from a clean checkout.
+
+Exact overrides select patched `js-yaml` 5.4.1, `smol-toml` 1.9.1, and KaTeX
+0.18.2 while upstream CLI dependency ranges lag. Review and remove each override
+when the upstream package selects a safe release. CI audits every severity.
+The license gate admits the exact reviewed `BlueOak-1.0.0` identifier for
+[minimatch](https://github.com/isaacs/minimatch/blob/ded1bbd01beca62a5978bc1650ed0a1ccf9039d5/LICENSE.md)
+and `(BSD-2-Clause OR MIT OR Apache-2.0)` declaration for
+[run-con](https://github.com/goatandsheep/rc/blob/57704b6c6196f31f38b5b66a43a31de990477834/package.json).
+Published license files match immutable upstream sources, with only CRLF/LF
+differences for run-con. Registry, integrity, development-only, and install-script
+checks continue to apply to every locked package.
 
 ## Cross-platform repository automation
 

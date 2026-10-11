@@ -35,7 +35,10 @@ jobs:
         run: npm ci --ignore-scripts
 
       - name: Audit documentation tooling
-        run: npm audit --audit-level=high
+        run: npm audit --audit-level=low
+
+      - name: Verify Markdown lint configuration
+        run: npm run test:markdown
 
       - name: Lint Markdown
         run: npm run lint:markdown
@@ -107,7 +110,7 @@ jobs:
         run: go vet ./...
 
       - name: Static analysis
-        run: go run honnef.co/go/tools/cmd/staticcheck@v0.8.1 ./...
+        run: go run honnef.co/go/tools/cmd/staticcheck@f1838cc308e5cfbb38d91cfc973355611845997e ./...
 
       - name: Vulnerability analysis
         run: go run golang.org/x/vuln/cmd/govulncheck@v1.7.0 ./...

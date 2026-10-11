@@ -7,9 +7,15 @@
     "npm": "12.x"
   },
   "scripts": {
-    "lint:markdown": "markdownlint-cli2"
+    "lint:markdown": "markdownlint --dot --config .markdownlint.yaml \"**/*.md\"",
+    "test:markdown": "node --test tools/markdownlint.test.mjs"
   },
   "devDependencies": {
-    "markdownlint-cli2": "0.23.2"
+    "markdownlint-cli": "0.49.1"
+  },
+  "overrides": {
+    "js-yaml": "5.4.1",
+    "smol-toml": "1.9.1",
+    "katex": "0.18.2"
   }
 }
