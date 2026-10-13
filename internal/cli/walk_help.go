@@ -14,6 +14,10 @@ func walkHelpForOperation(operation string) string {
 	case "simulate":
 		purpose = "Simulate coupled reservoir blowdown and retain its numerical account."
 		details = "The report separates stopping reason from arithmetic balance checks. Time\nand step budgets may truncate the history. The first-order clock requires\nstep refinement to assess accuracy; see 'fartapp help walk refine' for the\nopt-in quadrature method and its explicit error-estimate limits.\n"
+	case "sonify":
+		purpose = "Write diagnostic sonification of a simulated walk account."
+		details = "Mass flow sets amplitude, restriction pressure ratio sets pitch, and\nchoking changes timbre. The duration scale is an explicit time stretch.\nOutput is capped at 10 seconds and the peak is capped at the requested\ndBFS. diagnostic sonification, not physical acoustics.\n"
+		example = "  fartapp walk sonify testdata/walk/ordinary-low-pressure.json --output out.wav\n"
 	case "inspect":
 		purpose = "Inspect the simulated account and any declared dimension diagnostics."
 		details = "Dimension diagnostics are evaluated only when a compatible law_context is\ndeclared. No law context is inferred when that field is omitted.\n"

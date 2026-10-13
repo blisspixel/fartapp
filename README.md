@@ -76,6 +76,51 @@ On Windows, build with `go build -o artifacts/bin/fartapp.exe ./cmd/fartapp`
 and use `./artifacts/bin/fartapp.exe` in the examples. The build creates the
 output directory; `artifacts/` is ignored by Git.
 
+Install either CLI onto `PATH` from this checkout:
+
+```console
+go install ./cmd/fartapp
+cargo install --locked --path crates/fart-cli
+```
+
+A released Go tag can be installed without a checkout:
+
+```console
+go install github.com/blisspixel/fartapp/cmd/fartapp@v0.8.0-alpha.3
+```
+
+When a release publishes archives, they are attached to that GitHub release.
+Shell completion for the Go CLI:
+
+```console
+fartapp completion bash
+fartapp completion zsh
+fartapp completion fish
+```
+
+One shared catalog names every command. `fartapp <command>` and `fart <command>`
+both recognize it. A command that lives only in the other binary exits 2 and
+prints the other CLI's example. `fartapp quickplay 3` runs one synthetic walk.
+`fartapp walk sonify <case.json> --output out.wav` writes diagnostic
+sonification, not physical acoustics.
+
+## Command parity
+
+| Command | Go `fartapp` | Rust `fart` | Status |
+| --- | --- | --- | --- |
+| law | yes | no | Go oracle |
+| scenario | yes | no | Go oracle |
+| reservoir | yes | yes | both |
+| restriction | yes | yes | both |
+| walk | yes | no | Go oracle |
+| evidence | yes | no | Go oracle |
+| assurance | yes | no | Go oracle |
+| quickplay | yes | no | Go oracle |
+| completion | yes | no | Go oracle |
+| version | yes | yes | both |
+| help | yes | yes | both |
+| play | no | yes | Rust CLI |
+
 ![v0.7 reservoir report snapshot showing mixture state, transfers, assumptions, nonclaims, and balance claims](docs/media/readme/reservoir-predict-v0.7-current.svg)
 
 The image records the v0.7 presentation of a still-executable synthetic

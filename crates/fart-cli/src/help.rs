@@ -12,7 +12,11 @@ Commands:
   reservoir    Predict an explicit analytical SI endpoint.
   restriction  Predict flow or integrate a prescribed area history.
   play         Run, replay, or reconstruct a bounded local experiment.
+  version      Print the release tag and commit.
   help         Show command help without reading inputs.
+
+Also in the Go oracle CLI (fartapp): law, scenario, walk, evidence,
+assurance, quickplay, and completion. Exit status 2 names that CLI.
 
 Start here:
   fart 3

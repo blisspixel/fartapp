@@ -6,6 +6,9 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
 
 	"github.com/blisspixel/fartapp/internal/walkcase"
 	"github.com/blisspixel/fartapp/internal/walkevidence"
@@ -79,10 +82,13 @@ func runEvidence(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 			return evidenceFailure(options.format, operation, err, stdout, stderr)
 		}
 		record, err = walkevidence.Capture(request)
-		if err == nil {
-			err = walkevidence.WriteNew(context.Background(), destination, record)
-		}
 		if err != nil {
+			return evidenceFailure(options.format, operation, err, stdout, stderr)
+		}
+		if err = walkevidence.WriteNew(context.Background(), destination, record); err != nil {
+			if destination != "" && !strings.Contains(err.Error(), destination) && !strings.Contains(err.Error(), filepath.Dir(destination)) {
+				err = fmt.Errorf("%s: %w", destination, err)
+			}
 			return evidenceFailure(options.format, operation, err, stdout, stderr)
 		}
 	} else {
@@ -150,16 +156,18 @@ func evidenceFailure(format outputFormat, operation string, err error, stdout, s
 	case errors.Is(err, walkevidence.ErrTooLarge), errors.Is(err, walkcase.ErrInputTooLarge):
 		reason = "input_too_large"
 	}
+	detail := boundDiagnostic(err.Error())
 	if format == outputJSON {
 		value := struct {
 			Schema    string `json:"schema"`
 			Status    string `json:"status"`
 			Operation string `json:"operation"`
 			Reason    string `json:"reason_code"`
-		}{"fart.evidence-operation/v0alpha1", "invalid", operation, reason}
+			Message   string `json:"message"`
+		}{"fart.evidence-operation/v0alpha1", "invalid", operation, reason, detail}
 		_ = writeValue[any](stdout, stderr, outputJSON, value, func(any) string { return "" })
 	} else {
-		writeDiagnostic(stderr, "evidence %s failed: %s: %s\n", operation, reason, quoteInput(err.Error()))
+		writeDiagnostic(stderr, "evidence %s failed: %s: %s\n", operation, reason, strconv.QuoteToASCII(detail))
 	}
 	return 1
 }
