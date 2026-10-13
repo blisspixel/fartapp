@@ -120,6 +120,8 @@ func TestQuickPlayPresetsBoundsAndTryNext(t *testing.T) {
 	if strings.Count(formatQuickplay(report), "\n") > 24 {
 		t.Fatalf("quickplay text has %d lines", strings.Count(formatQuickplay(report), "\n"))
 	}
+	// Installed binaries must offer useful next steps outside a source checkout.
+	t.Chdir(t.TempDir())
 	for _, command := range report.TryNext {
 		fields := strings.Fields(command)
 		if len(fields) == 0 || fields[0] != "fartapp" {
