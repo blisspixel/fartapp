@@ -32,9 +32,9 @@ Example:
 `
 
 var quickplayNext = []string{
-	"fartapp walk branch testdata/walk/ordinary-low-pressure.json",
-	"fartapp walk explain testdata/walk/ordinary-low-pressure.json",
-	"fartapp walk certify testdata/walk/ordinary-low-pressure.json",
+	"fartapp walk new --preset ordinary",
+	"fartapp quickplay 5",
+	"fartapp quickplay 3 --format json",
 }
 
 type quickplayReport struct {
