@@ -218,7 +218,8 @@ jobs:
         run: |
           go install ./cmd/fartapp
           cargo install --locked --path crates/fart-cli
-          export PATH="$(go env GOPATH)/bin:$HOME/.cargo/bin:$PATH"
+          fartapp_go_bin="$(go env GOPATH)/bin"
+          export PATH="$fartapp_go_bin:$HOME/.cargo/bin:$PATH"
           command -v fartapp
           command -v fart
           fartapp version

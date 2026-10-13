@@ -88,7 +88,8 @@ locations, run this in the current shell and add the export to your shell's
 startup file to keep it for future sessions:
 
 ```console
-export PATH="$(go env GOPATH)/bin:$HOME/.cargo/bin:$PATH"
+fartapp_go_bin="$(go env GOPATH)/bin"
+export PATH="$fartapp_go_bin:$HOME/.cargo/bin:$PATH"
 command -v fartapp
 command -v fart
 ```
