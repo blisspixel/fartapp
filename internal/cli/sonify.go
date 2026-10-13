@@ -334,11 +334,6 @@ func synthesize(report walkcase.Report, settings sonifySettings) ([]byte, sonify
 				quantized = -target
 			}
 			pcm[index] = int16(quantized)
-			if abs := quantized; abs < 0 {
-				abs = -abs
-			} else if abs > peakAbs {
-				peakAbs = abs
-			}
 			if quantized < 0 {
 				if -quantized > peakAbs {
 					peakAbs = -quantized
