@@ -26,6 +26,8 @@ Commands:
   witness      Hash normalized inputs and the complete numerical account.
   reconstruct  Compare a new calculation with a retained expected_witness.
   refine       Estimate quadrature error under explicit tolerances and a work budget.
+  sonify       Write diagnostic sonification of the account to a WAV file.
+  new          Write a synthetic gentle, ordinary, or choked preset.
 
 Help:
   fartapp help walk simulate
@@ -34,7 +36,8 @@ The walkthrough is an explicit SI model, not an ordinary pfft calibration or
 Reference Pfft. An optional law_context must be earth.continuum.si@v0alpha1;
 incompatible contexts are refused. No context is selected when it is omitted.
 Use evidence help for a provisional retained software carrier. There is no
-case commitment, certificate authority, or physical audio.
+case commitment or certificate authority. walk sonify is diagnostic
+sonification, not physical acoustics.
 
 Example:
   fartapp walk explain testdata/walk/ordinary-low-pressure.json
@@ -67,6 +70,12 @@ func runWalk(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	}
 	if args[0] == "refine" {
 		return runRefine(args[1:], stdin, stdout, stderr)
+	}
+	if args[0] == "sonify" {
+		return runSonify(args[1:], stdin, stdout, stderr)
+	}
+	if args[0] == "new" {
+		return runWalkNew(args[1:], stdout, stderr)
 	}
 	if _, ok := walkOperations[args[0]]; !ok {
 		writeDiagnostic(stderr, "unknown walk command %s; run 'fartapp help walk'\n", quoteInput(args[0]))

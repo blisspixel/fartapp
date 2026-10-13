@@ -1,0 +1,13 @@
+# command	home	example
+law	go	fartapp law list
+scenario	go	fartapp scenario validate testdata/scenarios/earth-subsonic-probe.json
+reservoir	both	fartapp reservoir predict testdata/reservoir/synthetic-mixture-adiabatic.json
+restriction	both	fartapp restriction predict testdata/restriction/gamma15-choked.json
+walk	go	fartapp walk simulate testdata/walk/ordinary-low-pressure.json
+evidence	go	fartapp evidence verify testdata/walk/ordinary-low-pressure.json
+assurance	go	fartapp assurance list
+quickplay	go	fartapp quickplay 3
+completion	go	fartapp completion bash
+version	both	fartapp version
+help	both	fartapp help
+play	rust	fart play run testdata/play/reservoir-session.jsonl

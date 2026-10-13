@@ -70,6 +70,44 @@ fn permanent_toy_native_stdout_and_exit_status_are_exact() {
 }
 
 #[test]
+fn bare_invocation_version_and_foreign_commands_are_explicit() {
+    let (code, stdout, stderr) = run(&[], b"");
+    assert_eq!(code, 0);
+    assert!(stderr.is_empty());
+    assert!(
+        String::from_utf8(stdout)
+            .unwrap()
+            .contains("experimental native Rust CLI")
+    );
+
+    let (code, stdout, stderr) = run(&["--version"], b"");
+    assert_eq!(code, 0);
+    assert!(stderr.is_empty());
+    let text = String::from_utf8(stdout).unwrap();
+    assert!(
+        text.contains("fart v0.8.0-alpha.3 commit unknown"),
+        "{text}"
+    );
+
+    let (code, stdout, stderr) = run(&["walk"], b"");
+    assert_eq!(code, 2);
+    assert!(stdout.is_empty());
+    assert_eq!(
+        String::from_utf8(stderr).unwrap(),
+        "'walk' is available in the Go oracle CLI: fartapp walk simulate testdata/walk/ordinary-low-pressure.json\n"
+    );
+
+    let (code, stdout, stderr) = run(&["nope"], b"");
+    assert_eq!(code, 1);
+    assert!(stdout.is_empty());
+    assert!(
+        String::from_utf8(stderr)
+            .unwrap()
+            .contains("unknown command")
+    );
+}
+
+#[test]
 fn all_help_routes_are_explicit_and_do_not_read_input() {
     for args in [
         vec!["--help"],
@@ -122,7 +160,6 @@ fn all_help_routes_are_explicit_and_do_not_read_input() {
 #[test]
 fn usage_errors_do_not_produce_success_output() {
     for args in [
-        vec![],
         vec!["1", "2"],
         vec!["help", "unknown"],
         vec!["reservoir"],

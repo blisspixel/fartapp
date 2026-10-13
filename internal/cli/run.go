@@ -46,15 +46,44 @@ func Run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	if len(args) >= 2 && args[1] == "assurance" {
 		return runAssurance(args[2:], stdout, stderr)
 	}
-
-	if len(args) != 2 {
-		writeDiagnostic(stderr, "usage: fartapp <intensity>\n")
-		return 1
+	if len(args) >= 2 && (args[1] == "version" || args[1] == "--version") {
+		if len(args) != 2 {
+			writeDiagnostic(stderr, "usage: fartapp version\n")
+			return 1
+		}
+		return writeText(stdout, stderr, versionLine())
+	}
+	if len(args) >= 2 && args[1] == "quickplay" {
+		return runQuickplay(args[2:], stdout, stderr)
+	}
+	if len(args) >= 2 && args[1] == "completion" {
+		return runCompletion(args[2:], stdout, stderr)
 	}
 
+	if len(args) < 2 {
+		return writeText(stdout, stderr, rootHelp)
+	}
+	if hint, ok := rustCLIHint(args[1]); ok {
+		writeDiagnostic(stderr, "%s", hint)
+		return 2
+	}
+	if !looksNumeric(args[1]) {
+		writeDiagnostic(stderr, "unknown command %s; run 'fartapp help'\n", quoteInput(args[1]))
+		return 1
+	}
+	return runIntensity(args, stdout, stderr)
+}
+
+func runIntensity(args []string, stdout, stderr io.Writer) int {
 	rawIntensity := args[1]
-	value, err := strconv.Atoi(rawIntensity)
+	wavPath, err := intensityWavPath(args[2:])
 	if err != nil {
+		writeDiagnostic(stderr, "usage: fartapp <intensity> [--wav <out.wav>]\n")
+		return 1
+	}
+	value, canonical := canonicalIntensity(rawIntensity)
+	level, levelErr := newIntensity(value)
+	if !canonical || levelErr != nil {
 		writeDiagnostic(
 			stderr,
 			"invalid intensity %s: must be a canonical integer from %d to %d\n",
@@ -64,29 +93,23 @@ func Run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		)
 		return 1
 	}
-	if strconv.Itoa(value) != rawIntensity {
-		writeDiagnostic(
-			stderr,
-			"invalid intensity %s: must be a canonical integer from %d to %d\n",
-			quoteInput(rawIntensity),
-			minimumIntensity,
-			maximumIntensity,
-		)
+	if wavPath != "" && writeIntensityWAV(level, wavPath, stderr) != 0 {
 		return 1
 	}
-
-	level, err := newIntensity(value)
-	if err != nil {
-		writeDiagnostic(stderr, "invalid %v\n", err)
-		return 1
-	}
-
 	event := level.emission()
 	if _, err := fmt.Fprintf(stdout, "%s (%s)\n", event.sound, event.rating); err != nil {
 		writeDiagnostic(stderr, "write output: %v\n", err)
 		return 1
 	}
 	return 0
+}
+
+func canonicalIntensity(raw string) (int, bool) {
+	value, err := strconv.Atoi(raw)
+	if err != nil || strconv.Itoa(value) != raw {
+		return 0, false
+	}
+	return value, true
 }
 
 func quoteInput(value string) string {

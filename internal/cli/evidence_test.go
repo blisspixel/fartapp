@@ -9,6 +9,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"syscall"
 	"testing"
@@ -311,6 +312,41 @@ func TestEvidenceCLINoClobberAndFilesystemFailures(t *testing.T) {
 	missing := filepath.Join(directory, "missing-\x1b[2J.json")
 	if code := Run([]string{"fartapp", "evidence", "verify", missing}, tripwireReader{}, &stdout, &stderr); code != 1 || bytes.ContainsRune(stderr.Bytes(), '\x1b') {
 		t.Fatalf("text diagnostic emitted a terminal control: code=%d, stderr=%q", code, stderr.String())
+	}
+}
+
+func TestEvidenceMissingDirectoryNamesThePathAndOSReason(t *testing.T) {
+	directory := t.TempDir()
+	parent := filepath.Join(directory, "missing-output-dir")
+	destination := filepath.Join(parent, "case.fartevidence")
+	if _, err := os.OpenRoot(parent); err == nil {
+		t.Fatal("missing directory opened")
+	} else {
+		reason := err.Error()
+		for _, format := range []string{"text", "json"} {
+			var stdout, stderr bytes.Buffer
+			code := Run([]string{"fartapp", "evidence", "capture", "-", "--output", destination, "--format", format}, bytes.NewReader(evidenceCLIRequest(t)), &stdout, &stderr)
+			if code != 1 {
+				t.Fatalf("%s exit = %d", format, code)
+			}
+			if format == "json" {
+				var report struct {
+					Reason  string `json:"reason_code"`
+					Message string `json:"message"`
+				}
+				if err := json.Unmarshal(stdout.Bytes(), &report); err != nil {
+					t.Fatal(err)
+				}
+				if report.Reason != "input_or_filesystem_failure" || report.Message != reason || stderr.Len() != 0 {
+					t.Fatalf("json=(%s,%q), os=%s", stdout.String(), stderr.String(), reason)
+				}
+				if !strings.Contains(report.Message, parent) {
+					t.Fatalf("message %q does not name %s", report.Message, parent)
+				}
+			} else if !strings.Contains(stderr.String(), strconv.QuoteToASCII(reason)) {
+				t.Fatalf("text=%q os=%s", stderr.String(), reason)
+			}
+		}
 	}
 }
 

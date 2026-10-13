@@ -72,7 +72,7 @@ func TestRootHelpAdvertisesOnlyCurrentSurface(t *testing.T) {
 		t.Fatal("root help expanded beyond its compact command index")
 	}
 	for _, planned := range []string{
-		"fartapp quick",
+		"fartapp quick ",
 		"fartapp broadcast",
 		"fartapp ask",
 		"fartapp lab",

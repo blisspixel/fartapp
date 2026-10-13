@@ -1,5 +1,6 @@
 //! Thin native command presentation over bounded service facades.
 
+mod catalog;
 mod help;
 mod play;
 mod restriction;
@@ -35,8 +36,11 @@ pub fn run(
     stdout: &mut dyn Write,
     stderr: &mut dyn Write,
 ) -> u8 {
-    if args.len() == 1 && matches!(args[0].to_str(), Some("-h" | "--help")) {
+    if args.is_empty() || (args.len() == 1 && matches!(args[0].to_str(), Some("-h" | "--help"))) {
         return output(help::ROOT.as_bytes(), stdout, stderr);
+    }
+    if args.len() == 1 && matches!(args[0].to_str(), Some("version" | "--version")) {
+        return output(version_line().as_bytes(), stdout, stderr);
     }
     if args.first().is_some_and(|arg| arg == "help") {
         return if let Some(text) = help::topic(&args[1..]) {
@@ -89,17 +93,46 @@ pub fn run(
             1
         };
     }
+    if let Some(hint) = catalog::go_oracle_hint(&args[0]) {
+        return diagnostic_code(stderr, &hint, 2);
+    }
     if args.len() != 1 {
+        if args
+            .first()
+            .and_then(|arg| arg.to_str())
+            .is_some_and(|token| !catalog::looks_like_intensity(token))
+        {
+            let token = args[0].to_string_lossy();
+            return diagnostic(
+                stderr,
+                &format!("unknown command {token:?}; run 'fart help'\n"),
+            );
+        }
         return diagnostic(stderr, "usage: fart <intensity>\n");
     }
     if let Some(reply) = args[0].to_str().and_then(intensity_reply) {
         return output(reply.as_bytes(), stdout, stderr);
+    }
+    if args[0]
+        .to_str()
+        .is_some_and(|token| !catalog::looks_like_intensity(token))
+    {
+        let token = args[0].to_string_lossy();
+        return diagnostic(
+            stderr,
+            &format!("unknown command {token:?}; run 'fart help'\n"),
+        );
     }
     let token: String = args[0].to_string_lossy().chars().take(32).collect();
     diagnostic(
         stderr,
         &format!("invalid intensity {token:?}: must be a canonical integer from 1 to 5\n"),
     )
+}
+
+fn version_line() -> String {
+    let commit = option_env!("FART_COMMIT").unwrap_or("unknown");
+    format!("fart v{} commit {commit}\n", env!("CARGO_PKG_VERSION"))
 }
 
 fn options(args: &[OsString], play_run: bool) -> Result<Options<'_>, &'static str> {
@@ -194,6 +227,10 @@ fn output(bytes: &[u8], stdout: &mut dyn Write, stderr: &mut dyn Write) -> u8 {
 }
 
 fn diagnostic(stderr: &mut dyn Write, message: &str) -> u8 {
+    diagnostic_code(stderr, message, 1)
+}
+
+fn diagnostic_code(stderr: &mut dyn Write, message: &str, code: u8) -> u8 {
     let _ = stderr.write_all(message.as_bytes());
-    1
+    code
 }

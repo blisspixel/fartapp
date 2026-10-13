@@ -49,16 +49,16 @@ func TestCLIFixtures(t *testing.T) {
 		{name: "three", args: []string{"fartapp", "3"}, wantStdout: "braaap (respectable)\n"},
 		{name: "four", args: []string{"fartapp", "4"}, wantStdout: "blorp (respectable)\n"},
 		{name: "five", args: []string{"fartapp", "5"}, wantStdout: "KABLAM (mighty)\n"},
-		{name: "missing intensity", args: []string{"fartapp"}, wantCode: 1, wantStderr: "usage: fartapp <intensity>\n"},
-		{name: "extra argument", args: []string{"fartapp", "3", "extra"}, wantCode: 1, wantStderr: "usage: fartapp <intensity>\n"},
+		{name: "missing intensity", args: []string{"fartapp"}, wantStdout: rootHelp},
+		{name: "extra argument", args: []string{"fartapp", "3", "extra"}, wantCode: 1, wantStderr: "usage: fartapp <intensity> [--wav <out.wav>]\n"},
 		{
 			name:       "non-integer",
 			args:       []string{"fartapp", "nope"},
 			wantCode:   1,
-			wantStderr: "invalid intensity \"nope\": must be a canonical integer from 1 to 5\n",
+			wantStderr: "unknown command \"nope\"; run 'fartapp help'\n",
 		},
-		{name: "below range", args: []string{"fartapp", "0"}, wantCode: 1, wantStderr: "invalid intensity 0 must be from 1 to 5\n"},
-		{name: "above range", args: []string{"fartapp", "6"}, wantCode: 1, wantStderr: "invalid intensity 6 must be from 1 to 5\n"},
+		{name: "below range", args: []string{"fartapp", "0"}, wantCode: 1, wantStderr: "invalid intensity \"0\": must be a canonical integer from 1 to 5\n"},
+		{name: "above range", args: []string{"fartapp", "6"}, wantCode: 1, wantStderr: "invalid intensity \"6\": must be a canonical integer from 1 to 5\n"},
 		{
 			name:       "leading plus",
 			args:       []string{"fartapp", "+1"},
@@ -120,7 +120,7 @@ func TestCLIOutputFailure(t *testing.T) {
 }
 
 func TestCLIDiagnosticFailureDoesNotPanic(t *testing.T) {
-	if code := run([]string{"fartapp"}, &bytes.Buffer{}, failingWriter{}); code != 1 {
+	if code := run([]string{"fartapp", "nope"}, &bytes.Buffer{}, failingWriter{}); code != 1 {
 		t.Fatalf("exit code = %d, want 1", code)
 	}
 }
@@ -192,8 +192,8 @@ func FuzzRun(f *testing.F) {
 			if code1 != code2 || stdout1 != stdout2 || stderr1 != stderr2 {
 				t.Fatalf("nondeterministic result for %q", args)
 			}
-			if code1 != 0 && code1 != 1 {
-				t.Fatalf("exit code = %d, want 0 or 1", code1)
+			if code1 != 0 && code1 != 1 && code1 != 2 {
+				t.Fatalf("exit code = %d, want 0, 1, or 2", code1)
 			}
 			if stdout1 != "" && stderr1 != "" {
 				t.Fatalf("mixed stdout %q and stderr %q", stdout1, stderr1)
@@ -202,6 +202,10 @@ func FuzzRun(f *testing.F) {
 			if code1 == 0 && len(args) >= 2 &&
 				(args[1] == "help" || args[1] == "-h" || args[1] == "--help") {
 				limit = 8 * 1024
+			} else if len(args) >= 2 && (args[1] == "quickplay" || args[1] == "completion" || args[1] == "version" || args[1] == "walk") {
+				limit = 64 * 1024
+			} else if code1 == 2 {
+				limit = 1024
 			} else if len(args) >= 2 && args[1] == "scenario" {
 				limit = 32 * 1024
 			} else if code1 == 0 && len(args) >= 2 && args[1] == "law" {

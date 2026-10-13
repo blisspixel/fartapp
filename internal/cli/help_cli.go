@@ -11,7 +11,7 @@ Experimental law inspection, scenario validation, and analytical prediction.
 
 Usage:
   fartapp <command> [arguments]
-  fartapp <intensity>
+  fartapp <intensity> [--wav <out.wav>]
   fartapp help [command [operation]]
 
 Available now:
@@ -23,7 +23,12 @@ Available now:
   walk         Explore coupled blowdown, compare an area, or refine its clock.
   evidence     Capture, inspect, verify, replay, and reconstruct an account.
   assurance    Inspect declared invariants and evidence references.
+  quickplay    Run one synthetic walk preset for intensity 1 to 5.
+  completion   Print a bash, zsh, or fish completion script.
+  version      Print the release tag and commit.
   help         Show contextual command help.
+
+Also in the Rust CLI (fart): reservoir, restriction, and play.
 
 Predictors require explicit SI inputs and a named model. The scenario probe
 checks references; it executes no mapping or realization. Help and reports
@@ -31,12 +36,14 @@ use English; stable IDs and JSON fields retain their exact spelling.
 
 Examples:
   fartapp 3
+  fartapp quickplay 3
   fartapp walk explain testdata/walk/ordinary-low-pressure.json
   fartapp help walk branch
 
 Exit status:
   0  Help or a successful command.
   1  A controlled command, input, validation, or detected output failure.
+  2  The command belongs to the other CLI.
      A native Unix SIGPIPE retains the operating system's pipeline status.
 `
 
@@ -82,15 +89,23 @@ func helpOutput(args []string) (string, bool) {
 		return evidenceHelp, true
 	case len(args) == 1 && args[0] == "assurance":
 		return assuranceHelp, true
+	case len(args) == 1 && args[0] == "quickplay":
+		return quickplayHelp, true
+	case len(args) == 1 && args[0] == "completion":
+		return completionHelp, true
+	case len(args) == 1 && args[0] == "version":
+		return versionHelp, true
 	case len(args) == 2 && args[0] == "assurance" && (args[1] == "list" || args[1] == "inspect"):
 		return assuranceHelp, true
 	case len(args) == 2 && args[0] == "evidence" && evidenceOperation(args[1]):
 		return evidenceHelp, true
 	case len(args) == 2 && args[0] == "walk" && args[1] == "refine":
 		return refineHelp, true
+	case len(args) == 2 && args[0] == "walk" && args[1] == "new":
+		return walkNewHelp, true
 	case len(args) == 2 && args[0] == "walk":
-		if _, ok := walkOperations[args[1]]; ok {
-			return walkHelpForOperation(args[1]), true
+		if text := walkHelpForOperation(args[1]); text != "" {
+			return text, true
 		}
 		return "", false
 	default:
