@@ -5,7 +5,7 @@ import (
 	"runtime/debug"
 )
 
-const releaseVersion = "v0.8.0-alpha.3"
+const releaseVersion = "v0.8.0-alpha.4"
 
 const versionHelp = `Print the release tag and the build commit.
 

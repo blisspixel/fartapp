@@ -23,7 +23,7 @@ not one universal equation. See [Bounded universality](docs/UNIVERSALITY.md).
 ## Status
 
 Current source release:
-[v0.8.0-alpha.3](https://github.com/blisspixel/fartapp/releases/tag/v0.8.0-alpha.3).
+[v0.8.0-alpha.4](https://github.com/blisspixel/fartapp/releases/tag/v0.8.0-alpha.4).
 
 F.A.R.T. Lab is experimental v0.8 alpha software. The permanent v0.6 toy output
 is stable. Newer commands and schemas remain provisional. The Rust core and
@@ -86,7 +86,7 @@ cargo install --locked --path crates/fart-cli
 A released Go tag can be installed without a checkout:
 
 ```console
-go install github.com/blisspixel/fartapp/cmd/fartapp@v0.8.0-alpha.3
+go install github.com/blisspixel/fartapp/cmd/fartapp@v0.8.0-alpha.4
 ```
 
 When a release publishes archives, they are attached to that GitHub release.
