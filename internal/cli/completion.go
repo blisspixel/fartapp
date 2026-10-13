@@ -102,7 +102,14 @@ func zshCompletion(commands string) string {
 		}
 		fmt.Fprintf(&output, "_fartapp_%s=(%s)\n", command, strings.Join(ops, " "))
 	}
-	output.WriteString("_fartapp() {\n  _describe command _fartapp_commands\n}\n")
+	output.WriteString("_fartapp() {\n  if (( CURRENT == 2 )); then\n    _describe command _fartapp_commands\n  elif (( CURRENT == 3 )); then\n    case ${words[2]} in\n")
+	for _, command := range catalogCommands() {
+		if len(completionOperations[command]) != 0 {
+			fmt.Fprintf(&output, "      %s) _describe operation _fartapp_%s ;;\n", command, command)
+		}
+	}
+	output.WriteString("      *) return 1 ;;\n    esac\n  else\n    return 1\n  fi\n}\n")
+	output.WriteString("if [[ ${funcstack[1]} == _fartapp ]]; then\n  _fartapp \"$@\"\nelif (( $+functions[compdef] )); then\n  compdef _fartapp fartapp\nfi\n")
 	return output.String()
 }
 

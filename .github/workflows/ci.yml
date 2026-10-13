@@ -52,6 +52,9 @@ jobs:
       - name: Verify modules
         run: go mod verify
 
+      - name: Install zsh completion test dependency
+        run: sudo apt-get update && sudo apt-get install --yes --no-install-recommends zsh
+
       - name: Verify repository policy
         run: go run ./tools/repoquality repository
 
@@ -209,6 +212,18 @@ jobs:
 
       - name: Build Go oracle
         run: go build -o artifacts/bin/fartapp ./cmd/fartapp
+
+      - name: Verify README installation on PATH
+        shell: bash
+        run: |
+          go install ./cmd/fartapp
+          cargo install --locked --path crates/fart-cli
+          fartapp_go_bin="$(go env GOPATH)/bin"
+          export PATH="$fartapp_go_bin:$HOME/.cargo/bin:$PATH"
+          command -v fartapp
+          command -v fart
+          fartapp version
+          fart version
 
       - name: Test, compare full reports, and collect coverage
         env:
