@@ -83,6 +83,18 @@ go install ./cmd/fartapp
 cargo install --locked --path crates/fart-cli
 ```
 
+Ensure both install directories are on `PATH`. With Go and Cargo's default
+locations, run this in the current shell and add the export to your shell's
+startup file to keep it for future sessions:
+
+```console
+export PATH="$(go env GOPATH)/bin:$HOME/.cargo/bin:$PATH"
+command -v fartapp
+command -v fart
+```
+
+If you override `GOBIN` or Cargo's install root, use those directories instead.
+
 A released Go tag can be installed without a checkout:
 
 ```console
