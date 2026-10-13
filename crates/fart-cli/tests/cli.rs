@@ -85,7 +85,7 @@ fn bare_invocation_version_and_foreign_commands_are_explicit() {
     assert!(stderr.is_empty());
     let text = String::from_utf8(stdout).unwrap();
     assert!(
-        text.contains("fart v0.8.0-alpha.3 commit unknown"),
+        text.contains("fart v0.8.0-alpha.4 commit unknown"),
         "{text}"
     );
 

@@ -18,7 +18,7 @@ import (
 
 func TestVersionAndCrossCLIHint(t *testing.T) {
 	var stdout, stderr bytes.Buffer
-	if code := Run([]string{"fartapp", "--version"}, strings.NewReader(""), &stdout, &stderr); code != 0 || stderr.Len() != 0 || !strings.HasPrefix(stdout.String(), "fartapp v0.8.0-alpha.3 commit ") {
+	if code := Run([]string{"fartapp", "--version"}, strings.NewReader(""), &stdout, &stderr); code != 0 || stderr.Len() != 0 || !strings.HasPrefix(stdout.String(), "fartapp v0.8.0-alpha.4 commit ") {
 		t.Fatalf("version=(%d,%q,%q)", code, stdout.String(), stderr.String())
 	}
 	stdout.Reset()
@@ -86,7 +86,7 @@ func TestReadmeMatchesParityCatalog(t *testing.T) {
 		}
 	}
 	for _, phrase := range []string{
-		"go install github.com/blisspixel/fartapp/cmd/fartapp@v0.8.0-alpha.3",
+		"go install github.com/blisspixel/fartapp/cmd/fartapp@v0.8.0-alpha.4",
 		"go install ./cmd/fartapp",
 		"cargo install --locked --path crates/fart-cli",
 		"fartapp completion bash",
