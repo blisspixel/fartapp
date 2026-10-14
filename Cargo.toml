@@ -15,7 +15,7 @@ fart-domain = { path = "crates/fart-domain" }
 fart-core = { path = "crates/fart-core" }
 fart-services = { path = "crates/fart-services" }
 serde = { version = "=1.0.229", default-features = false, features = ["std"] }
-serde_json = { version = "=1.0.151", default-features = false, features = ["std", "float_roundtrip"] }
+serde_json = { version = "=1.0.154", default-features = false, features = ["std", "float_roundtrip"] }
 serde_json_canonicalizer = { version = "=0.3.2", default-features = false }
 sha2 = { version = "=0.11.0", default-features = false }
 
