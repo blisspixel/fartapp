@@ -133,10 +133,10 @@ fn history(result: &HistoryResult) -> Value {
 pub(super) fn text(report: &Report) -> String {
     let (_, _, implementation) = identity(report.kind);
     let (name, title) = match report.kind {
-        Kind::Prediction => ("restriction prediction", "RESTRICTION PREDICTED"),
+        Kind::Prediction => ("restriction prediction", "Restriction predicted"),
         Kind::History => (
             "restriction history",
-            "PRESCRIBED RESTRICTION HISTORY PREDICTED",
+            "Prescribed restriction history predicted",
         ),
     };
     if let Outcome::Invalid(error) = &report.outcome {
@@ -155,7 +155,7 @@ pub(super) fn text(report: &Report) -> String {
         Outcome::Prediction(result) => {
             let _ = writeln!(
                 output,
-                "\nCONTROL SECTION\n  Regime: {}\n  Area law: {}\n  Effective area: {} m^2\n  Mach: {}\n  Exit pressure: {} Pa\n  Exit temperature: {} K\n  Exit speed: {} m/s\n  Mass flow: {} kg/s\n  Thrust: {} N\n  Source recoil: {} N",
+                "\nControl section\n  Regime: {}\n  Area law: {}\n  Effective area: {} m^2\n  Mach: {}\n  Exit pressure: {} Pa\n  Exit temperature: {} K\n  Exit speed: {} m/s\n  Mass flow: {} kg/s\n  Thrust: {} N\n  Source recoil: {} N",
                 result.regime.name(),
                 result.request.area().name(),
                 human_number(result.effective_area_m2),
@@ -171,7 +171,7 @@ pub(super) fn text(report: &Report) -> String {
         Outcome::History(result) => {
             let _ = writeln!(
                 output,
-                "\nFROZEN SOURCE HISTORY\n  Samples: {}\n  Mass out: {} kg\n  Static exit enthalpy out: {} J\n  Exit kinetic energy out: {} J\n  Total stagnation enthalpy out: {} J\n  Thrust impulse: {} N s\n  Source recoil impulse: {} N s",
+                "\nFrozen source history\n  Samples: {}\n  Mass out: {} kg\n  Static exit enthalpy out: {} J\n  Exit kinetic energy out: {} J\n  Total stagnation enthalpy out: {} J\n  Thrust impulse: {} N s\n  Source recoil impulse: {} N s",
                 result.samples.len(),
                 human_number(result.mass_out_kg),
                 human_number(result.enthalpy_out_j),
@@ -183,7 +183,7 @@ pub(super) fn text(report: &Report) -> String {
         }
         Outcome::Invalid(_) => unreachable!("invalid reports returned above"),
     }
-    output.push_str("\nBALANCE CLAIMS\n");
+    output.push_str("\nBalance claims\n");
     for claim in claims(report) {
         let _ = writeln!(
             output,

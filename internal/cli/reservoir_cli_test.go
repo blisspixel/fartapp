@@ -14,7 +14,7 @@ import (
 	"github.com/blisspixel/fartapp/internal/reservoirprediction"
 )
 
-const expectedReservoirText = `RESERVOIR ENDPOINT PREDICTED
+const expectedReservoirText = `Reservoir endpoint predicted
 
 Model: continuum.rigid-calorically-perfect-ideal-mixture@v0alpha1
 Implementation: go-oracle.reservoir/v0alpha2
@@ -22,7 +22,7 @@ Quantity system: si (explicit)
 Closure: rigid-adiabatic
 Prescribed withdrawal fraction: 0.75
 
-INITIAL STATE
+Initial state
   component.a          1 kg; R 200 J/(kg K); cv 400 J/(kg K)
   component.b          3 kg; R 400 J/(kg K); cv 800 J/(kg K)
   Total mass:      4 kg
@@ -35,7 +35,7 @@ INITIAL STATE
   cp_mix:          1050 J/(kg K)
   gamma:           1.5
 
-FINAL STATE
+Final state
   component.a          0.25 kg; R 200 J/(kg K); cv 400 J/(kg K)
   component.b          0.75 kg; R 400 J/(kg K); cv 800 J/(kg K)
   Total mass:      1 kg
@@ -48,7 +48,7 @@ FINAL STATE
   cp_mix:          1050 J/(kg K)
   gamma:           1.5
 
-TRANSFERS
+Transfers
   component.a          mass out 0.75 kg
   component.b          mass out 2.25 kg
   Total mass out:          3 kg
@@ -56,16 +56,37 @@ TRANSFERS
   Heat into reservoir:     0 J
   Boundary work:           0 J
 
-BALANCE CLAIMS
+Balance claims
   reservoir.total-mass-balance: satisfied-within-roundoff; residual 0 kg; tolerance 5.68434e-14 kg
   reservoir.energy-balance: satisfied-within-roundoff; residual 0 J; tolerance 1.59162e-8 J
   reservoir.initial-equation-of-state: satisfied-within-roundoff; residual 0 J; tolerance 7.95808e-9 J
   reservoir.final-equation-of-state: satisfied-within-roundoff; residual 0 J; tolerance 9.9476e-10 J
 
-Assumptions: calorically-perfect-components, homogeneous-equilibrium-state, nonreacting-mixture, single-gas-phase, perfectly-mixed-nonselective-outflow, rigid-volume, sensible-energy-datum-cv-times-temperature, adiabatic-no-heat-transfer
-Model nonclaims: aperture-and-restriction-flow, elapsed-time-history, exterior-state, momentum-and-recoil, phase-change-and-reaction, plume-and-acoustics
-Operation nonclaims: case-commitment, certificate-issuance
-Evidence nonclaims: empirical-validation
+Assumptions:
+  calorically-perfect-components
+  homogeneous-equilibrium-state
+  nonreacting-mixture
+  single-gas-phase
+  perfectly-mixed-nonselective-outflow
+  rigid-volume
+  sensible-energy-datum-cv-times-temperature
+  adiabatic-no-heat-transfer
+
+Model nonclaims:
+  aperture-and-restriction-flow
+  elapsed-time-history
+  exterior-state
+  momentum-and-recoil
+  phase-change-and-reaction
+  plume-and-acoustics
+
+Operation nonclaims:
+  case-commitment
+  certificate-issuance
+
+Evidence nonclaims:
+  empirical-validation
+
 Ambient inputs: none
 Human values: six significant digits; full precision in JSON.
 `

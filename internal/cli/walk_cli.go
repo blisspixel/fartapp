@@ -150,7 +150,7 @@ func classifyWalkInputError(err error) string {
 
 func formatWalk(report walkcase.Report) string {
 	var output strings.Builder
-	fmt.Fprintf(&output, "WALK %s\n\n", strings.ToUpper(report.Operation))
+	fmt.Fprintf(&output, "Walk %s\n\n", report.Operation)
 	fmt.Fprintf(&output, "Implementation: %s\n", report.ImplementationRevision)
 	if report.LawContext != "" {
 		fmt.Fprintf(&output, "Law context: %s\n", report.LawContext)
@@ -227,31 +227,31 @@ func formatWalk(report walkcase.Report) string {
 		fmt.Fprintf(&output, "Witness match: %t\n", *report.WitnessMatch)
 	}
 	if len(report.Explanation) > 0 {
-		output.WriteString("\nEXPLANATION\n")
+		output.WriteString("\nExplanation\n")
 		for _, explanation := range report.Explanation {
-			fmt.Fprintf(&output, "  %s\n", explanation)
+			output.WriteString(wrapProse(explanation, "  ", 80) + "\n")
 		}
 	}
 	if len(report.Claims) > 0 {
-		output.WriteString("\nCLAIMS\n")
+		output.WriteString("\nClaims\n")
 		for _, claim := range report.Claims {
 			fmt.Fprintf(&output, "  %s: %s (residual %s %s; tolerance %s %s)\n", claim.ID, claim.Status,
 				formatScientificValue(claim.Residual), claim.ResidualUnit, formatScientificValue(claim.Tolerance), claim.ResidualUnit)
 		}
 	}
 	if len(report.Dimensions) > 0 {
-		output.WriteString("\nDIMENSIONS\n")
+		output.WriteString("\nDimensions\n")
 		for _, dimension := range report.Dimensions {
 			fmt.Fprintf(&output, "  %s %s [%s]: %s\n", dimension.Quantity, dimension.Unit, dimension.Dimension, dimension.Status)
 		}
 	}
-	fmt.Fprintf(&output, "\nAssumptions: %s\n", strings.Join(report.Assumptions, ", "))
+	formatIdentifierList(&output, "Assumptions", report.Assumptions)
 	if report.Nonclaims != nil {
-		fmt.Fprintf(&output, "Model nonclaims: %s\n", strings.Join(report.Nonclaims.Model, ", "))
-		fmt.Fprintf(&output, "Operation nonclaims: %s\n", strings.Join(report.Nonclaims.Operation, ", "))
-		fmt.Fprintf(&output, "Evidence nonclaims: %s\n", strings.Join(report.Nonclaims.Evidence, ", "))
+		formatIdentifierList(&output, "Model nonclaims", report.Nonclaims.Model)
+		formatIdentifierList(&output, "Operation nonclaims", report.Nonclaims.Operation)
+		formatIdentifierList(&output, "Evidence nonclaims", report.Nonclaims.Evidence)
 	}
-	output.WriteString("Ambient inputs: none\n")
+	output.WriteString("\nAmbient inputs: none\n")
 	output.WriteString(numericPresentationNote)
 	return output.String()
 }

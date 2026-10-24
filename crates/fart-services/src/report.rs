@@ -92,13 +92,13 @@ pub(crate) fn text(report: &PredictionReport) -> String {
         }
     };
     let mut output = format!(
-        "RESERVOIR ENDPOINT PREDICTED\n\nModel: {MODEL_ID}@{MODEL_VERSION}\nImplementation: {IMPLEMENTATION_REVISION}\nQuantity system: si (explicit)\nClosure: {}\nWithdrawal fraction: {}\n",
+        "Reservoir endpoint predicted\n\nModel: {MODEL_ID}@{MODEL_VERSION}\nImplementation: {IMPLEMENTATION_REVISION}\nQuantity system: si (explicit)\nClosure: {}\nWithdrawal fraction: {}\n",
         transition.closure.name(),
         human_number(transition.withdrawal.get())
     );
     for (label, state) in [
-        ("INITIAL", transition.initial),
-        ("FINAL", transition.final_state),
+        ("Initial", transition.initial),
+        ("Final", transition.final_state),
     ] {
         let _ = writeln!(
             output,
@@ -112,7 +112,7 @@ pub(crate) fn text(report: &PredictionReport) -> String {
     }
     let _ = writeln!(
         output,
-        "\nTRANSFERS\n  Mass out: {} kg\n  Enthalpy out: {} J\n  Heat into reservoir: {} J\n  Boundary work: 0 J\n\nBALANCE CLAIMS",
+        "\nTransfers\n  Mass out: {} kg\n  Enthalpy out: {} J\n  Heat into reservoir: {} J\n  Boundary work: 0 J\n\nBalance claims",
         human_number(transition.total_mass_out_kg),
         human_number(transition.enthalpy_out_j),
         human_number(transition.heat_in_j)

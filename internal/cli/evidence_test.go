@@ -116,7 +116,7 @@ func TestEvidenceCLIRetainedReplayAndReconstructionHaveDifferentMeanings(t *test
 									report.ExpectedWitness != record.Summary().Witness || report.ReconstructedWitness != original.Summary().Witness || len(report.History) == 0 {
 									t.Fatalf("reconstruction lost its comparison evidence: %v", err)
 								}
-							} else if !strings.Contains(stdout.String(), "WALK RECONSTRUCT") || !strings.Contains(stdout.String(), "Witness match: ") {
+							} else if !strings.Contains(stdout.String(), "Walk reconstruct") || !strings.Contains(stdout.String(), "Witness match: ") {
 								t.Fatal("text reconstruction omitted comparison outcome")
 							}
 						default:

@@ -474,3 +474,72 @@ func mustRead(t *testing.T, path string) []byte {
 	}
 	return data
 }
+
+func TestReportsFit80ColumnsAndSentenceCase(t *testing.T) {
+	commands := [][]string{
+		{"walk", "explain", "testdata/walk/ordinary-low-pressure.json"},
+		{"walk", "simulate", "testdata/walk/ordinary-low-pressure.json"},
+		{"reservoir", "predict", "testdata/reservoir/synthetic-mixture-adiabatic.json"},
+		{"restriction", "predict", "testdata/restriction/gamma15-choked.json"},
+		{"restriction", "history", "testdata/restriction/gamma15-choked-history.json"},
+	}
+
+	for _, cmd := range commands {
+		t.Run(strings.Join(cmd, "_"), func(t *testing.T) {
+			var stdout, stderr bytes.Buffer
+			args := append([]string{"fartapp"}, cmd...)
+			args[len(args)-1] = filepath.FromSlash(args[len(args)-1])
+			code := Run(args, strings.NewReader(""), &stdout, &stderr)
+			if code != 0 || stderr.Len() != 0 {
+				t.Fatalf("command failed: code=%d stderr=%s", code, stderr.String())
+			}
+
+			out := stdout.String()
+			lines := strings.Split(out, "\n")
+
+			// Check first line (report title) is sentence case, not uppercase.
+			if len(lines) > 0 && len(lines[0]) > 0 {
+				first := lines[0]
+				if strings.ToUpper(first) == first && strings.ToLower(first) != first {
+					t.Errorf("report title %q is uppercase; expected sentence case", first)
+				}
+			}
+
+			// If Explanation section is present, check every explanation line is <= 80 cols.
+			if idx := strings.Index(out, "Explanation\n"); idx != -1 {
+				rest := out[idx+len("Explanation\n"):]
+				end := strings.Index(rest, "\n\n")
+				if end != -1 {
+					rest = rest[:end]
+				}
+				for _, line := range strings.Split(rest, "\n") {
+					if len(line) > 80 {
+						t.Errorf("explanation line exceeds 80 columns (%d cols): %q", len(line), line)
+					}
+				}
+			}
+
+			// Check identifier lists (Assumptions and Nonclaims) format: one per line, indented, no commas.
+			for _, label := range []string{"Assumptions:\n", "Model nonclaims:\n", "Operation nonclaims:\n", "Evidence nonclaims:\n"} {
+				if idx := strings.Index(out, label); idx != -1 {
+					rest := out[idx+len(label):]
+					end := strings.Index(rest, "\n\n")
+					if end != -1 {
+						rest = rest[:end]
+					}
+					for _, item := range strings.Split(rest, "\n") {
+						if strings.TrimSpace(item) == "" {
+							continue
+						}
+						if strings.Contains(item, ",") {
+							t.Errorf("identifier list contained comma: %q", item)
+						}
+						if !strings.HasPrefix(item, "  ") {
+							t.Errorf("identifier not indented by 2 spaces: %q", item)
+						}
+					}
+				}
+			}
+		})
+	}
+}

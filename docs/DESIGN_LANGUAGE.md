@@ -42,10 +42,14 @@ result. A read-only observation has no new physical outcome. Omit inapplicable
 sections instead of filling them with zeros or empty familiar concepts.
 
 Keep one short heading, plain labels, two-space indentation, and one blank line
-between sections. Use a consistent description column for short command lists;
-put long descriptions on an indented continuation line. Aim for 80 columns of
-ordinary prose. Preserve copyable commands, paths, identifiers, and hashes even
-when they are longer.
+between sections. Use sentence case for report titles (`Walk explain`,
+`Reservoir endpoint predicted`), section headings (`Explanation`, `Claims`,
+`Initial state`), and help headings. Use a consistent description column for
+short command lists; put long descriptions on an indented continuation line.
+Aim for 80 columns of ordinary prose; wrap longer prose with an indent matching
+the section. Preserve copyable commands, paths, identifiers, and hashes even when
+they are longer. Format identifier lists (such as assumptions and nonclaims) one
+identifier per line under their label for scannability.
 
 Do not add boxes, repeated rules, required Unicode symbols, emoji, decorative
 ASCII art, or terminal-control sequences to plain output. Do not print a brand

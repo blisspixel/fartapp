@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"fmt"
 	"math"
 	"strconv"
 	"strings"
@@ -58,4 +59,16 @@ func wrapProse(text string, indent string, limit int) string {
 	}
 	lines = append(lines, currentLine)
 	return strings.Join(lines, "\n")
+}
+
+// formatIdentifierList writes a labeled identifier list with one item per line,
+// preceded by a blank line, as required by the design language.
+func formatIdentifierList(builder *strings.Builder, label string, items []string) {
+	if len(items) == 0 {
+		return
+	}
+	fmt.Fprintf(builder, "\n%s:\n", label)
+	for _, item := range items {
+		fmt.Fprintf(builder, "  %s\n", item)
+	}
 }

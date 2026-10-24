@@ -28,7 +28,7 @@ This experimental build provides no protocol server or empirical validation.
 ";
 
 pub(super) const RESERVOIR: &str = "\
-RESERVOIR PREDICT
+Reservoir predict
 
 Usage:
   fart reservoir predict <request.json|-> [--format text|json]
@@ -51,7 +51,7 @@ Exit status:
 ";
 
 pub(super) const RESTRICTION: &str = "\
-RESTRICTION
+Restriction
 
 Usage:
   fart restriction predict <request.json|-> [--format text|json]
@@ -66,7 +66,7 @@ Both operations describe a narrow ideal-gas model without empirical validation.
 ";
 
 pub(super) const RESTRICTION_PREDICT: &str = "\
-RESTRICTION PREDICT
+Restriction predict
 
 Usage:
   fart restriction predict <request.json|-> [--format text|json]
@@ -88,7 +88,7 @@ Exit status:
 ";
 
 pub(super) const RESTRICTION_HISTORY: &str = "\
-RESTRICTION HISTORY
+Restriction history
 
 Usage:
   fart restriction history <request.json|-> [--format text|json]
@@ -112,7 +112,7 @@ Exit status:
 ";
 
 pub(super) const PLAY: &str = "\
-LOCAL RESERVOIR PLAY
+Local reservoir play
 
 Usage:
   fart play run <commands.jsonl|-> [--format text|jsonl|transcript]
@@ -131,7 +131,7 @@ Help:
 ";
 
 pub(super) const PLAY_RUN: &str = "\
-PLAY RUN
+Play run
 
 Usage:
   fart play run <commands.jsonl|-> [--format text|jsonl|transcript]
@@ -161,7 +161,7 @@ Exit status:
 ";
 
 pub(super) const PLAY_REPLAY: &str = "\
-PLAY REPLAY
+Play replay
 
 Usage:
   fart play replay <transcript.json|-> [--format text|json]
@@ -182,7 +182,7 @@ Exit status:
 ";
 
 pub(super) const PLAY_RECONSTRUCT: &str = "\
-PLAY RECONSTRUCT
+Play reconstruct
 
 Usage:
   fart play reconstruct <transcript.json|-> [--format text|json]

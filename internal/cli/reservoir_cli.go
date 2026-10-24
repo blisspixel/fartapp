@@ -148,15 +148,15 @@ func writeReservoirDiagnostic(stderr io.Writer, diagnostic reservoirprediction.D
 
 func formatReservoirPrediction(report reservoirprediction.Report) string {
 	var output strings.Builder
-	output.WriteString("RESERVOIR ENDPOINT PREDICTED\n\n")
+	output.WriteString("Reservoir endpoint predicted\n\n")
 	fmt.Fprintf(&output, "Model: %s@%s\n", report.Model.ID, report.Model.Version)
 	fmt.Fprintf(&output, "Implementation: %s\n", report.ImplementationRevision)
 	fmt.Fprintf(&output, "Quantity system: %s (explicit)\n", report.QuantitySystem)
 	fmt.Fprintf(&output, "Closure: %s\n", report.Closure)
 	fmt.Fprintf(&output, "Prescribed withdrawal fraction: %s\n", formatScientificValue(*report.WithdrawalFraction))
-	writeReservoirState(&output, "INITIAL STATE", *report.Initial)
-	writeReservoirState(&output, "FINAL STATE", *report.Final)
-	output.WriteString("\nTRANSFERS\n")
+	writeReservoirState(&output, "Initial state", *report.Initial)
+	writeReservoirState(&output, "Final state", *report.Final)
+	output.WriteString("\nTransfers\n")
 	for _, component := range report.Transfers.Components {
 		fmt.Fprintf(&output, "  %-20s mass out %s kg\n", component.ID, formatScientificValue(component.MassOutKilograms))
 	}
@@ -164,7 +164,7 @@ func formatReservoirPrediction(report reservoirprediction.Report) string {
 	fmt.Fprintf(&output, "  Integrated enthalpy out: %s J\n", formatScientificValue(report.Transfers.IntegratedEnthalpyOutJoules))
 	fmt.Fprintf(&output, "  Heat into reservoir:     %s J\n", formatScientificValue(report.Transfers.HeatIntoReservoirJoules))
 	fmt.Fprintf(&output, "  Boundary work:           %s J\n", formatScientificValue(report.Transfers.BoundaryWorkByReservoirJoules))
-	output.WriteString("\nBALANCE CLAIMS\n")
+	output.WriteString("\nBalance claims\n")
 	for _, claim := range report.Claims {
 		fmt.Fprintf(
 			&output,
@@ -177,11 +177,13 @@ func formatReservoirPrediction(report reservoirprediction.Report) string {
 			claim.ResidualUnit,
 		)
 	}
-	fmt.Fprintf(&output, "\nAssumptions: %s\n", strings.Join(report.Assumptions, ", "))
-	fmt.Fprintf(&output, "Model nonclaims: %s\n", strings.Join(report.Nonclaims.Model, ", "))
-	fmt.Fprintf(&output, "Operation nonclaims: %s\n", strings.Join(report.Nonclaims.Operation, ", "))
-	fmt.Fprintf(&output, "Evidence nonclaims: %s\n", strings.Join(report.Nonclaims.Evidence, ", "))
-	output.WriteString("Ambient inputs: none\n")
+	formatIdentifierList(&output, "Assumptions", report.Assumptions)
+	if report.Nonclaims != nil {
+		formatIdentifierList(&output, "Model nonclaims", report.Nonclaims.Model)
+		formatIdentifierList(&output, "Operation nonclaims", report.Nonclaims.Operation)
+		formatIdentifierList(&output, "Evidence nonclaims", report.Nonclaims.Evidence)
+	}
+	output.WriteString("\nAmbient inputs: none\n")
 	output.WriteString(numericPresentationNote)
 	return output.String()
 }
