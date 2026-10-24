@@ -17,4 +17,5 @@ artifacts/
 .env.*
 !.env.example
 .radio-work/
+.agents/
 node_modules/
