@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"math"
 	"os"
 	"path/filepath"
@@ -191,6 +192,78 @@ func TestIntensityWavKeepsToyStdout(t *testing.T) {
 	}
 }
 
+type mockTerminalBuffer struct {
+	bytes.Buffer
+}
+
+func (m *mockTerminalBuffer) IsTerminal() bool {
+	return true
+}
+
+func TestIntensityWavReceiptOnTerminal(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "braaap.wav")
+	var stdout bytes.Buffer
+	var stderr mockTerminalBuffer
+	code := Run([]string{"fartapp", "3", "--wav", path}, strings.NewReader(""), &stdout, &stderr)
+	if code != 0 {
+		t.Fatalf("exit code %d, stderr: %s", code, stderr.String())
+	}
+	if stdout.String() != "braaap (respectable)\n" {
+		t.Fatalf("stdout = %q, want %q", stdout.String(), "braaap (respectable)\n")
+	}
+	wav, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	sum := sha256.Sum256(wav)
+	fullDigest := hex.EncodeToString(sum[:])
+	shortDigest := fullDigest[:12]
+	wantReceipt := fmt.Sprintf("wrote %s  1.11 s  sha256 %s  regenerate: fartapp 3 --wav %s  Conservation of Ass: satisfied within roundoff\n",
+		path, shortDigest, path)
+	if stderr.String() != wantReceipt {
+		t.Fatalf("stderr = %q, want %q", stderr.String(), wantReceipt)
+	}
+
+	// Two runs print the same digest
+	againPath := filepath.Join(t.TempDir(), "again.wav")
+	var stdoutAgain bytes.Buffer
+	var stderrAgain mockTerminalBuffer
+	code = Run([]string{"fartapp", "3", "--wav", againPath}, strings.NewReader(""), &stdoutAgain, &stderrAgain)
+	if code != 0 {
+		t.Fatalf("exit code %d, stderr: %s", code, stderrAgain.String())
+	}
+	wantAgainReceipt := fmt.Sprintf("wrote %s  1.11 s  sha256 %s  regenerate: fartapp 3 --wav %s  Conservation of Ass: satisfied within roundoff\n",
+		againPath, shortDigest, againPath)
+	if stderrAgain.String() != wantAgainReceipt {
+		t.Fatalf("stderr = %q, want %q", stderrAgain.String(), wantAgainReceipt)
+	}
+
+	// Redirected stderr (non-terminal) prints nothing extra to stderr
+	var stderrRedirected bytes.Buffer
+	var stdoutRedirected bytes.Buffer
+	code = Run([]string{"fartapp", "3", "--wav", filepath.Join(t.TempDir(), "redir.wav")}, strings.NewReader(""), &stdoutRedirected, &stderrRedirected)
+	if code != 0 || stderrRedirected.Len() != 0 {
+		t.Fatalf("redirected stderr was not empty: code=%d, stderr=%q", code, stderrRedirected.String())
+	}
+
+	// Receipt without mass-ledger claim does not show Conservation of Ass
+	withoutClaim := formatIntensityReceipt("test.wav", 1.5, "1234567890abcdef", 1, nil)
+	if strings.Contains(withoutClaim, "Conservation of Ass") {
+		t.Fatalf("unexpected deadpan label: %s", withoutClaim)
+	}
+	wantWithout := "wrote test.wav  1.50 s  sha256 1234567890ab  regenerate: fartapp 1 --wav test.wav"
+	if withoutClaim != wantWithout {
+		t.Fatalf("without claim = %q, want %q", withoutClaim, wantWithout)
+	}
+
+	failedClaim := formatIntensityReceipt("test.wav", 1.5, "1234567890abcdef", 1, []walkcase.Claim{
+		{ID: "walk.mass-ledger", Status: "failed"},
+	})
+	if strings.Contains(failedClaim, "Conservation of Ass") {
+		t.Fatalf("unexpected deadpan label on failed claim: %s", failedClaim)
+	}
+}
+
 func TestSonifyIsDeterministicBoundedAndDistinct(t *testing.T) {
 	ordinary := sonifyFile(t, "testdata/walk/ordinary-low-pressure.json")
 	repeat := sonifyFile(t, "testdata/walk/ordinary-low-pressure.json")
@@ -206,6 +279,13 @@ func TestSonifyIsDeterministicBoundedAndDistinct(t *testing.T) {
 	choked := sonifyFile(t, "testdata/walk/isothermal-choked.json")
 	if bytes.Equal(ordinary.wav, choked.wav) {
 		t.Fatal("ordinary and choked sonifications were identical")
+	}
+	if ordinary.meta.SHA256 != ordinaryGolden {
+		t.Fatalf("ordinary sonifyReport.SHA256 = %s, want %s", ordinary.meta.SHA256, ordinaryGolden)
+	}
+	chokedSum := sha256.Sum256(choked.wav)
+	if choked.meta.SHA256 != hex.EncodeToString(chokedSum[:]) {
+		t.Fatalf("choked sonifyReport.SHA256 = %s, want %s", choked.meta.SHA256, hex.EncodeToString(chokedSum[:]))
 	}
 	if !strings.Contains(string(ordinary.wav), sonifyMappingID+"/"+sonifyMappingVersion) || !strings.Contains(string(ordinary.wav), sonifyNonclaim) {
 		t.Fatal("wav metadata missing mapping or nonclaim")
