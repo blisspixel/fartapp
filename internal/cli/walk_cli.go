@@ -36,7 +36,7 @@ The walkthrough is an explicit SI model, not an ordinary pfft calibration or
 Reference Pfft. An optional law_context must be earth.continuum.si@v0alpha1;
 incompatible contexts are refused. No context is selected when it is omitted.
 Use evidence help for a provisional retained software carrier. There is no
-case commitment or certificate authority. walk sonify is diagnostic
+case commitment or certificate authority. Walk sonify is diagnostic
 sonification, not physical acoustics.
 
 Example:

@@ -120,8 +120,8 @@ Usage:
   fart play reconstruct <transcript.json|-> [--format text|json]
 
 Commands:
-  run     Start, predict, observe, and explicitly finish one local session.
-  replay  Verify and project retained evidence without running the solver.
+  run          Start, predict, observe, and explicitly finish one local session.
+  replay       Verify and project retained evidence without running the solver.
   reconstruct  Recompute every retained attempt and compare exact values.
 
 Help:

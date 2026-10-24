@@ -105,6 +105,15 @@ fn bare_invocation_version_and_foreign_commands_are_explicit() {
             .unwrap()
             .contains("unknown command")
     );
+
+    let (code, stdout, stderr) = run(&["--nope"], b"");
+    assert_eq!(code, 1);
+    assert!(stdout.is_empty());
+    assert!(
+        String::from_utf8(stderr)
+            .unwrap()
+            .contains("unknown option")
+    );
 }
 
 #[test]

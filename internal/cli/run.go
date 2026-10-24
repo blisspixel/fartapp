@@ -68,7 +68,11 @@ func Run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		return 2
 	}
 	if !looksNumeric(args[1]) {
-		writeDiagnostic(stderr, "unknown command %s; run 'fartapp help'\n", quoteInput(args[1]))
+		kind := "command"
+		if strings.HasPrefix(args[1], "-") {
+			kind = "option"
+		}
+		writeDiagnostic(stderr, "unknown %s %s; run 'fartapp help'\n", kind, quoteInput(args[1]))
 		return 1
 	}
 	return runIntensity(args, stdout, stderr)
