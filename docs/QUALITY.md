@@ -45,13 +45,13 @@ implicit production requirement. These pins were reviewed on 2026-09-04:
 | Component | Reviewed version | Role and source |
 | --- | --- | --- |
 | Go | 1.27.2 | Runtime and checker compiler, selected by [go.mod](../go.mod); security update reviewed 2026-10-11; [official release history](https://go.dev/doc/devel/release) |
-| Node.js | 26.8.1 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [official release index](https://nodejs.org/dist/index.json) |
+| Node.js | 26.12.0 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [official release index](https://nodejs.org/dist/index.json) |
 | npm | 12.0.2 | Documentation package manager, selected by [package.json](../package.json); [official release](https://github.com/npm/cli/releases/tag/v12.0.2) |
 | Markdownlint CLI | 0.49.1 | Exact npm development dependency; security update reviewed 2026-10-11 |
 | Staticcheck | Upstream commit f1838cc308e5cfbb38d91cfc973355611845997e | Temporary Go 1.27.2 compatibility pin; reviewed 2026-10-11 |
 | Govulncheck | v1.7.0 | Pinned vulnerability analysis |
 | Actionlint | v1.7.12 | Pinned workflow lint |
-| Rust | 1.98.1, edition 2024 | Native workspace; [toolchain pin](../rust-toolchain.toml) and [official release](https://blog.rust-lang.org/2026/09/03/Rust-1.98.1/) |
+| Rust | 1.99.1, edition 2024 | Native workspace; [toolchain pin](../rust-toolchain.toml) and [official release](https://blog.rust-lang.org/2026/10/15/Rust-1.99.1/) |
 | cargo-deny | 0.20.2 | Pinned Rust advisory, license, source, version, feature, and build-script policy |
 | cargo-llvm-cov | 0.9.0 | Pinned source-coverage collection with the matching compiler's LLVM tools |
 

@@ -51,9 +51,9 @@ verification, and validation status.
 
 ## Current development setup
 
-Install Go 1.27.2 as declared in `go.mod`. Documentation lint uses Node.js 26.8.1
+Install Go 1.27.2 as declared in `go.mod`. Documentation lint uses Node.js 26.12.0
 from `.node-version` and npm 12.0.2 from `package.json`'s `packageManager` pin.
-The native workspace pins Rust 1.98.1 in `rust-toolchain.toml`.
+The native workspace pins Rust 1.99.1 in `rust-toolchain.toml`.
 These are reviewed stable releases; use the
 [toolchain policy](docs/QUALITY.md) when updating them. Then run:
 
