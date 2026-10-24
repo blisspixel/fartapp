@@ -103,9 +103,14 @@ pub fn run(
             .is_some_and(|token| !catalog::looks_like_intensity(token))
         {
             let token = args[0].to_string_lossy();
+            let kind = if token.starts_with('-') {
+                "option"
+            } else {
+                "command"
+            };
             return diagnostic(
                 stderr,
-                &format!("unknown command {token:?}; run 'fart help'\n"),
+                &format!("unknown {kind} {token:?}; run 'fart help'\n"),
             );
         }
         return diagnostic(stderr, "usage: fart <intensity>\n");
@@ -118,9 +123,14 @@ pub fn run(
         .is_some_and(|token| !catalog::looks_like_intensity(token))
     {
         let token = args[0].to_string_lossy();
+        let kind = if token.starts_with('-') {
+            "option"
+        } else {
+            "command"
+        };
         return diagnostic(
             stderr,
-            &format!("unknown command {token:?}; run 'fart help'\n"),
+            &format!("unknown {kind} {token:?}; run 'fart help'\n"),
         );
     }
     let token: String = args[0].to_string_lossy().chars().take(32).collect();

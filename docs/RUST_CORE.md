@@ -375,7 +375,7 @@ version, or build-script change needs a corresponding policy review.
 ## Verification and promotion
 
 [The dependency policy](../.cargo/deny.toml), enforced by `cargo-deny` 0.20.2,
-allows only the 17 exact external package versions, reviewed feature sets,
+allows only the 17 reviewed external packages, their reviewed feature sets,
 five build scripts, and the crates.io registry. It rejects duplicate versions,
 unreviewed registry or Git sources, and unapproved licenses; the accepted
 license choices are Apache-2.0 and MIT. Advisory exceptions are empty. The

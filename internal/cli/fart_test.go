@@ -57,6 +57,12 @@ func TestCLIFixtures(t *testing.T) {
 			wantCode:   1,
 			wantStderr: "unknown command \"nope\"; run 'fartapp help'\n",
 		},
+		{
+			name:       "unknown option",
+			args:       []string{"fartapp", "--nope"},
+			wantCode:   1,
+			wantStderr: "unknown option \"--nope\"; run 'fartapp help'\n",
+		},
 		{name: "below range", args: []string{"fartapp", "0"}, wantCode: 1, wantStderr: "invalid intensity \"0\": must be a canonical integer from 1 to 5\n"},
 		{name: "above range", args: []string{"fartapp", "6"}, wantCode: 1, wantStderr: "invalid intensity \"6\": must be a canonical integer from 1 to 5\n"},
 		{

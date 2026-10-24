@@ -39,6 +39,7 @@ func TestHelpRoutes(t *testing.T) {
 		{name: "walk family", args: []string{"fartapp", "walk", "help"}, want: walkHelp},
 		{name: "walk simulate topic", args: []string{"fartapp", "help", "walk", "simulate"}, want: walkHelpForOperation("simulate")},
 		{name: "walk simulate leaf", args: []string{"fartapp", "walk", "simulate", "unopened.json", "--help"}, want: walkHelpForOperation("simulate")},
+		{name: "walk sonify topic", args: []string{"fartapp", "help", "walk", "sonify"}, want: walkHelpForOperation("sonify")},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {

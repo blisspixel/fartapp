@@ -16,7 +16,7 @@ func walkHelpForOperation(operation string) string {
 		details = "The report separates stopping reason from arithmetic balance checks. Time\nand step budgets may truncate the history. The first-order clock requires\nstep refinement to assess accuracy; see 'fartapp help walk refine' for the\nopt-in quadrature method and its explicit error-estimate limits.\n"
 	case "sonify":
 		purpose = "Write diagnostic sonification of a simulated walk account."
-		details = "Mass flow sets amplitude, restriction pressure ratio sets pitch, and\nchoking changes timbre. The duration scale is an explicit time stretch.\nOutput is capped at 10 seconds and the peak is capped at the requested\ndBFS. diagnostic sonification, not physical acoustics.\n"
+		details = "Mass flow sets amplitude, restriction pressure ratio sets pitch, and\nchoking changes timbre. The duration scale is an explicit time stretch.\nOutput is capped at 10 seconds and the peak is capped at the requested\ndBFS. Diagnostic sonification, not physical acoustics.\n"
 		example = "  fartapp walk sonify testdata/walk/ordinary-low-pressure.json --output out.wav\n"
 	case "inspect":
 		purpose = "Inspect the simulated account and any declared dimension diagnostics."
@@ -41,19 +41,33 @@ func walkHelpForOperation(operation string) string {
 	default:
 		return ""
 	}
+	usage := fmt.Sprintf("  fartapp walk %s <case.json|-> [--format text|json]", operation)
+	options := `Options:
+  --format text  Write a concise scientific report. This is the default.
+  --format json  Write the complete typed account and structured refusals.
+  -h, --help     Show this help without reading input.`
+	if operation == "sonify" {
+		usage = "  fartapp walk sonify <case.json|-> --output <out.wav> [options]"
+		options = `Options:
+  --output <out.wav>    Required WAV path. An existing file is replaced.
+  --duration-scale <n>  Multiply history elapsed time. Default 20.
+  --sample-rate <hz>    8000 to 96000. Default 48000.
+  --gain-dbfs <db>      Peak ceiling from -60 to 0. Default -18.
+  --play                Play with pw-play, paplay, or afplay when present.
+  --format text         Write a concise scientific report. This is the default.
+  --format json         Write the complete typed account and structured refusals.
+  -h, --help            Show this help without reading input.`
+	}
 	return fmt.Sprintf(`%s
 
 Usage:
-  fartapp walk %s <case.json|-> [--format text|json]
+%s
 
 Arguments:
   case.json  Strict JSON using fart.walk-case/v0alpha1, at most 65,536 bytes.
   -          Read the case from standard input.
 
-Options:
-  --format text  Write a concise scientific report. This is the default.
-  --format json  Write the complete typed account and structured refusals.
-  -h, --help     Show this help without reading input.
+%s
 
 %s
 Scope:
@@ -67,5 +81,5 @@ Exit status:
   0  An account was produced; inspect its stopping condition separately.
   1  Usage, input, model, invariant, comparison, or output failure.
      A native Unix SIGPIPE retains the operating system's pipeline status.
-`, purpose, operation, details, example)
+`, purpose, usage, options, details, example)
 }

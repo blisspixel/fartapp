@@ -43,7 +43,7 @@ Mapping diagnostic.flow-pitch/v0alpha1:
   choking switches in a brighter timbre. Time stretch is the duration scale.
   Output is at most 10 seconds, with a short fade at each end.
 
-diagnostic sonification, not physical acoustics
+Diagnostic sonification, not physical acoustics.
 
 Example:
   fartapp walk sonify testdata/walk/ordinary-low-pressure.json --output out.wav
