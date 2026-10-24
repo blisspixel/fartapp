@@ -137,6 +137,80 @@ func TestQuickPlayPresetsBoundsAndTryNext(t *testing.T) {
 	assertQuickRegime(t, "5", true)
 }
 
+func TestQuickPlayExplanationsAndLayout(t *testing.T) {
+	for _, tc := range []struct {
+		level      string
+		preset     string
+		wantStop   string
+		wantRegime string
+		wantBudget bool
+		avoidNext  string
+		wantWav    string
+	}{
+		{"1", "gentle", "max-steps", "subsonic", true, "fartapp quickplay 1", "fartapp 1 --wav pfft.wav"},
+		{"3", "ordinary", "equalized", "subsonic", false, "fartapp quickplay 3", "fartapp 3 --wav braaap.wav"},
+		{"5", "choked", "max-time", "sonic", true, "fartapp quickplay 5", "fartapp 5 --wav kablam.wav"},
+	} {
+		var stdout, stderr bytes.Buffer
+		code := Run([]string{"fartapp", "quickplay", tc.level, "--format", "json"}, strings.NewReader(""), &stdout, &stderr)
+		if code != 0 || stderr.Len() != 0 {
+			t.Fatalf("quickplay %s failed: code=%d, stderr=%s", tc.level, code, stderr.String())
+		}
+		var report quickplayReport
+		if err := json.Unmarshal(stdout.Bytes(), &report); err != nil {
+			t.Fatalf("unmarshal quickplay %s: %v", tc.level, err)
+		}
+		if report.Stop != tc.wantStop {
+			t.Fatalf("level %s stop = %q, want %q", tc.level, report.Stop, tc.wantStop)
+		}
+		if report.Preset != tc.preset {
+			t.Fatalf("level %s preset = %q, want %q", tc.level, report.Preset, tc.preset)
+		}
+		if strings.Contains(report.Explanation, "The walk account did not include an explanation") {
+			t.Fatalf("level %s has fallback explanation", tc.level)
+		}
+		if strings.Contains(report.Explanation, "This is one explicit synthetic SI reservoir") {
+			t.Fatalf("level %s has generic disclaimer explanation", tc.level)
+		}
+		if !strings.Contains(strings.ToLower(report.Explanation), tc.wantRegime) {
+			t.Fatalf("level %s explanation %q missing regime %q", tc.level, report.Explanation, tc.wantRegime)
+		}
+		if tc.wantBudget && !strings.Contains(strings.ToLower(report.Explanation), "budget") {
+			t.Fatalf("level %s explanation %q missing budget stop note", tc.level, report.Explanation)
+		}
+		if !tc.wantBudget && !strings.Contains(strings.ToLower(report.Explanation), "roundoff") {
+			t.Fatalf("level %s explanation %q missing roundoff stop note", tc.level, report.Explanation)
+		}
+		foundWav := false
+		for _, cmd := range report.TryNext {
+			if cmd == tc.avoidNext {
+				t.Fatalf("level %s suggests itself: %s", tc.level, cmd)
+			}
+			if cmd == tc.wantWav {
+				foundWav = true
+			}
+		}
+		if !foundWav {
+			t.Fatalf("level %s missing wav command %q in try_next: %v", tc.level, tc.wantWav, report.TryNext)
+		}
+
+		// Text layout checks
+		text := formatQuickplay(report)
+		lines := strings.Split(text, "\n")
+		if len(lines) > 25 {
+			t.Fatalf("level %s text has %d lines, want <= 25", tc.level, len(lines))
+		}
+		for lineIdx, line := range lines {
+			if len(line) > 80 {
+				t.Fatalf("level %s line %d exceeds 80 columns (%d chars): %q", tc.level, lineIdx+1, len(line), line)
+			}
+		}
+		if !strings.Contains(text, "recorded only") {
+			t.Fatalf("level %s text missing 'recorded only': %s", tc.level, text)
+		}
+	}
+}
+
 func assertQuickRegime(t *testing.T, intensity string, choked bool) {
 	t.Helper()
 	var stdout, stderr bytes.Buffer

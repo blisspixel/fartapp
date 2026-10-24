@@ -31,17 +31,12 @@ Example:
   fartapp quickplay 3
 `
 
-var quickplayNext = []string{
-	"fartapp walk new --preset ordinary",
-	"fartapp quickplay 5",
-	"fartapp quickplay 3 --format json",
-}
-
 type quickplayReport struct {
 	Schema       string   `json:"schema"`
 	Intensity    int      `json:"intensity"`
 	Seed         int64    `json:"seed"`
 	Preset       string   `json:"preset"`
+	Stop         string   `json:"stop"`
 	Sound        string   `json:"sound"`
 	Rating       string   `json:"rating"`
 	ElapsedS     float64  `json:"elapsed_s"`
@@ -52,6 +47,18 @@ type quickplayReport struct {
 	Explanation  string   `json:"explanation"`
 	Nonclaims    []string `json:"nonclaims"`
 	TryNext      []string `json:"try_next"`
+}
+
+func quickplayTryNext(level int, preset string, sound string) []string {
+	wavTarget := fmt.Sprintf("fartapp %d --wav %s.wav", level, strings.ToLower(sound))
+	newTarget := fmt.Sprintf("fartapp walk new --preset %s", preset)
+	var altTarget string
+	if level == 5 {
+		altTarget = "fartapp quickplay 3"
+	} else {
+		altTarget = "fartapp quickplay 5"
+	}
+	return []string{wavTarget, newTarget, altTarget}
 }
 
 func runQuickplay(args []string, stdout, stderr io.Writer) int {
@@ -96,7 +103,7 @@ func runQuickplay(args []string, stdout, stderr io.Writer) int {
 		writeDiagnostic(stderr, "quickplay failed: %s\n", quoteInput(err.Error()))
 		return 1
 	}
-	account := walkcase.Run(data, "simulate")
+	account := walkcase.Run(data, "explain")
 	if !account.Predicted() {
 		return writeWalkReport(account, "quickplay", options.format, stdout, stderr)
 	}
@@ -121,7 +128,9 @@ func runQuickplay(args []string, stdout, stderr io.Writer) int {
 		cheek = "met"
 	}
 	explanation := "The walk account did not include an explanation."
-	if len(account.Explanation) > 0 && account.Explanation[0] != "" {
+	if len(account.Explanation) >= 4 {
+		explanation = account.Explanation[2] + " " + account.Explanation[3]
+	} else if len(account.Explanation) > 0 && account.Explanation[0] != "" {
 		explanation = account.Explanation[0]
 	}
 	report := quickplayReport{
@@ -129,6 +138,7 @@ func runQuickplay(args []string, stdout, stderr io.Writer) int {
 		Intensity:    level,
 		Seed:         seed,
 		Preset:       name,
+		Stop:         account.Stop,
 		Sound:        event.sound,
 		Rating:       event.rating,
 		ElapsedS:     elapsed,
@@ -137,19 +147,24 @@ func runQuickplay(args []string, stdout, stderr io.Writer) int {
 		ChokedCheek:  cheek,
 		MassOutKg:    massOut,
 		Explanation:  explanation,
-		Nonclaims:    []string{"Synthetic laboratory preset, not a Reference Pfft or a biological claim."},
-		TryNext:      append([]string(nil), quickplayNext...),
+		Nonclaims:    []string{"Synthetic laboratory preset, not a Reference Pfft or a biological claim. Seed is recorded only."},
+		TryNext:      quickplayTryNext(level, name, event.sound),
 	}
 	return writeValue(stdout, stderr, options.format, report, formatQuickplay)
 }
 
 func formatQuickplay(report quickplayReport) string {
 	var output strings.Builder
-	fmt.Fprintf(&output, "Quick Play %d: %s (%s)\n", report.Intensity, report.Sound, report.Rating)
-	fmt.Fprintf(&output, "Preset: %s\n%s\nSeed: %d\n", report.Preset, report.Nonclaims[0], report.Seed)
-	fmt.Fprintf(&output, "Duration: %s s\nPeak mass flow: %s kg/s\n", formatScientificValue(report.ElapsedS), formatScientificValue(report.PeakMassFlow))
-	fmt.Fprintf(&output, "Choked Cheek Criterion: %s (model regime flag, not a biological claim)\n", report.ChokedCheek)
-	fmt.Fprintf(&output, "Mass out: %s kg\nExplanation: %s\nTry next:\n", formatScientificValue(report.MassOutKg), report.Explanation)
+	fmt.Fprintf(&output, "Quick Play %d: %s (%s)\n\n", report.Intensity, report.Sound, report.Rating)
+	fmt.Fprintf(&output, "  %-11s%s (synthetic laboratory preset)\n", "Preset", report.Preset)
+	fmt.Fprintf(&output, "  %-11s%s\n", "Stop", report.Stop)
+	fmt.Fprintf(&output, "  %-11s%s s\n", "Elapsed", formatScientificValue(report.ElapsedS))
+	fmt.Fprintf(&output, "  %-11s%s kg/s\n", "Peak flow", formatScientificValue(report.PeakMassFlow))
+	fmt.Fprintf(&output, "  %-11s%s kg\n", "Mass out", formatScientificValue(report.MassOutKg))
+	fmt.Fprintf(&output, "  Choked Cheek Criterion: %s (model regime flag)\n\n", report.ChokedCheek)
+	output.WriteString(wrapProse(report.Explanation, "  ", 80) + "\n\n")
+	fmt.Fprintf(&output, "Not a Reference Pfft or a biological claim. Seed %d is recorded only.\n\n", report.Seed)
+	output.WriteString("Try next:\n")
 	for _, command := range report.TryNext {
 		fmt.Fprintf(&output, "  %s\n", command)
 	}
