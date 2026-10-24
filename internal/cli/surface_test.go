@@ -543,4 +543,3 @@ func TestReportsFit80ColumnsAndSentenceCase(t *testing.T) {
 		})
 	}
 }
-
