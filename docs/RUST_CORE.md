@@ -13,11 +13,10 @@ The broader Go CLI remains available through
 
 ## Build and use
 
-[rust-toolchain.toml](../rust-toolchain.toml) pins Rust 1.98.1 and the minimal
+[rust-toolchain.toml](../rust-toolchain.toml) pins Rust 1.99.1 and the minimal
 toolchain with Clippy, rustfmt, and LLVM tools. The workspace uses edition 2024.
-Rust 1.98.1 was the current stable release when this foundation was introduced
-in September 2026; it fixes the vtable-generation miscompilation in 1.98.0.
-See the [official release announcement](https://blog.rust-lang.org/2026/09/03/Rust-1.98.1/)
+Rust 1.99.1 is the current stable release;
+see the [official release announcement](https://blog.rust-lang.org/2026/10/15/Rust-1.99.1/)
 and [edition guide](https://doc.rust-lang.org/edition-guide/rust-2024/index.html).
 
 Run these commands from the repository root with Rustup and the platform's Rust
