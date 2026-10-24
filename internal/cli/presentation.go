@@ -38,3 +38,24 @@ func formatScientificValue(value float64) string {
 	}
 	return sign + strings.TrimRight(strings.TrimRight(decimal, "0"), ".")
 }
+
+// wrapProse wraps whitespace-separated words at limit columns with a hanging indent.
+// Unbroken tokens exceeding limit are never wrapped mid-token.
+func wrapProse(text string, indent string, limit int) string {
+	words := strings.Fields(text)
+	if len(words) == 0 {
+		return ""
+	}
+	var lines []string
+	currentLine := indent + words[0]
+	for _, word := range words[1:] {
+		if len(currentLine)+1+len(word) <= limit {
+			currentLine += " " + word
+		} else {
+			lines = append(lines, currentLine)
+			currentLine = indent + word
+		}
+	}
+	lines = append(lines, currentLine)
+	return strings.Join(lines, "\n")
+}
