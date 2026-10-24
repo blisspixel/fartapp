@@ -1,7 +1,9 @@
 package cli
 
 import (
+	"crypto/sha256"
 	"encoding/binary"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"io"
@@ -73,6 +75,7 @@ type sonifyReport struct {
 	ChokedEndSample   *int     `json:"choked_end_sample,omitempty"`
 	Nonclaims         []string `json:"nonclaims"`
 	Output            string   `json:"output,omitempty"`
+	SHA256            string   `json:"sha256,omitempty"`
 	Player            string   `json:"player,omitempty"`
 }
 
@@ -191,7 +194,7 @@ func writeIntensityWAV(level intensity, path string, stderr io.Writer) int {
 		writeDiagnostic(stderr, "intensity wav: preset did not predict\n")
 		return 1
 	}
-	wav, _, err := synthesize(report, defaultSonify())
+	wav, meta, err := synthesize(report, defaultSonify())
 	if err != nil {
 		writeDiagnostic(stderr, "intensity wav: %s\n", strconv.QuoteToASCII(boundDiagnostic(err.Error())))
 		return 1
@@ -200,7 +203,46 @@ func writeIntensityWAV(level intensity, path string, stderr io.Writer) int {
 		writeDiagnostic(stderr, "intensity wav: %s\n", strconv.QuoteToASCII(boundDiagnostic(err.Error())))
 		return 1
 	}
+	if isTerminal(stderr) {
+		fmt.Fprintln(stderr, formatIntensityReceipt(path, meta.OutputDurationS, meta.SHA256, int(level)+minimumIntensity, report.Claims))
+	}
 	return 0
+}
+
+func formatIntensityReceipt(path string, durationS float64, sha256Hex string, level int, claims []walkcase.Claim) string {
+	durationStr := fmt.Sprintf("%.2f s", durationS)
+	shortDigest := sha256Hex
+	if len(shortDigest) > 12 {
+		shortDigest = shortDigest[:12]
+	}
+	receipt := fmt.Sprintf("wrote %s  %s  sha256 %s  regenerate: fartapp %d --wav %s",
+		path, durationStr, shortDigest, level, path)
+	for _, claim := range claims {
+		if claim.ID == "walk.mass-ledger" && claim.Status == "satisfied-within-roundoff" {
+			receipt += "  Conservation of Ass: satisfied within roundoff"
+			break
+		}
+	}
+	return receipt
+}
+
+type terminalChecker interface {
+	IsTerminal() bool
+}
+
+func isTerminal(w io.Writer) bool {
+	if t, ok := w.(terminalChecker); ok {
+		return t.IsTerminal()
+	}
+	f, ok := w.(*os.File)
+	if !ok {
+		return false
+	}
+	stat, err := f.Stat()
+	if err != nil {
+		return false
+	}
+	return (stat.Mode() & os.ModeCharDevice) != 0
 }
 
 func synthesize(report walkcase.Report, settings sonifySettings) ([]byte, sonifyReport, error) {
@@ -364,7 +406,10 @@ func synthesize(report walkcase.Report, settings sonifySettings) ([]byte, sonify
 		ChokedEndSample:   chokeEnd,
 		Nonclaims:         []string{sonifyNonclaim},
 	}
-	return buildWAV(pcm, settings.sampleRate, sonifyMappingID+"/"+sonifyMappingVersion, sonifyNonclaim), meta, nil
+	wav := buildWAV(pcm, settings.sampleRate, sonifyMappingID+"/"+sonifyMappingVersion, sonifyNonclaim)
+	sum := sha256.Sum256(wav)
+	meta.SHA256 = hex.EncodeToString(sum[:])
+	return wav, meta, nil
 }
 
 func historyAt(history []walkcase.HistorySample, t float64) (flow float64, pressure float64, choked bool) {
