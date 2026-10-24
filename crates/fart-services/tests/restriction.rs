@@ -157,7 +157,7 @@ fn retained_fixtures_expose_complete_current_reports_and_independent_anchors() {
             json!({"consulted_inputs":["document_bytes"],"ambient_inputs":[]})
         );
         let text = report.to_text();
-        assert!(text.starts_with("RESTRICTION PREDICTED\n"));
+        assert!(text.starts_with("Restriction predicted\n"));
         assert!(text.contains("Mass flow:"));
         assert!(text.contains("Human values: six significant digits; full precision in JSON."));
         assert_eq!(report.to_json(), report.clone().to_json());

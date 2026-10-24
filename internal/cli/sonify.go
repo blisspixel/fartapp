@@ -164,7 +164,7 @@ func writeSonify(meta sonifyReport, format outputFormat, stdout, stderr io.Write
 
 func formatSonify(meta sonifyReport) string {
 	var output strings.Builder
-	fmt.Fprintf(&output, "DIAGNOSTIC SONIFICATION\n\nMapping: %s/%s\n%s\n", meta.MappingID, meta.MappingVersion, sonifyNonclaim)
+	fmt.Fprintf(&output, "Diagnostic sonification\n\nMapping: %s/%s\n%s\n", meta.MappingID, meta.MappingVersion, sonifyNonclaim)
 	fmt.Fprintf(&output, "Sample rate: %d Hz\nDuration scale: %s\nGain: %s dBFS\nPeak: %s dBFS\n",
 		meta.SampleRate, formatScientificValue(meta.DurationScale), formatScientificValue(meta.GainDBFS), formatScientificValue(meta.PeakDBFS))
 	fmt.Fprintf(&output, "Output duration: %s s\nHistory elapsed: %s s\nDuration clamped: %t\n",

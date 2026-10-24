@@ -14,27 +14,27 @@ import (
 	"github.com/blisspixel/fartapp/internal/restrictionprediction"
 )
 
-const expectedRestrictionText = `RESTRICTION STATE PREDICTED
+const expectedRestrictionText = `Restriction state predicted
 
 Model: continuum.quasi-steady-isentropic-converging-restriction@v0alpha1
 Implementation: go-oracle.restriction/v0alpha2
 Quantity system: si (explicit)
 Regime: choked
 
-STAGNATION
+Stagnation
   Pressure:     125000 Pa
   Temperature:  400 K
   R:            200 J/(kg K)
   gamma:        1.5
 
-RESTRICTION
+Restriction
   Area law:     prescribed
   Prescribed:   0.01 m^2
   Effective:    0.01 m^2
   Cd:           1
   Back pressure: 50000 Pa
 
-CONTROL SECTION
+Control section
   Critical ratio: 0.512
   Back ratio:     0.4
   Throat Mach:    1
@@ -46,15 +46,36 @@ CONTROL SECTION
   Thrust:         1100 N
   Recoil:         -1100 N
 
-BALANCE CLAIMS
+Balance claims
   restriction.mass-flow-definition: satisfied-within-roundoff; residual 0 kg/s; tolerance 4.40307e-14 kg/s
   restriction.thrust-control-surface: satisfied-within-roundoff; residual 0 N; tolerance 1.56319e-11 N
   restriction.recoil-action-reaction: satisfied-within-roundoff; residual 0 N; tolerance 1.56319e-11 N
 
-Assumptions: calorically-perfect-gas, quasi-steady-flow, isentropic-control-section, converging-restriction-only, discharge-coefficient-scales-mass-flow-only, no-reverse-flow, no-shock-inside-restriction, prescribed-or-linear-quasi-static-area
-Model nonclaims: elapsed-time-history, reservoir-mass-energy-coupling, shock-containing-or-underexpanded-plume, viscous-resolved-vena-contracta, phase-change-and-reaction, acoustics
-Operation nonclaims: case-commitment, certificate-issuance
-Evidence nonclaims: empirical-validation
+Assumptions:
+  calorically-perfect-gas
+  quasi-steady-flow
+  isentropic-control-section
+  converging-restriction-only
+  discharge-coefficient-scales-mass-flow-only
+  no-reverse-flow
+  no-shock-inside-restriction
+  prescribed-or-linear-quasi-static-area
+
+Model nonclaims:
+  elapsed-time-history
+  reservoir-mass-energy-coupling
+  shock-containing-or-underexpanded-plume
+  viscous-resolved-vena-contracta
+  phase-change-and-reaction
+  acoustics
+
+Operation nonclaims:
+  case-commitment
+  certificate-issuance
+
+Evidence nonclaims:
+  empirical-validation
+
 Ambient inputs: none
 Human values: six significant digits; full precision in JSON.
 `
@@ -213,7 +234,7 @@ func TestRestrictionCLIInputAndOutputFailures(t *testing.T) {
 		&stdout,
 		&stderr,
 	)
-	if code != 0 || stderr.Len() != 0 || !strings.Contains(stdout.String(), "RESTRICTION HISTORY PREDICTED") ||
+	if code != 0 || stderr.Len() != 0 || !strings.Contains(stdout.String(), "Restriction history predicted") ||
 		!strings.Contains(stdout.String(), "Mass out:") {
 		t.Fatalf("history text = (%d, %q, %q)", code, stdout.String(), stderr.String())
 	}

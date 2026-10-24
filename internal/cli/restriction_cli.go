@@ -187,17 +187,17 @@ func writeRestrictionDiagnostic(stderr io.Writer, diagnostic restrictionpredicti
 
 func formatRestrictionPrediction(report restrictionprediction.Report) string {
 	var output strings.Builder
-	output.WriteString("RESTRICTION STATE PREDICTED\n\n")
+	output.WriteString("Restriction state predicted\n\n")
 	fmt.Fprintf(&output, "Model: %s@%s\n", report.Model.ID, report.Model.Version)
 	fmt.Fprintf(&output, "Implementation: %s\n", report.ImplementationRevision)
 	fmt.Fprintf(&output, "Quantity system: %s (explicit)\n", report.QuantitySystem)
 	fmt.Fprintf(&output, "Regime: %s\n", report.Flow.Regime)
-	output.WriteString("\nSTAGNATION\n")
+	output.WriteString("\nStagnation\n")
 	fmt.Fprintf(&output, "  Pressure:     %s Pa\n", formatScientificValue(report.Stagnation.PressurePascals))
 	fmt.Fprintf(&output, "  Temperature:  %s K\n", formatScientificValue(report.Stagnation.TemperatureKelvin))
 	fmt.Fprintf(&output, "  R:            %s J/(kg K)\n", formatScientificValue(report.Stagnation.SpecificGasConstantJoulesPerKilogramKelvin))
 	fmt.Fprintf(&output, "  gamma:        %s\n", formatScientificValue(report.Stagnation.HeatCapacityRatio))
-	output.WriteString("\nRESTRICTION\n")
+	output.WriteString("\nRestriction\n")
 	fmt.Fprintf(&output, "  Area law:     %s\n", report.Area.Law)
 	fmt.Fprintf(&output, "  Prescribed:   %s m^2\n", formatScientificValue(report.Area.PrescribedSquareMetres))
 	if report.Area.ComplianceSquareMetresPa != nil {
@@ -209,7 +209,7 @@ func formatRestrictionPrediction(report restrictionprediction.Report) string {
 	fmt.Fprintf(&output, "  Effective:    %s m^2\n", formatScientificValue(report.Area.EffectiveSquareMetres))
 	fmt.Fprintf(&output, "  Cd:           %s\n", formatScientificValue(*report.DischargeCoefficient))
 	fmt.Fprintf(&output, "  Back pressure: %s Pa\n", formatScientificValue(*report.BackPressurePascals))
-	output.WriteString("\nCONTROL SECTION\n")
+	output.WriteString("\nControl section\n")
 	fmt.Fprintf(&output, "  Critical ratio: %s\n", formatScientificValue(report.Flow.CriticalPressureRatio))
 	fmt.Fprintf(&output, "  Back ratio:     %s\n", formatScientificValue(report.Flow.BackPressureRatio))
 	fmt.Fprintf(&output, "  Throat Mach:    %s\n", formatScientificValue(report.Flow.ThroatMach))
@@ -220,7 +220,7 @@ func formatRestrictionPrediction(report restrictionprediction.Report) string {
 	fmt.Fprintf(&output, "  Sonic mass flow: %s kg/s\n", formatScientificValue(report.Flow.SonicMassFlowKilogramsPerS))
 	fmt.Fprintf(&output, "  Thrust:         %s N\n", formatScientificValue(report.Flow.ThrustNewtons))
 	fmt.Fprintf(&output, "  Recoil:         %s N\n", formatScientificValue(report.Flow.RecoilNewtons))
-	output.WriteString("\nBALANCE CLAIMS\n")
+	output.WriteString("\nBalance claims\n")
 	for _, claim := range report.Claims {
 		fmt.Fprintf(
 			&output,
@@ -233,11 +233,13 @@ func formatRestrictionPrediction(report restrictionprediction.Report) string {
 			claim.ResidualUnit,
 		)
 	}
-	fmt.Fprintf(&output, "\nAssumptions: %s\n", strings.Join(report.Assumptions, ", "))
-	fmt.Fprintf(&output, "Model nonclaims: %s\n", strings.Join(report.Nonclaims.Model, ", "))
-	fmt.Fprintf(&output, "Operation nonclaims: %s\n", strings.Join(report.Nonclaims.Operation, ", "))
-	fmt.Fprintf(&output, "Evidence nonclaims: %s\n", strings.Join(report.Nonclaims.Evidence, ", "))
-	output.WriteString("Ambient inputs: none\n")
+	formatIdentifierList(&output, "Assumptions", report.Assumptions)
+	if report.Nonclaims != nil {
+		formatIdentifierList(&output, "Model nonclaims", report.Nonclaims.Model)
+		formatIdentifierList(&output, "Operation nonclaims", report.Nonclaims.Operation)
+		formatIdentifierList(&output, "Evidence nonclaims", report.Nonclaims.Evidence)
+	}
+	output.WriteString("\nAmbient inputs: none\n")
 	output.WriteString(numericPresentationNote)
 	return output.String()
 }
@@ -288,11 +290,11 @@ func readRestrictionHistory(source string, stdin io.Reader) restrictionhistorypr
 
 func formatRestrictionHistory(report restrictionhistoryprediction.Report) string {
 	var output strings.Builder
-	output.WriteString("RESTRICTION HISTORY PREDICTED\n\n")
+	output.WriteString("Restriction history predicted\n\n")
 	fmt.Fprintf(&output, "Model: %s@%s\n", report.Model.ID, report.Model.Version)
 	fmt.Fprintf(&output, "Implementation: %s\n", report.ImplementationRevision)
 	fmt.Fprintf(&output, "Samples: %d\n", len(report.Samples))
-	output.WriteString("\nSAMPLES\n")
+	output.WriteString("\nSamples\n")
 	for _, sample := range report.Samples {
 		fmt.Fprintf(
 			&output,
@@ -305,14 +307,14 @@ func formatRestrictionHistory(report restrictionhistoryprediction.Report) string
 			formatScientificValue(sample.RecoilNewtons),
 		)
 	}
-	output.WriteString("\nINTEGRALS\n")
+	output.WriteString("\nIntegrals\n")
 	fmt.Fprintf(&output, "  Mass out:       %s kg\n", formatScientificValue(report.Totals.MassOutKilograms))
 	fmt.Fprintf(&output, "  Static exit enthalpy: %s J\n", formatScientificValue(report.Totals.EnthalpyOutJoules))
 	fmt.Fprintf(&output, "  Exit kinetic energy: %s J\n", formatScientificValue(report.Totals.KineticEnergyOutJoules))
 	fmt.Fprintf(&output, "  Total enthalpy out:   %s J\n", formatScientificValue(report.Totals.TotalEnthalpyOutJoules))
 	fmt.Fprintf(&output, "  Impulse:        %s N s\n", formatScientificValue(report.Totals.ImpulseNewtonSeconds))
 	fmt.Fprintf(&output, "  Recoil impulse: %s N s\n", formatScientificValue(report.Totals.RecoilImpulseNewtonSeconds))
-	output.WriteString("\nBALANCE CLAIMS\n")
+	output.WriteString("\nBalance claims\n")
 	for _, claim := range report.Claims {
 		fmt.Fprintf(
 			&output,
@@ -325,9 +327,11 @@ func formatRestrictionHistory(report restrictionhistoryprediction.Report) string
 			claim.ResidualUnit,
 		)
 	}
-	fmt.Fprintf(&output, "\nAssumptions: %s\n", strings.Join(report.Assumptions, ", "))
-	fmt.Fprintf(&output, "Model nonclaims: %s\n", strings.Join(report.Nonclaims.Model, ", "))
-	output.WriteString("Ambient inputs: none\n")
+	formatIdentifierList(&output, "Assumptions", report.Assumptions)
+	if report.Nonclaims != nil {
+		formatIdentifierList(&output, "Model nonclaims", report.Nonclaims.Model)
+	}
+	output.WriteString("\nAmbient inputs: none\n")
 	output.WriteString(numericPresentationNote)
 	return output.String()
 }

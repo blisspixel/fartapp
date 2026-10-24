@@ -151,10 +151,10 @@ fn all_help_routes_are_explicit_and_do_not_read_input() {
         let text = String::from_utf8(stdout).unwrap();
         assert!(text.contains("Usage:"));
         if args.contains(&"reservoir") {
-            assert!(text.starts_with("RESERVOIR PREDICT\n"));
+            assert!(text.starts_with("Reservoir predict\n"));
             assert!(text.contains("65,536"));
         } else if args.contains(&"restriction") {
-            assert!(text.starts_with("RESTRICTION"));
+            assert!(text.starts_with("Restriction"));
             assert!(text.contains("restriction"));
         } else if args.contains(&"play") {
             assert!(text.contains("play"));
@@ -261,7 +261,7 @@ fn file_stdin_and_native_process_reports_agree_without_modifying_the_input() {
     assert!(
         String::from_utf8(text)
             .unwrap()
-            .contains("RESERVOIR ENDPOINT PREDICTED")
+            .contains("Reservoir endpoint predicted")
     );
     assert!(stderr.is_empty());
 }

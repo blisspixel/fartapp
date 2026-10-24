@@ -38,10 +38,10 @@ fn both_existing_fixture_inputs_produce_complete_typed_reports() {
         assert_eq!(value["validation_environment"]["ambient_inputs"], json!([]));
         let text = report.to_text();
         for expected in [
-            "RESERVOIR ENDPOINT PREDICTED",
-            "INITIAL",
-            "FINAL",
-            "BALANCE CLAIMS",
+            "Reservoir endpoint predicted",
+            "Initial",
+            "Final",
+            "Balance claims",
             "Experimental analytical endpoint only.",
         ] {
             assert!(text.contains(expected));

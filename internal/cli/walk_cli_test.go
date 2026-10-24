@@ -22,7 +22,7 @@ func TestWalkCLISimulateAndFailures(t *testing.T) {
 		&stdout,
 		&stderr,
 	)
-	if code != 0 || stderr.Len() != 0 || !strings.Contains(stdout.String(), "WALK SIMULATE") ||
+	if code != 0 || stderr.Len() != 0 || !strings.Contains(stdout.String(), "Walk simulate") ||
 		!strings.Contains(stdout.String(), "Choked occurred:") {
 		t.Fatalf("simulate = (%d, %q, %q)", code, stdout.String(), stderr.String())
 	}
