@@ -73,12 +73,16 @@ mod tests {
 
     #[test]
     fn wrap_prose_preserves_unbroken_token_over_limit() {
-        let text = "word supercalifragilisticexpialidocious_unbroken_token_that_exceeds_the_limit end";
+        let text =
+            "word supercalifragilisticexpialidocious_unbroken_token_that_exceeds_the_limit end";
         let wrapped = wrap_prose(text, "  ", 30);
         let lines: Vec<_> = wrapped.lines().collect();
         assert_eq!(lines.len(), 3);
         assert_eq!(lines[0], "  word");
-        assert_eq!(lines[1], "  supercalifragilisticexpialidocious_unbroken_token_that_exceeds_the_limit");
+        assert_eq!(
+            lines[1],
+            "  supercalifragilisticexpialidocious_unbroken_token_that_exceeds_the_limit"
+        );
         assert_eq!(lines[2], "  end");
     }
 
