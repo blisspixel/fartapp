@@ -74,8 +74,10 @@ func TestCheckDependenciesReviewedDocumentationLicenses(t *testing.T) {
 	}{
 		{"BlueOak-1.0.0", true},
 		{"(BSD-2-Clause OR MIT OR Apache-2.0)", true},
+		{"PSF-2.0", true},
 		{"BlueOak-1.0.0-unreviewed", false},
 		{"(BSD-2-Clause OR UNLICENSED)", false},
+		{"PSF-2.0-unreviewed", false},
 	} {
 		writeFile(t, filepath.Join(root, "package-lock.json"), `{
 			"lockfileVersion": 3,

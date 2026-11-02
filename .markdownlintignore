@@ -1,4 +1,6 @@
 /LICENSE
+# Claude Code loads this file only through the @AGENTS.md import.
+/CLAUDE.md
 /node_modules/
 /vendor/
 /target/

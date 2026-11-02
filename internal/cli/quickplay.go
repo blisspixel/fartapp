@@ -61,7 +61,71 @@ func quickplayTryNext(level int, preset string, sound string) []string {
 	return []string{wavTarget, newTarget, altTarget}
 }
 
+func quickplayOptionValue(args []string, index int) bool {
+	return index+1 < len(args) && !strings.HasPrefix(args[index+1], "--") && args[index+1] != "-h"
+}
+
+func quickplayAudioRefusal(args []string) (string, bool) {
+	saw := false
+	path := ""
+	level := 3
+	seenLevel := false
+	for index := 0; index < len(args); index++ {
+		arg := args[index]
+		if arg == "--" {
+			break
+		}
+		name, inline, hasInline := strings.Cut(arg, "=")
+		if name == "--wav" {
+			saw = true
+			if hasInline {
+				if inline != "" {
+					path = inline
+				}
+				continue
+			}
+			if quickplayOptionValue(args, index) {
+				index++
+				path = args[index]
+			}
+			continue
+		}
+		if name == "--seed" || name == "--format" {
+			if !hasInline && quickplayOptionValue(args, index) {
+				index++
+			}
+			continue
+		}
+		if strings.HasPrefix(arg, "-") || seenLevel {
+			continue
+		}
+		if value, err := strconv.Atoi(arg); err == nil && strconv.Itoa(value) == arg {
+			if _, err = newIntensity(value); err == nil {
+				level = value
+				seenLevel = true
+			}
+		}
+	}
+	if !saw {
+		return "", false
+	}
+	target := "<out.wav>"
+	if path != "" {
+		target = quoteInput(path)
+	}
+	return fmt.Sprintf(
+		"invalid quickplay: quickplay does not write audio; use fartapp %d --wav %s, or fartapp walk sonify <case> --output %s for the walk sound\n",
+		level,
+		target,
+		target,
+	), true
+}
+
 func runQuickplay(args []string, stdout, stderr io.Writer) int {
+	if message, refused := quickplayAudioRefusal(args); refused {
+		writeDiagnostic(stderr, "%s", message)
+		return 1
+	}
 	options, values, err := parseValuedOptions(args, "--seed")
 	if err != nil {
 		writeDiagnostic(stderr, "invalid quickplay: %v\n", err)

@@ -17,6 +17,7 @@ var allowedLicenses = map[string]struct{}{
 	"BSD-3-Clause":                        {},
 	"ISC":                                 {},
 	"MIT":                                 {},
+	"PSF-2.0":                             {},
 	"Python-2.0":                          {},
 }
 

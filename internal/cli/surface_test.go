@@ -19,7 +19,7 @@ import (
 
 func TestVersionAndCrossCLIHint(t *testing.T) {
 	var stdout, stderr bytes.Buffer
-	if code := Run([]string{"fartapp", "--version"}, strings.NewReader(""), &stdout, &stderr); code != 0 || stderr.Len() != 0 || !strings.HasPrefix(stdout.String(), "fartapp v0.8.0-alpha.5 commit ") {
+	if code := Run([]string{"fartapp", "--version"}, strings.NewReader(""), &stdout, &stderr); code != 0 || stderr.Len() != 0 || !strings.HasPrefix(stdout.String(), "fartapp v0.8.0-alpha.6 commit ") {
 		t.Fatalf("version=(%d,%q,%q)", code, stdout.String(), stderr.String())
 	}
 	stdout.Reset()
@@ -87,7 +87,7 @@ func TestReadmeMatchesParityCatalog(t *testing.T) {
 		}
 	}
 	for _, phrase := range []string{
-		"go install github.com/blisspixel/fartapp/cmd/fartapp@v0.8.0-alpha.5",
+		"go install github.com/blisspixel/fartapp/cmd/fartapp@v0.8.0-alpha.6",
 		"go install ./cmd/fartapp",
 		"cargo install --locked --path crates/fart-cli",
 		"fartapp completion bash",
@@ -242,6 +242,59 @@ func TestWalkNewOrdinarySimulatesLikeTheFixture(t *testing.T) {
 	}
 	if *fromPreset.MassOutKilograms != *fromFixture.MassOutKilograms || fromPreset.Signature.ChokedOccurred != fromFixture.Signature.ChokedOccurred {
 		t.Fatal("walk new ordinary diverged from the fixture")
+	}
+}
+
+func TestQuickPlayWavNamesBothAudioCommands(t *testing.T) {
+	if strings.Contains(quickplayHelp, "--wav") {
+		t.Fatal("quickplay help advertises --wav")
+	}
+	cases := []struct {
+		args []string
+		want string
+	}{
+		{
+			args: []string{"fartapp", "quickplay", "3", "--wav", "out.wav"},
+			want: "invalid quickplay: quickplay does not write audio; use fartapp 3 --wav \"out.wav\", or fartapp walk sonify <case> --output \"out.wav\" for the walk sound\n",
+		},
+		{
+			args: []string{"fartapp", "quickplay", "5", "--wav=kablam.wav"},
+			want: "invalid quickplay: quickplay does not write audio; use fartapp 5 --wav \"kablam.wav\", or fartapp walk sonify <case> --output \"kablam.wav\" for the walk sound\n",
+		},
+		{
+			args: []string{"fartapp", "quickplay", "--seed", "4", "--wav", "out.wav"},
+			want: "invalid quickplay: quickplay does not write audio; use fartapp 3 --wav \"out.wav\", or fartapp walk sonify <case> --output \"out.wav\" for the walk sound\n",
+		},
+		{
+			args: []string{"fartapp", "quickplay", "--seed=4", "--format", "json", "1", "--wav", "out.wav"},
+			want: "invalid quickplay: quickplay does not write audio; use fartapp 1 --wav \"out.wav\", or fartapp walk sonify <case> --output \"out.wav\" for the walk sound\n",
+		},
+		{
+			args: []string{"fartapp", "quickplay", "--wav"},
+			want: "invalid quickplay: quickplay does not write audio; use fartapp 3 --wav <out.wav>, or fartapp walk sonify <case> --output <out.wav> for the walk sound\n",
+		},
+		{
+			args: []string{"fartapp", "quickplay", "9", "--wav", "out.wav"},
+			want: "invalid quickplay: quickplay does not write audio; use fartapp 3 --wav \"out.wav\", or fartapp walk sonify <case> --output \"out.wav\" for the walk sound\n",
+		},
+	}
+	for _, tc := range cases {
+		var stdout, stderr bytes.Buffer
+		code := Run(tc.args, strings.NewReader(""), &stdout, &stderr)
+		if code != 1 || stdout.Len() != 0 || stderr.String() != tc.want {
+			t.Fatalf("%v=(%d,%q,%q)", tc.args, code, stdout.String(), stderr.String())
+		}
+	}
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"fartapp", "quickplay", "3", "--", "--wav", "out.wav"}, strings.NewReader(""), &stdout, &stderr)
+	if code != 1 || stdout.Len() != 0 || strings.Contains(stderr.String(), "does not write audio") {
+		t.Fatalf("end of options = (%d,%q,%q)", code, stdout.String(), stderr.String())
+	}
+	stdout.Reset()
+	stderr.Reset()
+	code = Run([]string{"fartapp", "quickplay", "3", "--nope"}, strings.NewReader(""), &stdout, &stderr)
+	if code != 1 || stderr.String() != "invalid quickplay: unknown option \"--nope\"\n" {
+		t.Fatalf("unknown option = (%d,%q)", code, stderr.String())
 	}
 }
 

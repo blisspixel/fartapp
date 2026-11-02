@@ -47,7 +47,7 @@ implicit production requirement. These pins were reviewed on 2026-09-04:
 | Go | 1.27.2 | Runtime and checker compiler, selected by [go.mod](../go.mod); security update reviewed 2026-10-11; [official release history](https://go.dev/doc/devel/release) |
 | Node.js | 26.12.0 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [official release index](https://nodejs.org/dist/index.json) |
 | npm | 12.0.2 | Documentation package manager, selected by [package.json](../package.json); [official release](https://github.com/npm/cli/releases/tag/v12.0.2) |
-| Markdownlint CLI | 0.49.1 | Exact npm development dependency; security update reviewed 2026-10-11 |
+| Markdownlint CLI | 0.50.0 | Exact npm development dependency; 0.49.1 security update reviewed 2026-10-11; 0.50.0 and its nested argparse 3.0.4 license reviewed 2026-11-02 |
 | Staticcheck | Upstream commit f1838cc308e5cfbb38d91cfc973355611845997e | Temporary Go 1.27.2 compatibility pin; reviewed 2026-10-11 |
 | Govulncheck | v1.7.0 | Pinned vulnerability analysis |
 | Actionlint | v1.7.12 | Pinned workflow lint |
@@ -86,21 +86,41 @@ release after the same checks pass. The runtime compiler remains a stable
 security release and the static-analysis gate remains blocking.
 
 The 2026-10-11 documentation-tooling update replaces CLI2's unpatched `braces`
-dependency chain with the maintained Markdownlint CLI, retaining markdownlint
-0.41.1 and the same Markdown corpus. `.markdownlint.yaml` preserves MD013 and
-MD036 settings; `.markdownlintignore` preserves root-scoped exclusions. The
-command explicitly includes hidden directories and fails on invalid config.
+dependency chain with the maintained Markdownlint CLI and the same Markdown
+corpus. The 2026-11-02 review moves that CLI from 0.49.1 to 0.50.0, which
+selects markdownlint 0.42.0. `.markdownlint.yaml` preserves MD013 and MD036
+settings. `.markdownlintignore` preserves root-scoped exclusions and also
+ignores `CLAUDE.md`, whose only content is the Claude Code `@AGENTS.md` import.
+The command explicitly includes hidden directories and fails on invalid config.
 Run `npm run test:markdown` to check that command's rules and file selection.
 Ignored trees may still be traversed during file discovery; explicit YAML does
 not isolate ambient Markdownlint configuration. CI runs from a clean checkout.
 
 Exact overrides select patched `js-yaml` 5.4.1, `smol-toml` 1.9.1, and KaTeX
-0.18.2 while upstream CLI dependency ranges lag. Review and remove each override
+0.18.2 while upstream CLI dependency ranges lag. They also select `minimatch`
+11.0.4 and `re2js` 2.8.7. `minimatch` 10.2.6 has no patched release for
+[GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249);
+11.0.4 keeps the reviewed `BlueOak-1.0.0` identifier and is what
+`markdownlint-cli` 0.50.0 loads instead of its `~10.2.6` range. `markdownlint`
+0.42.0 pins `re2js` 2.8.6, which is inside
+[GHSA-gg6h-894w-4m9c](https://github.com/advisories/GHSA-gg6h-894w-4m9c);
+2.8.7 is the fixed release and remains `MIT`. Review and remove each override
 when the upstream package selects a safe release. CI audits every severity.
 The license gate admits the exact reviewed `BlueOak-1.0.0` identifier for
 [minimatch](https://github.com/isaacs/minimatch/blob/ded1bbd01beca62a5978bc1650ed0a1ccf9039d5/LICENSE.md)
 and `(BSD-2-Clause OR MIT OR Apache-2.0)` declaration for
 [run-con](https://github.com/goatandsheep/rc/blob/57704b6c6196f31f38b5b66a43a31de990477834/package.json).
+It also admits `PSF-2.0` for
+[argparse 3.0.4](https://github.com/nodeca/argparse/blob/3.0.4/LICENSE),
+locked at `node_modules/markdown-it/node_modules/argparse`. Its integrity is
+`sha512-fwWK3Zq22l4XJJjx5mcBHGikIk+hJqO+32dPm0Jur7+rtG5x1scOjSfdT9ZKeWHPpsya/l0HHK4tDImBkTrtvA==`.
+That file matches the SPDX `PSF-2.0` text. SPDX does not mark this identifier
+OSI-approved. The same agreement is the first license in the OSI-approved
+`Python-2.0` stack already admitted for argparse 2.0.1. argparse 3.0.4 keeps
+the PSF grant and drops the historical BeOpen, CNRI, and CWI licenses. The
+grant keeps the copyright notice and license, asks for a change summary in a
+distributed derivative, and gives no trademark permission. It is not copyleft.
+The package is development-only documentation tooling.
 Published license files match immutable upstream sources, with only CRLF/LF
 differences for run-con. Registry, integrity, development-only, and install-script
 checks continue to apply to every locked package.
@@ -295,9 +315,17 @@ Per pull request:
 - Dependency advisory, license, source, ban, and duplicate-version policy.
 - Architecture dependency tests and generated-schema drift checks.
 
-Scheduled and release gates add mutation testing, longer fuzzing, Miri, Loom,
-sanitizers, deterministic repeats under varied thread counts, and numerical
-benchmark comparisons.
+Pull requests run `npm audit --audit-level=low`, `govulncheck` v1.7.0, and
+`cargo deny --locked check` with cargo-deny 0.20.2 inside the CI workflow.
+The separate Dependency audit workflow runs those same three commands on `main`
+every Monday at 12:17 UTC and through `workflow_dispatch`. It uses
+`contents: read` and the same pinned actions. Its job is not a required
+pull-request status check, so the branch-protection contexts stay unchanged.
+A failed scheduled run is a failed Actions run on `main`.
+
+Mutation testing, longer fuzzing, Miri, Loom, sanitizers, deterministic
+repeats under varied thread counts, and numerical benchmark comparisons remain
+later release gates. They are not part of the weekly audit.
 
 ## Native field and accelerator gates
 

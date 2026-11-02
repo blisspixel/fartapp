@@ -1,0 +1,59 @@
+name: Dependency audit
+
+on:
+  schedule:
+    # Monday 12:17 UTC on the default branch. Dependabot opens version updates
+    # earlier in the week; this run checks dependencies already on main.
+    - cron: "17 12 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dependency-audit-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: npm, Go, and Rust dependency audits
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Select pinned npm
+        run: npm install --global --ignore-scripts "$(node -p "require('./package.json').packageManager")"
+
+      - name: Install documentation tooling
+        run: npm ci --ignore-scripts
+
+      - name: Audit documentation tooling
+        run: npm audit --audit-level=low
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: false
+
+      - name: Vulnerability analysis
+        run: go run golang.org/x/vuln/cmd/govulncheck@v1.7.0 ./...
+
+      - name: Select declared Rust toolchain
+        run: rustup show active-toolchain
+
+      - name: Install pinned cargo-deny
+        run: cargo install --locked --version 0.20.2 cargo-deny
+
+      - name: Audit Rust dependencies
+        run: cargo deny --locked check

@@ -23,7 +23,7 @@ not one universal equation. See [Bounded universality](docs/UNIVERSALITY.md).
 ## Status
 
 Current source release:
-[v0.8.0-alpha.5](https://github.com/blisspixel/fartapp/releases/tag/v0.8.0-alpha.5).
+[v0.8.0-alpha.6](https://github.com/blisspixel/fartapp/releases/tag/v0.8.0-alpha.6).
 
 F.A.R.T. Lab is experimental v0.8 alpha software. The permanent v0.6 toy output
 is stable. Newer commands and schemas remain provisional. The Rust core and
@@ -99,7 +99,7 @@ If you override `GOBIN` or Cargo's install root, use those directories instead.
 A released Go tag can be installed without a checkout:
 
 ```console
-go install github.com/blisspixel/fartapp/cmd/fartapp@v0.8.0-alpha.5
+go install github.com/blisspixel/fartapp/cmd/fartapp@v0.8.0-alpha.6
 ```
 
 When a release publishes archives, they are attached to that GitHub release.
@@ -113,9 +113,10 @@ fartapp completion fish
 
 One shared catalog names every command. `fartapp <command>` and `fart <command>`
 both recognize it. A command that lives only in the other binary exits 2 and
-prints the other CLI's example. `fartapp quickplay 3` runs one synthetic walk.
-`fartapp walk sonify <case.json> --output out.wav` writes diagnostic
-sonification, not physical acoustics.
+prints the other CLI's example. `fartapp quickplay 3` runs one synthetic walk
+and does not write audio. `fartapp 3 --wav braaap.wav` writes that level's toy
+sound. `fartapp walk sonify <case.json> --output out.wav` writes diagnostic
+sonification of the walk, not physical acoustics and not the toy sound.
 
 ## Command parity
 
