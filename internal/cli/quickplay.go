@@ -9,7 +9,10 @@ import (
 	"github.com/blisspixel/fartapp/internal/walkcase"
 )
 
-const quickplaySchema = "fart.quick-play/v0alpha1"
+const (
+	quickplaySchema           = "fart.quick-play/v0alpha1"
+	maximumQuickplayPathBytes = 4096
+)
 
 const quickplayHelp = `Run one synthetic walk and print a short account.
 
@@ -26,6 +29,12 @@ intensity and seed produce the same JSON. Default intensity is 3 and the
 default seed is 1.
 
 Synthetic laboratory preset, not a Reference Pfft or a biological claim.
+
+This command does not write audio. For intensity 3 the toy sound is
+  fartapp 3 --wav braaap.wav
+Diagnostic sonification of the walk is a different command,
+  fartapp walk sonify <case> --output out.wav
+and it is not the toy sound or physical acoustics.
 
 Example:
   fartapp quickplay 3
@@ -67,6 +76,7 @@ func quickplayOptionValue(args []string, index int) bool {
 
 func quickplayAudioRefusal(args []string) (string, bool) {
 	saw := false
+	havePath := false
 	path := ""
 	level := 3
 	seenLevel := false
@@ -77,15 +87,18 @@ func quickplayAudioRefusal(args []string) (string, bool) {
 		}
 		name, inline, hasInline := strings.Cut(arg, "=")
 		if name == "--wav" {
+			if saw {
+				return "invalid quickplay: --wav may be specified only once\n", true
+			}
 			saw = true
 			if hasInline {
-				if inline != "" {
-					path = inline
-				}
+				havePath = true
+				path = inline
 				continue
 			}
 			if quickplayOptionValue(args, index) {
 				index++
+				havePath = true
 				path = args[index]
 			}
 			continue
@@ -109,16 +122,29 @@ func quickplayAudioRefusal(args []string) (string, bool) {
 	if !saw {
 		return "", false
 	}
-	target := "<out.wav>"
-	if path != "" {
-		target = quoteInput(path)
+	target := quickplayToyFilename(level)
+	if havePath {
+		target = quoteQuickplayPath(path)
 	}
 	return fmt.Sprintf(
-		"invalid quickplay: quickplay does not write audio; use fartapp %d --wav %s, or fartapp walk sonify <case> --output %s for the walk sound\n",
+		"invalid quickplay: this command does not write audio.\n"+
+			"  Toy sound: fartapp %d --wav %s\n"+
+			"  Walk sound: fartapp walk sonify <case> --output %s\n",
 		level,
 		target,
 		target,
 	), true
+}
+
+func quickplayToyFilename(level int) string {
+	return strings.ToLower(emissions[level-minimumIntensity].sound) + ".wav"
+}
+
+func quoteQuickplayPath(path string) string {
+	if len(path) > maximumQuickplayPathBytes {
+		path = path[:maximumQuickplayPathBytes] + "..."
+	}
+	return strconv.QuoteToASCII(path)
 }
 
 func runQuickplay(args []string, stdout, stderr io.Writer) int {

@@ -48,6 +48,12 @@ func TestDependencyAuditMatchesCIAndLeavesRequiredChecks(t *testing.T) {
 	if strings.Contains(auditText, "pull_request:") {
 		t.Fatal("scheduled audit must stay off the required pull-request checks")
 	}
+	if strings.Contains(auditText, "earlier in the week") {
+		t.Fatal("audit comment claims a Dependabot weekday the schedule does not pin")
+	}
+	if !strings.Contains(auditText, "Dependabot's weekly check is") || !strings.Contains(auditText, "does not name a weekday") {
+		t.Fatal("audit comment should say the Dependabot weekly check is separate and names no weekday")
+	}
 	for _, name := range []string{
 		"name: Build, lint, fuzz, race, and coverage",
 		"name: Test on ${{ matrix.os }}",
