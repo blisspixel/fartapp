@@ -2,8 +2,9 @@ name: Dependency audit
 
 on:
   schedule:
-    # Monday 12:17 UTC on the default branch. Dependabot opens version updates
-    # earlier in the week; this run checks dependencies already on main.
+    # Monday 12:17 UTC on the default branch. Dependabot's weekly check is
+    # separate and does not name a weekday. This run audits dependencies
+    # already on main.
     - cron: "17 12 * * 1"
   workflow_dispatch:
 
