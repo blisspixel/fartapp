@@ -45,7 +45,7 @@ implicit production requirement. These pins were reviewed on 2026-09-04:
 | Component | Reviewed version | Role and source |
 | --- | --- | --- |
 | Go | 1.27.2 | Runtime and checker compiler, selected by [go.mod](../go.mod); security update reviewed 2026-10-11; [official release history](https://go.dev/doc/devel/release) |
-| Node.js | 26.12.0 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [official release index](https://nodejs.org/dist/index.json) |
+| Node.js | 26.12.1 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [official release index](https://nodejs.org/dist/index.json) |
 | npm | 12.0.2 | Documentation package manager, selected by [package.json](../package.json); [official release](https://github.com/npm/cli/releases/tag/v12.0.2) |
 | Markdownlint CLI | 0.50.0 | Exact npm development dependency; 0.49.1 security update reviewed 2026-10-11; 0.50.0 and its nested argparse 3.0.4 license reviewed 2026-11-02 |
 | Staticcheck | Upstream commit f1838cc308e5cfbb38d91cfc973355611845997e | Temporary Go 1.27.2 compatibility pin; reviewed 2026-10-11 |
