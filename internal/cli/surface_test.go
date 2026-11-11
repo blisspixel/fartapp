@@ -20,7 +20,7 @@ import (
 
 func TestVersionAndCrossCLIHint(t *testing.T) {
 	var stdout, stderr bytes.Buffer
-	if code := Run([]string{"fartapp", "--version"}, strings.NewReader(""), &stdout, &stderr); code != 0 || stderr.Len() != 0 || !strings.HasPrefix(stdout.String(), "fartapp v0.8.0-alpha.7 commit ") {
+	if code := Run([]string{"fartapp", "--version"}, strings.NewReader(""), &stdout, &stderr); code != 0 || stderr.Len() != 0 || stdout.String() != versionLine() || strings.Contains(stdout.String(), "unknown") {
 		t.Fatalf("version=(%d,%q,%q)", code, stdout.String(), stderr.String())
 	}
 	stdout.Reset()

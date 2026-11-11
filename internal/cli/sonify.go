@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"crypto/rand"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
@@ -10,6 +11,7 @@ import (
 	"math"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -32,7 +34,8 @@ Usage:
   fartapp walk sonify <case.json|-> --output <out.wav> [options]
 
 Options:
-  --output <out.wav>       Required WAV path. An existing file is replaced.
+  --output <out.wav>       Required WAV path. Refused if that file exists.
+  --force                  Replace an existing WAV file.
   --duration-scale <n>     Multiply history elapsed time. Default 20.
   --sample-rate <hz>       8000 to 96000. Default 48000.
   --gain-dbfs <db>         Peak ceiling from -60 to 0. Default -18.
@@ -88,6 +91,11 @@ func defaultSonify() sonifySettings {
 }
 
 func runSonify(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
+	force, args, err := stripFlag(args, "--force")
+	if err != nil {
+		writeDiagnostic(stderr, "invalid walk sonify: %v\n", err)
+		return 1
+	}
 	play, args, err := stripFlag(args, "--play")
 	if err != nil {
 		writeDiagnostic(stderr, "invalid walk sonify: %v\n", err)
@@ -102,7 +110,7 @@ func runSonify(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		return writeText(stdout, stderr, sonifyHelp)
 	}
 	if len(options.positional) != 1 {
-		writeDiagnostic(stderr, "usage: fartapp walk sonify <case.json|-> --output <out.wav>\n")
+		writeDiagnostic(stderr, "usage: fartapp walk sonify <case.json|-> --output <out.wav> [--force]\n")
 		return 1
 	}
 	destination := values["--output"]
@@ -142,8 +150,8 @@ func runSonify(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		writeDiagnostic(stderr, "walk sonify failed: %s\n", strconv.QuoteToASCII(boundDiagnostic(err.Error())))
 		return 1
 	}
-	if err := os.WriteFile(destination, wav, 0o644); err != nil {
-		writeDiagnostic(stderr, "walk sonify failed: %s\n", strconv.QuoteToASCII(boundDiagnostic(err.Error())))
+	if err := publishWAV(destination, wav, force); err != nil {
+		writeWAVError(stderr, "walk sonify failed", destination, err)
 		return 1
 	}
 	meta.Output = destination
@@ -183,7 +191,7 @@ func formatSonify(meta sonifyReport) string {
 	return output.String()
 }
 
-func writeIntensityWAV(level intensity, path string, stderr io.Writer) int {
+func writeIntensityWAV(level intensity, path string, force bool, stderr io.Writer) int {
 	data, err := presetBytes(presetForIntensity(int(level) + minimumIntensity))
 	if err != nil {
 		writeDiagnostic(stderr, "intensity wav: %s\n", strconv.QuoteToASCII(boundDiagnostic(err.Error())))
@@ -199,8 +207,8 @@ func writeIntensityWAV(level intensity, path string, stderr io.Writer) int {
 		writeDiagnostic(stderr, "intensity wav: %s\n", strconv.QuoteToASCII(boundDiagnostic(err.Error())))
 		return 1
 	}
-	if err := os.WriteFile(path, wav, 0o644); err != nil {
-		writeDiagnostic(stderr, "intensity wav: %s\n", strconv.QuoteToASCII(boundDiagnostic(err.Error())))
+	if err := publishWAV(path, wav, force); err != nil {
+		writeWAVError(stderr, "intensity wav", path, err)
 		return 1
 	}
 	if isTerminal(stderr) {
@@ -534,29 +542,123 @@ func parseFinite(name, raw string) (float64, error) {
 	return value, nil
 }
 
-func intensityWavPath(args []string) (string, error) {
+func intensityWavPath(args []string) (string, bool, error) {
 	var path string
-	seen := false
+	seenPath := false
+	seenForce := false
+	force := false
 	for index := 0; index < len(args); index++ {
 		arg := args[index]
-		var value string
 		switch {
+		case arg == "--force":
+			if seenForce {
+				return "", false, errors.New("repeat")
+			}
+			seenForce = true
+			force = true
 		case arg == "--wav":
 			index++
 			if index >= len(args) {
-				return "", errors.New("missing")
+				return "", false, errors.New("missing")
 			}
-			value = args[index]
+			if seenPath || args[index] == "" {
+				return "", false, errors.New("repeat")
+			}
+			seenPath = true
+			path = args[index]
 		case strings.HasPrefix(arg, "--wav="):
-			value = strings.TrimPrefix(arg, "--wav=")
+			value := strings.TrimPrefix(arg, "--wav=")
+			if seenPath || value == "" {
+				return "", false, errors.New("repeat")
+			}
+			seenPath = true
+			path = value
 		default:
-			return "", errors.New("extra")
+			return "", false, errors.New("extra")
 		}
-		if seen || value == "" {
-			return "", errors.New("repeat")
-		}
-		seen = true
-		path = value
 	}
-	return path, nil
+	if force && path == "" {
+		return "", false, errors.New("force without wav")
+	}
+	return path, force, nil
+}
+
+// errOutputExists reports that a WAV destination is already present.
+var errOutputExists = errors.New("output file already exists")
+
+// publishWAV writes data to destination through a same-directory temporary
+// file. Without force, an existing file, directory, or symlink stays in place.
+// With force, rename replaces an existing non-directory.
+func publishWAV(destination string, data []byte, force bool) error {
+	if destination == "" {
+		return errors.New("missing output path")
+	}
+	path, err := filepath.Abs(destination)
+	if err != nil {
+		return err
+	}
+	directory, err := os.OpenRoot(filepath.Dir(path))
+	if err != nil {
+		return err
+	}
+	defer directory.Close()
+	base := filepath.Base(path)
+	info, err := directory.Lstat(base)
+	if err == nil {
+		if info.IsDir() {
+			return fmt.Errorf("%s is a directory", destination)
+		}
+		if !force {
+			return errOutputExists
+		}
+	} else if !errors.Is(err, os.ErrNotExist) {
+		return err
+	}
+	temp := ".fartwav-" + rand.Text() + ".tmp"
+	file, err := directory.OpenFile(temp, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o644)
+	if err != nil {
+		return err
+	}
+	defer directory.Remove(temp)
+	if err := writeSynced(file, data); err != nil {
+		_ = file.Close()
+		return err
+	}
+	if err := file.Close(); err != nil {
+		return err
+	}
+	if force {
+		return directory.Rename(temp, base)
+	}
+	if err := directory.Link(temp, base); err != nil {
+		if os.IsExist(err) {
+			return errOutputExists
+		}
+		return err
+	}
+	return nil
+}
+
+func writeSynced(file *os.File, data []byte) error {
+	for len(data) > 0 {
+		n, err := file.Write(data)
+		if n > 0 {
+			data = data[n:]
+		}
+		if err != nil {
+			return err
+		}
+		if n == 0 {
+			return io.ErrShortWrite
+		}
+	}
+	return file.Sync()
+}
+
+func writeWAVError(stderr io.Writer, prefix, path string, err error) {
+	if errors.Is(err, errOutputExists) {
+		writeDiagnostic(stderr, "%s: %s already exists; pass --force to replace it\n", prefix, strconv.QuoteToASCII(path))
+		return
+	}
+	writeDiagnostic(stderr, "%s: %s\n", prefix, strconv.QuoteToASCII(boundDiagnostic(err.Error())))
 }

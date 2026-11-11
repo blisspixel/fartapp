@@ -50,7 +50,7 @@ func TestCLIFixtures(t *testing.T) {
 		{name: "four", args: []string{"fartapp", "4"}, wantStdout: "blorp (respectable)\n"},
 		{name: "five", args: []string{"fartapp", "5"}, wantStdout: "KABLAM (mighty)\n"},
 		{name: "missing intensity", args: []string{"fartapp"}, wantStdout: rootHelp},
-		{name: "extra argument", args: []string{"fartapp", "3", "extra"}, wantCode: 1, wantStderr: "usage: fartapp <intensity> [--wav <out.wav>]\n"},
+		{name: "extra argument", args: []string{"fartapp", "3", "extra"}, wantCode: 1, wantStderr: "usage: fartapp <intensity> [--wav <out.wav>] [--force]\n"},
 		{
 			name:       "non-integer",
 			args:       []string{"fartapp", "nope"},

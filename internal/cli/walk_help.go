@@ -49,7 +49,8 @@ func walkHelpForOperation(operation string) string {
 	if operation == "sonify" {
 		usage = "  fartapp walk sonify <case.json|-> --output <out.wav> [options]"
 		options = `Options:
-  --output <out.wav>    Required WAV path. An existing file is replaced.
+  --output <out.wav>    Required WAV path. Refused if that file exists.
+  --force               Replace an existing WAV file.
   --duration-scale <n>  Multiply history elapsed time. Default 20.
   --sample-rate <hz>    8000 to 96000. Default 48000.
   --gain-dbfs <db>      Peak ceiling from -60 to 0. Default -18.

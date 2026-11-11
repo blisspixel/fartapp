@@ -102,6 +102,9 @@ A released Go tag can be installed without a checkout:
 go install github.com/blisspixel/fartapp/cmd/fartapp@v0.8.0-alpha.7
 ```
 
+`fartapp version` prints the module version from that install. A commit is
+printed only when the build recorded one.
+
 When a release publishes archives, they are attached to that GitHub release.
 Shell completion for the Go CLI:
 
@@ -116,7 +119,8 @@ both recognize it. A command that lives only in the other binary exits 2 and
 prints the other CLI's example. `fartapp quickplay 3` runs one synthetic walk
 and does not write audio. `fartapp 3 --wav braaap.wav` writes that level's toy
 sound. `fartapp walk sonify <case.json> --output out.wav` writes diagnostic
-sonification of the walk, not physical acoustics and not the toy sound.
+sonification of the walk, not physical acoustics and not the toy sound. Both
+commands leave an existing file unchanged unless `--force` is also given.
 
 ## Command parity
 
