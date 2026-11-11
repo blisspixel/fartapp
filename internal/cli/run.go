@@ -80,9 +80,9 @@ func Run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 
 func runIntensity(args []string, stdout, stderr io.Writer) int {
 	rawIntensity := args[1]
-	wavPath, err := intensityWavPath(args[2:])
+	wavPath, force, err := intensityWavPath(args[2:])
 	if err != nil {
-		writeDiagnostic(stderr, "usage: fartapp <intensity> [--wav <out.wav>]\n")
+		writeDiagnostic(stderr, "usage: fartapp <intensity> [--wav <out.wav>] [--force]\n")
 		return 1
 	}
 	value, canonical := canonicalIntensity(rawIntensity)
@@ -97,7 +97,7 @@ func runIntensity(args []string, stdout, stderr io.Writer) int {
 		)
 		return 1
 	}
-	if wavPath != "" && writeIntensityWAV(level, wavPath, stderr) != 0 {
+	if wavPath != "" && writeIntensityWAV(level, wavPath, force, stderr) != 0 {
 		return 1
 	}
 	event := level.emission()

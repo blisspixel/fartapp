@@ -11,7 +11,7 @@ Experimental law inspection, scenario validation, and analytical prediction.
 
 Usage:
   fartapp <command> [arguments]
-  fartapp <intensity> [--wav <out.wav>]
+  fartapp <intensity> [--wav <out.wav>] [--force]
   fartapp help [command [operation]]
 
 Available now:
@@ -25,7 +25,7 @@ Available now:
   assurance    Inspect declared invariants and evidence references.
   quickplay    Run one synthetic walk preset for intensity 1 to 5.
   completion   Print a bash, zsh, or fish completion script.
-  version      Print the release tag and commit.
+  version      Print the version and any recorded commit.
   help         Show contextual command help.
 
 Also in the Rust CLI (fart): reservoir, restriction, and play.
