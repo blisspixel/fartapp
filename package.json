@@ -7,17 +7,16 @@
     "npm": "12.x"
   },
   "scripts": {
-    "lint:markdown": "markdownlint --dot --config .markdownlint.yaml \"**/*.md\"",
+    "lint:markdown": "node tools/lint-markdown.mjs",
     "test:markdown": "node --test tools/markdownlint.test.mjs"
   },
   "devDependencies": {
-    "markdownlint-cli": "0.50.0"
+    "ignore": "7.0.14",
+    "js-yaml": "5.4.1",
+    "markdownlint": "0.42.0"
   },
   "overrides": {
-    "js-yaml": "5.4.1",
-    "smol-toml": "1.9.1",
     "katex": "0.18.2",
-    "minimatch": "11.0.4",
     "re2js": "2.8.7"
   }
 }
