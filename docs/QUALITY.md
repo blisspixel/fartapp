@@ -45,11 +45,11 @@ the repository.
 
 | Component | Reviewed version | Role and source |
 | --- | --- | --- |
-| Go | 1.27.2 | Runtime and checker compiler, selected by [go.mod](../go.mod); security update reviewed 2026-10-11; [official release history](https://go.dev/doc/devel/release) |
+| Go | 1.27.4 | Runtime and checker compiler, selected by [go.mod](../go.mod); November 2026 security release; [official release history](https://go.dev/doc/devel/release) |
 | Node.js | 26.13.1 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [November security release](https://nodejs.org/en/blog/release/v26.13.1) |
 | npm | 12.2.2 | Documentation package manager, selected by [package.json](../package.json); [official release](https://github.com/npm/cli/releases/tag/v12.2.2) |
 | markdownlint | 0.42.0 | Documentation rules engine used by the repository runner |
-| Staticcheck | Upstream commit f1838cc308e5cfbb38d91cfc973355611845997e | Temporary Go 1.27.2 compatibility pin; reviewed 2026-10-11 |
+| Staticcheck | 2026.2.2 (v0.8.2) | Stable analyzer with Go 1.27 export support |
 | Govulncheck | v1.7.0 | Pinned vulnerability analysis |
 | Actionlint | v1.7.12 | Pinned workflow lint |
 | Rust | 1.99.1, edition 2024 | Native workspace; [toolchain pin](../rust-toolchain.toml) and [official release](https://blog.rust-lang.org/2026/10/15/Rust-1.99.1/) |
@@ -60,8 +60,7 @@ The application and repository checker retain zero external Go dependencies.
 Node is used only for development documentation tooling. CI reads language and
 package-manager pins from their source files. GitHub Actions retain immutable
 commit pins.
-The latest stable Node Current release is deliberate for this development-only
-toolchain; its release status is distinct from LTS. Go 1.27 raises the macOS
+Documentation uses the Node 26 LTS line. Go 1.27 raises the macOS
 floor to macOS 13, as recorded in its
 [platform release notes](https://go.dev/doc/go1.27).
 
@@ -78,13 +77,11 @@ listed `os.Root` symbols, but uses file creation and hard-link publication,
 not the advisory's directory-creation operation. No application escape was
 demonstrated. CI selects the patched compiler from `go.mod` on every platform.
 
-Staticcheck's latest stable release, 2026.2.1, cannot read Go 1.27.2's export
-format. A temporary development-tool exception pins the complete immutable
-[upstream compatibility fix](https://github.com/dominikh/go-tools/commit/f1838cc308e5cfbb38d91cfc973355611845997e),
-including its preceding loader compatibility changes. This is an upstream
-snapshot, not a stable release. Replace it with the next compatible stable
-release after the same checks pass. The runtime compiler remains a stable
-security release and the static-analysis gate remains blocking.
+Go 1.27.4 includes the November compiler, toolchain and standard-library
+security fixes. Staticcheck 2026.2.2 supports the Go 1.27 export format and
+runs in CI from the published v0.8.2 module.
+[Go release history](https://go.dev/doc/devel/release#go1.27.4) ·
+[Staticcheck release](https://github.com/dominikh/go-tools/releases/tag/2026.2.2).
 
 The documentation check uses the markdownlint 0.42.0 library directly.
 The repository runner walks Markdown files, including hidden directories
