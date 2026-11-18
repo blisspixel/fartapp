@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "ignore": "7.0.14",
-    "js-yaml": "5.4.1",
+    "js-yaml": "5.5.0",
     "markdownlint": "0.42.0"
   },
   "overrides": {
