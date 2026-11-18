@@ -11,12 +11,11 @@
     "test:markdown": "node --test tools/markdownlint.test.mjs"
   },
   "devDependencies": {
-    "ignore": "7.0.14",
-    "js-yaml": "5.4.1",
-    "markdownlint": "0.42.0"
+    "ignore": "7.0.16",
+    "js-yaml": "5.5.0",
+    "markdownlint": "0.42.2"
   },
   "overrides": {
-    "katex": "0.18.2",
-    "re2js": "2.8.7"
+    "katex": "0.19.1"
   }
 }
