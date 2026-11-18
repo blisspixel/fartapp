@@ -13,7 +13,7 @@
   "devDependencies": {
     "ignore": "7.0.14",
     "js-yaml": "5.4.1",
-    "markdownlint": "0.42.0"
+    "markdownlint": "0.42.1"
   },
   "overrides": {
     "katex": "0.18.2",
