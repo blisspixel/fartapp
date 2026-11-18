@@ -40,13 +40,14 @@ may survive merely because an aggregate score passes.
 Language and tool upgrades use published stable releases, explicit patch
 versions, and the same numerical and cross-platform checks as a feature change.
 Preview compilers, release candidates, and draft protocols do not become an
-implicit production requirement. These pins were reviewed on 2026-09-04:
+implicit production requirement. The table records the versions selected by
+the repository.
 
 | Component | Reviewed version | Role and source |
 | --- | --- | --- |
 | Go | 1.27.2 | Runtime and checker compiler, selected by [go.mod](../go.mod); security update reviewed 2026-10-11; [official release history](https://go.dev/doc/devel/release) |
-| Node.js | 26.12.1 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [official release index](https://nodejs.org/dist/index.json) |
-| npm | 12.0.2 | Documentation package manager, selected by [package.json](../package.json); [official release](https://github.com/npm/cli/releases/tag/v12.0.2) |
+| Node.js | 26.13.1 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [November security release](https://nodejs.org/en/blog/release/v26.13.1) |
+| npm | 12.2.2 | Documentation package manager, selected by [package.json](../package.json); [official release](https://github.com/npm/cli/releases/tag/v12.2.2) |
 | markdownlint | 0.42.0 | Documentation rules engine used by the repository runner |
 | Staticcheck | Upstream commit f1838cc308e5cfbb38d91cfc973355611845997e | Temporary Go 1.27.2 compatibility pin; reviewed 2026-10-11 |
 | Govulncheck | v1.7.0 | Pinned vulnerability analysis |
