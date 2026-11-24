@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { copyFileSync, mkdtempSync, mkdirSync, rmSync, writeFileSync, readFileSync } from "node:fs";
+import { copyFileSync, mkdtempSync, mkdirSync, rmSync, symlinkSync, writeFileSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const repository = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const manifest = JSON.parse(readFileSync(path.join(repository, "package.json"), "utf8"));
@@ -17,6 +17,9 @@ function fixture(t) {
   for (const name of [".markdownlint.yaml", ".markdownlintignore"]) {
     copyFileSync(path.join(repository, name), path.join(root, name));
   }
+  mkdirSync(path.join(root, "tools"));
+  const runner = pathToFileURL(path.join(repository, "tools/lint-markdown.mjs")).href;
+  writeFileSync(path.join(root, "tools/lint-markdown.mjs"), `import ${JSON.stringify(runner)};\n`);
   writeFileSync(path.join(root, "package.json"), JSON.stringify({
     private: true,
     scripts: { "lint:markdown": manifest.scripts["lint:markdown"] },
@@ -88,3 +91,34 @@ for (const missing of [false, true]) {
     assert.match(result.output, /Cannot read or parse config/);
   });
 }
+
+test("missing optional ignore file still checks the corpus", (t) => {
+  const root = fixture(t);
+  rmSync(path.join(root, ".markdownlintignore"));
+  put(root, "CLAUDE.md", invalid);
+  const result = lint(root);
+  assert.equal(result.status, 1, result.output);
+  assert.match(result.output, /MD009/);
+});
+
+test("empty corpus reports no matching files", (t) => {
+  const result = lint(fixture(t));
+  assert.equal(result.status, 0, result.output);
+  assert.match(result.output, /No matching files found/);
+});
+
+test("linked Markdown remains checked and a dangling link is skipped", (t) => {
+  const root = fixture(t);
+  put(root, "example.txt", invalid);
+  try {
+    symlinkSync("example.txt", path.join(root, "linked.md"), "file");
+  } catch (error) {
+    if (error.code === "EPERM") return t.skip("file symlinks unavailable");
+    throw error;
+  }
+  symlinkSync("missing.txt", path.join(root, "missing.md"), "file");
+  const result = lint(root);
+  assert.equal(result.status, 1, result.output);
+  assert.match(result.output, /linked\.md.*MD009/);
+  assert.doesNotMatch(result.output, /missing\.md/);
+});

@@ -40,15 +40,16 @@ may survive merely because an aggregate score passes.
 Language and tool upgrades use published stable releases, explicit patch
 versions, and the same numerical and cross-platform checks as a feature change.
 Preview compilers, release candidates, and draft protocols do not become an
-implicit production requirement. These pins were reviewed on 2026-09-04:
+implicit production requirement. The table records the versions selected by
+the repository.
 
 | Component | Reviewed version | Role and source |
 | --- | --- | --- |
-| Go | 1.27.2 | Runtime and checker compiler, selected by [go.mod](../go.mod); security update reviewed 2026-10-11; [official release history](https://go.dev/doc/devel/release) |
-| Node.js | 26.12.0 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [official release index](https://nodejs.org/dist/index.json) |
-| npm | 12.0.2 | Documentation package manager, selected by [package.json](../package.json); [official release](https://github.com/npm/cli/releases/tag/v12.0.2) |
-| Markdownlint CLI | 0.50.0 | Exact npm development dependency; 0.49.1 security update reviewed 2026-10-11; 0.50.0 and its nested argparse 3.0.4 license reviewed 2026-11-02 |
-| Staticcheck | Upstream commit f1838cc308e5cfbb38d91cfc973355611845997e | Temporary Go 1.27.2 compatibility pin; reviewed 2026-10-11 |
+| Go | 1.27.4 | Runtime and checker compiler, selected by [go.mod](../go.mod); November 2026 security release; [official release history](https://go.dev/doc/devel/release) |
+| Node.js | 26.13.1 | Current stable documentation toolchain, selected by [.node-version](../.node-version); [November security release](https://nodejs.org/en/blog/release/v26.13.1) |
+| npm | 12.2.2 | Documentation package manager, selected by [package.json](../package.json); [official release](https://github.com/npm/cli/releases/tag/v12.2.2) |
+| markdownlint | 0.42.0 | Documentation rules engine used by the repository runner |
+| Staticcheck | 2026.2.2 (v0.8.2) | Stable analyzer with Go 1.27 export support |
 | Govulncheck | v1.7.0 | Pinned vulnerability analysis |
 | Actionlint | v1.7.12 | Pinned workflow lint |
 | Rust | 1.99.1, edition 2024 | Native workspace; [toolchain pin](../rust-toolchain.toml) and [official release](https://blog.rust-lang.org/2026/10/15/Rust-1.99.1/) |
@@ -59,8 +60,7 @@ The application and repository checker retain zero external Go dependencies.
 Node is used only for development documentation tooling. CI reads language and
 package-manager pins from their source files. GitHub Actions retain immutable
 commit pins.
-The latest stable Node Current release is deliberate for this development-only
-toolchain; its release status is distinct from LTS. Go 1.27 raises the macOS
+Documentation uses the Node 26 LTS line. Go 1.27 raises the macOS
 floor to macOS 13, as recorded in its
 [platform release notes](https://go.dev/doc/go1.27).
 
@@ -77,53 +77,26 @@ listed `os.Root` symbols, but uses file creation and hard-link publication,
 not the advisory's directory-creation operation. No application escape was
 demonstrated. CI selects the patched compiler from `go.mod` on every platform.
 
-Staticcheck's latest stable release, 2026.2.1, cannot read Go 1.27.2's export
-format. A temporary development-tool exception pins the complete immutable
-[upstream compatibility fix](https://github.com/dominikh/go-tools/commit/f1838cc308e5cfbb38d91cfc973355611845997e),
-including its preceding loader compatibility changes. This is an upstream
-snapshot, not a stable release. Replace it with the next compatible stable
-release after the same checks pass. The runtime compiler remains a stable
-security release and the static-analysis gate remains blocking.
+Go 1.27.4 includes the November compiler, toolchain and standard-library
+security fixes. Staticcheck 2026.2.2 supports the Go 1.27 export format and
+runs in CI from the published v0.8.2 module.
+[Go release history](https://go.dev/doc/devel/release#go1.27.4) ·
+[Staticcheck release](https://github.com/dominikh/go-tools/releases/tag/2026.2.2).
 
-The 2026-10-11 documentation-tooling update replaces CLI2's unpatched `braces`
-dependency chain with the maintained Markdownlint CLI and the same Markdown
-corpus. The 2026-11-02 review moves that CLI from 0.49.1 to 0.50.0, which
-selects markdownlint 0.42.0. `.markdownlint.yaml` preserves MD013 and MD036
-settings. `.markdownlintignore` preserves root-scoped exclusions and also
-ignores `CLAUDE.md`, whose only content is the Claude Code `@AGENTS.md` import.
-The command explicitly includes hidden directories and fails on invalid config.
-Run `npm run test:markdown` to check that command's rules and file selection.
-Ignored trees may still be traversed during file discovery; explicit YAML does
-not isolate ambient Markdownlint configuration. CI runs from a clean checkout.
+The documentation check uses the markdownlint 0.42.0 library directly.
+The repository runner walks Markdown files, including hidden directories
+and linked directories, and applies the root patterns in `.markdownlintignore` with the
+ignore library. The root `.markdownlint.yaml` supplies the rules for developers and CI,
+independently of user-level settings. The runner loads it through js-yaml.
+Run `npm run lint:markdown` to check the repository and `npm run test:markdown`
+to exercise file selection, rule diagnostics and configuration failures.
 
-Exact overrides select patched `js-yaml` 5.4.1, `smol-toml` 1.9.1, and KaTeX
-0.18.2 while upstream CLI dependency ranges lag. They also select `minimatch`
-11.0.4 and `re2js` 2.8.7. `minimatch` 10.2.6 has no patched release for
-[GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249);
-11.0.4 keeps the reviewed `BlueOak-1.0.0` identifier and is what
-`markdownlint-cli` 0.50.0 loads instead of its `~10.2.6` range. `markdownlint`
-0.42.0 pins `re2js` 2.8.6, which is inside
-[GHSA-gg6h-894w-4m9c](https://github.com/advisories/GHSA-gg6h-894w-4m9c);
-2.8.7 is the fixed release and remains `MIT`. Review and remove each override
-when the upstream package selects a safe release. CI audits every severity.
-The license gate admits the exact reviewed `BlueOak-1.0.0` identifier for
-[minimatch](https://github.com/isaacs/minimatch/blob/ded1bbd01beca62a5978bc1650ed0a1ccf9039d5/LICENSE.md)
-and `(BSD-2-Clause OR MIT OR Apache-2.0)` declaration for
-[run-con](https://github.com/goatandsheep/rc/blob/57704b6c6196f31f38b5b66a43a31de990477834/package.json).
-It also admits `PSF-2.0` for
-[argparse 3.0.4](https://github.com/nodeca/argparse/blob/3.0.4/LICENSE),
-locked at `node_modules/markdown-it/node_modules/argparse`. Its integrity is
-`sha512-fwWK3Zq22l4XJJjx5mcBHGikIk+hJqO+32dPm0Jur7+rtG5x1scOjSfdT9ZKeWHPpsya/l0HHK4tDImBkTrtvA==`.
-That file matches the SPDX `PSF-2.0` text. SPDX does not mark this identifier
-OSI-approved. The same agreement is the first license in the OSI-approved
-`Python-2.0` stack already admitted for argparse 2.0.1. argparse 3.0.4 keeps
-the PSF grant and drops the historical BeOpen, CNRI, and CWI licenses. The
-grant keeps the copyright notice and license, asks for a change summary in a
-distributed derivative, and gives no trademark permission. It is not copyleft.
-The package is development-only documentation tooling.
-Published license files match immutable upstream sources, with only CRLF/LF
-differences for run-con. Registry, integrity, development-only, and install-script
-checks continue to apply to every locked package.
+This removes the markdownlint-cli dependency on tinyglobby and picomatch
+covered by [GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf).
+The existing KaTeX 0.18.2 and re2js 2.8.7 overrides retain the reviewed
+parser fixes. CI audits all severities and checks licenses, registry origins,
+integrity hashes, development-only scope, and install scripts for every locked
+package.
 
 ## Cross-platform repository automation
 
